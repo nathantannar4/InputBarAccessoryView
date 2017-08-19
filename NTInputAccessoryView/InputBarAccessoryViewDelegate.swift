@@ -1,5 +1,5 @@
 //
-//  Protocols.swift
+//  InputBarAccessoryViewDelegate.swift
 //  NTInputAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -26,9 +26,7 @@
 //
 
 @objc
-public protocol NTInputAccessoryViewDelegate: NSObjectProtocol {
-    @objc optional func textInput(_ textInput: UITextInputAccessoryView, contentSizeDidChangeTo Size: CGSize)
-    @objc optional func textInput(_ textInput: UITextInputAccessoryView, textDidChangeTo text: String)
-    @objc optional func textInput(_ textInput: UITextInputAccessoryView, didPressSendButtonWith text: String)
-    @objc optional func textInput(_ textInput: UITextInputAccessoryView, didPressAccessoryButtonWith text: String)
+public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
+    
+
 }

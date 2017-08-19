@@ -7,17 +7,27 @@
 //
 
 import UIKit
+import NTInputAccessoryView
 
 class ViewController: UIViewController {
     
     let textView = UITextView()
     let imageView = UIImageView()
     let label = UILabel()
+    let bar = InputBarAccessoryView()
+    
+    override var canBecomeFirstResponder: Bool {
+        return true
+    }
+    
+    override var inputAccessoryView: UIView? {
+        return bar
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .blue
         view.addSubview(textView)
         view.addSubview(imageView)
         view.addSubview(label)

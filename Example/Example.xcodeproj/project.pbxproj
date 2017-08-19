@@ -12,7 +12,23 @@
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
 		383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A21F47897800027965 /* LaunchScreen.storyboard */; };
 		383B83AC1F4789BA00027965 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83AB1F4789BA00027965 /* UIView+AutoLayout.swift */; };
+		383B83BA1F478D5D00027965 /* NTInputAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */; };
+		383B83BB1F478D5D00027965 /* NTInputAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		383B83BC1F478D5D00027965 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				383B83BB1F478D5D00027965 /* NTInputAccessoryView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		383B83991F47897800027965 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +38,7 @@
 		383B83A31F47897800027965 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		383B83AB1F4789BA00027965 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
+		383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NTInputAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				383B83BA1F478D5D00027965 /* NTInputAccessoryView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +56,7 @@
 		383B83901F47897800027965 = {
 			isa = PBXGroup;
 			children = (
+				383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */,
 				383B839B1F47897800027965 /* Example */,
 				383B839A1F47897800027965 /* Products */,
 			);
@@ -74,6 +93,7 @@
 				383B83951F47897800027965 /* Sources */,
 				383B83961F47897800027965 /* Frameworks */,
 				383B83971F47897800027965 /* Resources */,
+				383B83BC1F478D5D00027965 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -257,6 +277,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9EUCWD26TP;
 				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -270,6 +291,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9EUCWD26TP;
 				INFOPLIST_FILE = Example/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.Example;
 				PRODUCT_NAME = "$(TARGET_NAME)";

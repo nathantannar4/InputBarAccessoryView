@@ -1,5 +1,5 @@
 //
-//  NTInputTextView.swift
+//  InputTextView.swift
 //  NTInputAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -25,7 +25,7 @@
 //  Created by Nathan Tannar on 8/18/17.
 //
 
-open class NTTextInputView: UITextView {
+open class InputTextView: UITextView {
     
     // MARK: - Properties
     
@@ -59,16 +59,20 @@ open class NTTextInputView: UITextView {
     
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        addObservers()
+        setup()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        addObservers()
+        fatalError("init(coder:) has not been implemented")
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    private func setup() {
+        font = UIFont.preferredFont(forTextStyle: .body)
+        addObservers()
     }
     
     // MARK: - Methods
@@ -98,7 +102,7 @@ open class NTTextInputView: UITextView {
     
     private func addObservers() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(textDidChange),
+                                               selector: #selector(InputTextView.textDidChange(notification:)),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
         NotificationCenter.default.addObserver(self,

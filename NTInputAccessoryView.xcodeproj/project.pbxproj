@@ -8,22 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		383B83881F4787E200027965 /* NTInputAccessoryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 383B83861F4787E200027965 /* NTInputAccessoryView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		383B838F1F47895D00027965 /* UITextInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B838E1F47895D00027965 /* UITextInputAccessoryView.swift */; };
 		383B83AE1F478ABE00027965 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83AD1F478ABE00027965 /* UIView+AutoLayout.swift */; };
-		383B83B01F478BAC00027965 /* NTInputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83AF1F478BAC00027965 /* NTInputTextView.swift */; };
-		383B83B21F478BF900027965 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B11F478BF900027965 /* Protocols.swift */; };
-		383B83B81F478C4E00027965 /* NTInputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B71F478C4E00027965 /* NTInputAccessoryView.swift */; };
+		383B83B01F478BAC00027965 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83AF1F478BAC00027965 /* InputTextView.swift */; };
+		383B83B21F478BF900027965 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */; };
+		383B83B81F478C4E00027965 /* InputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */; };
+		383B83BE1F47C01600027965 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83BD1F47C01600027965 /* InputBarItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		383B83831F4787E200027965 /* NTInputAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NTInputAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		383B83861F4787E200027965 /* NTInputAccessoryView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NTInputAccessoryView.h; sourceTree = "<group>"; };
 		383B83871F4787E200027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		383B838E1F47895D00027965 /* UITextInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextInputAccessoryView.swift; sourceTree = "<group>"; };
 		383B83AD1F478ABE00027965 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
-		383B83AF1F478BAC00027965 /* NTInputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NTInputTextView.swift; sourceTree = "<group>"; };
-		383B83B11F478BF900027965 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
-		383B83B71F478C4E00027965 /* NTInputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NTInputAccessoryView.swift; sourceTree = "<group>"; };
+		383B83AF1F478BAC00027965 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
+		383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDelegate.swift; sourceTree = "<group>"; };
+		383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryView.swift; sourceTree = "<group>"; };
+		383B83BD1F47C01600027965 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +67,7 @@
 		383B83B31F478C1200027965 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				383B83B11F478BF900027965 /* Protocols.swift */,
+				383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -75,9 +75,9 @@
 		383B83B41F478C1A00027965 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				383B838E1F47895D00027965 /* UITextInputAccessoryView.swift */,
-				383B83B71F478C4E00027965 /* NTInputAccessoryView.swift */,
-				383B83AF1F478BAC00027965 /* NTInputTextView.swift */,
+				383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */,
+				383B83AF1F478BAC00027965 /* InputTextView.swift */,
+				383B83BD1F47C01600027965 /* InputBarItem.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -180,11 +180,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				383B83B21F478BF900027965 /* Protocols.swift in Sources */,
-				383B83B81F478C4E00027965 /* NTInputAccessoryView.swift in Sources */,
-				383B838F1F47895D00027965 /* UITextInputAccessoryView.swift in Sources */,
+				383B83B21F478BF900027965 /* InputBarAccessoryViewDelegate.swift in Sources */,
+				383B83B81F478C4E00027965 /* InputBarAccessoryView.swift in Sources */,
 				383B83AE1F478ABE00027965 /* UIView+AutoLayout.swift in Sources */,
-				383B83B01F478BAC00027965 /* NTInputTextView.swift in Sources */,
+				383B83B01F478BAC00027965 /* InputTextView.swift in Sources */,
+				383B83BE1F47C01600027965 /* InputBarItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,7 +304,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = NTInputAccessoryView/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.NTInputAccessoryView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -326,7 +326,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = NTInputAccessoryView/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.NTInputAccessoryView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
