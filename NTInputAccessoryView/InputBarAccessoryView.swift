@@ -75,10 +75,32 @@ open class InputBarAccessoryView: UIView {
         return textView
     }()
     
-    open let sendButton: InputBarItem = {
-        let item = InputBarItem()
+    open var sendButton: InputBarItem<UIButton> = {
+        
+        class CustomButton: UIButton {
+            
+            override func tintColorDidChange() {
+                super.tintColorDidChange()
+                setTitleColor(tintColor, for: .normal)
+                setTitleColor(tintColor.withAlphaComponent(0.3), for: .highlighted)
+            }
+        }
+        
+        let button = CustomButton()
+        button.setTitle("Send", for: .normal)
+        button.tintColor = .lightBlue
+        button.setTitleColor(.lightGray, for: .disabled)
+        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        button.isEnabled = false
+        button.contentHorizontalAlignment = .center
+        button.contentVerticalAlignment = .center
+        
+        let item = InputBarItem<UIButton>()
+        item.element.setTitle("Another One", for: .normal)
+        item.element.setTitleColor(.red, for: .normal)
         return item
     }()
+
     
     open var padding: UIEdgeInsets {
         return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
@@ -136,7 +158,7 @@ open class InputBarAccessoryView: UIView {
         addSubview(topStackView)
         addSubview(bottomStackView)
         topStackView.addArrangedSubview(textView)
-        
+        topStackView.addArrangedSubview(sendButton)
         
     }
     
