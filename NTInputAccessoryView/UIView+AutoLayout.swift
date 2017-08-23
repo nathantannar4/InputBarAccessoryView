@@ -93,6 +93,8 @@ public extension UIView {
         
         constraints.forEach { $0.isActive = true }
         
+        
+        
         return constraints
     }
     
@@ -103,5 +105,36 @@ public extension UIView {
             }
         }
         return nil
+    }
+}
+
+public struct NSLayoutConstraintSet {
+    
+    public var top: NSLayoutConstraint?
+    public var bottom: NSLayoutConstraint?
+    public var left: NSLayoutConstraint?
+    public var right: NSLayoutConstraint?
+    public var centerX: NSLayoutConstraint?
+    public var centerY: NSLayoutConstraint?
+    public var width: NSLayoutConstraint?
+    public var height: NSLayoutConstraint?
+    
+    public init(top: NSLayoutConstraint? = nil, bottom: NSLayoutConstraint? = nil,
+                left: NSLayoutConstraint? = nil, right: NSLayoutConstraint? = nil,
+                centerX: NSLayoutConstraint? = nil, centerY: NSLayoutConstraint? = nil,
+                width: NSLayoutConstraint? = nil, height: NSLayoutConstraint? = nil) {
+        self.top = top
+        self.bottom = bottom
+        self.left = left
+        self.right = right
+        self.centerX = centerX
+        self.centerY = centerY
+        self.width = width
+        self.height = height
+    }
+    
+    func forEach(_ body: (NSLayoutConstraint) -> Void) {
+        let constraints: [NSLayoutConstraint] = [top, bottom, left, right, centerX, centerY, width, height].filter { $0 != nil } as! [NSLayoutConstraint]
+        constraints.forEach(body)
     }
 }

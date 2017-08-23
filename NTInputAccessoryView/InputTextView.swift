@@ -28,32 +28,56 @@
 open class InputTextView: UITextView {
     
     // MARK: - Properties
+
+    private let placeholderLabel: UILabel = {
+        let label = UILabel()
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.2
+        label.numberOfLines = 0
+        label.textColor = .lightGray
+        label.text = "Aa"
+        label.backgroundColor = .clear
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
-    open var placeholder: NSString? {
-        didSet {
-            guard placeholder != oldValue else { return }
-            setNeedsDisplay()
+    private var placeholderLabelConstraints = [NSLayoutConstraint]()
+    
+    open var placeholder: String? {
+        get {
+            return placeholderLabel.text
+        }
+        set {
+            placeholderLabel.text = newValue
         }
     }
     
-    open var placeholderTextColor: UIColor = .lightGray {
-        didSet {
-            guard placeholderTextColor != oldValue else { return }
-            setNeedsDisplay()
+    open var placeholderTextColor: UIColor {
+        get {
+            return placeholderLabel.textColor
+        }
+        set {
+            placeholderLabel.textColor = newValue
         }
     }
     
-    open var placeholderInsets: UIEdgeInsets = UIEdgeInsets(top: 7,
-                                                            left: 5,
-                                                            bottom: 7,
-                                                            right: 5) {
+    override open var font: UIFont! {
         didSet {
-            guard placeholderInsets != oldValue else { return }
-            setNeedsDisplay()
+            placeholderLabel.font = font
         }
     }
     
-    private var isPlaceholderVisibile = false
+    override open var textAlignment: NSTextAlignment {
+        didSet {
+            placeholderLabel.textAlignment = textAlignment
+        }
+    }
+
+    override open var textContainerInset: UIEdgeInsets {
+        didSet {
+            updateConstraintsForPlaceholderLabel()
+        }
+    }
     
     // MARK: - Initializers
     
@@ -71,33 +95,40 @@ open class InputTextView: UITextView {
     }
     
     private func setup() {
+        
         font = UIFont.preferredFont(forTextStyle: .body)
+        isScrollEnabled = false
+        addSubview(placeholderLabel)
+        updateConstraintsForPlaceholderLabel()
         addObservers()
     }
     
-    // MARK: - Methods
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
+    }
     
-    override open func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
-        guard text.isEmpty, let placeholder = placeholder else { return }
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = textAlignment
-        
-        var attributes: [String: Any] = [
-            NSForegroundColorAttributeName: placeholderTextColor,
-            NSParagraphStyleAttributeName: paragraphStyle
-        ]
-        if let font = font {
-            attributes[NSFontAttributeName] = font
-        }
-        
-        placeholder.draw(in: UIEdgeInsetsInsetRect(rect, placeholderInsets),
-                         withAttributes: attributes)
-        
-        isPlaceholderVisibile = true
-        
+    private func updateConstraintsForPlaceholderLabel() {
+        var newConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(textContainerInset.left + textContainer.lineFragmentPadding))-[placeholder]",
+            options: [],
+            metrics: nil,
+            views: ["placeholder": placeholderLabel])
+        newConstraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-(\(textContainerInset.top))-[placeholder]",
+            options: [],
+            metrics: nil,
+            views: ["placeholder": placeholderLabel])
+        newConstraints.append(NSLayoutConstraint(
+            item: placeholderLabel,
+            attribute: .width,
+            relatedBy: .equal,
+            toItem: self,
+            attribute: .width,
+            multiplier: 1.0,
+            constant: -(textContainerInset.left + textContainerInset.right + textContainer.lineFragmentPadding * 2.0)
+        ))
+        removeConstraints(placeholderLabelConstraints)
+        addConstraints(newConstraints)
+        placeholderLabelConstraints = newConstraints
     }
     
     private func addObservers() {
@@ -106,15 +137,13 @@ open class InputTextView: UITextView {
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.orientationChanged(notification:)),
+                                               selector: #selector(InputTextView.orientationChanged(notification:)),
                                                name: Notification.Name.UIDeviceOrientationDidChange,
                                                object: nil)
     }
     
     func textDidChange(notification: Notification) {
-        guard text.isEmpty || isPlaceholderVisibile else { return }
-        setNeedsDisplay()
-        isPlaceholderVisibile = false
+        placeholderLabel.isHidden = !text.isEmpty
     }
     
     func orientationChanged(notification: Notification) {

@@ -28,5 +28,13 @@
 @objc
 public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
     
-
+    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectRightItem item: UIView)
+    
+    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectLeftItem item: UIView)
+    
+    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
+    
+    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, textViewDidChangeTo text: String)
+    
+    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
 }

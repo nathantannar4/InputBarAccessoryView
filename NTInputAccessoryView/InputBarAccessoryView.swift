@@ -35,20 +35,11 @@ open class InputBarAccessoryView: UIView {
         let blurEffect = UIBlurEffect(style: .extraLight)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.isHidden = true
         return view
     }()
     
-    open var topStackView: UIStackView = {
-        let view: UIStackView = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fillProportionally
-        view.alignment = .bottom
-        view.spacing = 0
-        return view
-    }()
-    
-    open var bottomStackView: UIStackView = {
+    open var stackView: UIStackView = {
         let view: UIStackView = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -60,65 +51,92 @@ open class InputBarAccessoryView: UIView {
     
     open let textView: InputTextView = {
         let textView = InputTextView()
-        textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-        textView.textColor = .black
-        textView.placeholder = "Aa"
-        textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        textView.layer.borderWidth = 1.0
-        textView.layer.cornerRadius = 16.0
-        textView.layer.masksToBounds = true
-        textView.isScrollEnabled = false
-        textView.placeholderInsets = UIEdgeInsets(top: 7, left: 14, bottom: 7, right: 14)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+//        textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+//        textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+//        textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+//        textView.layer.borderWidth = 1.0
+//        textView.layer.cornerRadius = 16.0
+//        textView.layer.masksToBounds = true
         textView.textContainerInset = UIEdgeInsets(top: 7, left: 8, bottom: 7, right: 8)
-        textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+//        textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         return textView
     }()
     
-    open var sendButton: InputBarItem<UIButton> = {
-        
-        class CustomButton: UIButton {
-            
-            override func tintColorDidChange() {
-                super.tintColorDidChange()
-                setTitleColor(tintColor, for: .normal)
-                setTitleColor(tintColor.withAlphaComponent(0.3), for: .highlighted)
-            }
-        }
-        
-        let button = CustomButton()
-        button.setTitle("Send", for: .normal)
-        button.tintColor = .lightBlue
-        button.setTitleColor(.lightGray, for: .disabled)
-        button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        button.isEnabled = false
-        button.contentHorizontalAlignment = .center
-        button.contentVerticalAlignment = .center
-        
-        let item = InputBarItem<UIButton>()
-        item.element.setTitle("Another One", for: .normal)
-        item.element.setTitleColor(.red, for: .normal)
-        return item
-    }()
-
+    open var leftItem: UIView?
     
-    open var padding: UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    open var leftItemSize: CGSize = .zero {
+        didSet {
+            leftItemLayoutSet?.width?.constant = leftItemSize.width
+            leftItemLayoutSet?.height?.constant = leftItemSize.height
+        }
     }
     
-    open var stackViewSpacing: CGFloat {
-        return 0
+    open var rightItem: UIView?
+    
+    open var rightItemSize: CGSize = .zero {
+        didSet {
+            rightItemLayoutSet?.width?.constant = rightItemSize.width
+            rightItemLayoutSet?.height?.constant = rightItemSize.height
+        }
+    }
+    
+    open var padding: UIEdgeInsets {
+        return UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
+    }
+    
+    open var maxHeight: CGFloat = 200 {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
+    open var isTranslucent: Bool {
+        get {
+            return backgroundView.isHidden
+        }
+        set {
+            backgroundView.isHidden = newValue
+            backgroundColor = newValue ? .clear : .white
+        }
     }
     
     override open var intrinsicContentSize: CGSize {
-        
-        return CGSize(width: 300, height: 44)
+        let sizeToFit = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude))
+        var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
+        if heightToFit >= maxHeight {
+            textView.isScrollEnabled = true
+            heightToFit = maxHeight
+        } else {
+            textView.isScrollEnabled = false
+        }
+        let size = CGSize(width: bounds.width, height: heightToFit)
+        if previousIntrinsicContentSize != size {
+            delegate?.inputBar?(self, didChangeIntrinsicContentTo: size)
+        }
+        previousIntrinsicContentSize = size
+        return size
     }
     
-    /// [topAnchor, bottomAnchor, leftAnchor, rightAnchor]
-    private var backgroundViewConstraints: [NSLayoutConstraint]?
-    private var topStackViewConstraints: [NSLayoutConstraint]?
-    private var bottomStackViewConstraints: [NSLayoutConstraint]?
+    private var backgroundViewLayoutSet: NSLayoutConstraintSet?
+    private var textViewLayoutSet: NSLayoutConstraintSet?
+    private var stackViewLayoutSet: NSLayoutConstraintSet?
+    private var rightItemLayoutSet: NSLayoutConstraintSet?
+    private var leftItemLayoutSet: NSLayoutConstraintSet?
+    
+    private var previousIntrinsicContentSize: CGSize?
+    
+    private var rightItemContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private var leftItemContainerView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
     
     // MARK: - Initialization
     
@@ -139,67 +157,177 @@ open class InputBarAccessoryView: UIView {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private func setup() {
+    open func setup() {
         
         backgroundColor = .white
         autoresizingMask = .flexibleHeight
         setupSubviews()
         setupConstraints()
         setupObservers()
-        
-        #if DEBUG
-            
-        #endif
+        setupGestureRecognizers()
+        setupSendButton()
     }
     
     private func setupSubviews() {
         
         addSubview(backgroundView)
-        addSubview(topStackView)
-        addSubview(bottomStackView)
-        topStackView.addArrangedSubview(textView)
-        topStackView.addArrangedSubview(sendButton)
-        
+        addSubview(textView)
+        addSubview(stackView)
+        addSubview(leftItemContainerView)
+        addSubview(rightItemContainerView)
     }
     
     private func setupConstraints() {
         
-        backgroundViewConstraints = [
-            backgroundView.topAnchor.constraint(equalTo: topAnchor),
-            backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            backgroundView.leftAnchor.constraint(equalTo: leftAnchor),
-            backgroundView.rightAnchor.constraint(equalTo: rightAnchor)
-        ]
-        backgroundViewConstraints?.forEach{ $0.isActive = true }
+        backgroundViewLayoutSet = NSLayoutConstraintSet(
+            top:    backgroundView.topAnchor.constraint(equalTo: topAnchor),
+            bottom: backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            left:   backgroundView.leftAnchor.constraint(equalTo: leftAnchor),
+            right:  backgroundView.rightAnchor.constraint(equalTo: rightAnchor)
+        )
+        backgroundViewLayoutSet?.forEach { $0.isActive = true }
         
-        topStackViewConstraints = [
-            topStackView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
-            topStackView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -stackViewSpacing),
-            topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-            topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
-        ]
-        topStackViewConstraints?.forEach{ $0.isActive = true }
-
-        bottomStackViewConstraints = [
-            bottomStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
-            bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-            bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-            bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
-        ]
-        bottomStackViewConstraints?.forEach{ $0.isActive = true }
+        textViewLayoutSet = NSLayoutConstraintSet(
+            top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            bottom: textView.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: 0),
+            left:   textView.leftAnchor.constraint(equalTo: leftItemContainerView.rightAnchor),
+            right:  textView.rightAnchor.constraint(equalTo: rightItemContainerView.leftAnchor)
+        )
+        textViewLayoutSet?.forEach { $0.isActive = true }
         
-        // Anchor the two stack views heights together
-//        topStackView.heightAnchor.constraint(equalTo: bottomStackView.heightAnchor).isActive = true
-    }
-    
-    open override func updateConstraints() {
+        stackViewLayoutSet = NSLayoutConstraintSet(
+            top:    stackView.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
+            bottom: stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
+            left:   stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            right:  stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
+        )
+        stackViewLayoutSet?.forEach { $0.isActive = true }
         
-        super.updateConstraints()
+        leftItemLayoutSet = NSLayoutConstraintSet(
+            bottom: leftItemContainerView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
+            left:   leftItemContainerView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            width:  leftItemContainerView.widthAnchor.constraint(equalToConstant: leftItemSize.width),
+            height: leftItemContainerView.heightAnchor.constraint(equalToConstant: leftItemSize.height)
+        )
+        leftItemLayoutSet?.forEach { $0.isActive = true }
+        
+        rightItemLayoutSet = NSLayoutConstraintSet(
+            bottom: rightItemContainerView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
+            right:  rightItemContainerView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
+            width:  rightItemContainerView.widthAnchor.constraint(equalToConstant: rightItemSize.width),
+            height: rightItemContainerView.heightAnchor.constraint(equalToConstant: rightItemSize.height)
+        )
+        rightItemLayoutSet?.forEach { $0.isActive = true }
     }
     
     private func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(orientationDidChange), name: .UIDeviceOrientationDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(textViewDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(InputBarAccessoryView.orientationDidChange), name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(InputBarAccessoryView.textViewDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+    }
+    
+    private func setupGestureRecognizers() {
+        
+        let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
+        rightSwipeGesture.direction = .right
+        
+        let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
+        leftSwipeGesture.direction = .left
+        
+        textView.addGestureRecognizer(rightSwipeGesture)
+        textView.addGestureRecognizer(leftSwipeGesture)
+    }
+    
+    open override func tintColorDidChange() {
+        super.tintColorDidChange()
+        textView.tintColor = tintColor
+        (rightItem as? InputBarSendButton)?.setTitleColor(tintColor, for: .normal)
+        (rightItem as? InputBarSendButton)?.setTitleColor(tintColor.withAlphaComponent(0.3), for: .highlighted)
+    }
+    
+    // MARK: - Methods
+    
+    open func setupSendButton() {
+        
+        let button = InputBarSendButton()
+        button.isEnabled = false
+        button.addTarget(self, action: #selector(InputBarAccessoryView.didSelectRightItem(_:)), for: .touchUpInside)
+        setRightItem(button, animated: false)
+    }
+    
+    // MARK: - Right Item
+    
+    open func setRightItem(_ item: UIView?, size: CGSize? = nil, animated: Bool) {
+        
+        rightItem?.removeFromSuperview()
+        
+        if let newItem = item {
+            // Add/Replace Item
+            rightItemContainerView.addSubview(newItem)
+            newItem.translatesAutoresizingMaskIntoConstraints = false
+            _ = [
+                newItem.topAnchor.constraint(equalTo: rightItemContainerView.topAnchor, constant: 0),
+                newItem.bottomAnchor.constraint(equalTo: rightItemContainerView.bottomAnchor, constant: 0),
+                newItem.leftAnchor.constraint(equalTo: rightItemContainerView.leftAnchor, constant: padding.left),
+                newItem.rightAnchor.constraint(equalTo: rightItemContainerView.rightAnchor, constant: 0)
+                ].map { $0.isActive = true }
+            rightItem = newItem
+            let newSize = size ?? CGSize(width: newItem.intrinsicContentSize.width + padding.left, height: 36)
+            setRightItemSize(newSize, animated: animated)
+            
+        } else {
+            // Remove Item
+            rightItem = nil
+            setRightItemSize(.zero, animated: animated)
+        }
+    }
+    
+    open func setRightItemSize(_ size: CGSize, animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: { 
+                self.rightItemSize = size
+                self.layoutIfNeeded()
+            })
+        } else {
+            rightItemSize = size
+        }
+    }
+    
+    // MARK: - Left Item
+    
+    open func setLeftItem(_ item: UIView?, size: CGSize? = nil, animated: Bool) {
+        
+        leftItem?.removeFromSuperview()
+        
+        if let newItem = item {
+            // Add/Replace Item
+            leftItemContainerView.addSubview(newItem)
+            newItem.translatesAutoresizingMaskIntoConstraints = false
+            _ = [
+                newItem.topAnchor.constraint(equalTo: leftItemContainerView.topAnchor, constant: 0),
+                newItem.bottomAnchor.constraint(equalTo: leftItemContainerView.bottomAnchor, constant: 0),
+                newItem.leftAnchor.constraint(equalTo: leftItemContainerView.leftAnchor, constant: padding.right),
+                newItem.rightAnchor.constraint(equalTo: leftItemContainerView.rightAnchor, constant: 0)
+                ].map { $0.isActive = true }
+            leftItem = newItem
+            let newSize = size ?? CGSize(width: newItem.intrinsicContentSize.width + padding.right, height: 36)
+            setLeftItemSize(newSize, animated: animated)
+            
+        } else {
+            // Remove Item
+            leftItem = nil
+            setLeftItemSize(.zero, animated: animated)
+        }
+    }
+    
+    open func setLeftItemSize(_ size: CGSize, animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.leftItemSize = size
+                self.layoutIfNeeded()
+            })
+        } else {
+            leftItemSize = size
+        }
     }
     
     // MARK: - Notifications
@@ -209,14 +337,23 @@ open class InputBarAccessoryView: UIView {
     }
     
     open  func textViewDidChange(_ notification: Notification) {
-//        if textView.text.isEmpty && isAccessoryButtonHidden {
-//            isAccessoryButtonHidden = false
-//        } else if !textView.text.isEmpty && !isAccessoryButtonHidden {
-//            isAccessoryButtonHidden = true
-//        }
-//        let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-//        sendButton.isEnabled = !trimmedText.isEmpty
-//        delegate?.textInput?(self, textDidChangeTo: trimmedText)
-//        invalidateIntrinsicContentSize()
+        let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        (rightItem as? InputBarSendButton)?.isEnabled = !trimmedText.isEmpty
+        delegate?.inputBar?(self, textViewDidChangeTo: trimmedText)
+        invalidateIntrinsicContentSize()
+    }
+    
+    // MARK: - User Actions
+    
+    open func didSwipeTextView(_ swipeGesture: UISwipeGestureRecognizer) {
+        delegate?.inputBar?(self, didSwipeTextViewWith: swipeGesture)
+    }
+    
+    open func didSelectRightItem(_ view: UIView) {
+        delegate?.inputBar?(self, didSelectRightItem: view)
+    }
+    
+    open func didSelectLeftItem(_ view: UIView) {
+        delegate?.inputBar?(self, didSelectLeftItem: view)
     }
 }

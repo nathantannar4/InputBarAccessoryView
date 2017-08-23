@@ -1,5 +1,5 @@
 //
-//  InputBarItem.swift
+//  InputBarSendButton.swift
 //  NTInputAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,62 +22,49 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/18/17.
+//  Created by Nathan Tannar on 8/19/17.
 //
 
 import UIKit
 
-open class InputBarItem<T : UIView> {
+open class InputBarSendButton: UIButton {
     
     // MARK: - Properties
     
-    open var view: T
-    
-    fileprivate var onTapAction: ((InputBarItem)->Void)?
-    private var onKeyboardEditingBeginsAction: ((InputBarItem)->Void)?
-    private var onKeyboardEditingEndsAction: ((InputBarItem)->Void)?
-    
     // MARK: - Initialization
     
-    public init() {
-        view = T()
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
     }
     
-    public init(customView: T) {
-        view = customView
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Methods
-    
-    @discardableResult
-    open func configure(_ setup: (InputBarItem)->Void) -> Self {
-        setup(self)
-        return self
+    private func setup() {
+        setTitle("Send", for: .normal)
+        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
+        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
+        setTitleColor(.lightGray, for: .disabled)
+        titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        contentVerticalAlignment = .center
+        contentHorizontalAlignment = .center
     }
     
-    @discardableResult
-    open func onKeyboardEditingBegins(_ action: @escaping (InputBarItem)->Void) -> Self {
-        onKeyboardEditingBeginsAction = action
-        return self
+    // MARK: - Touch Methods
+    
+    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        
     }
     
-    @discardableResult
-    open func onKeyboardEditingEnds(_ action: @escaping (InputBarItem)->Void) -> Self {
-        onKeyboardEditingEndsAction = action
-        return self
+    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesEnded(touches, with: event)
     }
     
-    @objc func didTouchUpInside() {
-       onTapAction?(self)
+    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesCancelled(touches, with: event)
     }
-}
-
-public extension InputBarItem where T: UIButton  {
     
-    @discardableResult
-    public func onTap(_ action: @escaping (InputBarItem)->Void) -> Self {
-        onTapAction = action
-        view.addTarget(self, action: #selector(InputBarItem.didTouchUpInside), for: .touchUpInside)
-        return self
-    }
 }
