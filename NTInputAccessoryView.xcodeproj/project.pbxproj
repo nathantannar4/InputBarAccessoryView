@@ -13,8 +13,6 @@
 		383B83B21F478BF900027965 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */; };
 		383B83B81F478C4E00027965 /* InputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */; };
 		383B83BE1F47C01600027965 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83BD1F47C01600027965 /* InputBarItem.swift */; };
-		383B83C01F47D2EB00027965 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83BF1F47D2EB00027965 /* UIColor+Extension.swift */; };
-		383B83C21F47D4CC00027965 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83C11F47D4CC00027965 /* File.swift */; };
 		383B83C61F49019C00027965 /* InputBarSendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83C51F49019C00027965 /* InputBarSendButton.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,8 +25,6 @@
 		383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDelegate.swift; sourceTree = "<group>"; };
 		383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryView.swift; sourceTree = "<group>"; };
 		383B83BD1F47C01600027965 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
-		383B83BF1F47D2EB00027965 /* UIColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
-		383B83C11F47D4CC00027965 /* File.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		383B83C51F49019C00027965 /* InputBarSendButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSendButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,7 +81,6 @@
 				383B83AF1F478BAC00027965 /* InputTextView.swift */,
 				383B83C51F49019C00027965 /* InputBarSendButton.swift */,
 				383B83BD1F47C01600027965 /* InputBarItem.swift */,
-				383B83C11F47D4CC00027965 /* File.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -94,7 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				383B83AD1F478ABE00027965 /* UIView+AutoLayout.swift */,
-				383B83BF1F47D2EB00027965 /* UIColor+Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -191,9 +185,7 @@
 			files = (
 				383B83B21F478BF900027965 /* InputBarAccessoryViewDelegate.swift in Sources */,
 				383B83B81F478C4E00027965 /* InputBarAccessoryView.swift in Sources */,
-				383B83C21F47D4CC00027965 /* File.swift in Sources */,
 				383B83AE1F478ABE00027965 /* UIView+AutoLayout.swift in Sources */,
-				383B83C01F47D2EB00027965 /* UIColor+Extension.swift in Sources */,
 				383B83B01F478BAC00027965 /* InputTextView.swift in Sources */,
 				383B83C61F49019C00027965 /* InputBarSendButton.swift in Sources */,
 				383B83BE1F47C01600027965 /* InputBarItem.swift in Sources */,

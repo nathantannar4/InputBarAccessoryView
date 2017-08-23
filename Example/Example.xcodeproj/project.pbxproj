@@ -11,7 +11,6 @@
 		383B839F1F47897800027965 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B839E1F47897800027965 /* ViewController.swift */; };
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
 		383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A21F47897800027965 /* LaunchScreen.storyboard */; };
-		383B83AC1F4789BA00027965 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83AB1F4789BA00027965 /* UIView+AutoLayout.swift */; };
 		383B83BA1F478D5D00027965 /* NTInputAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */; };
 		383B83BB1F478D5D00027965 /* NTInputAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -37,7 +36,6 @@
 		383B83A01F47897800027965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		383B83A31F47897800027965 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		383B83AB1F4789BA00027965 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NTInputAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -75,7 +73,6 @@
 			children = (
 				383B839C1F47897800027965 /* AppDelegate.swift */,
 				383B839E1F47897800027965 /* ViewController.swift */,
-				383B83AB1F4789BA00027965 /* UIView+AutoLayout.swift */,
 				383B83A01F47897800027965 /* Assets.xcassets */,
 				383B83A21F47897800027965 /* LaunchScreen.storyboard */,
 				383B83A51F47897800027965 /* Info.plist */,
@@ -157,7 +154,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				383B839F1F47897800027965 /* ViewController.swift in Sources */,
-				383B83AC1F4789BA00027965 /* UIView+AutoLayout.swift in Sources */,
 				383B839D1F47897800027965 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +314,7 @@
 				383B83AA1F47897800027965 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

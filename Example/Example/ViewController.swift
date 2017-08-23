@@ -48,7 +48,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         button.imageView?.contentMode = .scaleAspectFit
         button.contentVerticalAlignment = .center
         button.contentHorizontalAlignment = .center
-        button.tintColor = .lightBlue
+        button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         bar.textView.textContainerInset = UIEdgeInsets(top: 7, left: 8, bottom: 7, right: 8)
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
@@ -67,7 +67,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
             button.imageView?.contentMode = .scaleAspectFit
             button.contentVerticalAlignment = .center
             button.contentHorizontalAlignment = .center
-            button.tintColor = .lightBlue
+            button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.widthAnchor.constraint(equalToConstant: 30).isActive = true
             return button
@@ -90,7 +90,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.stackView.addArrangedSubview(button)
         
         bar.setRightItem(nil, animated: false)
-        bar.stackViewHeight = 30
+        bar.stackViewHeight = 20
         
     }
 
@@ -105,6 +105,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
         print(text)
         inputBar.textView.text = String()
+        self.inputBar(inputBar, textViewDidChangeTo: String())
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewDidChangeTo text: String) {

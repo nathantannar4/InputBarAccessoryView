@@ -29,7 +29,7 @@ open class InputTextView: UITextView {
     
     // MARK: - Properties
 
-    private let placeholderLabel: UILabel = {
+    open let placeholderLabel: UILabel = {
         let label = UILabel()
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.2

@@ -30,7 +30,7 @@ import UIKit
 
 public extension UIView {
     
-    func constrainToSuperview() {
+    func fillSuperview() {
         guard let superview = self.superview else {
             return
         }
@@ -41,12 +41,8 @@ public extension UIView {
         bottomAnchor.constraint(equalTo: superview.bottomAnchor).isActive = true
     }
 
-    func addConstraints(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) {
-        
-        _ = addConstraintsWithReturn(top, left: left, bottom: bottom, right: right, topConstant: topConstant, leftConstant: leftConstant, bottomConstant: bottomConstant, rightConstant: rightConstant, widthConstant: widthConstant, heightConstant: heightConstant)
-    }
-    
-    func addConstraintsWithReturn(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
+    @discardableResult
+    func addConstraints(_ top: NSLayoutYAxisAnchor? = nil, left: NSLayoutXAxisAnchor? = nil, bottom: NSLayoutYAxisAnchor? = nil, right: NSLayoutXAxisAnchor? = nil, topConstant: CGFloat = 0, leftConstant: CGFloat = 0, bottomConstant: CGFloat = 0, rightConstant: CGFloat = 0, widthConstant: CGFloat = 0, heightConstant: CGFloat = 0) -> [NSLayoutConstraint] {
         
         if self.superview == nil {
             return []
@@ -96,15 +92,6 @@ public extension UIView {
         
         
         return constraints
-    }
-    
-    func constraint(withIdentifier identifier: String) -> NSLayoutConstraint? {
-        for constraint in self.constraints {
-            if constraint.identifier == identifier {
-                return constraint
-            }
-        }
-        return nil
     }
 }
 

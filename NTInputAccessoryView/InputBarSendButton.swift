@@ -29,8 +29,6 @@ import UIKit
 
 open class InputBarSendButton: UIButton {
     
-    // MARK: - Properties
-    
     // MARK: - Initialization
     
     public override init(frame: CGRect) {
@@ -51,21 +49,6 @@ open class InputBarSendButton: UIButton {
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         contentVerticalAlignment = .center
         contentHorizontalAlignment = .center
-    }
-    
-    // MARK: - Touch Methods
-    
-    open override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesBegan(touches, with: event)
-        
-    }
-    
-    open override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesEnded(touches, with: event)
-    }
-    
-    open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        super.touchesCancelled(touches, with: event)
     }
 }
 
