@@ -11,9 +11,8 @@ import NTInputAccessoryView
 
 class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     
-    let textView = UITextView()
+    
     let imageView = UIImageView()
-    let label = UILabel()
     let bar = InputBarAccessoryView()
     
     override var canBecomeFirstResponder: Bool {
@@ -23,58 +22,96 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     override var inputAccessoryView: UIView? {
         return bar
     }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        view.addSubview(textView)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.95)
         view.addSubview(imageView)
-        view.addSubview(label)
         
         bar.delegate = self
-        
-        imageView.addConstraints(view.topAnchor, left: view.leftAnchor, bottom: nil, right: nil, topConstant: 30, leftConstant: 16, bottomConstant: 0, rightConstant: 0, widthConstant: 30, heightConstant: 30)
-        imageView.backgroundColor = UIColor.groupTableViewBackground
-        
-        label.addConstraints(view.topAnchor, left: imageView.rightAnchor, bottom: imageView.bottomAnchor, right: view.rightAnchor, topConstant: 30, leftConstant: 16, bottomConstant: 0, rightConstant: 16, widthConstant: 0, heightConstant: 0)
-        label.backgroundColor = UIColor.groupTableViewBackground
-        
-        textView.addConstraints(label.bottomAnchor, left: imageView.leftAnchor, bottom: nil, right: label.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 300)
-        textView.backgroundColor = UIColor.groupTableViewBackground
-        
-//        let buttonItem = InputBarItem<UIButton>()
-//            .configure {
-//                $0.view.backgroundColor = .red
-//                $0.view.setTitle("Button", for: .normal)
-//                print("Button Setup")
-//            }.onTap {
-//                $0.view.backgroundColor = .blue
-//                print("Button Tapped")
-//        }
-//        view.addSubview(buttonItem.view)
-//        buttonItem.view.addConstraints(textView.bottomAnchor, left: textView.leftAnchor, bottom: nil, right: textView.rightAnchor, topConstant: 10, leftConstant: 0, bottomConstant: 0, rightConstant: 0, widthConstant: 0, heightConstant: 44)
+        bar.isTranslucent = true
+        bar.textView.backgroundColor = .clear
         
         
+//        setSimple()
+        setSlack()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-//            let button = UIButton(type: UIButtonType.contactAdd)
-//            button.contentVerticalAlignment = .center
-//            button.contentHorizontalAlignment = .center
-//            self.bar.setRightItem(button, animated: true)
-//        }
+    func setSimple() {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        button.tintColor = .lightBlue
+        bar.textView.textContainerInset = UIEdgeInsets(top: 7, left: 8, bottom: 7, right: 8)
+        bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+        bar.textView.layer.borderWidth = 1.0
+        bar.textView.layer.cornerRadius = 16.0
+        bar.textView.layer.masksToBounds = true
+        bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.setLeftItem(button, size: CGSize(width: 36, height: 36), animated: false)
     }
 
+    func setSlack() {
+        func makeButton(named: String) -> UIButton {
+            let button = UIButton()
+            button.setImage(UIImage(named: named)?.withRenderingMode(.alwaysTemplate), for: .normal)
+            button.imageView?.contentMode = .scaleAspectFit
+            button.contentVerticalAlignment = .center
+            button.contentHorizontalAlignment = .center
+            button.tintColor = .lightBlue
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            return button
+        }
+        
+        bar.textViewPadding = .zero
+        
+        bar.stackView.addArrangedSubview(makeButton(named: "ic_camera"))
+        bar.stackView.addArrangedSubview(makeButton(named: "ic_library"))
+        bar.stackView.addArrangedSubview(makeButton(named: "ic_at"))
+        bar.stackView.addArrangedSubview(makeButton(named: "ic_hashtag"))
+        
+        // Spacer view
+        bar.stackView.addArrangedSubview(UIView())
+        
+        let button = bar.sendButton()
+        button.isEnabled = false
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 52).isActive = true
+        bar.stackView.addArrangedSubview(button)
+        
+        bar.setRightItem(nil, animated: false)
+        bar.stackViewHeight = 30
+        
+    }
 
     func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
         if gesture.direction == .left {
-            inputBar.setLeftItemSize(CGSize.zero, animated: true)
+            inputBar.setLeftItemSize(CGSize(width: 0, height: 36), animated: true)
         } else {
-            inputBar.setLeftItemSize(CGSize(width: 100, height: 36), animated: true)
+            inputBar.setLeftItemSize(CGSize(width: 36, height: 36), animated: true)
+        }
+    }
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
+        print(text)
+        inputBar.textView.text = String()
+    }
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, textViewDidChangeTo text: String) {
+        for subview in inputBar.stackView.arrangedSubviews {
+            if let sendButton = subview as? InputBarSendButton {
+                sendButton.isEnabled = !text.isEmpty
+            }
         }
     }
 }

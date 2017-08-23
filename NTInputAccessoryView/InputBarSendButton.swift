@@ -43,6 +43,7 @@ open class InputBarSendButton: UIButton {
     }
     
     private func setup() {
+        isEnabled = false
         setTitle("Send", for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
@@ -66,5 +67,15 @@ open class InputBarSendButton: UIButton {
     open override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesCancelled(touches, with: event)
     }
+}
+
+public extension InputBarAccessoryView {
     
+    public func sendButton() -> InputBarSendButton {
+        
+        let button = InputBarSendButton()
+        button.addTarget(self, action: #selector(InputBarAccessoryView.didSelectRightItem(_:)), for: .touchUpInside)
+        button.addTarget(self, action: #selector(InputBarAccessoryView.didSelectSendButton), for: .touchUpInside)
+        return button
+    }
 }

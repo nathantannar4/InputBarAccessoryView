@@ -28,6 +28,8 @@
 @objc
 public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
     
+    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String)
+    
     @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectRightItem item: UIView)
     
     @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectLeftItem item: UIView)
