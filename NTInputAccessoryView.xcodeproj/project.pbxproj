@@ -79,8 +79,8 @@
 			children = (
 				383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */,
 				383B83AF1F478BAC00027965 /* InputTextView.swift */,
-				383B83C51F49019C00027965 /* InputBarSendButton.swift */,
 				383B83BD1F47C01600027965 /* InputBarItem.swift */,
+				383B83C51F49019C00027965 /* InputBarSendButton.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";

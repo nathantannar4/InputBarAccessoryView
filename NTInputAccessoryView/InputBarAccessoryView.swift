@@ -53,7 +53,7 @@ open class InputBarAccessoryView: UIView {
         let view: UIStackView = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.alignment = .leading
+        view.alignment = UIStackViewAlignment.center
         view.spacing = 15
         return view
     }()
@@ -93,8 +93,18 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    open var padding: UIEdgeInsets {
-        return UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
+    open var padding: UIEdgeInsets = UIEdgeInsets(top: 4, left: 12, bottom: 4, right: 12) {
+        didSet {
+            
+        }
+    }
+    
+    open var stackViewItems: [InputBarItem] = []
+    
+    open func setStackViewItems(_ items: [InputBarItem], animated: Bool) {
+        stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+        stackViewItems = items
+        stackViewItems.forEach { stackView.addArrangedSubview($0) }
     }
     
     /// Adjusts the heightAnchor of the stackView. Use setStackViewHeight(_ height: CGFloat, animated: Bool) to animate the new layout
@@ -206,49 +216,55 @@ open class InputBarAccessoryView: UIView {
             bottom: textView.bottomAnchor.constraint(equalTo: stackView.topAnchor, constant: textViewPadding.bottom),
             left:   textView.leftAnchor.constraint(equalTo: leftItemContainerView.rightAnchor, constant: textViewPadding.left),
             right:  textView.rightAnchor.constraint(equalTo: rightItemContainerView.leftAnchor, constant: -textViewPadding.right)
-        )
-        textViewLayoutSet?.forEach { $0.isActive = true }
+        ).activated()
         
         stackViewLayoutSet = NSLayoutConstraintSet(
+            top:    stackView.topAnchor.constraint(equalTo: textView.bottomAnchor),
             bottom: stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-            left:   stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-            right:  stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
-            height: stackView.heightAnchor.constraint(equalToConstant: 0)
-        )
-        stackViewLayoutSet?.forEach { $0.isActive = true }
+            left:   stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left + 4),
+            right:  stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right - 4)
+        ).activated()
         
         leftItemLayoutSet = NSLayoutConstraintSet(
             bottom: leftItemContainerView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             left:   leftItemContainerView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             width:  leftItemContainerView.widthAnchor.constraint(equalToConstant: leftItemSize.width),
             height: leftItemContainerView.heightAnchor.constraint(equalToConstant: leftItemSize.height)
-        )
-        leftItemLayoutSet?.forEach { $0.isActive = true }
+        ).activated()
         
         rightItemLayoutSet = NSLayoutConstraintSet(
             bottom: rightItemContainerView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             right:  rightItemContainerView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
             width:  rightItemContainerView.widthAnchor.constraint(equalToConstant: rightItemSize.width),
             height: rightItemContainerView.heightAnchor.constraint(equalToConstant: rightItemSize.height)
-        )
-        rightItemLayoutSet?.forEach { $0.isActive = true }
+        ).activated()
     }
     
     private func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(InputBarAccessoryView.orientationDidChange), name: .UIDeviceOrientationDidChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(InputBarAccessoryView.textViewDidChange), name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(InputBarAccessoryView.orientationDidChange),
+                                               name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(InputBarAccessoryView.textViewDidChange),
+                                               name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(InputBarAccessoryView.textViewDidBeginEditing),
+                                               name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(InputBarAccessoryView.textViewDidEndEditing),
+                                               name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
     }
     
     private func setupGestureRecognizers() {
         
-        let rightSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
-        rightSwipeGesture.direction = .right
-        
-        let leftSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
-        leftSwipeGesture.direction = .left
-        
-        textView.addGestureRecognizer(rightSwipeGesture)
-        textView.addGestureRecognizer(leftSwipeGesture)
+        let directions: [UISwipeGestureRecognizerDirection] = [.up, .down, .left, .right]
+        for direction in directions {
+            let gesture = UISwipeGestureRecognizer(target: self,
+                                                   action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
+            gesture.direction = direction
+            textView.addGestureRecognizer(gesture)
+        }
     }
     
     open override func tintColorDidChange() {
@@ -318,6 +334,7 @@ open class InputBarAccessoryView: UIView {
     open func setRightItemSize(_ size: CGSize, animated: Bool) {
         
         if animated {
+            layoutIfNeeded()
             UIView.animate(withDuration: 0.3, animations: {
                 self.rightItemSize = size
                 self.layoutIfNeeded()
@@ -335,6 +352,7 @@ open class InputBarAccessoryView: UIView {
     open func setLeftItemSize(_ size: CGSize, animated: Bool) {
         
         if animated {
+            layoutIfNeeded()
             UIView.animate(withDuration: 0.3, animations: {
                 self.leftItemSize = size
                 self.layoutIfNeeded()
@@ -363,18 +381,34 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Notifications
     
-    open func orientationDidChange(_ notification: Notification) {
+    open func orientationDidChange() {
         invalidateIntrinsicContentSize()
     }
     
     /// Calls the delegate method 'inputBar(_ inputBar: InputBarAccessoryView, textViewDidChangeTo text: String)' and invalidates the intrinsic content size.
-    ///
-    /// - Parameter notification: Notification
-    open  func textViewDidChange(_ notification: Notification) {
+    open func textViewDidChange() {
         let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         (rightItem as? InputBarSendButton)?.isEnabled = !trimmedText.isEmpty
-        delegate?.inputBar?(self, textViewDidChangeTo: trimmedText)
+        delegate?.inputBar?(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
+    }
+    
+    open func textViewDidBeginEditing() {
+        UIView.animate(withDuration: 0.3) { 
+            self.stackViewItems.forEach {
+                $0.onKeyboardEditingBeginsAction?($0)
+            }
+            self.stackView.layoutIfNeeded()
+        }
+    }
+    
+    open func textViewDidEndEditing() {
+        UIView.animate(withDuration: 0.3) {
+            self.stackViewItems.forEach {
+                $0.onKeyboardEditingEndsAction?($0)
+            }
+            self.stackView.layoutIfNeeded()
+        }
     }
     
     // MARK: - User Actions
@@ -387,11 +421,11 @@ open class InputBarAccessoryView: UIView {
         delegate?.inputBar?(self, didSelectSendButtonWith: textView.text)
     }
     
-    open func didSelectRightItem(_ view: UIView) {
-        delegate?.inputBar?(self, didSelectRightItem: view)
-    }
-    
-    open func didSelectLeftItem(_ view: UIView) {
-        delegate?.inputBar?(self, didSelectLeftItem: view)
+    open func didSelectInputBarItem(_ item: InputBarItem) {
+        if item is InputBarSendButton {
+            didSelectSendButton()
+        } else {
+            item.executeTouchUpInsideAction()
+        }
     }
 }

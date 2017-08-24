@@ -27,23 +27,77 @@
 
 import UIKit
 
-open class InputBarItem<T : UIView> {
+open class InputBarItem: UIButton {
+    
+    public enum Spacing {
+        case fixed(CGFloat)
+        case flexible
+        case none
+    }
     
     // MARK: - Properties
     
-    open var view: T
+    open weak var inputBarAccessoryView: InputBarAccessoryView?
     
-    private var onKeyboardEditingBeginsAction: ((InputBarItem)->Void)?
-    private var onKeyboardEditingEndsAction: ((InputBarItem)->Void)?
+    public var spacing: Spacing = .none {
+        didSet {
+            switch spacing {
+            case .flexible:
+                setContentHuggingPriority(1, for: .horizontal)
+                setContentHuggingPriority(1, for: .vertical)
+            case .fixed:
+                setContentHuggingPriority(1000, for: .horizontal)
+                setContentHuggingPriority(1000, for: .vertical)
+            case .none:
+                setContentHuggingPriority(500, for: .horizontal)
+                setContentHuggingPriority(500, for: .vertical)
+            }
+        }
+    }
+    
+    open var onTouchUpInsideAction: ((InputBarItem)->Void)?
+    open var onKeyboardEditingBeginsAction: ((InputBarItem)->Void)?
+    open var onKeyboardEditingEndsAction: ((InputBarItem)->Void)?
+    
+    open var size: CGSize? = nil {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
+    open override var intrinsicContentSize: CGSize {
+        var contentSize = size ?? super.intrinsicContentSize
+        switch spacing {
+        case .fixed(let width):
+            contentSize.width += width
+        default:
+            break
+        }
+        return contentSize
+    }
     
     // MARK: - Initialization
     
-    public init() {
-        view = T()
+    public convenience init() {
+        self.init(frame: .zero)
     }
     
-    public init(customView: T) {
-        view = customView
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    open func setup() {
+        contentVerticalAlignment = .center
+        contentHorizontalAlignment = .center
+        imageView?.contentMode = .scaleAspectFit
+        setContentHuggingPriority(500, for: .horizontal)
+        setContentHuggingPriority(500, for: .vertical)
+        addTarget(self, action: #selector(InputBarItem.executeTouchUpInsideAction), for: .touchUpInside)
     }
     
     // MARK: - Methods
@@ -64,5 +118,31 @@ open class InputBarItem<T : UIView> {
     open func onKeyboardEditingEnds(_ action: @escaping (InputBarItem)->Void) -> Self {
         onKeyboardEditingEndsAction = action
         return self
+    }
+    
+    @discardableResult
+    open func onTouchUpInside(_ action: @escaping (InputBarItem)->Void) -> Self {
+        onTouchUpInsideAction = action
+        return self
+    }
+    
+    func executeTouchUpInsideAction() {
+        onTouchUpInsideAction?(self)
+    }
+    
+    // MARK: - Static vars
+    
+    open static var flexibleSpace: InputBarItem {
+        let item = InputBarItem()
+        item.size = .zero
+        item.spacing = .flexible
+        return item
+    }
+    
+    open static func fixedSpace(_ width: CGFloat) -> InputBarItem {
+        let item = InputBarItem()
+        item.size = .zero
+        item.spacing = .fixed(width)
+        return item
     }
 }

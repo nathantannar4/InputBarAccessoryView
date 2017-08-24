@@ -27,37 +27,27 @@
 
 import UIKit
 
-open class InputBarSendButton: UIButton {
+open class InputBarSendButton: InputBarItem {
     
-    // MARK: - Initialization
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setup()
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setup() {
+    open override func setup() {
+        super.setup()
         isEnabled = false
         setTitle("Send", for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         setTitleColor(.lightGray, for: .disabled)
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-        contentVerticalAlignment = .center
-        contentHorizontalAlignment = .center
     }
 }
 
 public extension InputBarAccessoryView {
     
+    /// Creates a InputBarSendButton with an action to 'didSelectSendButton'
+    ///
+    /// - Returns: InputBarSendButton
     public func sendButton() -> InputBarSendButton {
         
         let button = InputBarSendButton()
-        button.addTarget(self, action: #selector(InputBarAccessoryView.didSelectRightItem(_:)), for: .touchUpInside)
         button.addTarget(self, action: #selector(InputBarAccessoryView.didSelectSendButton), for: .touchUpInside)
         return button
     }

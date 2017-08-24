@@ -95,7 +95,7 @@ public extension UIView {
     }
 }
 
-public struct NSLayoutConstraintSet {
+public class NSLayoutConstraintSet {
     
     public var top: NSLayoutConstraint?
     public var bottom: NSLayoutConstraint?
@@ -123,5 +123,14 @@ public struct NSLayoutConstraintSet {
     func forEach(_ body: (NSLayoutConstraint) -> Void) {
         let constraints: [NSLayoutConstraint] = [top, bottom, left, right, centerX, centerY, width, height].filter { $0 != nil } as! [NSLayoutConstraint]
         constraints.forEach(body)
+    }
+    
+    
+    /// Activates all of the non-nil constraints
+    ///
+    /// - Returns: Self
+    func activated() -> Self {
+        forEach { $0.isActive = true }
+        return self
     }
 }
