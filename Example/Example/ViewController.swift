@@ -12,7 +12,12 @@ import NTInputAccessoryView
 class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     
     
-    let imageView = UIImageView()
+    let actionView = InputBarItem<UIButton>()
+        .configure {
+            $0.view.backgroundColor = .blue
+        }.onTap { _ in 
+            print("tapped")
+    }
     let bar = InputBarAccessoryView()
     
     override var canBecomeFirstResponder: Bool {
@@ -31,7 +36,12 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.white.withAlphaComponent(0.95)
-        view.addSubview(imageView)
+        view.addSubview(actionView.view)
+        
+        actionView.view.frame = CGRect(x: 20, y: 50, width: 100, height: 100)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(ViewController.setSlack))
+        actionView.view.addGestureRecognizer(tapGesture)
         
         bar.delegate = self
         bar.isTranslucent = true
@@ -39,7 +49,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         
         
 //        setSimple()
-        setSlack()
+//        setSlack()
     }
     
     func setSimple() {
@@ -75,6 +85,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         
         bar.textViewPadding = .zero
         
+        bar.stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         bar.stackView.addArrangedSubview(makeButton(named: "ic_camera"))
         bar.stackView.addArrangedSubview(makeButton(named: "ic_library"))
         bar.stackView.addArrangedSubview(makeButton(named: "ic_at"))
@@ -89,8 +100,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         button.widthAnchor.constraint(equalToConstant: 52).isActive = true
         bar.stackView.addArrangedSubview(button)
         
-        bar.setRightItem(nil, animated: false)
-        bar.stackViewHeight = 20
+        bar.setRightItem(nil, animated: true)
+        bar.setStackViewHeight(20, animated: true)
         
     }
 

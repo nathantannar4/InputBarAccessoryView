@@ -33,7 +33,6 @@ open class InputBarItem<T : UIView> {
     
     open var view: T
     
-    fileprivate var onTapAction: ((InputBarItem)->Void)?
     private var onKeyboardEditingBeginsAction: ((InputBarItem)->Void)?
     private var onKeyboardEditingEndsAction: ((InputBarItem)->Void)?
     
@@ -64,20 +63,6 @@ open class InputBarItem<T : UIView> {
     @discardableResult
     open func onKeyboardEditingEnds(_ action: @escaping (InputBarItem)->Void) -> Self {
         onKeyboardEditingEndsAction = action
-        return self
-    }
-    
-    @objc func didTouchUpInside() {
-       onTapAction?(self)
-    }
-}
-
-public extension InputBarItem where T: UIButton  {
-    
-    @discardableResult
-    public func onTap(_ action: @escaping (InputBarItem)->Void) -> Self {
-        onTapAction = action
-        view.addTarget(self, action: #selector(InputBarItem.didTouchUpInside), for: .touchUpInside)
         return self
     }
 }
