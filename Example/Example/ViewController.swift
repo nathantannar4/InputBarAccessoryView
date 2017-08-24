@@ -93,6 +93,11 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
             frame.origin.x += 58
         }
         
+        let textView = InputTextView()
+        textView.setContentHuggingPriority(1, for: .horizontal)
+        bar.stackView.addArrangedSubview(textView)
+        bar.stackView.addArrangedSubview(bar.sendButton())
+        
     }
     
     func Messenger() {

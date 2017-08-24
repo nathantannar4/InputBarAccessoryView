@@ -53,6 +53,7 @@ open class InputBarAccessoryView: UIView {
         let view: UIStackView = UIStackView()
         view.axis = .horizontal
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.distribution = .fillProportionally
         view.alignment = UIStackViewAlignment.center
         view.spacing = 15
         return view
@@ -221,8 +222,8 @@ open class InputBarAccessoryView: UIView {
         stackViewLayoutSet = NSLayoutConstraintSet(
             top:    stackView.topAnchor.constraint(equalTo: textView.bottomAnchor),
             bottom: stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-            left:   stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left + 4),
-            right:  stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right - 4)
+            left:   stackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            right:  stackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
         ).activated()
         
         leftItemLayoutSet = NSLayoutConstraintSet(
@@ -395,26 +396,26 @@ open class InputBarAccessoryView: UIView {
     
     open func textViewDidBeginEditing() {
         UIView.animate(withDuration: 0.3) { 
-            self.stackViewItems.forEach {
-                $0.onKeyboardEditingBeginsAction?($0)
-            }
+            self.stackViewItems.forEach { $0.onKeyboardEditingBeginsAction?($0) }
             self.stackView.layoutIfNeeded()
         }
     }
     
     open func textViewDidEndEditing() {
         UIView.animate(withDuration: 0.3) {
-            self.stackViewItems.forEach {
-                $0.onKeyboardEditingEndsAction?($0)
-            }
+            self.stackViewItems.forEach { $0.onKeyboardEditingEndsAction?($0) }
             self.stackView.layoutIfNeeded()
         }
     }
     
     // MARK: - User Actions
     
-    open func didSwipeTextView(_ swipeGesture: UISwipeGestureRecognizer) {
-        delegate?.inputBar?(self, didSwipeTextViewWith: swipeGesture)
+    open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
+        UIView.animate(withDuration: 0.3) {
+            self.stackViewItems.forEach { $0.onKeyboardSwipeGestureAction?($0, gesture) }
+            self.stackView.layoutIfNeeded()
+        }
+        delegate?.inputBar?(self, didSwipeTextViewWith: gesture)
     }
     
     open func didSelectSendButton() {

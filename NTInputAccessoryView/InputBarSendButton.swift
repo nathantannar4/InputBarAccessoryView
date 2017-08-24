@@ -37,6 +37,9 @@ open class InputBarSendButton: InputBarItem {
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         setTitleColor(.lightGray, for: .disabled)
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        contentHorizontalAlignment = .right
+        contentVerticalAlignment = .bottom
+        size = CGSize(width: 52, height: 20)
     }
 }
 

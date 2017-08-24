@@ -44,13 +44,13 @@ open class InputBarItem: UIButton {
             switch spacing {
             case .flexible:
                 setContentHuggingPriority(1, for: .horizontal)
-                setContentHuggingPriority(1, for: .vertical)
+//                setContentHuggingPriority(1, for: .vertical)
             case .fixed:
                 setContentHuggingPriority(1000, for: .horizontal)
-                setContentHuggingPriority(1000, for: .vertical)
+//                setContentHuggingPriority(1000, for: .vertical)
             case .none:
                 setContentHuggingPriority(500, for: .horizontal)
-                setContentHuggingPriority(500, for: .vertical)
+//                setContentHuggingPriority(500, for: .vertical)
             }
         }
     }
@@ -58,6 +58,7 @@ open class InputBarItem: UIButton {
     open var onTouchUpInsideAction: ((InputBarItem)->Void)?
     open var onKeyboardEditingBeginsAction: ((InputBarItem)->Void)?
     open var onKeyboardEditingEndsAction: ((InputBarItem)->Void)?
+    open var onKeyboardSwipeGestureAction: ((InputBarItem, UIGestureRecognizer)->Void)?
     
     open var size: CGSize? = nil {
         didSet {
@@ -117,6 +118,12 @@ open class InputBarItem: UIButton {
     @discardableResult
     open func onKeyboardEditingEnds(_ action: @escaping (InputBarItem)->Void) -> Self {
         onKeyboardEditingEndsAction = action
+        return self
+    }
+    
+    @discardableResult
+    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarItem, _ gesture: UIGestureRecognizer)->Void) -> Self {
+        onKeyboardSwipeGestureAction = action
         return self
     }
     
