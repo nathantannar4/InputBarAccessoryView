@@ -41,7 +41,7 @@ open class InputTextView: UITextView {
         return label
     }()
     
-    private var placeholderLabelConstraints = [NSLayoutConstraint]()
+    private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
     
     open var placeholder: String? {
         get {
@@ -72,14 +72,26 @@ open class InputTextView: UITextView {
             placeholderLabel.textAlignment = textAlignment
         }
     }
+    
+    open override var textContainerInset: UIEdgeInsets {
+        didSet {
+            placeholderLabelInsets = textContainerInset
+        }
+    }
 
-    override open var textContainerInset: UIEdgeInsets {
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
     }
     
+    public weak var inputBarAccessoryView: InputBarAccessoryView?
+    
     // MARK: - Initializers
+    
+    public convenience init() {
+        self.init(frame: .zero)
+    }
     
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -94,41 +106,36 @@ open class InputTextView: UITextView {
         NotificationCenter.default.removeObserver(self)
     }
     
-    private func setup() {
+    open func setup() {
         
         font = UIFont.preferredFont(forTextStyle: .body)
         isScrollEnabled = false
-        addSubview(placeholderLabel)
-        updateConstraintsForPlaceholderLabel()
+        addSubviews()
         addObservers()
+        addConstraints()
     }
     
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
+    private func addSubviews() {
+        
+        addSubview(placeholderLabel)
+    }
+    
+    private func addConstraints() {
+        
+        placeholderLabelConstraintSet = NSLayoutConstraintSet(
+            top:    placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
+            bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
+            left:   placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
+            right:  placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right)
+        ).activated()
     }
     
     private func updateConstraintsForPlaceholderLabel() {
-        var newConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|-(\(textContainerInset.left + textContainer.lineFragmentPadding))-[placeholder]",
-            options: [],
-            metrics: nil,
-            views: ["placeholder": placeholderLabel])
-        newConstraints += NSLayoutConstraint.constraints(withVisualFormat: "V:|-(\(textContainerInset.top))-[placeholder]",
-            options: [],
-            metrics: nil,
-            views: ["placeholder": placeholderLabel])
-        newConstraints.append(NSLayoutConstraint(
-            item: placeholderLabel,
-            attribute: .width,
-            relatedBy: .equal,
-            toItem: self,
-            attribute: .width,
-            multiplier: 1.0,
-            constant: -(textContainerInset.left + textContainerInset.right + textContainer.lineFragmentPadding * 2.0)
-        ))
-        removeConstraints(placeholderLabelConstraints)
-        addConstraints(newConstraints)
-        placeholderLabelConstraints = newConstraints
+        
+        placeholderLabelConstraintSet?.top?.constant = textContainerInset.top
+        placeholderLabelConstraintSet?.bottom?.constant = -textContainerInset.bottom
+        placeholderLabelConstraintSet?.left?.constant = textContainerInset.left
+        placeholderLabelConstraintSet?.right?.constant = -textContainerInset.bottom
     }
     
     private func addObservers() {
@@ -136,18 +143,17 @@ open class InputTextView: UITextView {
                                                selector: #selector(InputTextView.textDidChange(notification:)),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputTextView.orientationChanged(notification:)),
-                                               name: Notification.Name.UIDeviceOrientationDidChange,
-                                               object: nil)
     }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
+    }
+    
+    // MARK: - Notifications
     
     func textDidChange(notification: Notification) {
         placeholderLabel.isHidden = !text.isEmpty
-    }
-    
-    func orientationChanged(notification: Notification) {
-        setNeedsDisplay()
     }
 }
 

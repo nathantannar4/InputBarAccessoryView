@@ -13,7 +13,6 @@
 		383B83B21F478BF900027965 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */; };
 		383B83B81F478C4E00027965 /* InputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */; };
 		383B83BE1F47C01600027965 /* InputBarItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83BD1F47C01600027965 /* InputBarItem.swift */; };
-		383B83C61F49019C00027965 /* InputBarSendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B83C51F49019C00027965 /* InputBarSendButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		383B83B11F478BF900027965 /* InputBarAccessoryViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDelegate.swift; sourceTree = "<group>"; };
 		383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryView.swift; sourceTree = "<group>"; };
 		383B83BD1F47C01600027965 /* InputBarItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarItem.swift; sourceTree = "<group>"; };
-		383B83C51F49019C00027965 /* InputBarSendButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarSendButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +77,6 @@
 			children = (
 				383B83B71F478C4E00027965 /* InputBarAccessoryView.swift */,
 				383B83AF1F478BAC00027965 /* InputTextView.swift */,
-				383B83C51F49019C00027965 /* InputBarSendButton.swift */,
 				383B83BD1F47C01600027965 /* InputBarItem.swift */,
 			);
 			name = Views;
@@ -187,7 +184,6 @@
 				383B83B81F478C4E00027965 /* InputBarAccessoryView.swift in Sources */,
 				383B83AE1F478ABE00027965 /* UIView+AutoLayout.swift in Sources */,
 				383B83B01F478BAC00027965 /* InputTextView.swift in Sources */,
-				383B83C61F49019C00027965 /* InputBarSendButton.swift in Sources */,
 				383B83BE1F47C01600027965 /* InputBarItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

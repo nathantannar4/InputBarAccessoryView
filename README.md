@@ -1,4 +1,7 @@
-# NTInputAccessoryView
+# InputBarAccessoryView
+
+#### Used in [MessageKit](https://github.com/MessageKit/MessageKit)
+<img src="https://cdn.rawgit.com/MessageKit/MessageKit/master/Assets/mklogo.svg" title="MessageKit logo" height="60">
 
 ## InputBarAccessoryView Examples
 
