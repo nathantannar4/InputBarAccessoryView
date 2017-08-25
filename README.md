@@ -1,5 +1,11 @@
 # InputBarAccessoryView
 
+### Installation via CocoaPods
+
+```ruby
+pod 'InputBarAccessoryView'
+```
+
 ### Requirements
 iOS 9.0 and Higher
 
