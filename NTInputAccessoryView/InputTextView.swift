@@ -72,12 +72,20 @@ open class InputTextView: UITextView {
             placeholderLabel.textAlignment = textAlignment
         }
     }
+    
+    open override var textContainerInset: UIEdgeInsets {
+        didSet {
+            placeholderLabelInsets = textContainerInset
+        }
+    }
 
     open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
         didSet {
             updateConstraintsForPlaceholderLabel()
         }
     }
+    
+    public weak var inputBarAccessoryView: InputBarAccessoryView?
     
     // MARK: - Initializers
     
@@ -135,10 +143,6 @@ open class InputTextView: UITextView {
                                                selector: #selector(InputTextView.textDidChange(notification:)),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputTextView.orientationChanged(notification:)),
-                                               name: Notification.Name.UIDeviceOrientationDidChange,
-                                               object: nil)
     }
     
     open override func layoutSubviews() {
@@ -150,10 +154,6 @@ open class InputTextView: UITextView {
     
     func textDidChange(notification: Notification) {
         placeholderLabel.isHidden = !text.isEmpty
-    }
-    
-    func orientationChanged(notification: Notification) {
-        setNeedsDisplay()
     }
 }
 

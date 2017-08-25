@@ -27,7 +27,7 @@
 
 import UIKit
 
-open class InputBarItem: UIButton {
+open class InputBarButtonItem: UIButton {
     
     public enum Spacing {
         case fixed(CGFloat)
@@ -44,21 +44,19 @@ open class InputBarItem: UIButton {
             switch spacing {
             case .flexible:
                 setContentHuggingPriority(1, for: .horizontal)
-//                setContentHuggingPriority(1, for: .vertical)
             case .fixed:
                 setContentHuggingPriority(1000, for: .horizontal)
-//                setContentHuggingPriority(1000, for: .vertical)
             case .none:
                 setContentHuggingPriority(500, for: .horizontal)
-//                setContentHuggingPriority(500, for: .vertical)
             }
         }
     }
     
-    open var onTouchUpInsideAction: ((InputBarItem)->Void)?
-    open var onKeyboardEditingBeginsAction: ((InputBarItem)->Void)?
-    open var onKeyboardEditingEndsAction: ((InputBarItem)->Void)?
-    open var onKeyboardSwipeGestureAction: ((InputBarItem, UIGestureRecognizer)->Void)?
+    private var onTouchUpInsideAction: ((InputBarButtonItem)->Void)?
+    private var onKeyboardEditingBeginsAction: ((InputBarButtonItem)->Void)?
+    private var onKeyboardEditingEndsAction: ((InputBarButtonItem)->Void)?
+    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UIGestureRecognizer)->Void)?
+    private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView)->Void)?
     
     open var size: CGSize? = nil {
         didSet {
@@ -98,56 +96,78 @@ open class InputBarItem: UIButton {
         imageView?.contentMode = .scaleAspectFit
         setContentHuggingPriority(500, for: .horizontal)
         setContentHuggingPriority(500, for: .vertical)
-        addTarget(self, action: #selector(InputBarItem.executeTouchUpInsideAction), for: .touchUpInside)
+        addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
     }
     
     // MARK: - Methods
     
     @discardableResult
-    open func configure(_ setup: (InputBarItem)->Void) -> Self {
+    open func configure(_ setup: (InputBarButtonItem)->Void) -> Self {
         setup(self)
         return self
     }
     
     @discardableResult
-    open func onKeyboardEditingBegins(_ action: @escaping (InputBarItem)->Void) -> Self {
+    open func onKeyboardEditingBegins(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
         onKeyboardEditingBeginsAction = action
         return self
     }
     
     @discardableResult
-    open func onKeyboardEditingEnds(_ action: @escaping (InputBarItem)->Void) -> Self {
+    open func onKeyboardEditingEnds(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
         onKeyboardEditingEndsAction = action
         return self
     }
     
     @discardableResult
-    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarItem, _ gesture: UIGestureRecognizer)->Void) -> Self {
+    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UIGestureRecognizer)->Void) -> Self {
         onKeyboardSwipeGestureAction = action
         return self
     }
     
     @discardableResult
-    open func onTouchUpInside(_ action: @escaping (InputBarItem)->Void) -> Self {
+    open func onTextViewDidChange(_ action: @escaping (_ item: InputBarButtonItem, _ textView: InputTextView)->Void) -> Self {
+        onTextViewDidChangeAction = action
+        return self
+    }
+    
+    @discardableResult
+    open func onTouchUpInside(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
         onTouchUpInsideAction = action
         return self
     }
     
-    func executeTouchUpInsideAction() {
+    public func textViewDidChangeAction(with textView: InputTextView) {
+        onTextViewDidChangeAction?(self, textView)
+    }
+    
+    public func keyboardSwipeGestureAction(with gesture: UISwipeGestureRecognizer) {
+        onKeyboardSwipeGestureAction?(self, gesture)
+    }
+    
+    public func keyboardEditingEndsAction() {
+        onKeyboardEditingEndsAction?(self)
+    }
+    
+    public func keyboardEditingBeginsAction() {
+        onKeyboardEditingBeginsAction?(self)
+    }
+    
+    func touchUpInsideAction() {
         onTouchUpInsideAction?(self)
     }
     
     // MARK: - Static vars
     
-    open static var flexibleSpace: InputBarItem {
-        let item = InputBarItem()
+    open static var flexibleSpace: InputBarButtonItem {
+        let item = InputBarButtonItem()
         item.size = .zero
         item.spacing = .flexible
         return item
     }
     
-    open static func fixedSpace(_ width: CGFloat) -> InputBarItem {
-        let item = InputBarItem()
+    open static func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
+        let item = InputBarButtonItem()
         item.size = .zero
         item.spacing = .fixed(width)
         return item

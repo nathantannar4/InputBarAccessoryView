@@ -92,21 +92,13 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
             view.addSubview(button)
             frame.origin.x += 58
         }
-        
-        let textView = InputTextView()
-        textView.setContentHuggingPriority(1, for: .horizontal)
-        bar.stackView.addArrangedSubview(textView)
-        bar.stackView.addArrangedSubview(bar.sendButton())
-        
     }
     
     func Messenger() {
         
-        let button = UIButton()
+        let button = InputBarButtonItem()
         button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
-        button.contentVerticalAlignment = .center
-        button.contentHorizontalAlignment = .center
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         bar.textView.textContainerInset = UIEdgeInsets(top: 7, left: 8, bottom: 7, right: 8)
         bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 7, left: 16, bottom: 7, right: 12)
@@ -117,30 +109,25 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.textView.layer.cornerRadius = 16.0
         bar.textView.layer.masksToBounds = true
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.setLeftItem(button, size: CGSize(width: 36, height: 36), animated: false)
+        bar.setStackViewItems([button], forStack: .left, animated: true)
     }
 
     func Slack() {
-        func makeButton(named: String) -> InputBarItem {
-            let button = InputBarItem()
+        func makeButton(named: String) -> InputBarButtonItem {
+            return InputBarButtonItem()
                 .configure {
                     $0.setImage(UIImage(named: named)?.withRenderingMode(.alwaysTemplate), for: .normal)
                     $0.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
                     $0.inputBarAccessoryView = bar
                     $0.size = CGSize(width: 20, height: 20)
+                    $0.backgroundColor = .red
                 }.onTouchUpInside {
                     print($0)
             }
-            return button
         }
-        
-        bar.textViewPadding = .zero
-        
-        let button = bar.sendButton().configure{
-                $0.isEnabled = false
-            $0.contentHorizontalAlignment = .right
-        }
-        
+    
+        bar.sendButton.size = CGSize(width: 52, height: 20)
+        bar.rightStackViewWidthContant = 0
         
         let items = [
             makeButton(named: "ic_camera"),
@@ -148,11 +135,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
             makeButton(named: "ic_at"),
             makeButton(named: "ic_hashtag"),
             .flexibleSpace,
-            button
+            bar.sendButton
         ]
         
-        bar.setStackViewItems(items, animated: true)
-        bar.setRightItem(nil, animated: true)
+        bar.setStackViewItems(items, forStack: .bottom, animated: true)
     }
     
     func WhatsApp() {
@@ -168,20 +154,16 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func None() {
-        bar.textViewPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
-        bar.setStackViewItems([], animated: true)
-        bar.setRightItem(bar.sendButton(), animated: true)
-        bar.setLeftItem(nil, animated: true)
+//        bar.textViewPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
+//        bar.setStackViewItems([], animated: true)
+//        bar.setRightItem(bar.sendButton(), animated: true)
+//        bar.setLeftItem(nil, animated: true)
     }
     
     // MARK: - InputBarAccessoryViewDelegate
 
     func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .left && currentStyle == .messenger {
-            inputBar.setLeftItemSize(CGSize(width: 0, height: 36), animated: true)
-        } else if gesture.direction == .right && currentStyle == .messenger {
-            inputBar.setLeftItemSize(CGSize(width: 36, height: 36), animated: true)
-        } else if gesture.direction == .down {
+        if gesture.direction == .down {
             inputBar.textView.resignFirstResponder()
         } else {
             inputBar.textView.becomeFirstResponder()
@@ -191,15 +173,14 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
         print(text)
         inputBar.textView.text = String()
-        self.inputBar(inputBar, textViewTextDidChangeTo: String())
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
-        for subview in inputBar.stackView.arrangedSubviews {
-            if let sendButton = subview as? InputBarSendButton {
-                sendButton.isEnabled = !text.isEmpty
-            }
-        }
+//        for subview in inputBar.stackView.arrangedSubviews {
+//            if let sendButton = subview as? InputBarSendButton {
+//                sendButton.isEnabled = !text.isEmpty
+//            }
+//        }
     }
 }
 
