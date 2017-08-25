@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NTInputAccessoryView
+import InputBarAccessoryView
 
 class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     

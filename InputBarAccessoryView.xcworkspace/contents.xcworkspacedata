@@ -8,7 +8,10 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:/Users/nathantannar/Documents/Active iOS Projects/NTInputAccessoryView/InputBarAccessoryView.xcodeproj">
+      location = "group:InputBarAccessoryView.podspec">
+   </FileRef>
+   <FileRef
+      location = "group:InputBarAccessoryView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Example/Example.xcodeproj">
