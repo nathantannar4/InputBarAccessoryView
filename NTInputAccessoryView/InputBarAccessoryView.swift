@@ -52,6 +52,18 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
+//    open lazy var tableView: UITableView = { [unowned self] in
+//        let tableView = UITableView()
+//        tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.dataSource = self
+//        tableView.delegate = self
+//        tableView.register(InputBarTableViewCell.self, forCellReuseIdentifier: InputBarTableViewCell.reuseIdentifier)
+//        tableView.backgroundColor = .red
+//        tableView.separatorInset = .zero
+//        tableView.tableFooterView = UIView()
+//        return tableView
+//    }()
+    
     /// A boarder line anchored to the top of the view
     open let separatorLine: UIView = {
         let view = UIView()
@@ -114,7 +126,6 @@ open class InputBarAccessoryView: UIView {
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-                $0.inputBarAccessoryView = self
             }.onTextViewDidChange({ (item, textView) in
                 item.isEnabled = !textView.text.isEmpty
             }).onTouchUpInside {
@@ -147,7 +158,7 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// The maximum intrinsicContentSize height. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
-    open var maxHeight: CGFloat = 208 {
+    open var maxHeight: CGFloat = 288 {
         didSet {
             invalidateIntrinsicContentSize()
         }
@@ -173,9 +184,7 @@ open class InputBarAccessoryView: UIView {
     open var leftStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the rightStackView
-    open lazy var rightStackViewItems: [InputBarButtonItem] = { [unowned self] in
-        return [self.sendButton]
-    }()
+    open var rightStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the bottomStackView
     open var bottomStackViewItems: [InputBarButtonItem] = []
@@ -184,9 +193,26 @@ open class InputBarAccessoryView: UIView {
     public var items: [InputBarButtonItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems].flatMap{$0}
     }
+    
+//    open var tableViewCellHeight: CGFloat = 36
+//    
+//    /// The objects that will be used to render UITableViewCells for the UITableView
+//    open var tableViewObjects: [AnyObject] = [] {
+//        didSet {
+//            tableView.reloadData()
+//            performLayout(false) {
+//                if self.tableViewObjects.count >= 5 {
+//                    self.tableViewHeightContant = self.tableViewCellHeight * 5.0
+//                } else {
+//                    self.tableViewHeightContant = self.tableViewCellHeight * CGFloat(self.tableViewObjects.count)
+//                }
+//            }
+//        }
+//    }
 
     // MARK: - Auto-Layout Management
 
+//    private var tableViewLayoutSet: NSLayoutConstraintSet?
     private var textViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
@@ -227,16 +253,24 @@ open class InputBarAccessoryView: UIView {
     
     private func setupSubviews() {
         
+//        addSubview(tableView)
         addSubview(blurView)
         addSubview(textView)
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
         addSubview(separatorLine)
-        rightStackView.addArrangedSubview(sendButton)
+        setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     private func setupConstraints() {
+        
+//        tableViewLayoutSet = NSLayoutConstraintSet(
+//            top:    tableView.bottomAnchor.constraint(equalTo: topAnchor),
+//            left:   tableView.leftAnchor.constraint(equalTo: leftAnchor),
+//            right:  tableView.rightAnchor.constraint(equalTo: rightAnchor),
+//            height: tableView.heightAnchor.constraint(equalToConstant: tableViewHeightContant)
+//        ).activated()
         
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 0.5)
         blurView.fillSuperview()
@@ -249,12 +283,14 @@ open class InputBarAccessoryView: UIView {
         ).activated()
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: leftStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthContant)
         ).activated()
         
         rightStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: rightStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
             width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthContant)
@@ -308,11 +344,21 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
+    // MARK: - Layout Helper Methods
+    
     private func layoutStackViews() {
         
         for stackView in [leftStackView, rightStackView, bottomStackView] {
             stackView.setNeedsLayout()
             stackView.layoutIfNeeded()
+        }
+    }
+    
+    private func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: animations)
+        } else {
+            UIView.performWithoutAnimation { animations() }
         }
     }
     
@@ -352,37 +398,31 @@ open class InputBarAccessoryView: UIView {
             }
         }
         
-        if animated {
-            UIView.animate(withDuration: 0.3, animations: { 
-                setNewItems()
-                self.layoutStackViews()
-            })
-        } else {
-            UIView.performWithoutAnimation {
-                setNewItems()
-            }
+        performLayout(animated) {
+            setNewItems()
+            self.layoutStackViews()
         }
     }
     
+//    open func setTableViewHeightConstant(to newValue: CGFloat, animated: Bool) {
+//        performLayout(animated) { 
+//            self.tableViewHeightContant = newValue
+//            self.layoutIfNeeded()
+//        }
+//    }
+    
+    
     open func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
-        if animated {
-            UIView.animate(withDuration: 0.3) {
-                self.leftStackViewWidthContant = newValue
-                self.layoutIfNeeded()
-            }
-        } else {
-            leftStackViewWidthContant = newValue
+        performLayout(animated) { 
+            self.leftStackViewWidthContant = newValue
+            self.layoutIfNeeded()
         }
     }
     
     open func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
-        if animated {
-            UIView.animate(withDuration: 0.3) {
-                self.rightStackViewWidthContant = newValue
-                self.layoutIfNeeded()
-            }
-        } else {
-            rightStackViewWidthContant = newValue
+        performLayout(animated) { 
+            self.rightStackViewWidthContant = newValue
+            self.layoutIfNeeded()
         }
     }
     
@@ -394,7 +434,7 @@ open class InputBarAccessoryView: UIView {
     
     open func textViewDidChange() {
         let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        UIView.animate(withDuration: 0.3) {
+        performLayout(true) { 
             self.items.forEach { $0.textViewDidChangeAction(with: self.textView) }
             self.layoutStackViews()
         }
@@ -403,14 +443,14 @@ open class InputBarAccessoryView: UIView {
     }
     
     open func textViewDidBeginEditing() {
-        UIView.animate(withDuration: 0.3) { 
+        performLayout(true) { 
             self.items.forEach { $0.keyboardEditingBeginsAction() }
             self.layoutStackViews()
         }
     }
     
     open func textViewDidEndEditing() {
-        UIView.animate(withDuration: 0.3) {
+        performLayout(true) { 
             self.items.forEach { $0.keyboardEditingEndsAction() }
             self.layoutStackViews()
         }
@@ -419,7 +459,7 @@ open class InputBarAccessoryView: UIView {
     // MARK: - User Actions
     
     open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
-        UIView.animate(withDuration: 0.3) {
+        performLayout(true) { 
             self.items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
             self.layoutStackViews()
         }

@@ -37,6 +37,7 @@ open class InputBarButtonItem: UIButton {
     
     // MARK: - Properties
     
+    /// Set automatically when using the InputBarAccessoryView method 'setStackViewItems'
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
     public var spacing: Spacing = .none {
@@ -90,16 +91,30 @@ open class InputBarButtonItem: UIButton {
         }
     }
     
-    open override var isSelected: Bool {
+    open override var isHighlighted: Bool {
         get {
-            return super.isSelected
+            return super.isHighlighted
         }
         set {
-            super.isSelected = newValue
+            super.isHighlighted = newValue
             if newValue {
                 onSelectedAction?(self)
             } else {
                 onDeselectedAction?(self)
+            }
+        }
+    }
+    
+    open override var isEnabled: Bool {
+        get {
+            return super.isEnabled
+        }
+        set {
+            super.isEnabled = newValue
+            if newValue {
+                onEnabledAction?(self)
+            } else {
+                onDisabledAction?(self)
             }
         }
     }
@@ -113,6 +128,8 @@ open class InputBarButtonItem: UIButton {
     private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView)->Void)?
     private var onSelectedAction: ((InputBarButtonItem)->Void)?
     private var onDeselectedAction: ((InputBarButtonItem)->Void)?
+    private var onEnabledAction: ((InputBarButtonItem)->Void)?
+    private var onDisabledAction: ((InputBarButtonItem)->Void)?
     
     // MARK: - Initialization
     
@@ -191,6 +208,18 @@ open class InputBarButtonItem: UIButton {
         return self
     }
     
+    @discardableResult
+    open func onEnabled(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+        onEnabledAction = action
+        return self
+    }
+    
+    @discardableResult
+    open func onDisabled(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+        onDisabledAction = action
+        return self
+    }
+    
     // MARK: - Hook Executors
     
     public func textViewDidChangeAction(with textView: InputTextView) {
@@ -211,7 +240,6 @@ open class InputBarButtonItem: UIButton {
     
     public func touchUpInsideAction() {
         onTouchUpInsideAction?(self)
-        isSelected = true
     }
     
     // MARK: - Static vars

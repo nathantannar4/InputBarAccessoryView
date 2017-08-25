@@ -1,5 +1,5 @@
 //
-//  InputBarAccessoryViewDelegate.swift
+//  InputBarTableViewCell.swift
 //  NTInputAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,21 +22,19 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/18/17.
+//  Created by Nathan Tannar on 8/25/17.
 //
 
-@objc
-public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
+import UIKit
+
+open class InputBarTableViewCell: UITableViewCell {
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String)
+    // MARK: - Properties
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
+    open static var reuseIdentifier: String {
+        return "InputBarTableViewCell"
+    }
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)
+
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
-    
-//    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, configureCellFor object: AnyObject, in tableView: UITableView) -> UITableViewCell
-//    
-//    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectObject object: AnyObject)
 }

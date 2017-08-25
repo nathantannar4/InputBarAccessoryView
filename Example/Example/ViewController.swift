@@ -125,7 +125,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
             return InputBarButtonItem()
                 .configure {
                     $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-                    $0.inputBarAccessoryView = bar
                     $0.size = CGSize(width: 20, height: 20)
                 }.onTouchUpInside {
                     print($0)
@@ -136,6 +135,14 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.sendButton.layer.borderWidth = 1
         bar.sendButton.layer.borderColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1).cgColor
         bar.sendButton.layer.cornerRadius = 8
+        
+        bar.sendButton.setTitleColor(.white, for: .highlighted)
+        
+        bar.sendButton.onSelected {
+                $0.backgroundColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+            }.onDeselected {
+                $0.backgroundColor = .white
+        }
         bar.rightStackViewWidthContant = 0
         
         let items = [
@@ -181,15 +188,21 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
         print(text)
+//        inputBar.tableViewObjects.append(text as AnyObject)
         inputBar.textView.text = String()
     }
     
-    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
-//        for subview in inputBar.stackView.arrangedSubviews {
-//            if let sendButton = subview as? InputBarSendButton {
-//                sendButton.isEnabled = !text.isEmpty
-//            }
+//    func inputBar(_ inputBar: InputBarAccessoryView, configureCellFor object: AnyObject, in tableView: UITableView) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: InputBarTableViewCell.reuseIdentifier) as? InputBarTableViewCell else {
+//            return UITableViewCell()
 //        }
-    }
+//        if let text = object as? String {
+//            cell.textLabel?.text = text
+//        } else {
+//            cell.textLabel?.text = "asasasasas"
+//        }
+//        
+//        return cell
+//    }
 }
 
