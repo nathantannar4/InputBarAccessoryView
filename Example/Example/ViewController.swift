@@ -97,11 +97,18 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     func Messenger() {
         
         let button = InputBarButtonItem()
+        button.onKeyboardSwipeGesture { item, gesture in
+            if gesture.direction == .left {
+                item.inputBarAccessoryView?.setLeftStackViewWidthContant(to: 0, animated: true)
+            } else if gesture.direction == .right {
+                item.inputBarAccessoryView?.setLeftStackViewWidthContant(to: 36, animated: true)
+            }
+        }
+        button.size = CGSize(width: 36, height: 36)
         button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        bar.textView.textContainerInset = UIEdgeInsets(top: 7, left: 8, bottom: 7, right: 8)
-        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 7, left: 16, bottom: 7, right: 12)
+        bar.textView.textContainerInset = UIEdgeInsets(top: 7, left: 12, bottom: 7, right: 12)
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
@@ -109,6 +116,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.textView.layer.cornerRadius = 16.0
         bar.textView.layer.masksToBounds = true
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.leftStackViewWidthContant = 36
         bar.setStackViewItems([button], forStack: .left, animated: true)
     }
 
@@ -116,17 +124,18 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         func makeButton(named: String) -> InputBarButtonItem {
             return InputBarButtonItem()
                 .configure {
-                    $0.setImage(UIImage(named: named)?.withRenderingMode(.alwaysTemplate), for: .normal)
-                    $0.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+                    $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                     $0.inputBarAccessoryView = bar
                     $0.size = CGSize(width: 20, height: 20)
-                    $0.backgroundColor = .red
                 }.onTouchUpInside {
                     print($0)
             }
         }
     
         bar.sendButton.size = CGSize(width: 52, height: 20)
+        bar.sendButton.layer.borderWidth = 1
+        bar.sendButton.layer.borderColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1).cgColor
+        bar.sendButton.layer.cornerRadius = 8
         bar.rightStackViewWidthContant = 0
         
         let items = [

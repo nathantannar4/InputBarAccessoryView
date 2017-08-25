@@ -66,7 +66,7 @@ open class InputBarAccessoryView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.distribution = .fill
         view.alignment = .fill
-        view.spacing = 10
+        view.spacing = 15
         return view
     }()
     
@@ -76,7 +76,7 @@ open class InputBarAccessoryView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.distribution = .fill
         view.alignment = .fill
-        view.spacing = 10
+        view.spacing = 15
         return view
     }()
     
@@ -86,7 +86,7 @@ open class InputBarAccessoryView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.distribution = .fill
         view.alignment = .fill
-        view.spacing = 10
+        view.spacing = 15
         return view
     }()
     
@@ -112,10 +112,7 @@ open class InputBarAccessoryView: UIView {
                 $0.size = CGSize(width: 52, height: 36)
                 $0.spacing = .fixed(4)
                 $0.isEnabled = false
-                $0.setTitle("Send", for: .normal)
-                $0.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
-                $0.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
-                $0.setTitleColor(.lightGray, for: .disabled)
+                $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
                 $0.inputBarAccessoryView = self
             }.onTextViewDidChange({ (item, textView) in
@@ -321,7 +318,7 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - UIStackView InputBarItem Methods
     
-    /// Removes all of the arranged subviews from the UIStackView and adds the given items
+    /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the inputBarAccessoryView property of the InputBarButtonItem
     ///
     /// - Parameters:
     ///   - items: New UIStackView arranged views
@@ -334,15 +331,24 @@ open class InputBarAccessoryView: UIView {
             case .left:
                 leftStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 leftStackViewItems = items
-                leftStackViewItems.forEach { leftStackView.addArrangedSubview($0) }
+                leftStackViewItems.forEach {
+                    $0.inputBarAccessoryView = self
+                    leftStackView.addArrangedSubview($0)
+                }
             case .right:
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 rightStackViewItems = items
-                rightStackViewItems.forEach { rightStackView.addArrangedSubview($0) }
+                rightStackViewItems.forEach {
+                    $0.inputBarAccessoryView = self
+                    rightStackView.addArrangedSubview($0)
+                }
             case .bottom:
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 bottomStackViewItems = items
-                bottomStackViewItems.forEach { bottomStackView.addArrangedSubview($0) }
+                bottomStackViewItems.forEach {
+                    $0.inputBarAccessoryView = self
+                    bottomStackView.addArrangedSubview($0)
+                }
             }
         }
         
@@ -355,6 +361,28 @@ open class InputBarAccessoryView: UIView {
             UIView.performWithoutAnimation {
                 setNewItems()
             }
+        }
+    }
+    
+    open func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.3) {
+                self.leftStackViewWidthContant = newValue
+                self.layoutIfNeeded()
+            }
+        } else {
+            leftStackViewWidthContant = newValue
+        }
+    }
+    
+    open func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
+        if animated {
+            UIView.animate(withDuration: 0.3) {
+                self.rightStackViewWidthContant = newValue
+                self.layoutIfNeeded()
+            }
+        } else {
+            rightStackViewWidthContant = newValue
         }
     }
     
@@ -400,10 +428,12 @@ open class InputBarAccessoryView: UIView {
     
     open func didSelectSendButton() {
         delegate?.inputBar?(self, didSelectSendButtonWith: textView.text)
+        textViewDidChange()
         invalidateIntrinsicContentSize()
     }
     
     open func didSelectInputBarItem(_ item: InputBarButtonItem) {
+        items.forEach { $0.isSelected = false }
         item.touchUpInsideAction()
     }
 }

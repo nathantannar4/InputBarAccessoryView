@@ -52,13 +52,8 @@ open class InputBarButtonItem: UIButton {
         }
     }
     
-    private var onTouchUpInsideAction: ((InputBarButtonItem)->Void)?
-    private var onKeyboardEditingBeginsAction: ((InputBarButtonItem)->Void)?
-    private var onKeyboardEditingEndsAction: ((InputBarButtonItem)->Void)?
-    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UIGestureRecognizer)->Void)?
-    private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView)->Void)?
-    
-    open var size: CGSize? = nil {
+    /// When not nil this size overrides the intrinsicContentSize
+    open var size: CGSize? = CGSize(width: 20, height: 20) {
         didSet {
             invalidateIntrinsicContentSize()
         }
@@ -74,6 +69,50 @@ open class InputBarButtonItem: UIButton {
         }
         return contentSize
     }
+    
+    /// The title for the UIControlState.normal
+    open var title: String? {
+        get {
+            return title(for: .normal)
+        }
+        set {
+            setTitle(newValue, for: .normal)
+        }
+    }
+    
+    /// The image for the UIControlState.normal
+    open var image: UIImage? {
+        get {
+            return image(for: .normal)
+        }
+        set {
+            setImage(newValue, for: .normal)
+        }
+    }
+    
+    open override var isSelected: Bool {
+        get {
+            return super.isSelected
+        }
+        set {
+            super.isSelected = newValue
+            if newValue {
+                onSelectedAction?(self)
+            } else {
+                onDeselectedAction?(self)
+            }
+        }
+    }
+    
+    // MARK: - Hooks
+    
+    private var onTouchUpInsideAction: ((InputBarButtonItem)->Void)?
+    private var onKeyboardEditingBeginsAction: ((InputBarButtonItem)->Void)?
+    private var onKeyboardEditingEndsAction: ((InputBarButtonItem)->Void)?
+    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer)->Void)?
+    private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView)->Void)?
+    private var onSelectedAction: ((InputBarButtonItem)->Void)?
+    private var onDeselectedAction: ((InputBarButtonItem)->Void)?
     
     // MARK: - Initialization
     
@@ -96,10 +135,13 @@ open class InputBarButtonItem: UIButton {
         imageView?.contentMode = .scaleAspectFit
         setContentHuggingPriority(500, for: .horizontal)
         setContentHuggingPriority(500, for: .vertical)
+        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
+        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
+        setTitleColor(.lightGray, for: .disabled)
         addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
     }
     
-    // MARK: - Methods
+    // MARK: - Hook Setup Methods
     
     @discardableResult
     open func configure(_ setup: (InputBarButtonItem)->Void) -> Self {
@@ -120,7 +162,7 @@ open class InputBarButtonItem: UIButton {
     }
     
     @discardableResult
-    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UIGestureRecognizer)->Void) -> Self {
+    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer)->Void) -> Self {
         onKeyboardSwipeGestureAction = action
         return self
     }
@@ -136,6 +178,20 @@ open class InputBarButtonItem: UIButton {
         onTouchUpInsideAction = action
         return self
     }
+    
+    @discardableResult
+    open func onSelected(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+        onSelectedAction = action
+        return self
+    }
+    
+    @discardableResult
+    open func onDeselected(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+        onDeselectedAction = action
+        return self
+    }
+    
+    // MARK: - Hook Executors
     
     public func textViewDidChangeAction(with textView: InputTextView) {
         onTextViewDidChangeAction?(self, textView)
@@ -153,8 +209,9 @@ open class InputBarButtonItem: UIButton {
         onKeyboardEditingBeginsAction?(self)
     }
     
-    func touchUpInsideAction() {
+    public func touchUpInsideAction() {
         onTouchUpInsideAction?(self)
+        isSelected = true
     }
     
     // MARK: - Static vars

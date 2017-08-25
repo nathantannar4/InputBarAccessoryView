@@ -136,6 +136,7 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.bottom?.constant = -textContainerInset.bottom
         placeholderLabelConstraintSet?.left?.constant = textContainerInset.left
         placeholderLabelConstraintSet?.right?.constant = -textContainerInset.bottom
+        layoutIfNeeded()
     }
     
     private func addObservers() {
@@ -143,11 +144,6 @@ open class InputTextView: UITextView {
                                                selector: #selector(InputTextView.textDidChange(notification:)),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
-    }
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-        placeholderLabel.preferredMaxLayoutWidth = textContainer.size.width - textContainer.lineFragmentPadding * 2.0
     }
     
     // MARK: - Notifications
