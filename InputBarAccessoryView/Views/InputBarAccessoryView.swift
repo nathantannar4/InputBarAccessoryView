@@ -25,6 +25,9 @@
 //  Created by Nathan Tannar on 8/18/17.
 //
 
+import Foundation
+import UIKit
+
 open class InputBarAccessoryView: UIView {
     
     public enum UIStackViewPosition {
@@ -51,19 +54,7 @@ open class InputBarAccessoryView: UIView {
             backgroundColor = isTranslucent ? .clear : .white
         }
     }
-    
-//    open lazy var tableView: UITableView = { [unowned self] in
-//        let tableView = UITableView()
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.dataSource = self
-//        tableView.delegate = self
-//        tableView.register(InputBarTableViewCell.self, forCellReuseIdentifier: InputBarTableViewCell.reuseIdentifier)
-//        tableView.backgroundColor = .red
-//        tableView.separatorInset = .zero
-//        tableView.tableFooterView = UIView()
-//        return tableView
-//    }()
-    
+
     /// A boarder line anchored to the top of the view
     open let separatorLine: UIView = {
         let view = UIView()
@@ -177,8 +168,6 @@ open class InputBarAccessoryView: UIView {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthContant
         }
     }
-    
-    // MARK: - InputBarItem
 
     /// The InputBarItems held in the leftStackView
     open var leftStackViewItems: [InputBarButtonItem] = []
@@ -193,26 +182,9 @@ open class InputBarAccessoryView: UIView {
     public var items: [InputBarButtonItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems].flatMap{$0}
     }
-    
-//    open var tableViewCellHeight: CGFloat = 36
-//    
-//    /// The objects that will be used to render UITableViewCells for the UITableView
-//    open var tableViewObjects: [AnyObject] = [] {
-//        didSet {
-//            tableView.reloadData()
-//            performLayout(false) {
-//                if self.tableViewObjects.count >= 5 {
-//                    self.tableViewHeightContant = self.tableViewCellHeight * 5.0
-//                } else {
-//                    self.tableViewHeightContant = self.tableViewCellHeight * CGFloat(self.tableViewObjects.count)
-//                }
-//            }
-//        }
-//    }
 
     // MARK: - Auto-Layout Management
-
-//    private var tableViewLayoutSet: NSLayoutConstraintSet?
+    
     private var textViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
@@ -240,10 +212,9 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Setup
     
-    private func setup() {
+    open func setup() {
         
         backgroundColor = .white
-        clipsToBounds = true
         autoresizingMask = .flexibleHeight
         setupSubviews()
         setupConstraints()
@@ -253,7 +224,6 @@ open class InputBarAccessoryView: UIView {
     
     private func setupSubviews() {
         
-//        addSubview(tableView)
         addSubview(blurView)
         addSubview(textView)
         addSubview(leftStackView)
@@ -264,13 +234,6 @@ open class InputBarAccessoryView: UIView {
     }
     
     private func setupConstraints() {
-        
-//        tableViewLayoutSet = NSLayoutConstraintSet(
-//            top:    tableView.bottomAnchor.constraint(equalTo: topAnchor),
-//            left:   tableView.leftAnchor.constraint(equalTo: leftAnchor),
-//            right:  tableView.rightAnchor.constraint(equalTo: rightAnchor),
-//            height: tableView.heightAnchor.constraint(equalToConstant: tableViewHeightContant)
-//        ).activated()
         
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 0.5)
         blurView.fillSuperview()
@@ -295,7 +258,6 @@ open class InputBarAccessoryView: UIView {
             right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
             width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthContant)
         ).activated()
-
 
         bottomStackViewLayoutSet = NSLayoutConstraintSet(
             top:    bottomStackView.topAnchor.constraint(equalTo: textView.bottomAnchor),
@@ -346,6 +308,7 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Layout Helper Methods
     
+    /// Called during the hooks so account for any size changes
     private func layoutStackViews() {
         
         for stackView in [leftStackView, rightStackView, bottomStackView] {
@@ -404,14 +367,11 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-//    open func setTableViewHeightConstant(to newValue: CGFloat, animated: Bool) {
-//        performLayout(animated) { 
-//            self.tableViewHeightContant = newValue
-//            self.layoutIfNeeded()
-//        }
-//    }
-    
-    
+    /// Sets the leftStackViewWidthConstant
+    ///
+    /// - Parameters:
+    ///   - newValue: New widthAnchor constant
+    ///   - animated: If the layout should be animated
     open func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) { 
             self.leftStackViewWidthContant = newValue
@@ -419,6 +379,11 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
+    /// Sets the rightStackViewWidthConstant
+    ///
+    /// - Parameters:
+    ///   - newValue: New widthAnchor constant
+    ///   - animated: If the layout should be animated
     open func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) { 
             self.rightStackViewWidthContant = newValue

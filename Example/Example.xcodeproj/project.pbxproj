@@ -11,8 +11,8 @@
 		383B839F1F47897800027965 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B839E1F47897800027965 /* ViewController.swift */; };
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
 		383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A21F47897800027965 /* LaunchScreen.storyboard */; };
-		383B83BA1F478D5D00027965 /* NTInputAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */; };
-		383B83BB1F478D5D00027965 /* NTInputAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38C8676C1F50A4C000811974 /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C8676B1F50A4C000811974 /* InputBarAccessoryView.framework */; };
+		38C8676D1F50A4C000811974 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38C8676B1F50A4C000811974 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -22,7 +22,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				383B83BB1F478D5D00027965 /* NTInputAccessoryView.framework in Embed Frameworks */,
+				38C8676D1F50A4C000811974 /* InputBarAccessoryView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -36,7 +36,7 @@
 		383B83A01F47897800027965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		383B83A31F47897800027965 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = NTInputAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38C8676B1F50A4C000811974 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				383B83BA1F478D5D00027965 /* NTInputAccessoryView.framework in Frameworks */,
+				38C8676C1F50A4C000811974 /* InputBarAccessoryView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,7 +54,7 @@
 		383B83901F47897800027965 = {
 			isa = PBXGroup;
 			children = (
-				383B83B91F478D5D00027965 /* NTInputAccessoryView.framework */,
+				38C8676B1F50A4C000811974 /* InputBarAccessoryView.framework */,
 				383B839B1F47897800027965 /* Example */,
 				383B839A1F47897800027965 /* Products */,
 			);

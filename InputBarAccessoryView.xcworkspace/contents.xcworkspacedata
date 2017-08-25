@@ -8,7 +8,7 @@
       location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:NTInputAccessoryView.xcodeproj">
+      location = "group:/Users/nathantannar/Documents/Active iOS Projects/NTInputAccessoryView/InputBarAccessoryView.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Example/Example.xcodeproj">

@@ -25,14 +25,15 @@
 //  Created by Nathan Tannar on 8/18/17.
 //
 
+import Foundation
+import UIKit
+
 open class InputTextView: UITextView {
     
     // MARK: - Properties
 
     open let placeholderLabel: UILabel = {
         let label = UILabel()
-        label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.2
         label.numberOfLines = 0
         label.textColor = .lightGray
         label.text = "Aa"
@@ -140,15 +141,16 @@ open class InputTextView: UITextView {
     }
     
     private func addObservers() {
+        
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputTextView.textDidChange(notification:)),
+                                               selector: #selector(InputTextView.textViewTextDidChange),
                                                name: Notification.Name.UITextViewTextDidChange,
                                                object: nil)
     }
     
     // MARK: - Notifications
     
-    func textDidChange(notification: Notification) {
+    func textViewTextDidChange() {
         placeholderLabel.isHidden = !text.isEmpty
     }
 }

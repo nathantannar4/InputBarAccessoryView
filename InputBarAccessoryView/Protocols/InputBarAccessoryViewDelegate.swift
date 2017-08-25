@@ -25,6 +25,9 @@
 //  Created by Nathan Tannar on 8/18/17.
 //
 
+import Foundation
+import UIKit
+
 @objc
 public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
     
@@ -35,8 +38,4 @@ public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
     @objc optional func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)
     
     @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
-    
-//    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, configureCellFor object: AnyObject, in tableView: UITableView) -> UITableViewCell
-//    
-//    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectObject object: AnyObject)
 }
