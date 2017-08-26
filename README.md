@@ -13,7 +13,7 @@ iOS 9.0 and Higher
 
 ### Screenshots
 
-<img src="./Assets/ScreenshotA.png" width="242" height="432"> <img src="./Assets/ScreenshotB.png" width="242" height="432"> <img src="./Assets/ScreenshotC.png" width="242" height="432"> <img src="./Assets/ScreenshotD.png" width="242" height="432">
+<img src="./Assets/ScreenshotA.png" width="242" height="432"> <img src="./Assets/ScreenshotB.png" width="242" height="432"> <img src="./Assets/ScreenshotC.png" width="242" height="432"> <img src="./Assets/ScreenshotD.png" width="242" height="432"> <img src="./Assets/ScreenshotE.png" width="242" height="432"> <img src="./Assets/ScreenshotF.png" width="242" height="432">
 
 ## Layout
 

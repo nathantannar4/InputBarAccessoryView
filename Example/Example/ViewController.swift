@@ -95,7 +95,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func Messenger() {
-        
+        bar.setStackViewItems([], forStack: .bottom, animated: true)
+        bar.setRightStackViewWidthContant(to: 52, animated: true)
+        bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
@@ -108,9 +110,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        bar.textView.textContainerInset = UIEdgeInsets(top: 7, left: 12, bottom: 7, right: 12)
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
         bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
         bar.textView.layer.borderWidth = 1.0
         bar.textView.layer.cornerRadius = 16.0
@@ -121,39 +124,44 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
 
     func Slack() {
-        func makeButton(named: String) -> InputBarButtonItem {
-            return InputBarButtonItem()
-                .configure {
-                    $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-                    $0.size = CGSize(width: 20, height: 20)
-                }.onTouchUpInside {
-                    print($0)
-            }
-        }
-    
-        bar.sendButton.size = CGSize(width: 52, height: 20)
-        bar.sendButton.layer.borderWidth = 1
-        bar.sendButton.layer.borderColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1).cgColor
-        bar.sendButton.layer.cornerRadius = 8
-        
-        bar.sendButton.setTitleColor(.white, for: .highlighted)
-        
-        bar.sendButton.onSelected {
-                $0.backgroundColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-            }.onDeselected {
-                $0.backgroundColor = .white
-        }
-        bar.rightStackViewWidthContant = 0
-        
+        bar.setStackViewItems([], forStack: .left, animated: true)
         let items = [
-            makeButton(named: "ic_camera"),
-            makeButton(named: "ic_library"),
+            makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+            },
+            makeButton(named: "ic_library").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+            },
             makeButton(named: "ic_at"),
             makeButton(named: "ic_hashtag"),
             .flexibleSpace,
             bar.sendButton
+                .configure {
+                    $0.layer.cornerRadius = 8
+                    $0.layer.borderWidth = 1.5
+                    $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
+                    $0.setTitleColor(UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0), for: .normal)
+                    $0.setTitleColor(.white, for: .highlighted)
+                    $0.size = CGSize(width: 52, height: 30)
+                }.onDisabled {
+                    $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
+                }.onEnabled {
+                    $0.layer.borderColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0).cgColor
+                }.onSelected {
+                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                }.onDeselected {
+                    $0.backgroundColor = .white
+            }
         ]
         
+        // We can change the container insets if we want
+        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+    
+        // Since we moved the send button to the bottom stack lets set the right stack width to 0
+        bar.setRightStackViewWidthContant(to: 0, animated: true)
+        
+        // Finally set the items
         bar.setStackViewItems(items, forStack: .bottom, animated: true)
     }
     
@@ -170,10 +178,29 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func None() {
-//        bar.textViewPadding = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 4)
-//        bar.setStackViewItems([], animated: true)
-//        bar.setRightItem(bar.sendButton(), animated: true)
-//        bar.setLeftItem(nil, animated: true)
+        
+    }
+    
+    func makeButton(named: String) -> InputBarButtonItem {
+        return InputBarButtonItem()
+            .configure {
+                $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
+                $0.size = CGSize(width: 40, height: 40)
+                $0.layer.cornerRadius = 8
+                $0.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+            }.onKeyboardEditingBegins {
+                $0.size = CGSize(width: 30, height: 30)
+            }.onKeyboardEditingEnds {
+                $0.size = CGSize(width: 40, height: 40)
+            }.onSelected {
+                $0.backgroundColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+                $0.tintColor = .white
+            }.onDeselected {
+                $0.backgroundColor = .white
+                $0.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+            }.onTouchUpInside { _ in
+                print("Item Tapped")
+        }
     }
     
     // MARK: - InputBarAccessoryViewDelegate
@@ -188,21 +215,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
         print(text)
-//        inputBar.tableViewObjects.append(text as AnyObject)
         inputBar.textView.text = String()
     }
-    
-//    func inputBar(_ inputBar: InputBarAccessoryView, configureCellFor object: AnyObject, in tableView: UITableView) -> UITableViewCell {
-//        guard let cell = tableView.dequeueReusableCell(withIdentifier: InputBarTableViewCell.reuseIdentifier) as? InputBarTableViewCell else {
-//            return UITableViewCell()
-//        }
-//        if let text = object as? String {
-//            cell.textLabel?.text = text
-//        } else {
-//            cell.textLabel?.text = "asasasasas"
-//        }
-//        
-//        return cell
-//    }
 }
 
