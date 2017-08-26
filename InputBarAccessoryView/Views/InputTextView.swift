@@ -31,6 +31,12 @@ import UIKit
 open class InputTextView: UITextView {
     
     // MARK: - Properties
+    
+    open override var text: String! {
+        didSet {
+            placeholderLabel.isHidden = !text.isEmpty
+        }
+    }
 
     open let placeholderLabel: UILabel = {
         let label = UILabel()
@@ -139,6 +145,5 @@ open class InputTextView: UITextView {
     
     func textViewTextDidChange() {
         placeholderLabel.isHidden = !text.isEmpty
-        print("set")
     }
 }
