@@ -95,9 +95,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func Messenger() {
-        bar.setStackViewItems([], forStack: .bottom, animated: true)
-        bar.setRightStackViewWidthContant(to: 52, animated: true)
-        bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
+        None()
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
@@ -124,7 +122,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
 
     func Slack() {
-        bar.setStackViewItems([], forStack: .left, animated: true)
+        None()
         let items = [
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
@@ -178,7 +176,17 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func None() {
-        
+        bar.textView.backgroundColor = .clear
+        bar.textView.layer.borderWidth = 0
+        bar.setStackViewItems([], forStack: .bottom, animated: true)
+        bar.setStackViewItems([], forStack: .left, animated: true)
+        bar.setLeftStackViewWidthContant(to: 0, animated: true)
+        bar.setRightStackViewWidthContant(to: 52, animated: true)
+        bar.sendButton.size = CGSize(width: 52, height: 36)
+        bar.sendButton.layer.borderWidth = 0
+        bar.sendButton.backgroundColor = .clear
+        bar.sendButton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1).withAlphaComponent(0.3), for: .highlighted)
+        bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
     }
     
     func makeButton(named: String) -> InputBarButtonItem {

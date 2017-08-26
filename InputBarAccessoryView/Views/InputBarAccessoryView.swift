@@ -63,6 +63,12 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
     
+    open let tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
     open let leftStackView: UIStackView = {
         let view = UIStackView()
         view.axis = .horizontal
@@ -114,7 +120,6 @@ open class InputBarAccessoryView: UIView {
         return InputBarButtonItem()
             .configure {
                 $0.size = CGSize(width: 52, height: 36)
-                $0.spacing = .fixed(4)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
