@@ -1,6 +1,6 @@
 //
 //  InputBarItem.swift
-//  NTInputAccessoryView
+//  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
 //
@@ -34,6 +34,8 @@ open class InputBarButtonItem: UIButton {
         case flexible
         case none
     }
+    
+    public typealias InputBarButtonItemAction = ((InputBarButtonItem) -> Void)?
     
     // MARK: - Properties
     
@@ -121,15 +123,15 @@ open class InputBarButtonItem: UIButton {
     
     // MARK: - Hooks
     
-    private var onTouchUpInsideAction: ((InputBarButtonItem)->Void)?
-    private var onKeyboardEditingBeginsAction: ((InputBarButtonItem)->Void)?
-    private var onKeyboardEditingEndsAction: ((InputBarButtonItem)->Void)?
-    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer)->Void)?
-    private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView)->Void)?
-    private var onSelectedAction: ((InputBarButtonItem)->Void)?
-    private var onDeselectedAction: ((InputBarButtonItem)->Void)?
-    private var onEnabledAction: ((InputBarButtonItem)->Void)?
-    private var onDisabledAction: ((InputBarButtonItem)->Void)?
+    private var onTouchUpInsideAction: InputBarButtonItemAction
+    private var onKeyboardEditingBeginsAction: InputBarButtonItemAction
+    private var onKeyboardEditingEndsAction: InputBarButtonItemAction
+    private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
+    private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
+    private var onSelectedAction: InputBarButtonItemAction
+    private var onDeselectedAction: InputBarButtonItemAction
+    private var onEnabledAction: InputBarButtonItemAction
+    private var onDisabledAction: InputBarButtonItemAction
     
     // MARK: - Initialization
     
@@ -155,67 +157,68 @@ open class InputBarButtonItem: UIButton {
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
         setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         setTitleColor(.lightGray, for: .disabled)
+        adjustsImageWhenHighlighted = false
         addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
     }
     
     // MARK: - Hook Setup Methods
     
     @discardableResult
-    open func configure(_ setup: (InputBarButtonItem)->Void) -> Self {
-        setup(self)
+    open func configure(_ setup: InputBarButtonItemAction) -> Self {
+        setup?(self)
         return self
     }
     
     @discardableResult
-    open func onKeyboardEditingBegins(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onKeyboardEditingBegins(_ action: InputBarButtonItemAction) -> Self {
         onKeyboardEditingBeginsAction = action
         return self
     }
     
     @discardableResult
-    open func onKeyboardEditingEnds(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onKeyboardEditingEnds(_ action: InputBarButtonItemAction) -> Self {
         onKeyboardEditingEndsAction = action
         return self
     }
     
     @discardableResult
-    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer)->Void) -> Self {
+    open func onKeyboardSwipeGesture(_ action: @escaping (_ item: InputBarButtonItem, _ gesture: UISwipeGestureRecognizer) -> Void) -> Self {
         onKeyboardSwipeGestureAction = action
         return self
     }
     
     @discardableResult
-    open func onTextViewDidChange(_ action: @escaping (_ item: InputBarButtonItem, _ textView: InputTextView)->Void) -> Self {
+    open func onTextViewDidChange(_ action: @escaping (_ item: InputBarButtonItem, _ textView: InputTextView) -> Void) -> Self {
         onTextViewDidChangeAction = action
         return self
     }
     
     @discardableResult
-    open func onTouchUpInside(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onTouchUpInside(_ action: InputBarButtonItemAction) -> Self {
         onTouchUpInsideAction = action
         return self
     }
     
     @discardableResult
-    open func onSelected(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onSelected(_ action: InputBarButtonItemAction) -> Self {
         onSelectedAction = action
         return self
     }
     
     @discardableResult
-    open func onDeselected(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onDeselected(_ action: InputBarButtonItemAction) -> Self {
         onDeselectedAction = action
         return self
     }
     
     @discardableResult
-    open func onEnabled(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onEnabled(_ action: InputBarButtonItemAction) -> Self {
         onEnabledAction = action
         return self
     }
     
     @discardableResult
-    open func onDisabled(_ action: @escaping (InputBarButtonItem)->Void) -> Self {
+    open func onDisabled(_ action: InputBarButtonItemAction) -> Self {
         onDisabledAction = action
         return self
     }

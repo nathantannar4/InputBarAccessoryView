@@ -54,16 +54,29 @@ public class NSLayoutConstraintSet {
     }
     
     func forEach(_ body: (NSLayoutConstraint) -> Void) {
-        let constraints: [NSLayoutConstraint] = [top, bottom, left, right, centerX, centerY, width, height].filter { $0 != nil } as! [NSLayoutConstraint]
-        constraints.forEach(body)
+        let constraints = [top, bottom, left, right, centerX, centerY, width, height]
+        for constraint in constraints {
+            if let constraint = constraint {
+                body(constraint)
+            }
+        }
     }
-    
     
     /// Activates all of the non-nil constraints
     ///
     /// - Returns: Self
-    func activated() -> Self {
+    @discardableResult
+    func activate() -> Self {
         forEach { $0.isActive = true }
+        return self
+    }
+    
+    /// Deactivates all of the non-nil constraints
+    ///
+    /// - Returns: Self
+    @discardableResult
+    func deactivate() -> Self {
+        forEach { $0.isActive = false }
         return self
     }
 }

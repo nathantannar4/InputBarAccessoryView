@@ -1,6 +1,6 @@
 //
 //  InputBarAccessoryViewDelegate.swift
-//  NTInputAccessoryView
+//  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
 //
@@ -29,7 +29,7 @@ import Foundation
 import UIKit
 
 @objc
-public protocol InputBarAccessoryViewDelegate: NSObjectProtocol {
+public protocol InputBarAccessoryViewDelegate: class {
     
     @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String)
     

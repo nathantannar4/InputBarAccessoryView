@@ -1,4 +1,5 @@
 # InputBarAccessoryView
+<img src="./Assets/Banner.png">
 
 ### Installation via CocoaPods
 
@@ -7,17 +8,18 @@ pod 'InputBarAccessoryView'
 ```
 
 ### Requirements
+
 iOS 9.0 and Higher
 
-## Examples
+### Screenshots
 
-Explore the Example project!
-
-<img src="./Screenshots/Slack Keyboard.png" width="242" height="432">  <img src="./Screenshots/Simple Keyboard.png" width="242" height="432">
+<img src="./Assets/ScreenshotA.png" width="242" height="432"> <img src="./Assets/ScreenshotB.png" width="242" height="432"> <img src="./Assets/ScreenshotC.png" width="242" height="432"> <img src="./Assets/ScreenshotD.png" width="242" height="432">
 
 ## Layout
 
 The layout of the `InputBarAccessoryView` is made of of 3 `UIStackView`'s and an `InputTextView` (subclass of `UITextView`). The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
+
+<img src="./Assets/Layout.png">
 
 ```swift
 H:|-(padding.left)-[UIStackView(leftStackViewWidthContant)]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[UIStackView(rightStackViewWidthContant)]-(padding.right)-|
@@ -76,8 +78,13 @@ private var onDisabledAction: ((InputBarButtonItem)->Void)?
 ## Author
 
 <img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="75" height="75">
-Nathan Tannar - https://nathantannar.me
+Nathan Tannar - [https://nathantannar.me](https://nathantannar.me)
 
 ## License
+
+##### InputBarAccessoryView was developed as a contribution to [MessageKit](https://github.com/MessageKit/MessageKit).
+<p>
+  <img src="https://cdn.rawgit.com/MessageKit/MessageKit/master/Assets/mklogo.svg" title="MessageKit logo">
+</p>
 
 Distributed under the MIT license. See ``LICENSE`` for more information.

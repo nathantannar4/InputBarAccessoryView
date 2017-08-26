@@ -1,6 +1,6 @@
 //
 //  InputTextView.swift
-//  NTInputAccessoryView
+//  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
 //
@@ -73,12 +73,6 @@ open class InputTextView: UITextView {
             placeholderLabel.textAlignment = textAlignment
         }
     }
-    
-    open override var textContainerInset: UIEdgeInsets {
-        didSet {
-            placeholderLabelInsets = textContainerInset
-        }
-    }
 
     open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
         didSet {
@@ -128,16 +122,15 @@ open class InputTextView: UITextView {
             bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
             left:   placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
             right:  placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right)
-        ).activated()
+        ).activate()
     }
     
     private func updateConstraintsForPlaceholderLabel() {
         
-        placeholderLabelConstraintSet?.top?.constant = textContainerInset.top
-        placeholderLabelConstraintSet?.bottom?.constant = -textContainerInset.bottom
-        placeholderLabelConstraintSet?.left?.constant = textContainerInset.left
-        placeholderLabelConstraintSet?.right?.constant = -textContainerInset.bottom
-        layoutIfNeeded()
+        placeholderLabelConstraintSet?.top?.constant = placeholderLabelInsets.top
+        placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
+        placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
+        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
     }
     
     private func addObservers() {
@@ -154,4 +147,3 @@ open class InputTextView: UITextView {
         placeholderLabel.isHidden = !text.isEmpty
     }
 }
-

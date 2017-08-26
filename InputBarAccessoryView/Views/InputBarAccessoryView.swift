@@ -1,6 +1,6 @@
 //
 //  InputBarAccessoryView.swift
-//  NTInputAccessoryView
+//  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
 //
@@ -93,7 +93,7 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
     
-    open lazy var textView: InputTextView = { [unowned self] in
+    open lazy var textView: InputTextView = { [weak self] in
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.inputBarAccessoryView = self
@@ -106,10 +106,11 @@ open class InputBarAccessoryView: UIView {
             textViewLayoutSet?.bottom?.constant = -textViewPadding.bottom
             textViewLayoutSet?.left?.constant = textViewPadding.left
             textViewLayoutSet?.right?.constant = -textViewPadding.right
+            bottomStackViewLayoutSet?.top?.constant = textViewPadding.bottom
         }
     }
     
-    open lazy var sendButton: InputBarButtonItem = { [unowned self] in
+    open lazy var sendButton: InputBarButtonItem = { [weak self] in
         return InputBarButtonItem()
             .configure {
                 $0.size = CGSize(width: 52, height: 36)
@@ -180,7 +181,7 @@ open class InputBarAccessoryView: UIView {
     
     /// Returns a flatMap of all the items in each of the UIStackViews
     public var items: [InputBarButtonItem] {
-        return [leftStackViewItems, rightStackViewItems, bottomStackViewItems].flatMap{$0}
+        return [leftStackViewItems, rightStackViewItems, bottomStackViewItems].flatMap { $0 }
     }
 
     // MARK: - Auto-Layout Management
@@ -243,28 +244,28 @@ open class InputBarAccessoryView: UIView {
             bottom: textView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -textViewPadding.bottom),
             left:   textView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  textView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
-        ).activated()
+        ).activate()
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
             top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: leftStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthContant)
-        ).activated()
+        ).activate()
         
         rightStackViewLayoutSet = NSLayoutConstraintSet(
             top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
             bottom: rightStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
             width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthContant)
-        ).activated()
+        ).activate()
 
         bottomStackViewLayoutSet = NSLayoutConstraintSet(
             top:    bottomStackView.topAnchor.constraint(equalTo: textView.bottomAnchor),
             bottom: bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
             left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
-        ).activated()
+        ).activate()
     }
     
     private func updateViewContraints() {
@@ -317,12 +318,26 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
+    /// Performs layout changes over the main thread
+    ///
+    /// - Parameters:
+    ///   - animated: If the layout should be animated
+    ///   - animations: Code
     private func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
+        
+        leftStackViewLayoutSet?.deactivate()
+        rightStackViewLayoutSet?.deactivate()
+        bottomStackViewLayoutSet?.deactivate()
         if animated {
-            UIView.animate(withDuration: 0.3, animations: animations)
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.3, animations: animations)
+            }
         } else {
             UIView.performWithoutAnimation { animations() }
         }
+        leftStackViewLayoutSet?.activate()
+        rightStackViewLayoutSet?.activate()
+        bottomStackViewLayoutSet?.activate()
     }
     
     // MARK: - UIStackView InputBarItem Methods
@@ -344,6 +359,7 @@ open class InputBarAccessoryView: UIView {
                     $0.inputBarAccessoryView = self
                     leftStackView.addArrangedSubview($0)
                 }
+                leftStackView.layoutIfNeeded()
             case .right:
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 rightStackViewItems = items
@@ -351,6 +367,7 @@ open class InputBarAccessoryView: UIView {
                     $0.inputBarAccessoryView = self
                     rightStackView.addArrangedSubview($0)
                 }
+                rightStackView.layoutIfNeeded()
             case .bottom:
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
                 bottomStackViewItems = items
@@ -358,12 +375,12 @@ open class InputBarAccessoryView: UIView {
                     $0.inputBarAccessoryView = self
                     bottomStackView.addArrangedSubview($0)
                 }
+                bottomStackView.layoutIfNeeded()
             }
         }
         
         performLayout(animated) {
             setNewItems()
-            self.layoutStackViews()
         }
     }
     

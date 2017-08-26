@@ -1,6 +1,6 @@
 //
 //  UIView+Autolayout.swift
-//  NTInputAccessoryView
+//  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
 //
@@ -23,7 +23,6 @@
 //  SOFTWARE.
 //
 //  Created by Nathan Tannar on 2/12/17.
-//  Modified from Brian Voong <bhlvoong@gmail.com>
 //
 
 import UIKit
@@ -88,9 +87,6 @@ public extension UIView {
         }
         
         constraints.forEach { $0.isActive = true }
-        
-        
-        
         return constraints
     }
 }
