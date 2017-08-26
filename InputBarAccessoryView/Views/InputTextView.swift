@@ -139,5 +139,6 @@ open class InputTextView: UITextView {
     
     func textViewTextDidChange() {
         placeholderLabel.isHidden = !text.isEmpty
+        print("set")
     }
 }

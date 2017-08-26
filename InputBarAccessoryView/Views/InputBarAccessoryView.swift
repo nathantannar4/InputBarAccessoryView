@@ -449,6 +449,7 @@ open class InputBarAccessoryView: UIView {
     
     open func didSelectSendButton() {
         delegate?.inputBar(self, didSelectSendButtonWith: textView.text)
+        textView.placeholderLabel.isHidden = false
         textViewDidChange()
         invalidateIntrinsicContentSize()
     }
