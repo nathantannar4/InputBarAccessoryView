@@ -78,7 +78,7 @@ private var onDisabledAction: ((InputBarButtonItem)->Void)?
 ## Author
 
 <img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="75" height="75">
-Nathan Tannar - [https://nathantannar.me](https://nathantannar.me)
+Nathan Tannar - https://nathantannar.me
 
 ## License
 
