@@ -95,9 +95,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func Messenger() {
-        bar.setStackViewItems([], forStack: .bottom, animated: true)
-        bar.setRightStackViewWidthContant(to: 52, animated: true)
-        bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
+        None()
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
@@ -119,12 +117,12 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.textView.layer.cornerRadius = 16.0
         bar.textView.layer.masksToBounds = true
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.leftStackViewWidthContant = 36
+        bar.setLeftStackViewWidthContant(to: 36, animated: true)
         bar.setStackViewItems([button], forStack: .left, animated: true)
     }
 
     func Slack() {
-        bar.setStackViewItems([], forStack: .left, animated: true)
+        None()
         let items = [
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
@@ -178,7 +176,16 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     }
     
     func None() {
-        
+        bar.textView.backgroundColor = .clear
+        bar.textView.layer.borderWidth = 0
+        bar.setStackViewItems([], forStack: .left, animated: true)
+        bar.setStackViewItems([], forStack: .bottom, animated: true)
+        bar.setRightStackViewWidthContant(to: 52, animated: true)
+        bar.setLeftStackViewWidthContant(to: 0, animated: true)
+        bar.sendButton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
+        bar.sendButton.layer.borderWidth = 0
+        bar.sendButton.size = CGSize(width: 52, height: 36)
+        bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
     }
     
     func makeButton(named: String) -> InputBarButtonItem {
