@@ -223,6 +223,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
         print(text)
         inputBar.textView.text = String()
+        inputBar.textView.placeholderLabel.isHidden = false //show placeholder in textview when send button press...
     }
 }
 
