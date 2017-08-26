@@ -168,6 +168,9 @@ open class InputBarAccessoryView: UIView {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthContant
         }
     }
+    
+    /// When set to TRUE and the swipe gesture direction on the InputTextView is down the first responder will be resigned
+    open var shouldDismissOnSwipe: Bool = true
 
     /// The InputBarItems held in the leftStackView
     private(set) var leftStackViewItems: [InputBarButtonItem] = []
@@ -178,9 +181,12 @@ open class InputBarAccessoryView: UIView {
     /// The InputBarItems held in the bottomStackView
     private(set) var bottomStackViewItems: [InputBarButtonItem] = []
     
+    /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
+    open var nonStackViewItems: [InputBarButtonItem] = []
+    
     /// Returns a flatMap of all the items in each of the UIStackViews
     public var items: [InputBarButtonItem] {
-        return [leftStackViewItems, rightStackViewItems, bottomStackViewItems].flatMap { $0 }
+        return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, nonStackViewItems].flatMap { $0 }
     }
 
     // MARK: - Auto-Layout Management
@@ -440,15 +446,20 @@ open class InputBarAccessoryView: UIView {
     // MARK: - User Actions
     
     open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
+        
         performLayout(true) { 
             self.items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
             self.layoutStackViews()
         }
         delegate?.inputBar(self, didSwipeTextViewWith: gesture)
+        
+        if shouldDismissOnSwipe && gesture.direction == .down {
+            resignFirstResponder()
+        }
     }
     
     open func didSelectSendButton() {
-        delegate?.inputBar(self, didSelectSendButtonWith: textView.text)
+        delegate?.inputBar(self, didPressSendButtonWith: textView.text)
         textViewDidChange()
     }
     

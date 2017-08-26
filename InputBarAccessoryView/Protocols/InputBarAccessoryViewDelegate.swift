@@ -30,7 +30,7 @@ import UIKit
 
 public protocol InputBarAccessoryViewDelegate: class {
     
-    func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String)
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String)
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
     
@@ -41,7 +41,7 @@ public protocol InputBarAccessoryViewDelegate: class {
 
 public extension InputBarAccessoryViewDelegate {
     
-    func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {}
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {}
     

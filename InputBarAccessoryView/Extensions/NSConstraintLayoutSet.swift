@@ -28,16 +28,16 @@
 import Foundation
 import UIKit
 
-public class NSLayoutConstraintSet {
+open class NSLayoutConstraintSet {
     
-    public var top: NSLayoutConstraint?
-    public var bottom: NSLayoutConstraint?
-    public var left: NSLayoutConstraint?
-    public var right: NSLayoutConstraint?
-    public var centerX: NSLayoutConstraint?
-    public var centerY: NSLayoutConstraint?
-    public var width: NSLayoutConstraint?
-    public var height: NSLayoutConstraint?
+    open var top: NSLayoutConstraint?
+    open var bottom: NSLayoutConstraint?
+    open var left: NSLayoutConstraint?
+    open var right: NSLayoutConstraint?
+    open var centerX: NSLayoutConstraint?
+    open var centerY: NSLayoutConstraint?
+    open var width: NSLayoutConstraint?
+    open var height: NSLayoutConstraint?
     
     public init(top: NSLayoutConstraint? = nil, bottom: NSLayoutConstraint? = nil,
                 left: NSLayoutConstraint? = nil, right: NSLayoutConstraint? = nil,
@@ -53,7 +53,7 @@ public class NSLayoutConstraintSet {
         self.height = height
     }
     
-    func forEach(_ body: (NSLayoutConstraint) -> Void) {
+    open func forEach(_ body: (NSLayoutConstraint) -> Void) {
         let constraints = [top, bottom, left, right, centerX, centerY, width, height]
         for constraint in constraints {
             if let constraint = constraint {
@@ -66,7 +66,7 @@ public class NSLayoutConstraintSet {
     ///
     /// - Returns: Self
     @discardableResult
-    func activate() -> Self {
+    open func activate() -> Self {
         forEach { $0.isActive = true }
         return self
     }
@@ -75,7 +75,7 @@ public class NSLayoutConstraintSet {
     ///
     /// - Returns: Self
     @discardableResult
-    func deactivate() -> Self {
+    open func deactivate() -> Self {
         forEach { $0.isActive = false }
         return self
     }
