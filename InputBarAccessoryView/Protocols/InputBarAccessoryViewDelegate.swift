@@ -28,14 +28,24 @@
 import Foundation
 import UIKit
 
-@objc
 public protocol InputBarAccessoryViewDelegate: class {
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String)
+    func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String)
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
+    func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)
+    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)
     
-    @objc optional func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
+    func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
+}
+
+public extension InputBarAccessoryViewDelegate {
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {}
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {}
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {}
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {}
 }

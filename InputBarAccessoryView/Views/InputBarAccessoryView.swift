@@ -142,41 +142,41 @@ open class InputBarAccessoryView: UIView {
         }
         let size = CGSize(width: bounds.width, height: heightToFit)
         if previousIntrinsicContentSize != size {
-            delegate?.inputBar?(self, didChangeIntrinsicContentTo: size)
+            delegate?.inputBar(self, didChangeIntrinsicContentTo: size)
         }
         previousIntrinsicContentSize = size
         return size
     }
     
     /// The maximum intrinsicContentSize height. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
-    open var maxHeight: CGFloat = 288 {
+    open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
         didSet {
             invalidateIntrinsicContentSize()
         }
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    open var leftStackViewWidthContant: CGFloat = 0 {
+    private(set) var leftStackViewWidthContant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthContant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    open var rightStackViewWidthContant: CGFloat = 52 {
+    private(set) var rightStackViewWidthContant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthContant
         }
     }
 
     /// The InputBarItems held in the leftStackView
-    open var leftStackViewItems: [InputBarButtonItem] = []
+    private(set) var leftStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the rightStackView
-    open var rightStackViewItems: [InputBarButtonItem] = []
+    private(set) var rightStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    open var bottomStackViewItems: [InputBarButtonItem] = []
+    private(set) var bottomStackViewItems: [InputBarButtonItem] = []
     
     /// Returns a flatMap of all the items in each of the UIStackViews
     public var items: [InputBarButtonItem] {
@@ -419,7 +419,7 @@ open class InputBarAccessoryView: UIView {
             self.items.forEach { $0.textViewDidChangeAction(with: self.textView) }
             self.layoutStackViews()
         }
-        delegate?.inputBar?(self, textViewTextDidChangeTo: trimmedText)
+        delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
     }
     
@@ -444,11 +444,11 @@ open class InputBarAccessoryView: UIView {
             self.items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
             self.layoutStackViews()
         }
-        delegate?.inputBar?(self, didSwipeTextViewWith: gesture)
+        delegate?.inputBar(self, didSwipeTextViewWith: gesture)
     }
     
     open func didSelectSendButton() {
-        delegate?.inputBar?(self, didSelectSendButtonWith: textView.text)
+        delegate?.inputBar(self, didSelectSendButtonWith: textView.text)
         textViewDidChange()
         invalidateIntrinsicContentSize()
     }
