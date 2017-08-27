@@ -127,31 +127,38 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
             },
-            makeButton(named: "ic_library").onTextViewDidChange { button, textView in
-                button.isEnabled = textView.text.isEmpty
-            },
             makeButton(named: "ic_at"),
             makeButton(named: "ic_hashtag"),
             .flexibleSpace,
+            makeButton(named: "ic_library").onTextViewDidChange { button, textView in
+                button.isEnabled = textView.text.isEmpty
+            },
             bar.sendButton
                 .configure {
                     $0.layer.cornerRadius = 8
                     $0.layer.borderWidth = 1.5
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
-                    $0.setTitleColor(UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0), for: .normal)
+                    $0.setTitleColor(.white, for: .normal)
                     $0.setTitleColor(.white, for: .highlighted)
                     $0.size = CGSize(width: 52, height: 30)
                 }.onDisabled {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
-                }.onEnabled {
-                    $0.layer.borderColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0).cgColor
-                }.onSelected {
-                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
-                }.onDeselected {
                     $0.backgroundColor = .white
+                }.onEnabled {
+                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.layer.borderColor = UIColor.clear.cgColor
+                }.onSelected {
+                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 0.5)
+                    
+                    // We use a transform becuase changing the size would cause the other views to relayout
+                    $0.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+                }.onDeselected {
+                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.transform = CGAffineTransform.identity
             }
         ]
-        
+        items.forEach { $0.tintColor = .lightGray }
+    
         // We can change the container insets if we want
         bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
@@ -191,20 +198,13 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     func makeButton(named: String) -> InputBarButtonItem {
         return InputBarButtonItem()
             .configure {
+                $0.spacing = .fixed(10)
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-                $0.size = CGSize(width: 40, height: 40)
-                $0.layer.cornerRadius = 8
-                $0.imageEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-            }.onKeyboardEditingBegins {
                 $0.size = CGSize(width: 30, height: 30)
-            }.onKeyboardEditingEnds {
-                $0.size = CGSize(width: 40, height: 40)
             }.onSelected {
-                $0.backgroundColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-                $0.tintColor = .white
+                $0.tintColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             }.onDeselected {
-                $0.backgroundColor = .white
-                $0.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+                $0.tintColor = UIColor.lightGray
             }.onTouchUpInside { _ in
                 print("Item Tapped")
         }

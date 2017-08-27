@@ -82,7 +82,7 @@ Nathan Tannar - https://nathantannar.me
 
 ## License
 
-##### InputBarAccessoryView was developed as a contribution to [MessageKit](https://github.com/MessageKit/MessageKit).
+##### InputBarAccessoryView was developed as a contribution to [MessageKit](https://github.com/MessageKit/MessageKit) where it was renamed to MessageInputBar.
 <p>
   <img src="https://cdn.rawgit.com/MessageKit/MessageKit/master/Assets/mklogo.svg" title="MessageKit logo">
 </p>

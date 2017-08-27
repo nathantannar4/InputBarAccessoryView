@@ -110,7 +110,7 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    open lazy var sendButton: InputBarButtonItem = { [weak self] in
+    open var sendButton: InputBarButtonItem = {
         return InputBarButtonItem()
             .configure {
                 $0.size = CGSize(width: 52, height: 36)
