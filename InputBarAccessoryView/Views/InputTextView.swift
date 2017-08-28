@@ -32,9 +32,17 @@ open class InputTextView: UITextView {
     
     // MARK: - Properties
     
+    open weak var autocompleteDelegate: InputTextViewDelegate?
+    
+    open var autocompletePrefixes: [Character] = ["@", "#"] {
+        didSet {
+            
+        }
+    }
+    
     open override var text: String! {
         didSet {
-            placeholderLabel.isHidden = !text.isEmpty
+            textViewTextDidChange()
         }
     }
 
@@ -42,7 +50,7 @@ open class InputTextView: UITextView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .lightGray
-        label.text = "New Message"
+        label.text = "Aa"
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -143,7 +151,36 @@ open class InputTextView: UITextView {
     
     // MARK: - Notifications
     
-    func textViewTextDidChange() {
+    open func textViewTextDidChange() {
         placeholderLabel.isHidden = !text.isEmpty
+        checkForTypedPrefixes()
+    }
+    
+    // MARK: - Autocomplete
+    
+    /// Checks the last character for registered prefixes
+    open func checkForTypedPrefixes() {
+        
+        let words = text.components(separatedBy: " ")
+        guard let lastWord = words.last else { return }
+        autocompletePrefixes.forEach {
+            if lastWord.contains(String($0)) {
+                autocompleteDelegate?.inputTextView(self, didTypeAutocompletePrefix: $0)
+            }
+        }
+    }
+    
+    
+    /// Completes a prefix by replacing the string after the prefix with the provided text
+    ///
+    /// - Parameters:
+    ///   - prefix: The prefix
+    ///   - index: The index of the prefix
+    ///   - text: The text to autocomplete to
+    /// - Returns: If the autocomplete was successful
+    @discardableResult
+    open func autocomplete(_ prefix: Character, atIndex index: String.Index, withText text: String) -> Bool {
+        
+        return false
     }
 }

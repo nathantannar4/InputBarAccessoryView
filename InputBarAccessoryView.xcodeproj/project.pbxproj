@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		383989961F5277B8003D30DD /* InputTextViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383989951F5277B8003D30DD /* InputTextViewDelegate.swift */; };
+		383989981F528E5C003D30DD /* InputBarAccessoryViewDatasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383989971F528E5C003D30DD /* InputBarAccessoryViewDatasource.swift */; };
 		38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */; };
 		38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */; };
 		38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		383989951F5277B8003D30DD /* InputTextViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextViewDelegate.swift; sourceTree = "<group>"; };
+		383989971F528E5C003D30DD /* InputBarAccessoryViewDatasource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDatasource.swift; sourceTree = "<group>"; };
 		383B83831F4787E200027965 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
 		38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */,
+				383989971F528E5C003D30DD /* InputBarAccessoryViewDatasource.swift */,
+				383989951F5277B8003D30DD /* InputTextViewDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -184,11 +190,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				38C867841F50A6AD00811974 /* InputTextView.swift in Sources */,
+				383989961F5277B8003D30DD /* InputTextViewDelegate.swift in Sources */,
 				38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */,
 				38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */,
 				38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */,
 				38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarItem.swift in Sources */,
+				383989981F528E5C003D30DD /* InputBarAccessoryViewDatasource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
