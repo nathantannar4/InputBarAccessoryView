@@ -37,10 +37,18 @@ open class InputBarAccessoryView: UIView {
     // MARK: - Properties
     
     open weak var delegate: InputBarAccessoryViewDelegate?
+    open weak var dataSource: InputBarAccessoryViewDataSource?
     
     /// A background view that adds a blur effect. Shown when 'isTransparent' is set to TRUE. Hidden by default.
-    open let blurView: UIView = {
-        let blurEffect = UIBlurEffect(style: .extraLight)
+    open lazy var backgroundView: UIView = { [weak self] in
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    private let blurView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.isHidden = true
@@ -51,7 +59,7 @@ open class InputBarAccessoryView: UIView {
     open var isTranslucent: Bool = false {
         didSet {
             blurView.isHidden = !isTranslucent
-            backgroundColor = isTranslucent ? .clear : .white
+            backgroundView.backgroundColor = isTranslucent ? .clear : .white
         }
     }
 
@@ -64,39 +72,51 @@ open class InputBarAccessoryView: UIView {
     }()
     
     open let leftStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.spacing = 15
+        return stackView
     }()
     
     open let rightStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        return stackView
     }()
     
     open let bottomStackView: UIStackView = {
-        let view = UIStackView()
-        view.axis = .horizontal
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.distribution = .fill
-        view.alignment = .fill
-        view.spacing = 15
-        return view
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.spacing = 15
+        return stackView
+    }()
+    
+    open lazy var tableView: UITableView = { [weak self] in
+        let tableView = UITableView()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(InputTableViewCell.self, forCellReuseIdentifier: InputTableViewCell.reuseIdentifier)
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
+        tableView.rowHeight = 44
+        tableView.showsVerticalScrollIndicator = false
+        return tableView
     }()
     
     open lazy var textView: InputTextView = { [weak self] in
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.inputBarAccessoryView = self
+        textView.autocompleteDelegate = self
         return textView
     }()
     
@@ -133,7 +153,7 @@ open class InputBarAccessoryView: UIView {
     
     override open var intrinsicContentSize: CGSize {
         let sizeToFit = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude))
-        var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
+        var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom + separatorLine.frame.height + tableViewHeightConstant
         if heightToFit >= maxHeight {
             textView.isScrollEnabled = true
             heightToFit = maxHeight
@@ -156,18 +176,27 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    private(set) var leftStackViewWidthContant: CGFloat = 0 {
+    private(set) var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
-            leftStackViewLayoutSet?.width?.constant = leftStackViewWidthContant
+            leftStackViewLayoutSet?.width?.constant = leftStackViewWidthConstant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    private(set) var rightStackViewWidthContant: CGFloat = 52 {
+    private(set) var rightStackViewWidthConstant: CGFloat = 52 {
         didSet {
-            rightStackViewLayoutSet?.width?.constant = rightStackViewWidthContant
+            rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
         }
     }
+    
+    private(set) var tableViewHeightConstant: CGFloat = .leastNonzeroMagnitude {
+        didSet {
+            tableViewHeightConstraint?.constant = tableViewHeightConstant
+        }
+    }
+    
+    internal var currentPrefix: Character?
+    internal var currentAutocompleteFilter: String?
     
     /// When set to TRUE and the swipe gesture direction on the InputTextView is down the first responder will be resigned
     open var shouldDismissOnSwipe: Bool = true
@@ -195,6 +224,7 @@ open class InputBarAccessoryView: UIView {
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
+    private var tableViewHeightConstraint: NSLayoutConstraint?
     private var previousIntrinsicContentSize: CGSize?
     
     // MARK: - Initialization
@@ -220,8 +250,9 @@ open class InputBarAccessoryView: UIView {
     
     open func setup() {
         
-        backgroundColor = .white
-        autoresizingMask = [.flexibleHeight, .flexibleBottomMargin]
+        tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        backgroundColor = .clear
+        autoresizingMask = .flexibleHeight
         setupSubviews()
         setupConstraints()
         setupObservers()
@@ -230,39 +261,43 @@ open class InputBarAccessoryView: UIView {
     
     private func setupSubviews() {
         
-        addSubview(blurView)
+        addSubview(backgroundView)
+        backgroundView.addSubview(blurView)
         addSubview(textView)
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
+        addSubview(tableView)
         addSubview(separatorLine)
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     private func setupConstraints() {
         
-        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 0.5)
+        tableViewHeightConstraint = tableView.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: .leastNonzeroMagnitude).last
+        separatorLine.addConstraints(tableView.bottomAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 0.5)
+        backgroundView.addConstraints(tableView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         blurView.fillSuperview()
         
         textViewLayoutSet = NSLayoutConstraintSet(
-            top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            top:    textView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: padding.top),
             bottom: textView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -textViewPadding.bottom),
             left:   textView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  textView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
         ).activate()
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            top:    textView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: padding.top),
             bottom: leftStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-            width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthContant)
+            width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
         ).activate()
         
         rightStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    textView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
+            top:    textView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: padding.top),
             bottom: rightStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
             right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
-            width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthContant)
+            width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
         ).activate()
 
         bottomStackViewLayoutSet = NSLayoutConstraintSet(
@@ -394,10 +429,9 @@ open class InputBarAccessoryView: UIView {
     /// - Parameters:
     ///   - newValue: New widthAnchor constant
     ///   - animated: If the layout should be animated
-    open func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
+    open func setLeftStackViewWidthConstant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) { 
-            self.leftStackViewWidthContant = newValue
-            self.layoutIfNeeded()
+            self.leftStackViewWidthConstant = newValue
         }
     }
     
@@ -406,10 +440,21 @@ open class InputBarAccessoryView: UIView {
     /// - Parameters:
     ///   - newValue: New widthAnchor constant
     ///   - animated: If the layout should be animated
-    open func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool) {
+    open func setRightStackViewWidthConstant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) { 
-            self.rightStackViewWidthContant = newValue
-            self.layoutIfNeeded()
+            self.rightStackViewWidthConstant = newValue
+        }
+    }
+    
+    
+    /// Sets the tableViewHeighConstant. This should only be used if you start overriding the UITableViewDatasource methods.
+    ///
+    /// - Parameters:
+    ///   - newValue: New heightAnchor constant
+    ///   - animated: If the layout should be animated
+    open func setTableViewHeightConstant(to newValue: CGFloat) {
+        performLayout(false) {
+            self.tableViewHeightConstraint?.constant = newValue
         }
     }
     
@@ -466,5 +511,70 @@ open class InputBarAccessoryView: UIView {
     open func didSelectInputBarItem(_ item: InputBarButtonItem) {
         items.forEach { $0.isSelected = false }
         item.touchUpInsideAction()
+    }
+}
+
+// MARK: - InputTextViewDelegate
+
+extension InputBarAccessoryView: InputTextViewAutocompleteDelegate {
+    
+    open func inputTextView(_ textView: InputTextView, didTypeAutocompletePrefix prefix: Character, withText text: String) {
+        currentPrefix = prefix
+        currentAutocompleteFilter = text
+        tableView.reloadData()
+    }
+}
+
+// MARK: - UITableViewDataSource
+
+extension InputBarAccessoryView: UITableViewDataSource {
+    
+    open func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        guard let prefix = currentPrefix, let filterText = currentAutocompleteFilter, let dataSource = dataSource else {
+            return 0
+        }
+        let numberOfRows = dataSource.inputBar(self, autocompleteOptionsForPrefix: prefix, withEnteredText: filterText).count
+        let multiplier = numberOfRows < 4 ? CGFloat(numberOfRows) : 3
+        let tableViewHeight = multiplier * tableView.rowHeight
+        setTableViewHeightConstant(to: tableViewHeight)
+        return numberOfRows
+    }
+    
+    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = dataSource?.inputBar(self, tableView: tableView, cellForRowAt: indexPath), let prefix = currentPrefix, let filterText = currentAutocompleteFilter else {
+            return UITableViewCell()
+        }
+        cell.prefix = prefix
+        cell.autocompleteText = dataSource?.inputBar(self, autocompleteOptionsForPrefix: prefix, withEnteredText: filterText)[indexPath.row]
+        cell.tintColor = tintColor
+        return cell
+    }
+}
+
+// MARK: - UITableViewDelegate
+
+extension InputBarAccessoryView: UITableViewDelegate {
+    
+    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        guard let prefix = currentPrefix, let filterText = currentAutocompleteFilter, let dataSource = dataSource else {
+            return
+        }
+        let replacementText = dataSource.inputBar(self, autocompleteOptionsForPrefix: prefix, withEnteredText: filterText)[indexPath.row]
+        if textView.autocomplete(withText: replacementText, from: filterText) {
+            setTableViewHeightConstant(to: 0)
+        }
+    }
+    
+    open func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let lastRow = tableView.numberOfRows(inSection: 0) - 1
+        tableView.bounces = !(indexPath.row == lastRow)
     }
 }

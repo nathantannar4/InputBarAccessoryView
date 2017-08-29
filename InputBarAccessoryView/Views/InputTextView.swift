@@ -28,15 +28,15 @@
 import Foundation
 import UIKit
 
-open class InputTextView: UITextView {
+open class InputTextView: UITextView, UITextViewDelegate {
     
     // MARK: - Properties
     
-    open weak var autocompleteDelegate: InputTextViewDelegate?
+    open weak var autocompleteDelegate: InputTextViewAutocompleteDelegate?
     
     open var autocompletePrefixes: [Character] = ["@", "#"] {
         didSet {
-            
+            checkForTypedPrefixes()
         }
     }
     
@@ -58,7 +58,7 @@ open class InputTextView: UITextView {
     
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
     
-    open var placeholder: String? = "New Message" {
+    open var placeholder: String? = "Aa" {
         didSet {
             placeholderLabel.text = placeholder
         }
@@ -90,6 +90,9 @@ open class InputTextView: UITextView {
     
     public weak var inputBarAccessoryView: InputBarAccessoryView?
     
+    private var currentPrefix: Character?
+    private var currentPrefixRange: Range<Int>?
+    
     // MARK: - Initializers
     
     public convenience init() {
@@ -113,6 +116,7 @@ open class InputTextView: UITextView {
         
         font = UIFont.preferredFont(forTextStyle: .body)
         isScrollEnabled = false
+        delegate = self
         addSubviews()
         addObservers()
         addConstraints()
@@ -138,7 +142,7 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.top?.constant = placeholderLabelInsets.top
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
-        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.bottom
+        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.right
     }
     
     private func addObservers() {
@@ -152,8 +156,26 @@ open class InputTextView: UITextView {
     // MARK: - Notifications
     
     open func textViewTextDidChange() {
+        
         placeholderLabel.isHidden = !text.isEmpty
         checkForTypedPrefixes()
+    }
+    
+    // MARK: -  UITextViewDelegate
+    
+    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        
+        guard let char = text.characters.first else { return true }
+        if autocompletePrefixes.contains(char) {
+            currentPrefix = char
+            currentPrefixRange = range.toRange()
+        }
+        if char == " " {
+            currentPrefix = nil
+            currentPrefixRange = nil
+        }
+        
+        return true
     }
     
     // MARK: - Autocomplete
@@ -161,15 +183,25 @@ open class InputTextView: UITextView {
     /// Checks the last character for registered prefixes
     open func checkForTypedPrefixes() {
         
-        let words = text.components(separatedBy: " ")
-        guard let lastWord = words.last else { return }
-        autocompletePrefixes.forEach {
-            if lastWord.contains(String($0)) {
-                autocompleteDelegate?.inputTextView(self, didTypeAutocompletePrefix: $0)
+        if let prefix = currentPrefix, let prefixRange = currentPrefixRange {
+            var offset = prefixRange.lowerBound
+            if offset > (text.characters.count - 1) {
+                offset = text.characters.count - 1
+            }
+            if offset < 0 {
+                offset = 0
+            }
+            
+            let index = text.index(text.startIndex, offsetBy: offset)
+            if let filerText = text.substring(from: index)
+                .components(separatedBy:  " ")
+                .first?
+                .replacingOccurrences(of: String(prefix), with: "") {
+                
+                autocompleteDelegate?.inputTextView(self, didTypeAutocompletePrefix: prefix, withText: filerText)
             }
         }
     }
-    
     
     /// Completes a prefix by replacing the string after the prefix with the provided text
     ///
@@ -179,8 +211,29 @@ open class InputTextView: UITextView {
     ///   - text: The text to autocomplete to
     /// - Returns: If the autocomplete was successful
     @discardableResult
-    open func autocomplete(_ prefix: Character, atIndex index: String.Index, withText text: String) -> Bool {
+    open func autocomplete(withText autocompleteText: String, from enteredText: String) -> Bool {
         
-        return false
+        guard let prefix = currentPrefix, let prefixRange = currentPrefixRange else {
+            return false
+        }
+        
+        var offset = prefixRange.lowerBound
+        if offset > (text.characters.count - 1) {
+            offset = text.characters.count - 1
+        }
+        if offset < 0 {
+            offset = 0
+        }
+
+        let leftIndex = text.index(text.startIndex, offsetBy: offset)
+        let leftText = text.substring(to: leftIndex)
+        
+        let rightIndex = text.index(text.startIndex, offsetBy: offset + enteredText.characters.count + 1)
+        let rightText = text.substring(from: rightIndex)
+        
+        self.text = leftText + String(prefix) + autocompleteText + rightText
+        currentPrefix = nil
+        currentPrefixRange = nil
+        return true
     }
 }

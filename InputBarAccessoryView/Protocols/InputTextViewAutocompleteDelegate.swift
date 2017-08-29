@@ -1,5 +1,5 @@
 //
-//  InputTextViewDelegate.swift
+//  InputTextViewAutocompleteDelegate.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -28,12 +28,7 @@
 import Foundation
 import UIKit
 
-public protocol InputTextViewDelegate: class {
+public protocol InputTextViewAutocompleteDelegate: class {
     
-    func inputTextView(_ textView: InputTextView, didTypeAutocompletePrefix prefix: Character)
-}
-
-public extension InputTextViewDelegate {
-    
-    func inputTextView(_ textView: InputTextView, didTypeAutocompletePrefix prefix: Character) {}
+    func inputTextView(_ textView: InputTextView, didTypeAutocompletePrefix prefix: Character, withText text: String)
 }

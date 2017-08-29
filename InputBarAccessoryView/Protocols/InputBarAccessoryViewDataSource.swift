@@ -1,5 +1,5 @@
 //
-//  InputBarAccessoryViewDatasource.swift
+//  InputBarAccessoryViewDatasSource.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -25,6 +25,19 @@
 //  Created by Nathan Tannar on 8/26/17.
 //
 
-class InputBarAccessoryViewDatasource {
+import Foundation
+import UIKit
+
+public protocol InputBarAccessoryViewDataSource: class {
     
+    func inputBar(_ inputBar: InputBarAccessoryView, autocompleteOptionsForPrefix prefix: Character, withEnteredText text: String) -> [String]
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, tableView: UITableView, cellForRowAt indexPath: IndexPath) -> InputTableViewCell?
+}
+
+public extension InputBarAccessoryViewDataSource {
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, tableView: UITableView, cellForRowAt indexPath: IndexPath) -> InputTableViewCell? {
+        return tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.reuseIdentifier, for: indexPath) as? InputTableViewCell
+    }
 }
