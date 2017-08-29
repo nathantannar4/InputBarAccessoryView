@@ -9,7 +9,7 @@
 import UIKit
 import InputBarAccessoryView
 
-class ViewController: UIViewController, InputBarAccessoryViewDelegate {
+class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarAccessoryViewDataSource {
     
     enum Style: String {
         case slack = "Slack"
@@ -50,6 +50,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     lazy var bar: InputBarAccessoryView = { [unowned self] in
         let bar = InputBarAccessoryView()
         bar.delegate = self
+        bar.dataSource = self
         return bar
     }()
     
@@ -99,9 +100,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
-                item.inputBarAccessoryView?.setLeftStackViewWidthContant(to: 0, animated: true)
+                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: true)
             } else if gesture.direction == .right {
-                item.inputBarAccessoryView?.setLeftStackViewWidthContant(to: 36, animated: true)
+                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 36, animated: true)
             }
         }
         button.size = CGSize(width: 36, height: 36)
@@ -117,7 +118,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.textView.layer.cornerRadius = 16.0
         bar.textView.layer.masksToBounds = true
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.setLeftStackViewWidthContant(to: 36, animated: true)
+        bar.setLeftStackViewWidthConstant(to: 36, animated: true)
         bar.setStackViewItems([button], forStack: .left, animated: true)
     }
 
@@ -164,7 +165,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
     
         // Since we moved the send button to the bottom stack lets set the right stack width to 0
-        bar.setRightStackViewWidthContant(to: 0, animated: true)
+        bar.setRightStackViewWidthConstant(to: 0, animated: true)
         
         // Finally set the items
         bar.setStackViewItems(items, forStack: .bottom, animated: true)
@@ -187,8 +188,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
         bar.textView.layer.borderWidth = 0
         bar.setStackViewItems([], forStack: .left, animated: true)
         bar.setStackViewItems([], forStack: .bottom, animated: true)
-        bar.setRightStackViewWidthContant(to: 52, animated: true)
-        bar.setLeftStackViewWidthContant(to: 0, animated: true)
+        bar.setRightStackViewWidthConstant(to: 52, animated: true)
+        bar.setLeftStackViewWidthConstant(to: 0, animated: true)
         bar.sendButton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         bar.sendButton.layer.borderWidth = 0
         bar.sendButton.size = CGSize(width: 52, height: 36)
@@ -223,6 +224,13 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
         print(text)
         inputBar.textView.text = String()
+    }
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, autocompleteOptionsForPrefix prefix: Character, withEnteredText text: String) -> [String] {
+        
+        let values = prefix == "@" ? ["nathan.tannar", "bill.gates", "steve.jobs", "tim.cook"] : ["apple", "microsoft", "iphone", "ipad"]
+        let options = values.filter { $0.lowercased().contains(text.lowercased()) }
+        return options
     }
 }
 
