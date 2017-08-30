@@ -118,7 +118,7 @@ open class InputTableViewCell: UITableViewCell {
             }
         }
         if animated {
-            UIView.animate(withDuration:  selected ? 0.1 : 0.5) {
+            UIView.animate(withDuration:  selected ? 0.3 : 1) {
                 animation()
             }
         } else {

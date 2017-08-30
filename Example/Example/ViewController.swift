@@ -47,6 +47,14 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         }
     }
     
+    let names: [String] = {
+        var array: [String] = []
+        for _ in 1...100 {
+            array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
+        }
+        return array
+    }()
+    
     lazy var bar: InputBarAccessoryView = { [unowned self] in
         let bar = InputBarAccessoryView()
         bar.delegate = self
@@ -111,8 +119,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
         bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
         bar.textView.layer.borderWidth = 1.0
         bar.textView.layer.cornerRadius = 16.0
@@ -172,15 +180,34 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
     }
     
     func WhatsApp() {
-        
+        None()
     }
     
     func Snapchat() {
-        
+        None()
     }
     
     func iMessage() {
-        
+        None()
+        bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 46)
+        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 50)
+        bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+        bar.textView.layer.borderWidth = 1.0
+        bar.textView.layer.cornerRadius = 16.0
+        bar.textView.layer.masksToBounds = true
+        bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.setRightStackViewWidthConstant(to: 38, animated: true)
+        bar.setStackViewItems([bar.sendButton, .fixedSpace(2)], forStack: .right, animated: true)
+        bar.sendButton.imageView?.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        bar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
+        bar.sendButton.size = CGSize(width: 36, height: 36)
+        bar.sendButton.image = #imageLiteral(resourceName: "ic_up")
+        bar.sendButton.title = nil
+        bar.sendButton.imageView?.layer.cornerRadius = 16
+        bar.sendButton.backgroundColor = .clear
+        bar.textViewPadding.right = -38
     }
     
     func None() {
@@ -193,6 +220,11 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.sendButton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
         bar.sendButton.layer.borderWidth = 0
         bar.sendButton.size = CGSize(width: 52, height: 36)
+        bar.sendButton.backgroundColor = .white
+        bar.sendButton.title = "Send"
+        bar.sendButton.image = nil
+        bar.sendButton.contentEdgeInsets = .zero
+        bar.sendButton.imageView?.layer.cornerRadius = 0
         bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
     }
     
@@ -221,14 +253,14 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         }
     }
     
-    func inputBar(_ inputBar: InputBarAccessoryView, didSelectSendButtonWith text: String) {
+    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         print(text)
         inputBar.textView.text = String()
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, autocompleteOptionsForPrefix prefix: Character, withEnteredText text: String) -> [String] {
         
-        let values = prefix == "@" ? ["nathan.tannar", "bill.gates", "steve.jobs", "tim.cook"] : ["apple", "microsoft", "iphone", "ipad"]
+        let values = prefix == "@" ? names : ["apple", "microsoft", "iphone", "ipad"]
         let options = values.filter { $0.lowercased().contains(text.lowercased()) }
         return options
     }
