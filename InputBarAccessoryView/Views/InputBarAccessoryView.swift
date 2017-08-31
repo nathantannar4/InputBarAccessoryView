@@ -285,6 +285,7 @@ open class InputBarAccessoryView: UIView {
             left:   textView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  textView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
         ).activate()
+        textViewLayoutSet?.height = textView.heightAnchor.constraint(equalToConstant: 36)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
             top:    textView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: padding.top),
@@ -465,6 +466,7 @@ open class InputBarAccessoryView: UIView {
     }
     
     open func textViewDidChange() {
+        textViewLayoutSet?.height?.isActive = textView.text.isEmpty
         let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         performLayout(true) { 
             self.items.forEach { $0.textViewDidChangeAction(with: self.textView) }
