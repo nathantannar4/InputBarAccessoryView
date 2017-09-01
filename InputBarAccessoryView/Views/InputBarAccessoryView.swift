@@ -348,11 +348,20 @@ open class InputBarAccessoryView: UIView {
     // MARK: - Layout Helper Methods
     
     /// Called during the hooks so account for any size changes
-    public func layoutStackViews() {
+    public func layoutStackViews(_ positions: [UIStackViewPosition] = [.left, .right, .bottom]) {
         
-        for stackView in [leftStackView, rightStackView, bottomStackView] {
-            stackView.setNeedsLayout()
-            stackView.layoutIfNeeded()
+        for position in positions {
+            switch position {
+            case .left:
+                leftStackView.setNeedsLayout()
+                leftStackView.layoutIfNeeded()
+            case .right:
+                rightStackView.setNeedsLayout()
+                rightStackView.layoutIfNeeded()
+            case .bottom:
+                bottomStackView.setNeedsLayout()
+                bottomStackView.layoutIfNeeded()
+            }
         }
     }
     
@@ -399,6 +408,7 @@ open class InputBarAccessoryView: UIView {
                 leftStackViewItems = items
                 leftStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
+                    $0.parentStackViewPosition = position
                     leftStackView.addArrangedSubview($0)
                 }
                 leftStackView.layoutIfNeeded()
@@ -407,6 +417,7 @@ open class InputBarAccessoryView: UIView {
                 rightStackViewItems = items
                 rightStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
+                    $0.parentStackViewPosition = position
                     rightStackView.addArrangedSubview($0)
                 }
                 rightStackView.layoutIfNeeded()
@@ -415,6 +426,7 @@ open class InputBarAccessoryView: UIView {
                 bottomStackViewItems = items
                 bottomStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
+                    $0.parentStackViewPosition = position
                     bottomStackView.addArrangedSubview($0)
                 }
                 bottomStackView.layoutIfNeeded()
@@ -434,6 +446,8 @@ open class InputBarAccessoryView: UIView {
     open func setLeftStackViewWidthConstant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) { 
             self.leftStackViewWidthConstant = newValue
+            self.layoutStackViews([.left])
+            self.layoutIfNeeded()
         }
     }
     
@@ -445,6 +459,8 @@ open class InputBarAccessoryView: UIView {
     open func setRightStackViewWidthConstant(to newValue: CGFloat, animated: Bool) {
         performLayout(animated) { 
             self.rightStackViewWidthConstant = newValue
+            self.layoutStackViews([.right])
+            self.layoutIfNeeded()
         }
     }
     
@@ -457,6 +473,7 @@ open class InputBarAccessoryView: UIView {
     open func setTableViewHeightConstant(to newValue: CGFloat) {
         performLayout(false) {
             self.tableViewHeightConstraint?.constant = newValue
+            self.layoutIfNeeded()
         }
     }
     

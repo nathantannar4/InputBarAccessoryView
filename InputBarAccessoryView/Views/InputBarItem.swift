@@ -75,6 +75,8 @@ open class InputBarButtonItem: UIButton {
         return contentSize
     }
     
+    public var parentStackViewPosition: InputBarAccessoryView.UIStackViewPosition?
+    
     /// The title for the UIControlState.normal
     open var title: String? {
         get {
@@ -159,9 +161,9 @@ open class InputBarButtonItem: UIButton {
     
     open func setSize(_ newValue: CGSize?, animated: Bool) {
         size = newValue
-        if animated {
+        if animated, let position = parentStackViewPosition {
             inputBarAccessoryView?.performLayout(animated) {
-                self.inputBarAccessoryView?.layoutStackViews()
+                self.inputBarAccessoryView?.layoutStackViews([position])
             }
         }
     }

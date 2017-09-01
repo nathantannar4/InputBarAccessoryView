@@ -116,9 +116,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
-                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: self.viewIsLoaded)
+                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: true)
             } else if gesture.direction == .right {
-                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 36, animated: self.viewIsLoaded)
+                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 36, animated: true)
             }
         }
         button.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
