@@ -27,7 +27,7 @@
 
 import UIKit
 
-public extension UIView {
+extension UIView {
     
     func fillSuperview() {
         guard let superview = self.superview else {
@@ -88,5 +88,9 @@ public extension UIView {
         
         constraints.forEach { $0.isActive = true }
         return constraints
+    }
+    
+    func removeAllConstraints() {
+        constraints.forEach { removeConstraint($0) }
     }
 }

@@ -56,8 +56,6 @@ open class InputTextView: UITextView, UITextViewDelegate {
         return label
     }()
     
-    private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
-    
     open var placeholder: String? = "Aa" {
         didSet {
             placeholderLabel.text = placeholder
@@ -81,6 +79,12 @@ open class InputTextView: UITextView, UITextViewDelegate {
             placeholderLabel.textAlignment = textAlignment
         }
     }
+    
+    open override var textContainerInset: UIEdgeInsets {
+        didSet {
+            placeholderLabelInsets = textContainerInset
+        }
+    }
 
     open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
         didSet {
@@ -88,9 +92,10 @@ open class InputTextView: UITextView, UITextViewDelegate {
         }
     }
     
+    private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
     private var currentPrefix: Character?
     private var currentPrefixRange: Range<Int>?
-    
+ 
     // MARK: - Initializers
     
     public convenience init() {
@@ -161,36 +166,29 @@ open class InputTextView: UITextView, UITextViewDelegate {
     
     // MARK: -  UITextViewDelegate
     
-    open func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
-        guard let char = text.characters.first else { return true }
-        if autocompletePrefixes.contains(char) {
-            currentPrefix = char
-            currentPrefixRange = range.toRange()
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    
+        if let char = text.characters.first {
+            // Register/Unregister Prefix
+            if autocompletePrefixes.contains(char) {
+                currentPrefix = char
+                currentPrefixRange = range.toRange()
+            }
+            if char == " " {
+                currentPrefix = nil
+                currentPrefixRange = nil
+            }
         }
-        if char == " " {
-            currentPrefix = nil
-            currentPrefixRange = nil
-        }
-        
         return true
     }
     
     // MARK: - Autocomplete
     
     /// Checks the last character for registered prefixes
-    open func checkForTypedPrefixes() {
+    public func checkForTypedPrefixes() {
         
-        if let prefix = currentPrefix, let prefixRange = currentPrefixRange {
-            var offset = prefixRange.lowerBound
-            if offset > (text.characters.count - 1) {
-                offset = text.characters.count - 1
-            }
-            if offset < 0 {
-                offset = 0
-            }
-            
-            let index = text.index(text.startIndex, offsetBy: offset)
+        if let prefix = currentPrefix {
+            let index = text.index(text.startIndex, offsetBy: safeOffset())
             if let filerText = text.substring(from: index)
                 .components(separatedBy:  " ")
                 .first?
@@ -205,33 +203,47 @@ open class InputTextView: UITextView, UITextViewDelegate {
     ///
     /// - Parameters:
     ///   - prefix: The prefix
-    ///   - index: The index of the prefix
-    ///   - text: The text to autocomplete to
+    ///   - autocompleteText: The text to insert
+    ///   - enteredText: The text to replace
     /// - Returns: If the autocomplete was successful
     @discardableResult
-    open func autocomplete(withText autocompleteText: String, from enteredText: String) -> Bool {
+    public func autocomplete(withText autocompleteText: String, from enteredText: String) -> Bool {
         
-        guard let prefix = currentPrefix, let prefixRange = currentPrefixRange else {
+        guard let prefix = currentPrefix else {
             return false
         }
         
-        var offset = prefixRange.lowerBound
-        if offset > (text.characters.count - 1) {
-            offset = text.characters.count - 1
-        }
-        if offset < 0 {
-            offset = 0
-        }
+        let leftIndex = text.index(text.startIndex, offsetBy: safeOffset())
+        let rightIndex = text.index(text.startIndex, offsetBy: safeOffset() + enteredText.characters.count)
 
-        let leftIndex = text.index(text.startIndex, offsetBy: offset)
-        let leftText = text.substring(to: leftIndex)
+        let range = leftIndex...rightIndex
+        let textToInsert = String(prefix) + autocompleteText.appending(" ")
+        text.replaceSubrange(range, with: textToInsert)
         
-        let rightIndex = text.index(text.startIndex, offsetBy: offset + enteredText.characters.count + 1)
-        let rightText = text.substring(from: rightIndex)
+        // Move Cursor to the end of the inserted text
+        selectedRange = NSMakeRange(safeOffset() + textToInsert.characters.count, 0)
         
-        self.text = leftText + String(prefix) + autocompleteText + rightText
+        // Unregister
         currentPrefix = nil
         currentPrefixRange = nil
         return true
+    }
+    
+    // MARK: - Helper Methods
+    
+    /// A safe way to generate an offset
+    ///
+    /// - Returns: An offset that is not more than the endIndex or less than the startIndex
+    private func safeOffset() -> Int {
+        guard let range = currentPrefixRange else {
+            return 0
+        }
+        if range.lowerBound > (text.characters.count - 1) {
+            return text.characters.count - 1
+        }
+        if range.lowerBound < 0 {
+            return 0
+        }
+        return range.lowerBound
     }
 }

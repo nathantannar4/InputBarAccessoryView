@@ -39,26 +39,31 @@ open class InputBarAccessoryView: UIView {
     open weak var delegate: InputBarAccessoryViewDelegate?
     open weak var dataSource: InputBarAccessoryViewDataSource?
     
-    /// A background view that adds a blur effect. Shown when 'isTransparent' is set to TRUE. Hidden by default.
-    open lazy var backgroundView: UIView = { [weak self] in
+    open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         return view
     }()
     
-    private let blurView: UIVisualEffectView = {
+    /// A backgroundView subview that adds a blur effect. Shown when 'isTransparent' is set to TRUE. Hidden by default.
+    open var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.isHidden = true
         return view
     }()
     
     /// When set to true, the blurView in the background is shown and the backgroundColor is set to .clear. Default is FALSE
     open var isTranslucent: Bool = false {
         didSet {
-            blurView.isHidden = !isTranslucent
+            if isTranslucent && blurView.superview == nil {
+                backgroundView.addSubview(blurView)
+                blurView.fillSuperview()
+            } else if !isTranslucent {
+                blurView.removeAllConstraints()
+                blurView.removeFromSuperview()
+            }
             backgroundView.backgroundColor = isTranslucent ? .clear : .white
         }
     }
@@ -260,7 +265,6 @@ open class InputBarAccessoryView: UIView {
     private func setupSubviews() {
         
         addSubview(backgroundView)
-        backgroundView.addSubview(blurView)
         addSubview(textView)
         addSubview(leftStackView)
         addSubview(rightStackView)
@@ -275,7 +279,6 @@ open class InputBarAccessoryView: UIView {
         tableViewHeightConstraint = tableView.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: .leastNonzeroMagnitude).last
         separatorLine.addConstraints(tableView.bottomAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 0.5)
         backgroundView.addConstraints(tableView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
-        blurView.fillSuperview()
         
         textViewLayoutSet = NSLayoutConstraintSet(
             top:    textView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: padding.top),

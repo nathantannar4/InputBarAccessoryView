@@ -105,6 +105,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         }
         Slack()
         
+        // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
+        // inputAccessoryView?.snapshotView(afterScreenUpdates: true)
+        
         viewIsLoaded = true
     }
     
@@ -254,8 +257,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
     func inputBar(_ inputBar: InputBarAccessoryView, autocompleteOptionsForPrefix prefix: Character, withEnteredText text: String) -> [String] {
         
         let values = prefix == "@" ? names : ["apple", "microsoft", "iphone", "ipad"]
-        let options = values.filter { $0.lowercased().contains(text.lowercased()) }
-        return options
+        if !text.isEmpty {
+            return values.filter { $0.lowercased().contains(text.lowercased()) }
+        }
+        return values
     }
 }
 
