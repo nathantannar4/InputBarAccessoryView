@@ -61,6 +61,9 @@ open class InputBarButtonItem: UIButton {
     open var size: CGSize? = CGSize(width: 20, height: 20) {
         didSet {
             invalidateIntrinsicContentSize()
+            inputBarAccessoryView?.performLayout(false) {
+                self.inputBarAccessoryView?.layoutStackViews()
+            }
         }
     }
     
@@ -69,7 +72,7 @@ open class InputBarButtonItem: UIButton {
         switch spacing {
         case .fixed(let width):
             contentSize.width += width
-        default:
+        case .flexible, .none:
             break
         }
         return contentSize
@@ -96,12 +99,8 @@ open class InputBarButtonItem: UIButton {
     }
     
     open override var isHighlighted: Bool {
-        get {
-            return super.isHighlighted
-        }
-        set {
-            super.isHighlighted = newValue
-            if newValue {
+        didSet {
+            if isHighlighted {
                 onSelectedAction?(self)
             } else {
                 onDeselectedAction?(self)
@@ -110,12 +109,8 @@ open class InputBarButtonItem: UIButton {
     }
     
     open override var isEnabled: Bool {
-        get {
-            return super.isEnabled
-        }
-        set {
-            super.isEnabled = newValue
-            if newValue {
+        didSet {
+            if isEnabled {
                 onEnabledAction?(self)
             } else {
                 onDisabledAction?(self)

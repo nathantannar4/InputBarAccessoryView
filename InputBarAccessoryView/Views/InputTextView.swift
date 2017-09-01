@@ -88,8 +88,6 @@ open class InputTextView: UITextView, UITextViewDelegate {
         }
     }
     
-    public weak var inputBarAccessoryView: InputBarAccessoryView?
-    
     private var currentPrefix: Character?
     private var currentPrefixRange: Range<Int>?
     

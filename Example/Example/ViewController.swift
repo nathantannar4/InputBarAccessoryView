@@ -101,6 +101,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
             view.addSubview(button)
             frame.origin.x += 58
         }
+        Slack()
     }
     
     func Messenger() {
@@ -173,10 +174,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
     
         // Since we moved the send button to the bottom stack lets set the right stack width to 0
-        bar.setRightStackViewWidthConstant(to: 0, animated: true)
+        bar.setRightStackViewWidthConstant(to: 0, animated: false)
         
         // Finally set the items
-        bar.setStackViewItems(items, forStack: .bottom, animated: true)
+        bar.setStackViewItems(items, forStack: .bottom, animated: false)
     }
     
     func WhatsApp() {
