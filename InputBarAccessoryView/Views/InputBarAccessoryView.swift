@@ -200,9 +200,6 @@ open class InputBarAccessoryView: UIView {
     
     internal var currentPrefix: Character?
     internal var currentAutocompleteFilter: String?
-    
-    /// When set to TRUE and the swipe gesture direction on the InputTextView is down the first responder will be resigned
-    open var shouldDismissOnSwipe: Bool = true
 
     /// The InputBarItems held in the leftStackView
     private(set) var leftStackViewItems: [InputBarButtonItem] = []
@@ -339,7 +336,7 @@ open class InputBarAccessoryView: UIView {
     
     private func setupGestureRecognizers() {
         
-        let directions: [UISwipeGestureRecognizerDirection] = [.up, .down, .left, .right]
+        let directions: [UISwipeGestureRecognizerDirection] = [.left, .right]
         for direction in directions {
             let gesture = UISwipeGestureRecognizer(target: self,
                                                    action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
@@ -494,10 +491,6 @@ open class InputBarAccessoryView: UIView {
         
         items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
         delegate?.inputBar(self, didSwipeTextViewWith: gesture)
-        
-        if shouldDismissOnSwipe && gesture.direction == .down {
-            resignFirstResponder()
-        }
     }
     
     open func didSelectSendButton() {

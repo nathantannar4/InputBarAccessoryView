@@ -240,14 +240,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
     }
     
     // MARK: - InputBarAccessoryViewDelegate
-
-    func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
-        if gesture.direction == .down {
-            inputBar.textView.resignFirstResponder()
-        } else {
-            inputBar.textView.becomeFirstResponder()
-        }
-    }
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         print(text)
