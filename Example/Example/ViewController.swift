@@ -144,8 +144,16 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
             },
-            makeButton(named: "ic_at"),
-            makeButton(named: "ic_hashtag"),
+            makeButton(named: "ic_at").onSelected { _ in
+//                if let textView = $0.inputBarAccessoryView?.textView {
+//                    textView.text.insert("@", at: textView.text.endIndex)
+//                }
+            },
+            makeButton(named: "ic_hashtag").onSelected { _ in
+//                if let textView = $0.inputBarAccessoryView?.textView {
+//                    textView.text.insert("#", at: textView.text.endIndex)
+//                }
+            },
             .flexibleSpace,
             makeButton(named: "ic_library").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty

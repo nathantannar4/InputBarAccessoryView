@@ -42,6 +42,7 @@ open class InputTextView: UITextView, UITextViewDelegate {
     
     open override var text: String! {
         didSet {
+//            checkForAppendedPrefix()
             textViewTextDidChange()
         }
     }
@@ -196,8 +197,42 @@ open class InputTextView: UITextView, UITextViewDelegate {
                 
                 autocompleteDelegate?.inputTextView(self, didTypeAutocompletePrefix: prefix, withText: filerText)
             }
+        } else {
+//            for char in autocompletePrefixes {
+//                
+//                var ranges = [NSRange]()
+//                do {
+//                    let stringToFind = String(char)
+//                    let regex = try NSRegularExpression(pattern: stringToFind, options: [])
+//                    ranges = regex.matches(in: stringToFind, options: [], range: NSMakeRange(0, stringToFind.characters.count)).map { $0.range }
+//                } catch {}
+//                if ranges.isEmpty {
+//                    autocompleteDelegate?.inputTextView(self, didCancelAutocompleteFor: char)
+//                } else {
+//                    for range in ranges {
+//                        
+//                    }
+//                }
+//            }
         }
     }
+    
+//    public func checkForAppendedPrefix() {
+//        
+//        for char in autocompletePrefixes {
+//            // Check if a prefix was appended
+//            if text.hasSuffix(String(char)) {
+//                // Check if CHAR before suffix is not a space
+//                let indexBeforeSuffix = text.characters.index(text.characters.endIndex, offsetBy: -1)
+//                let charBeforeSuffix = text.characters[indexBeforeSuffix]
+//                print(charBeforeSuffix)
+//                if charBeforeSuffix != " " {
+//                    currentPrefix = char
+//                    currentPrefixRange = NSMakeRange(text.characters.count - 1, 1).toRange()
+//                }
+//            
+//        }
+//    }
     
     /// Completes a prefix by replacing the string after the prefix with the provided text
     ///

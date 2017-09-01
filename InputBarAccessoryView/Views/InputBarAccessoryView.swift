@@ -347,7 +347,10 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Layout Helper Methods
     
-    /// Called during the hooks so account for any size changes
+    
+    /// Layout the given UIStackView's
+    ///
+    /// - Parameter positions: The UIStackView's to layout
     public func layoutStackViews(_ positions: [UIStackViewPosition] = [.left, .right, .bottom]) {
         
         for position in positions {
@@ -524,6 +527,15 @@ extension InputBarAccessoryView: InputTextViewAutocompleteDelegate {
         currentPrefix = prefix
         currentAutocompleteFilter = text
         tableView.reloadData()
+    }
+    
+    public func inputTextView(_ textView: InputTextView, didCancelAutocompleteFor prefix: Character) {
+        if currentPrefix == prefix {
+            currentPrefix = nil
+            currentAutocompleteFilter = nil
+            setTableViewHeightConstant(to: 0)
+            tableView.reloadData()
+        }
     }
 }
 

@@ -31,4 +31,11 @@ import UIKit
 public protocol InputTextViewAutocompleteDelegate: class {
     
     func inputTextView(_ textView: InputTextView, didTypeAutocompletePrefix prefix: Character, withText text: String)
+    
+    func inputTextView(_ textView: InputTextView, didCancelAutocompleteFor prefix: Character)
+}
+
+public extension InputTextViewAutocompleteDelegate {
+    
+    func inputTextView(_ textView: InputTextView, didCancelAutocompleteFor prefix: Character) {}
 }

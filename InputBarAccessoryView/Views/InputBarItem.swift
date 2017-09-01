@@ -75,7 +75,7 @@ open class InputBarButtonItem: UIButton {
         return contentSize
     }
     
-    public var parentStackViewPosition: InputBarAccessoryView.UIStackViewPosition?
+    internal var parentStackViewPosition: InputBarAccessoryView.UIStackViewPosition?
     
     /// The title for the UIControlState.normal
     open var title: String? {
