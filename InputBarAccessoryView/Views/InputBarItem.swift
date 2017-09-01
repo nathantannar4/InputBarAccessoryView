@@ -58,12 +58,9 @@ open class InputBarButtonItem: UIButton {
     }
     
     /// When not nil this size overrides the intrinsicContentSize
-    open var size: CGSize? = CGSize(width: 20, height: 20) {
+    private(set) var size: CGSize? = CGSize(width: 20, height: 20) {
         didSet {
             invalidateIntrinsicContentSize()
-            inputBarAccessoryView?.performLayout(false) {
-                self.inputBarAccessoryView?.layoutStackViews()
-            }
         }
     }
     
@@ -156,6 +153,17 @@ open class InputBarButtonItem: UIButton {
         setTitleColor(.lightGray, for: .disabled)
         adjustsImageWhenHighlighted = false
         addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
+    }
+    
+    // MARK: - Size Adjustment
+    
+    open func setSize(_ newValue: CGSize?, animated: Bool) {
+        size = newValue
+        if animated {
+            inputBarAccessoryView?.performLayout(animated) {
+                self.inputBarAccessoryView?.layoutStackViews()
+            }
+        }
     }
     
     // MARK: - Hook Setup Methods

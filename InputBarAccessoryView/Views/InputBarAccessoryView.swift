@@ -132,13 +132,11 @@ open class InputBarAccessoryView: UIView {
     open var sendButton: InputBarButtonItem = {
         return InputBarButtonItem()
             .configure {
-                $0.size = CGSize(width: 52, height: 36)
+                $0.setSize(CGSize(width: 52, height: 36), animated: false)
                 $0.isEnabled = false
                 $0.title = "Send"
                 $0.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
-            }.onTextViewDidChange({ (item, textView) in
-                item.isEnabled = !textView.text.isEmpty
-            }).onTouchUpInside {
+            }.onTouchUpInside {
                 $0.inputBarAccessoryView?.didSelectSendButton()
         }
     }()
@@ -365,16 +363,20 @@ open class InputBarAccessoryView: UIView {
     ///   - animations: Code
     internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
         
+        textViewLayoutSet?.deactivate()
         leftStackViewLayoutSet?.deactivate()
         rightStackViewLayoutSet?.deactivate()
         bottomStackViewLayoutSet?.deactivate()
         if animated {
             DispatchQueue.main.async {
+                
                 UIView.animate(withDuration: 0.3, animations: animations)
+                
             }
         } else {
             UIView.performWithoutAnimation { animations() }
         }
+        textViewLayoutSet?.activate()
         leftStackViewLayoutSet?.activate()
         rightStackViewLayoutSet?.activate()
         bottomStackViewLayoutSet?.activate()
@@ -467,6 +469,7 @@ open class InputBarAccessoryView: UIView {
     open func textViewDidChange() {
         
         let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        sendButton.isEnabled = !textView.text.isEmpty
         items.forEach { $0.textViewDidChangeAction(with: self.textView) }
         delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
@@ -486,10 +489,7 @@ open class InputBarAccessoryView: UIView {
     
     open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
         
-        performLayout(true) { 
-            self.items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
-            self.layoutStackViews()
-        }
+        items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
         delegate?.inputBar(self, didSwipeTextViewWith: gesture)
         
         if shouldDismissOnSwipe && gesture.direction == .down {

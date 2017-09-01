@@ -69,6 +69,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
     override var inputAccessoryView: UIView? {
         return bar
     }
+    
+    var viewIsLoaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,6 +104,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
             frame.origin.x += 58
         }
         Slack()
+        
+        viewIsLoaded = true
     }
     
     func Messenger() {
@@ -109,12 +113,12 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
-                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: true)
+                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 0, animated: self.viewIsLoaded)
             } else if gesture.direction == .right {
-                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 36, animated: true)
+                item.inputBarAccessoryView?.setLeftStackViewWidthConstant(to: 36, animated: self.viewIsLoaded)
             }
         }
-        button.size = CGSize(width: 36, height: 36)
+        button.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
         button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
@@ -127,8 +131,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textView.layer.cornerRadius = 16.0
         bar.textView.layer.masksToBounds = true
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.setLeftStackViewWidthConstant(to: 36, animated: true)
-        bar.setStackViewItems([button], forStack: .left, animated: true)
+        bar.setLeftStackViewWidthConstant(to: 36, animated: viewIsLoaded)
+        bar.setStackViewItems([button], forStack: .left, animated: viewIsLoaded)
     }
 
     func Slack() {
@@ -150,7 +154,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.setTitleColor(.white, for: .normal)
                     $0.setTitleColor(.white, for: .highlighted)
-                    $0.size = CGSize(width: 52, height: 30)
+                    $0.setSize(CGSize(width: 52, height: 30), animated: viewIsLoaded)
                 }.onDisabled {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.backgroundColor = .white
@@ -158,12 +162,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
                     $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
                     $0.layer.borderColor = UIColor.clear.cgColor
                 }.onSelected {
-                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 0.5)
-                    
                     // We use a transform becuase changing the size would cause the other views to relayout
                     $0.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
                 }.onDeselected {
-                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
                     $0.transform = CGAffineTransform.identity
             }
         ]
@@ -174,10 +175,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
     
         // Since we moved the send button to the bottom stack lets set the right stack width to 0
-        bar.setRightStackViewWidthConstant(to: 0, animated: false)
+        bar.setRightStackViewWidthConstant(to: 0, animated: viewIsLoaded)
         
         // Finally set the items
-        bar.setStackViewItems(items, forStack: .bottom, animated: false)
+        bar.setStackViewItems(items, forStack: .bottom, animated: viewIsLoaded)
     }
     
     func WhatsApp() {
@@ -192,18 +193,18 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         None()
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 46)
-        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 50)
+        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
+        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
         bar.textView.layer.borderWidth = 1.0
         bar.textView.layer.cornerRadius = 16.0
         bar.textView.layer.masksToBounds = true
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.setRightStackViewWidthConstant(to: 38, animated: true)
-        bar.setStackViewItems([bar.sendButton, .fixedSpace(2)], forStack: .right, animated: true)
+        bar.setRightStackViewWidthConstant(to: 38, animated: viewIsLoaded)
+        bar.setStackViewItems([bar.sendButton, .fixedSpace(2)], forStack: .right, animated: viewIsLoaded)
         bar.sendButton.imageView?.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
         bar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
-        bar.sendButton.size = CGSize(width: 36, height: 36)
+        bar.sendButton.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
         bar.sendButton.image = #imageLiteral(resourceName: "ic_up")
         bar.sendButton.title = nil
         bar.sendButton.imageView?.layer.cornerRadius = 16
@@ -212,21 +213,12 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
     }
     
     func None() {
-        bar.textView.backgroundColor = .clear
-        bar.textView.layer.borderWidth = 0
-        bar.setStackViewItems([], forStack: .left, animated: true)
-        bar.setStackViewItems([], forStack: .bottom, animated: true)
-        bar.setRightStackViewWidthConstant(to: 52, animated: true)
-        bar.setLeftStackViewWidthConstant(to: 0, animated: true)
-        bar.sendButton.setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
-        bar.sendButton.layer.borderWidth = 0
-        bar.sendButton.size = CGSize(width: 52, height: 36)
-        bar.sendButton.backgroundColor = .white
-        bar.sendButton.title = "Send"
-        bar.sendButton.image = nil
-        bar.sendButton.contentEdgeInsets = .zero
-        bar.sendButton.imageView?.layer.cornerRadius = 0
-        bar.setStackViewItems([bar.sendButton], forStack: .right, animated: true)
+        bar.textView.resignFirstResponder()
+        let newBar = InputBarAccessoryView()
+        newBar.delegate = self
+        newBar.dataSource = self
+        bar = newBar
+        reloadInputViews()
     }
     
     func makeButton(named: String) -> InputBarButtonItem {
@@ -234,7 +226,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
             .configure {
                 $0.spacing = .fixed(10)
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
-                $0.size = CGSize(width: 30, height: 30)
+                $0.setSize(CGSize(width: 30, height: 30), animated: viewIsLoaded)
             }.onSelected {
                 $0.tintColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             }.onDeselected {
