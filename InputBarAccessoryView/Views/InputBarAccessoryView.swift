@@ -239,7 +239,8 @@ open class InputBarAccessoryView: UIView {
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
     }
     
     deinit {
@@ -381,9 +382,7 @@ open class InputBarAccessoryView: UIView {
         bottomStackViewLayoutSet?.deactivate()
         if animated {
             DispatchQueue.main.async {
-                
                 UIView.animate(withDuration: 0.3, animations: animations)
-                
             }
         } else {
             UIView.performWithoutAnimation { animations() }
@@ -590,5 +589,16 @@ extension InputBarAccessoryView: UITableViewDelegate {
         
         let lastRow = tableView.numberOfRows(inSection: 0) - 1
         tableView.bounces = !(indexPath.row == lastRow)
+    }
+}
+
+extension InputBarAccessoryView {
+    
+    
+    /// Render issues when using a `UINavigationController` has been known to take place. If this bug effects you create a copy of `InputBarAccessoryView` during `func viewWillAppear(animated: Bool)` and anchor it to the bottom of your view. Then during `func viewDidAppear(animated: Bool)` remove the copy from its superview.
+    ///
+    /// - Returns: A copy of Self
+    public func createCopy() -> InputBarAccessoryView? {
+        return NSKeyedUnarchiver.unarchiveObject(with: NSKeyedArchiver.archivedData(withRootObject: self)) as? InputBarAccessoryView
     }
 }
