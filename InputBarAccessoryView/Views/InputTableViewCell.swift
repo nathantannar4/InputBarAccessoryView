@@ -79,12 +79,12 @@ open class InputTableViewCell: UITableViewCell {
         let title = NSMutableAttributedString()
         if let char = prefix {
             let size = textLabel?.font.pointSize ?? 14
-            let attrs: [String:AnyObject] = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: size),NSForegroundColorAttributeName : color]
+            let attrs: [NSAttributedStringKey:AnyObject] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.font.rawValue) : UIFont.boldSystemFont(ofSize: size),NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue) : color]
             let boldPrefix = NSMutableAttributedString(string: String(char), attributes: attrs)
             title.append(boldPrefix)
         }
         if let text = autocompleteText {
-            let attrs: [String:AnyObject] = [NSForegroundColorAttributeName : color]
+            let attrs: [NSAttributedStringKey:AnyObject] = [NSAttributedStringKey(rawValue: NSAttributedStringKey.foregroundColor.rawValue) : color]
             let attributedTitle = NSAttributedString(string: text, attributes: attrs)
             title.append(attributedTitle)
         }

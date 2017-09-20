@@ -481,11 +481,11 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Notifications/Hooks
     
-    open func orientationDidChange() {
+    @objc open func orientationDidChange() {
         invalidateIntrinsicContentSize()
     }
     
-    open func textViewDidChange() {
+    @objc open func textViewDidChange() {
         
         let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         sendButton.isEnabled = !textView.text.isEmpty
@@ -494,19 +494,19 @@ open class InputBarAccessoryView: UIView {
         invalidateIntrinsicContentSize()
     }
     
-    open func textViewDidBeginEditing() {
+    @objc open func textViewDidBeginEditing() {
         
         items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
-    open func textViewDidEndEditing() {
+    @objc open func textViewDidEndEditing() {
         
         items.forEach { $0.keyboardEditingEndsAction() }
     }
     
     // MARK: - User Actions
     
-    open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
+    @objc open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
         
         items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
         delegate?.inputBar(self, didSwipeTextViewWith: gesture)

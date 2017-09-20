@@ -160,7 +160,7 @@ open class InputTextView: UITextView, UITextViewDelegate {
     
     // MARK: - Notifications
     
-    open func textViewTextDidChange() {
+    @objc open func textViewTextDidChange() {
         
         placeholderLabel.isHidden = !text.isEmpty
         checkForTypedPrefixes()

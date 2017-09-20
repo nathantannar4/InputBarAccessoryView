@@ -170,7 +170,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
                     $0.backgroundColor = .white
                 }.onEnabled {
-                    $0.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
                     $0.layer.borderColor = UIColor.clear.cgColor
                 }.onSelected {
                     // We use a transform becuase changing the size would cause the other views to relayout
@@ -213,7 +213,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.setRightStackViewWidthConstant(to: 38, animated: viewIsLoaded)
         bar.setStackViewItems([bar.sendButton, .fixedSpace(2)], forStack: .right, animated: viewIsLoaded)
-        bar.sendButton.imageView?.backgroundColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+        bar.sendButton.imageView?.backgroundColor = UIColor.blue
         bar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         bar.sendButton.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
         bar.sendButton.image = #imageLiteral(resourceName: "ic_up")
@@ -239,7 +239,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 30, height: 30), animated: viewIsLoaded)
             }.onSelected {
-                $0.tintColor = UIColor(colorLiteralRed: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                $0.tintColor = UIColor.blue
             }.onDeselected {
                 $0.tintColor = UIColor.lightGray
             }.onTouchUpInside { _ in
