@@ -37,7 +37,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         }
         
         static func all() -> [Style] {
-            return [.slack, .messenger, .whatsapp, .snapchat, .imessage, .none]
+            // not all are implemented yet
+            return [.slack, .messenger, .imessage, .none]
         }
     }
     
@@ -103,14 +104,13 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
             view.addSubview(button)
             frame.origin.x += 58
         }
-        Slack()
         
-        // https://stackoverflow.com/questions/31049651/uitextview-as-inputaccessoryview-doesnt-render-text-until-after-animation
-        // inputAccessoryView?.snapshotView(afterScreenUpdates: true)
+        //Slack()
         
         viewIsLoaded = true
     }
     
+    @objc
     func Messenger() {
         None()
         let button = InputBarButtonItem()
@@ -138,6 +138,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.setStackViewItems([button], forStack: .left, animated: viewIsLoaded)
     }
 
+    @objc
     func Slack() {
         None()
         let items = [
@@ -192,14 +193,17 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.setStackViewItems(items, forStack: .bottom, animated: viewIsLoaded)
     }
     
+    @objc
     func WhatsApp() {
         None()
     }
     
+    @objc
     func Snapchat() {
         None()
     }
     
+    @objc
     func iMessage() {
         None()
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
@@ -213,7 +217,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.setRightStackViewWidthConstant(to: 38, animated: viewIsLoaded)
         bar.setStackViewItems([bar.sendButton, .fixedSpace(2)], forStack: .right, animated: viewIsLoaded)
-        bar.sendButton.imageView?.backgroundColor = UIColor.blue
+        bar.sendButton.imageView?.backgroundColor = bar.tintColor
         bar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         bar.sendButton.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
         bar.sendButton.image = #imageLiteral(resourceName: "ic_up")
@@ -223,6 +227,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textViewPadding.right = -38
     }
     
+    @objc
     func None() {
         bar.textView.resignFirstResponder()
         let newBar = InputBarAccessoryView()

@@ -121,6 +121,7 @@ open class InputBarAccessoryView: UIView {
         let textView = InputTextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.autocompleteDelegate = self
+        textView.inputBarAccessoryView = self
         return textView
     }()
     
@@ -154,26 +155,43 @@ open class InputBarAccessoryView: UIView {
     }
     
     override open var intrinsicContentSize: CGSize {
-        let sizeToFit = textView.sizeThatFits(CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude))
-        var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom + separatorLine.frame.height + tableViewHeightConstant
+        let maxSize = CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)
+        let sizeToFit = textView.sizeThatFits(maxSize)
+        var heightToFit = sizeToFit.height.rounded() + padding.top + padding.bottom
+        
         if heightToFit >= maxHeight {
-            textView.isScrollEnabled = true
+            if !isOverMaxHeight {
+                textViewHeightAnchor?.isActive = true
+                textView.isScrollEnabled = true
+                isOverMaxHeight = true
+            }
             heightToFit = maxHeight
         } else {
-            textView.isScrollEnabled = false
+            if isOverMaxHeight {
+                textViewHeightAnchor?.isActive = false
+                textView.isScrollEnabled = false
+                isOverMaxHeight = false
+            }
             textView.invalidateIntrinsicContentSize()
         }
+        
         let size = CGSize(width: bounds.width, height: heightToFit)
+        
         if previousIntrinsicContentSize != size {
             delegate?.inputBar(self, didChangeIntrinsicContentTo: size)
         }
+        
         previousIntrinsicContentSize = size
         return size
     }
     
+    /// If the required height of the InputBarAccessoryView is over the max height
+    private(set) var isOverMaxHeight = false
+    
     /// The maximum intrinsicContentSize height. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
     open var maxHeight: CGFloat = UIScreen.main.bounds.height / 3 {
         didSet {
+            textViewHeightAnchor?.constant = maxHeight
             invalidateIntrinsicContentSize()
         }
     }
@@ -221,6 +239,7 @@ open class InputBarAccessoryView: UIView {
     // MARK: - Auto-Layout Management
     
     private var textViewLayoutSet: NSLayoutConstraintSet?
+    private var textViewHeightAnchor: NSLayoutConstraint?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
@@ -252,7 +271,7 @@ open class InputBarAccessoryView: UIView {
     open func setup() {
         
         tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        backgroundColor = .clear
+        backgroundColor = UIColor(red: 247/255, green: 247/255, blue: 247/255, alpha: 1.0)
         autoresizingMask = .flexibleHeight
         setupSubviews()
         setupConstraints()
@@ -284,6 +303,7 @@ open class InputBarAccessoryView: UIView {
             left:   textView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  textView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
         ).activate()
+        textViewHeightAnchor = textView.heightAnchor.constraint(equalToConstant: maxHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
             top:    textView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: padding.top),
@@ -495,19 +515,16 @@ open class InputBarAccessoryView: UIView {
     }
     
     @objc open func textViewDidBeginEditing() {
-        
         items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
     @objc open func textViewDidEndEditing() {
-        
         items.forEach { $0.keyboardEditingEndsAction() }
     }
     
     // MARK: - User Actions
     
     @objc open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
-        
         items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
         delegate?.inputBar(self, didSwipeTextViewWith: gesture)
     }
