@@ -9,7 +9,9 @@ pod 'InputBarAccessoryView'
 
 ### Requirements
 
-iOS 9.0 and Higher
+iOS 9.0+
+Swift 4
+XCode 9.0+
 
 ### Screenshots
 
@@ -82,9 +84,9 @@ Nathan Tannar - https://nathantannar.me
 
 ## License
 
-##### InputBarAccessoryView was developed as a contribution to [MessageKit](https://github.com/MessageKit/MessageKit) where it was renamed to MessageInputBar. However, InputBarAccessoryView will stay ahead with regards to the latest updates, bug fixes and features.
+##### InputBarAccessoryView was developed as a contribution to [MessageKit](https://github.com/MessageKit/MessageKit) where it was renamed to MessageInputBar.
 <p>
-  <img src="https://cdn.rawgit.com/MessageKit/MessageKit/master/Assets/mklogo.svg" title="MessageKit logo">
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
 </p>
 
 Distributed under the MIT license. See ``LICENSE`` for more information.

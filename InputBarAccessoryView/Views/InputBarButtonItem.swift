@@ -1,5 +1,5 @@
 //
-//  InputBarItem.swift
+//  InputBarButtonItem.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
