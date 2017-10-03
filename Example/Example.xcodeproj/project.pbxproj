@@ -14,6 +14,7 @@
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
 		383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A21F47897800027965 /* LaunchScreen.storyboard */; };
 		3876DA941F835B7300C89326 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA931F835B7300C89326 /* Style.swift */; };
+		3876DA961F836C8C00C89326 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA951F836C8C00C89326 /* NSMutableAttributedString+Extensions.swift */; };
 		38C867861F50A78900811974 /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C867851F50A78900811974 /* InputBarAccessoryView.framework */; };
 		38C867871F50A78900811974 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38C867851F50A78900811974 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		383B83A31F47897800027965 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3876DA931F835B7300C89326 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		3876DA951F836C8C00C89326 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		38C867851F50A78900811974 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -82,6 +84,7 @@
 				3876DA931F835B7300C89326 /* Style.swift */,
 				383989B91F55C600003D30DD /* Lorem.swift */,
 				383989BC1F564F5C003D30DD /* Random.swift */,
+				3876DA951F836C8C00C89326 /* NSMutableAttributedString+Extensions.swift */,
 				383B83A01F47897800027965 /* Assets.xcassets */,
 				383B83A21F47897800027965 /* LaunchScreen.storyboard */,
 				383B83A51F47897800027965 /* Info.plist */,
@@ -163,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3876DA961F836C8C00C89326 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				383989BD1F564F5C003D30DD /* Random.swift in Sources */,
 				383989BA1F55C600003D30DD /* Lorem.swift in Sources */,
 				383B839F1F47897800027965 /* ViewController.swift in Sources */,

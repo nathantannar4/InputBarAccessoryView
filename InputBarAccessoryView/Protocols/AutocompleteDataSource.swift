@@ -28,12 +28,30 @@ public protocol AutocompleteDataSource: class {
     
     func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, cellConfigFor cell: AutocompleteCell, at indexPath: IndexPath)
+    func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
 }
 
 public extension AutocompleteDataSource {
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, cellConfigFor cell: AutocompleteCell, at indexPath: IndexPath) {}
+    func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+            return UITableViewCell()
+        }
+    
+        let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
+        let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
+        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)], range: matchingRange)
+        let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
+        stringWithPrefix.append(attributedString)
+        cell.textLabel?.attributedText = stringWithPrefix
+        
+        cell.backgroundColor = autocompleteManager.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
+        cell.tintColor = autocompleteManager.inputBarAccessoryView?.tintColor
+        cell.separatorLine.isHidden = indexPath.row == (autocompleteManager.currentAutocompleteText ?? []).count - 1
+        
+        return cell
+    }
 }
 
 

@@ -32,18 +32,6 @@ open class AutocompleteCell: UITableViewCell {
         return "AutocompleteCell"
     }
     
-    open var prefix: Character? {
-        didSet {
-            updateTextLabel()
-        }
-    }
-
-    open var autocompleteText: String? {
-        didSet {
-            updateTextLabel()
-        }
-    }
-    
     /// A boarder line anchored to the top of the view
     open let separatorLine: UIView = {
         let view = UIView()
@@ -52,10 +40,12 @@ open class AutocompleteCell: UITableViewCell {
         return view
     }()
     
+    open var imageViewEdgeInsets: UIEdgeInsets = .zero
+    
     // MARK: - Initialization
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         setup()
     }
     
@@ -66,8 +56,11 @@ open class AutocompleteCell: UITableViewCell {
     
     open override func prepareForReuse() {
         super.prepareForReuse()
-        prefix = nil
-        autocompleteText = nil
+        textLabel?.text = nil
+        detailTextLabel?.text = nil
+        imageView?.image = nil
+        imageViewEdgeInsets = .zero
+        separatorLine.backgroundColor = .lightGray
         separatorLine.isHidden = false
     }
     
@@ -89,9 +82,11 @@ open class AutocompleteCell: UITableViewCell {
         separatorLine.addConstraints(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, heightConstant: 0.5)
     }
     
-    private func updateTextLabel() {
-        
-        guard let prefix = prefix, let autocompleteText = autocompleteText else { return }
-        textLabel?.text = String(prefix) + autocompleteText
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let imageViewFrame = imageView?.frame else { return }
+        let imageViewOrigin = CGPoint(x: imageViewFrame.origin.x + imageViewEdgeInsets.left, y: imageViewFrame.origin.y + imageViewEdgeInsets.top)
+        let imageViewSize = CGSize(width: imageViewFrame.size.width - imageViewEdgeInsets.left - imageViewEdgeInsets.right, height: imageViewFrame.size.height - imageViewEdgeInsets.top - imageViewEdgeInsets.bottom)
+        imageView?.frame = CGRect(origin: imageViewOrigin, size: imageViewSize)
     }
 }

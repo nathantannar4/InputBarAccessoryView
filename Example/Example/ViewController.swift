@@ -232,5 +232,39 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         }
         return array
     }
+    
+    func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+        
+        // The following is done by default if you do not override this function, you will need this if you implement your own `autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell `
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+            return UITableViewCell()
+        }
+        
+        let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
+        let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
+        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)], range: matchingRange)
+        let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
+        stringWithPrefix.append(attributedString)
+        cell.textLabel?.attributedText = stringWithPrefix
+        
+        cell.backgroundColor = autocompleteManager.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
+        cell.tintColor = autocompleteManager.inputBarAccessoryView?.tintColor
+        cell.separatorLine.isHidden = indexPath.row == (autocompleteManager.currentAutocompleteText ?? []).count - 1
+        
+        cell.imageView?.tintAdjustmentMode = .normal
+        cell.imageView?.image = UIImage(named: "ic_user")
+        cell.imageView?.backgroundColor = .lightGray
+        cell.imageView?.layer.borderColor = cell.tintColor.cgColor
+        cell.imageView?.layer.borderWidth = 1.5
+        cell.imageView?.layer.cornerRadius = 8
+        cell.imageView?.clipsToBounds = true
+        
+        if indexPath.row % 3 == 0 {
+            cell.detailTextLabel?.text = "Online"
+            cell.detailTextLabel?.textColor = UIColor(red: 76/255, green: 153/255, blue: 0, alpha: 1)
+        }
+        
+        return cell
+    }
 }
 

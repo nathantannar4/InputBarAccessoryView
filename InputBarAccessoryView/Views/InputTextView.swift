@@ -34,7 +34,9 @@ open class InputTextView: UITextView {
     
     open override var text: String! {
         didSet {
+            resetTypingAttributes()
             textViewTextDidChange()
+            highlightSubstrings(with: previousPrefixCharacters)
         }
     }
 
@@ -98,6 +100,7 @@ open class InputTextView: UITextView {
     
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
+    private var previousPrefixCharacters = [Character]()
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
  
     // MARK: - Initializers
@@ -164,6 +167,70 @@ open class InputTextView: UITextView {
                                                object: nil)
     }
     
+    // MARK: - Attributed Text Highlighting
+    
+    open func resetTypingAttributes() {
+        typingAttributes = [
+            NSAttributedStringKey.font.rawValue : font,
+            NSAttributedStringKey.foregroundColor.rawValue : UIColor.black
+        ]
+    }
+    
+    /// Finds the ranges of all substrings that start with the provided prefixes and sets those ranges background color to the InputTextView's tintColor
+    ///
+    /// - Parameter prefixes: The prefix the substring must begin with
+    open func highlightSubstrings(with prefixes: [Character]) {
+        
+        previousPrefixCharacters = prefixes
+        let substrings = text.components(separatedBy: " ").filter {
+            var hasPrefix = false
+            for prefix in prefixes {
+                if $0.hasPrefix(String(prefix)) && $0.count > 1 {
+                    hasPrefix = true
+                    break
+                }
+            }
+            return hasPrefix
+        }
+        var ranges = [NSRange]()
+        substrings.map { return rangesOf($0, in: text) }.flatMap { return $0 }.forEach {
+            text.enumerateSubstrings(in: $0, options: .substringNotRequired) {
+                (substring, substringRange, _, _) in
+                let range = NSRange(substringRange, in: self.text)
+                ranges.append(range)
+            }
+        }
+        let attrs: [NSAttributedStringKey:AnyObject] = [
+            NSAttributedStringKey.font : font,
+            NSAttributedStringKey.foregroundColor : textColor ?? .black
+        ]
+        let attributedString = NSMutableAttributedString(string: text, attributes: attrs)
+        let highlightAttrs: [NSAttributedStringKey:AnyObject] = [
+            NSAttributedStringKey.foregroundColor : tintColor,
+            NSAttributedStringKey.backgroundColor : tintColor.withAlphaComponent(0.2)
+        ]
+        ranges.forEach { attributedString.addAttributes(highlightAttrs, range: $0) }
+        attributedText = attributedString
+    }
+    
+    /// A helper method that returns all the ranges of a provided string in another string
+    ///
+    /// - Parameters:
+    ///   - string: Substrings to filter the ranges
+    ///   - text: The String to find ranges in
+    /// - Returns: The ranges of the string in text
+    private func rangesOf(_ string: String, in text: String) -> [Range<String.Index>] {
+        var ranges = [Range<String.Index>]()
+        var searchStartIndex = text.startIndex
+        
+        while searchStartIndex < text.endIndex, let range = text.range(of: string, range: searchStartIndex..<text.endIndex), !range.isEmpty {
+            ranges.append(range)
+            searchStartIndex = range.upperBound
+        }
+        return ranges
+    }
+
+    
     // MARK: - Notifications
     
     @objc open func textViewTextDidChange() {
@@ -171,3 +238,4 @@ open class InputTextView: UITextView {
         placeholderLabel.isHidden = !text.isEmpty
     }
 }
+

@@ -44,10 +44,20 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         return tableView
     }()
     
+    
+    /// If the autocomplete matches should be made by casting the strings to lowercase
     open var isCaseSensitive = false
+    
+    /// When TRUE, autocompleted text will be highlighted with the UITextView's tintColor with an alpha component
+    open var highlightAutocompletes = true
+    
+    /// The max visible rows visible in the autocomplete table before the user has to scroll throught them
     open var maxVisibleRows = 3
+    
+    /// The prefices that the manager will recognize
     open var autocompletePrefixes: [Character] = ["@","#"]
     
+    /// The current autocomplete text options filtered by the text after the prefix
     open var currentAutocompleteText: [String]? {
         
         guard let prefix = currentPrefix, let filter = currentFilter else { return nil }
@@ -89,17 +99,9 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
-            return UITableViewCell()
-        }
-        
-        cell.prefix = currentPrefix
-        cell.autocompleteText = currentAutocompleteText?[indexPath.row]
-        cell.backgroundColor = inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
-        cell.tintColor = inputBarAccessoryView?.tintColor
-        cell.separatorLine.isHidden = indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1
-        dataSource?.autocomplete(self, cellConfigFor: cell, at: indexPath)
-        return cell
+        guard let prefix = currentPrefix, let filterText = currentFilter else { return UITableViewCell() }
+        let autocompleteText = currentAutocompleteText?[indexPath.row] ?? String()
+        return dataSource?.autocomplete(self, tableView: tableView, cellForRowAt: indexPath, for: (prefix, filterText, autocompleteText)) ?? UITableViewCell()
     }
     
     // MARK: - UITableViewDelegate
@@ -114,11 +116,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
-        // If a space is typed or text is pasted with a space unregister the current prefix
-        guard !text.contains(" ") else {
-            unregisterCurrentPrefix()
-            return true
-        }
+        (textView as? InputTextView)?.resetTypingAttributes()
         
         // User deleted the registered prefix
         if let currentRange = currentPrefixRange {
@@ -128,7 +126,12 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
             }
         }
         
-        if let prefix = currentPrefix {
+        guard let char = text.characters.first else { return true }
+        // If a space is typed or text is pasted with a space/newline unregister the current prefix
+        if char == " " || char == "\n" {
+            unregisterCurrentPrefix()
+            
+        } else if let prefix = currentPrefix {
             // A prefix is already regsitered so update the filter text
             let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
             let index = newText.index(newText.startIndex, offsetBy: safeOffset(withText: newText))
@@ -137,11 +140,9 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
                 .first?
                 .replacingOccurrences(of: String(prefix), with: "")
             
-        } else if let char = text.characters.first {
+        } else if autocompletePrefixes.contains(char), let range = Range(range) {
             // Check if the first character is a registered prefix
-            if autocompletePrefixes.contains(char), let range = Range(range){
-                registerCurrentPrefix(to: char, at: range)
-            }
+            registerCurrentPrefix(to: char, at: range)
         }
         
         return true
@@ -202,9 +203,15 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         let range = leftIndex...rightIndex
         let textToInsert = String(prefix) + text.appending(" ")
         textView.text.replaceSubrange(range, with: textToInsert)
+        if highlightAutocompletes {
+            textView.highlightSubstrings(with: autocompletePrefixes)
+        }
         
         // Move Cursor to the end of the inserted text
         textView.selectedRange = NSMakeRange(safeOffset(withText: textView.text) + textToInsert.characters.count, 0)
+        
+        // After modifying the selectedRange we need to reset the typing attributes
+        
         
         // Unregister
         unregisterCurrentPrefix()
