@@ -1,6 +1,6 @@
 //
-//  InputBarAccessoryViewDatasSource.swift
-//  InputBarAccessoryView
+//  Style.swift
+//  Example
 //
 //  Copyright © 2017 Nathan Tannar.
 //
@@ -22,22 +22,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 8/26/17.
+//  Created by Nathan Tannar on 10/2/17.
 //
 
-import Foundation
-import UIKit
-
-public protocol InputBarAccessoryViewDataSource: class {
+class Style {
     
-    func inputBar(_ inputBar: InputBarAccessoryView, autocompleteOptionsForPrefix prefix: Character, withEnteredText text: String) -> [String]
-    
-    func inputBar(_ inputBar: InputBarAccessoryView, tableView: UITableView, cellForRowAt indexPath: IndexPath) -> InputTableViewCell?
-}
-
-public extension InputBarAccessoryViewDataSource {
-    
-    func inputBar(_ inputBar: InputBarAccessoryView, tableView: UITableView, cellForRowAt indexPath: IndexPath) -> InputTableViewCell? {
-        return tableView.dequeueReusableCell(withIdentifier: InputTableViewCell.reuseIdentifier, for: indexPath) as? InputTableViewCell
-    }
 }
