@@ -39,12 +39,12 @@ public extension AutocompleteDataSource {
             return UITableViewCell()
         }
     
-        let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
-        let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
-        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)], range: matchingRange)
-        let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
-        stringWithPrefix.append(attributedString)
-        cell.textLabel?.attributedText = stringWithPrefix
+//        let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
+//        let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
+//        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)], range: matchingRange)
+//        let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
+//        stringWithPrefix.append(attributedString)
+//        cell.textLabel?.attributedText = stringWithPrefix
         
         cell.backgroundColor = autocompleteManager.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
         cell.tintColor = autocompleteManager.inputBarAccessoryView?.tintColor
