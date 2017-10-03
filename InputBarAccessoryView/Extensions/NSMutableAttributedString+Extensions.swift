@@ -27,7 +27,7 @@ import UIKit
 extension NSMutableAttributedString {
     
     @discardableResult
-    func bold(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    public func bold(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: fontSize),
             NSAttributedStringKey.foregroundColor : textColor
@@ -38,7 +38,7 @@ extension NSMutableAttributedString {
     }
     
     @discardableResult
-    func medium(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    public func medium(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.medium),
             NSAttributedStringKey.foregroundColor : textColor
@@ -49,7 +49,7 @@ extension NSMutableAttributedString {
     }
     
     @discardableResult
-    func italic(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    public func italic(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.italicSystemFont(ofSize: fontSize),
             NSAttributedStringKey.foregroundColor : textColor
@@ -60,7 +60,7 @@ extension NSMutableAttributedString {
     }
     
     @discardableResult
-    func normal(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    public func normal(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs:[NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize),
             NSAttributedStringKey.foregroundColor : textColor
