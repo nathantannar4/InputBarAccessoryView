@@ -28,17 +28,9 @@
 import Foundation
 import UIKit
 
-open class InputTextView: UITextView, UITextViewDelegate {
+open class InputTextView: UITextView {
     
     // MARK: - Properties
-    
-    open weak var autocompleteDelegate: InputTextViewAutocompleteDelegate?
-    
-    open var autocompletePrefixes: [Character] = ["@", "#"] {
-        didSet {
-            checkForTypedPrefixes()
-        }
-    }
     
     open override var text: String! {
         didSet {
@@ -107,8 +99,6 @@ open class InputTextView: UITextView, UITextViewDelegate {
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
-    private var currentPrefix: Character?
-    private var currentPrefixRange: Range<Int>?
  
     // MARK: - Initializers
     
@@ -138,7 +128,6 @@ open class InputTextView: UITextView, UITextViewDelegate {
                                              left: .leastNonzeroMagnitude,
                                              bottom: .leastNonzeroMagnitude,
                                              right: .leastNonzeroMagnitude)
-        delegate = self
         addSubviews()
         addObservers()
         addConstraints()
@@ -180,100 +169,5 @@ open class InputTextView: UITextView, UITextViewDelegate {
     @objc open func textViewTextDidChange() {
         
         placeholderLabel.isHidden = !text.isEmpty
-        checkForTypedPrefixes()
-    }
-    
-    // MARK: -  UITextViewDelegate
-    
-    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-    
-        if let char = text.characters.first {
-            // Register/Unregister Prefix
-            if autocompletePrefixes.contains(char) {
-                currentPrefix = char
-                currentPrefixRange = range.toRange()
-            }
-            if char == " " {
-                currentPrefix = nil
-                currentPrefixRange = nil
-            }
-        }
-        
-        // When isScrollEnabled gets changed in MessageInputBar when it becomes more than the maxHeight there is a bug the incorrectly sets the contentSize. This fixes it by inserting the text via `replacingCharacters`
-        if text == UIPasteboard.general.string {
-            if let inputBarAccessoryView = inputBarAccessoryView {
-                if !inputBarAccessoryView.isOverMaxHeight {
-                    textView.text = (textView.text as NSString).replacingCharacters(in: range, with: text)
-                    return false
-                }
-            }
-        }
-        
-        return true
-    }
-    
-    // MARK: - Autocomplete
-    
-    /// Checks the last character for registered prefixes
-    public func checkForTypedPrefixes() {
-        
-        if let prefix = currentPrefix {
-            let index = text.index(text.startIndex, offsetBy: safeOffset())
-            if let filerText = text.substring(from: index)
-                .components(separatedBy:  " ")
-                .first?
-                .replacingOccurrences(of: String(prefix), with: "") {
-                
-                autocompleteDelegate?.inputTextView(self, didTypeAutocompletePrefix: prefix, withText: filerText)
-            }
-        }
-    }
-
-    /// Completes a prefix by replacing the string after the prefix with the provided text
-    ///
-    /// - Parameters:
-    ///   - prefix: The prefix
-    ///   - autocompleteText: The text to insert
-    ///   - enteredText: The text to replace
-    /// - Returns: If the autocomplete was successful
-    @discardableResult
-    public func autocomplete(withText autocompleteText: String, from enteredText: String) -> Bool {
-        
-        guard let prefix = currentPrefix else {
-            return false
-        }
-        
-        let leftIndex = text.index(text.startIndex, offsetBy: safeOffset())
-        let rightIndex = text.index(text.startIndex, offsetBy: safeOffset() + enteredText.characters.count)
-
-        let range = leftIndex...rightIndex
-        let textToInsert = String(prefix) + autocompleteText.appending(" ")
-        text.replaceSubrange(range, with: textToInsert)
-        
-        // Move Cursor to the end of the inserted text
-        selectedRange = NSMakeRange(safeOffset() + textToInsert.characters.count, 0)
-        
-        // Unregister
-        currentPrefix = nil
-        currentPrefixRange = nil
-        return true
-    }
-    
-    // MARK: - Helper Methods
-    
-    /// A safe way to generate an offset
-    ///
-    /// - Returns: An offset that is not more than the endIndex or less than the startIndex
-    private func safeOffset() -> Int {
-        guard let range = currentPrefixRange else {
-            return 0
-        }
-        if range.lowerBound > (text.characters.count - 1) {
-            return text.characters.count - 1
-        }
-        if range.lowerBound < 0 {
-            return 0
-        }
-        return range.lowerBound
     }
 }

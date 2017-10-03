@@ -86,7 +86,7 @@ open class AutocompleteCell: UITableViewCell {
     
     open func setupConstraints() {
         
-        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 0.5)
+        separatorLine.addConstraints(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, heightConstant: 0.5)
     }
     
     private func updateTextLabel() {

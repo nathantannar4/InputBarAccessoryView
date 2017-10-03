@@ -46,12 +46,10 @@ open class InputBarButtonItem: UIButton {
         didSet {
             switch spacing {
             case .flexible:
-                setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .vertical)
                 setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
             case .fixed:
                 setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
             case .none:
-                setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
                 setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
             }
         }

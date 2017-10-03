@@ -53,13 +53,10 @@ open class NSLayoutConstraintSet {
         self.height = height
     }
     
-    open func forEach(_ body: (NSLayoutConstraint) -> Void) {
-        let constraints = [top, bottom, left, right, centerX, centerY, width, height]
-        for constraint in constraints {
-            if let constraint = constraint {
-                body(constraint)
-            }
-        }
+    /// All of the currently configured constraints
+    private var availableConstraints: [NSLayoutConstraint] {
+        return [top, bottom, left, right, centerX, centerY, width, height]
+            .flatMap {$0}
     }
     
     /// Activates all of the non-nil constraints
@@ -67,7 +64,7 @@ open class NSLayoutConstraintSet {
     /// - Returns: Self
     @discardableResult
     open func activate() -> Self {
-        forEach { $0.isActive = true }
+        NSLayoutConstraint.activate(availableConstraints)
         return self
     }
     
@@ -76,7 +73,7 @@ open class NSLayoutConstraintSet {
     /// - Returns: Self
     @discardableResult
     open func deactivate() -> Self {
-        forEach { $0.isActive = false }
+        NSLayoutConstraint.deactivate(availableConstraints)
         return self
     }
 }

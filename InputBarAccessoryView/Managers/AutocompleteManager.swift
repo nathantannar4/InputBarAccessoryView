@@ -30,16 +30,15 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     open weak var delegate: AutocompleteDelegate?
     
-    open weak var messageInputBar: MessageInputBar?
+    open weak var inputBarAccessoryView: InputBarAccessoryView?
     
     /// The autocomplete table for @mention or #hastag
     open lazy var tableView: UITableView = { [weak self] in
         let tableView = UITableView()
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = self?.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
         tableView.rowHeight = 44
-        tableView.showsVerticalScrollIndicator = false
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
@@ -71,6 +70,12 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         }
     }
     
+    // MARK: - Initialization
+    
+    public override init() {
+        super.init()
+    }
+    
     // MARK: - UITableViewDataSource
     
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -90,8 +95,9 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         cell.prefix = currentPrefix
         cell.autocompleteText = currentAutocompleteText?[indexPath.row]
-        cell.backgroundColor = messageInputBar?.backgroundView.backgroundColor ?? .inputBarGray
-        cell.tintColor = messageInputBar?.tintColor
+        cell.backgroundColor = inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
+        cell.tintColor = inputBarAccessoryView?.tintColor
+        cell.separatorLine.isHidden = indexPath.row == self.tableView(tableView, numberOfRowsInSection: 0) - 1
         dataSource?.autocomplete(self, cellConfigFor: cell, at: indexPath)
         return cell
     }
@@ -103,15 +109,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         guard let replacementText = currentAutocompleteText?[indexPath.row] else { return }
         autocomplete(with: replacementText)
     }
-    
-    open func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // Prevent a bounce up which leaves empty content in the background
-        if scrollView.contentOffset.y > 0 {
-            scrollView.contentOffset.y = 0
-        }
-    }
-    
+
     // MARK: -  UITextViewDelegate
    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
@@ -154,7 +152,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
         currentPrefix = prefix
         currentPrefixRange = range
-        autocompleteMap[prefix] = dataSource?.autocomplete(self, autocompleteTextFor: prefix, with: String()) ?? []
+        autocompleteMap[prefix] = dataSource?.autocomplete(self, autocompleteTextFor: prefix) ?? []
         currentFilter = String()
     }
     
@@ -170,13 +168,14 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         let totalRows = currentAutocompleteText?.count ?? 0
         let visibleRows = maxVisibleRows < totalRows ? CGFloat(maxVisibleRows) : CGFloat(totalRows)
-        messageInputBar?.setTopStackViewHeightConstant(to: visibleRows * tableView.rowHeight, animated: false)
+        inputBarAccessoryView?.setTopStackViewHeightConstant(to: visibleRows * tableView.rowHeight, animated: false)
     }
     
     /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
     open func checkLastCharacter() {
         
-        guard let characters = messageInputBar?.inputTextView.text.characters, let char = characters.last else {
+        guard let characters = inputBarAccessoryView?.textView.text.characters, let char = characters.last else {
+            unregisterCurrentPrefix()
             return
         }
         if autocompletePrefixes.contains(char), let range = Range(NSMakeRange(characters.count - 1, 0)) {
@@ -194,7 +193,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     @discardableResult
     public func autocomplete(with text: String) -> Bool {
         
-        guard let prefix = currentPrefix, let textView = messageInputBar?.inputTextView, let filterText = currentFilter else {
+        guard let prefix = currentPrefix, let textView = inputBarAccessoryView?.textView, let filterText = currentFilter else {
             return false
         }
         let leftIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text))

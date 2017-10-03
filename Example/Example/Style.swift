@@ -25,6 +25,35 @@
 //  Created by Nathan Tannar on 10/2/17.
 //
 
-class Style {
+import UIKit.UIImage
+
+enum Style: String {
+    case slack = "Slack"
+    case messenger = "Messenger"
+    case whatsapp = "WhatsApp"
+    case snapchat = "Snapchat"
+    case imessage = "iMessage"
+    case none = "None"
     
+    func image() -> UIImage? {
+        switch self {
+        case .slack:
+            return #imageLiteral(resourceName: "icons8-slack")
+        case .messenger:
+            return #imageLiteral(resourceName: "icons8-facebook_messenger")
+        case .whatsapp:
+            return #imageLiteral(resourceName: "icons8-whatsapp")
+        case .snapchat:
+            return #imageLiteral(resourceName: "icons8-snapchat")
+        case .imessage:
+            return #imageLiteral(resourceName: "imessage-logo-618x350")
+        case .none:
+            return nil
+        }
+    }
+    
+    static func all() -> [Style] {
+        // not all are implemented yet
+        return [.slack, .messenger, .imessage, .none]
+    }
 }

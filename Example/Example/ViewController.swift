@@ -9,38 +9,7 @@
 import UIKit
 import InputBarAccessoryView
 
-class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarAccessoryViewDataSource {
-    
-    enum Style: String {
-        case slack = "Slack"
-        case messenger = "Messenger"
-        case whatsapp = "WhatsApp"
-        case snapchat = "Snapchat"
-        case imessage = "iMessage"
-        case none = "None"
-        
-        func image() -> UIImage? {
-            switch self {
-            case .slack:
-                return #imageLiteral(resourceName: "icons8-slack")
-            case .messenger:
-                return #imageLiteral(resourceName: "icons8-facebook_messenger")
-            case .whatsapp:
-                return #imageLiteral(resourceName: "icons8-whatsapp")
-            case .snapchat:
-                return #imageLiteral(resourceName: "icons8-snapchat")
-            case .imessage:
-                return #imageLiteral(resourceName: "imessage-logo-618x350")
-            case .none:
-                return nil
-            }
-        }
-        
-        static func all() -> [Style] {
-            // not all are implemented yet
-            return [.slack, .messenger, .imessage, .none]
-        }
-    }
+class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteDataSource {
     
     var currentStyle: Style = .none {
         didSet {
@@ -48,29 +17,29 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         }
     }
     
-    let names: [String] = {
-        var array: [String] = []
-        for _ in 1...100 {
-            array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
-        }
-        return array
-    }()
-    
     lazy var bar: InputBarAccessoryView = { [unowned self] in
         let bar = InputBarAccessoryView()
         bar.delegate = self
-        bar.dataSource = self
+        
+        // required to pass autocomplete strings to the manager
+        bar.autocompleteManager.dataSource = self
+        
+        // default value is false
+        bar.isAutocompleteEnabled = true
         return bar
     }()
     
+    // Required to use an inputAccessoryView
     override var canBecomeFirstResponder: Bool {
         return true
     }
     
+    // Required to use an inputAccessoryView
     override var inputAccessoryView: UIView? {
         return bar
     }
     
+    // We only want to adjust animate changes in the bar when the view is loaded
     var viewIsLoaded = false
 
     override func viewDidLoad() {
@@ -79,22 +48,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         navigationController?.navigationBar.isTranslucent = false
         view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
-        func createButton(withStyle style: Style) -> UIButton {
-            let button = UIButton()
-            button.setImage(style.image(), for: .normal)
-            button.imageView?.contentMode = .scaleAspectFit
-            button.addTarget(self, action: Selector(style.rawValue), for: .touchUpInside)
-            switch style {
-            case .snapchat:
-                button.backgroundColor = UIColor.yellow
-            case .none:
-                button.setTitle("None", for: .normal)
-                button.backgroundColor = UIColor.groupTableViewBackground
-            default:
-                button.backgroundColor = UIColor.groupTableViewBackground
-            }
-            return button
-        }
         let buttons = Style.all().map { (style) -> UIButton in
             return createButton(withStyle: style)
         }
@@ -105,7 +58,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
             frame.origin.x += 58
         }
         
-        //Slack()
         
         viewIsLoaded = true
     }
@@ -146,15 +98,16 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
                 button.isEnabled = textView.text.isEmpty
             },
             makeButton(named: "ic_at").onSelected { _ in
-//                if let textView = $0.inputBarAccessoryView?.textView {
-//                    textView.text.insert("@", at: textView.text.endIndex)
-//                }
+                self.bar.textView.text.append("@")
+                
+                // We must call checkLastCharacter() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
+                self.bar.autocompleteManager.checkLastCharacter()
             },
             makeButton(named: "ic_hashtag").onSelected { _ in
-//                if let textView = $0.inputBarAccessoryView?.textView {
-//                    textView.text.insert("#", at: textView.text.endIndex)
-//                }
-            },
+                self.bar.textView.text.append("#")
+                
+                // We must call checkLastCharacter() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
+                self.bar.autocompleteManager.checkLastCharacter()            },
             .flexibleSpace,
             makeButton(named: "ic_library").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
@@ -194,16 +147,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
     }
     
     @objc
-    func WhatsApp() {
-        None()
-    }
-    
-    @objc
-    func Snapchat() {
-        None()
-    }
-    
-    @objc
     func iMessage() {
         None()
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
@@ -232,8 +175,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         bar.textView.resignFirstResponder()
         let newBar = InputBarAccessoryView()
         newBar.delegate = self
-        newBar.dataSource = self
         bar = newBar
+        bar.autocompleteManager.dataSource = self
+        bar.isAutocompleteEnabled = true
         reloadInputViews()
     }
     
@@ -252,6 +196,23 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         }
     }
     
+    func createButton(withStyle style: Style) -> UIButton {
+        let button = UIButton()
+        button.setImage(style.image(), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: Selector(style.rawValue), for: .touchUpInside)
+        switch style {
+        case .snapchat:
+            button.backgroundColor = UIColor.yellow
+        case .none:
+            button.setTitle("None", for: .normal)
+            button.backgroundColor = UIColor.groupTableViewBackground
+        default:
+            button.backgroundColor = UIColor.groupTableViewBackground
+        }
+        return button
+    }
+    
     // MARK: - InputBarAccessoryViewDelegate
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
@@ -259,13 +220,17 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, InputBarA
         inputBar.textView.text = String()
     }
     
-    func inputBar(_ inputBar: InputBarAccessoryView, autocompleteOptionsForPrefix prefix: Character, withEnteredText text: String) -> [String] {
+    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
         
-        let values = prefix == "@" ? names : ["apple", "microsoft", "iphone", "ipad"]
-        if !text.isEmpty {
-            return values.filter { $0.lowercased().contains(text.lowercased()) }
+        var array: [String] = []
+        for _ in 1...100 {
+            if prefix == "@" {
+                array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
+            } else {
+                array.append(Lorem.word())
+            }
         }
-        return values
+        return array
     }
 }
 
