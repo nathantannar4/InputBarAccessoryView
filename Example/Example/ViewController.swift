@@ -11,12 +11,6 @@ import InputBarAccessoryView
 
 class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteDataSource {
     
-    var currentStyle: Style = .none {
-        didSet {
-            title = currentStyle.rawValue
-        }
-    }
-    
     lazy var bar: InputBarAccessoryView = { [unowned self] in
         let bar = InputBarAccessoryView()
         bar.delegate = self
@@ -41,30 +35,78 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     
     // We only want to adjust animate changes in the bar when the view is loaded
     var viewIsLoaded = false
+    
+    var label: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.isTranslucent = false
+        title = "InputBarAccessoryView"
         view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         
-        let buttons = Style.all().map { (style) -> UIButton in
-            return createButton(withStyle: style)
-        }
-        var frame = CGRect(x: 16, y: 30, width: 50, height: 50)
-        for button in buttons {
-            button.frame = frame
-            view.addSubview(button)
-            frame.origin.x += 58
-        }
+        let imageView = UIImageView(image: UIImage(named: "NT Logo Blue"))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(imageView)
+        view.addSubview(label)
+        NSLayoutConstraint.activate([
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            imageView.heightAnchor.constraint(equalToConstant: 200),
+            imageView.widthAnchor.constraint(equalToConstant: 200),
+            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
         
+        navigationItem.rightBarButtonItems = [
+            UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleKeyboardButton))
+        ]
         
         viewIsLoaded = true
     }
     
     @objc
-    func Messenger() {
-        None()
+    func handleKeyboardButton() {
+        
+        let actionSheetController = UIAlertController(title: "Change Keyboard Style", message: nil, preferredStyle: .actionSheet)
+        let actions = [
+            UIAlertAction(title: "Slack", style: .default, handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                    self.slack()
+                })
+            }),
+            UIAlertAction(title: "iMessage", style: .default, handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                    self.iMessage()
+                })
+            }),
+            UIAlertAction(title: "Facebook Messenger", style: .default, handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                    self.messenger()
+                })
+            }),
+            UIAlertAction(title: "Default", style: .default, handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                    self.none()
+                })
+            }),
+            UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        ]
+        actions.forEach { actionSheetController.addAction($0) }
+        present(actionSheetController, animated: true, completion: nil)
+    }
+    
+    @objc
+    func messenger() {
+        none()
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
@@ -91,8 +133,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     }
 
     @objc
-    func Slack() {
-        None()
+    func slack() {
+        none()
         let items = [
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
@@ -148,7 +190,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     
     @objc
     func iMessage() {
-        None()
+        none()
         bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
         bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
@@ -171,7 +213,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     }
     
     @objc
-    func None() {
+    func none() {
         bar.textView.resignFirstResponder()
         let newBar = InputBarAccessoryView()
         newBar.delegate = self
@@ -196,27 +238,11 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         }
     }
     
-    func createButton(withStyle style: Style) -> UIButton {
-        let button = UIButton()
-        button.setImage(style.image(), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.addTarget(self, action: Selector(style.rawValue), for: .touchUpInside)
-        switch style {
-        case .snapchat:
-            button.backgroundColor = UIColor.yellow
-        case .none:
-            button.setTitle("None", for: .normal)
-            button.backgroundColor = UIColor.groupTableViewBackground
-        default:
-            button.backgroundColor = UIColor.groupTableViewBackground
-        }
-        return button
-    }
-    
     // MARK: - InputBarAccessoryViewDelegate
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        print(text)
+        
+        label.text = text
         inputBar.textView.text = String()
     }
     

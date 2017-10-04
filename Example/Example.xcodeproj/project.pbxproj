@@ -13,7 +13,6 @@
 		383B839F1F47897800027965 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B839E1F47897800027965 /* ViewController.swift */; };
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
 		383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A21F47897800027965 /* LaunchScreen.storyboard */; };
-		3876DA941F835B7300C89326 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA931F835B7300C89326 /* Style.swift */; };
 		3876DAA41F841AE900C89326 /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */; };
 		3876DAA51F841AE900C89326 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -41,7 +40,6 @@
 		383B83A01F47897800027965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		383B83A31F47897800027965 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3876DA931F835B7300C89326 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
 		3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -79,7 +77,6 @@
 			children = (
 				383B839C1F47897800027965 /* AppDelegate.swift */,
 				383B839E1F47897800027965 /* ViewController.swift */,
-				3876DA931F835B7300C89326 /* Style.swift */,
 				383989B91F55C600003D30DD /* Lorem.swift */,
 				383989BC1F564F5C003D30DD /* Random.swift */,
 				383B83A01F47897800027965 /* Assets.xcassets */,
@@ -167,7 +164,6 @@
 				383989BA1F55C600003D30DD /* Lorem.swift in Sources */,
 				383B839F1F47897800027965 /* ViewController.swift in Sources */,
 				383B839D1F47897800027965 /* AppDelegate.swift in Sources */,
-				3876DA941F835B7300C89326 /* Style.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
