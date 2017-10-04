@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
     s.summary = "Make versatile and flexible InputBars"
     s.description  = "A simple and highly customizable AccessoryView perfect for messaging applications."
     s.requires_arc = true
+    s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
     # 2 - Version
     s.version = "1.0.0"
