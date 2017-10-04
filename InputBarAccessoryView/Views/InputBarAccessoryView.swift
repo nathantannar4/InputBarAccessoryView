@@ -115,9 +115,39 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
     
+    /// The object that manages attachments
+    open var attachmentManager = AttachmentManager() {
+        willSet {
+            // Ensures old view is removed
+            isAttachmentViewHidden = true
+        }
+        didSet {
+            isAttachmentViewHidden = false
+        }
+    }
+    
+    /// When set to TRUE the AttachmentsView corresponding to the AttachmentManager will be added to the top UIStackView
+    open var isAttachmentViewHidden: Bool = true {
+        didSet {
+            if !isAttachmentViewHidden && attachmentManager.attachmentView.superview == nil {
+                topStackView.addArrangedSubview(attachmentManager.attachmentView)
+                attachmentManager.inputBarAccessoryView = self
+                setTopStackViewHeightConstant(to: topStackViewHeightConstant, animated: false)
+            } else if isAttachmentViewHidden {
+                attachmentManager.attachmentView.removeFromSuperview()
+                attachmentManager.inputBarAccessoryView = nil
+                setTopStackViewHeightConstant(to: topStackViewHeightConstant - attachmentViewHeight, animated: false)
+            }
+        }
+    }
+    
+    /// The height of the attachment view when visible
+    open var attachmentViewHeight: CGFloat = 100
+    
     /// The object that manages autocomplete. When set isAutocompleteEnabled is automatically set to TRUE
     open var autocompleteManager = AutocompleteManager() {
         willSet {
+            // Ensures old view is removed
             isAutocompleteEnabled = false
         }
         didSet {
@@ -129,7 +159,7 @@ open class InputBarAccessoryView: UIView {
     open var isAutocompleteEnabled: Bool = false {
         didSet {
             if isAutocompleteEnabled && autocompleteManager.tableView.superview == nil {
-                topStackView.addArrangedSubview(autocompleteManager.tableView)
+                topStackView.insertArrangedSubview(autocompleteManager.tableView, at: 0)
                 textView.delegate = autocompleteManager
                 autocompleteManager.inputBarAccessoryView = self
             } else if !isAutocompleteEnabled {
@@ -309,6 +339,7 @@ open class InputBarAccessoryView: UIView {
         tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         backgroundColor = .clear
         autoresizingMask = [.flexibleHeight]
+        attachmentManager.inputBarAccessoryView = self
         setupSubviews()
         setupConstraints()
         setupObservers()
@@ -543,14 +574,16 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Sets the topStackViewHeightConstant
+    /// Sets the topStackViewHeightConstant. Because the AttachmentView height is fixes it will be automatically added to the newValue if it is supposed to be shown
     ///
     /// - Parameters:
     ///   - newValue: New heightAnchor constant
     ///   - animated: If the layout should be animated
     open func setTopStackViewHeightConstant(to newValue: CGFloat, animated: Bool) {
+        
+        let newHeight = isAttachmentViewHidden ? newValue : (newValue + attachmentViewHeight)
         performLayout(animated) {
-            self.topStackViewHeightConstant = newValue
+            self.topStackViewHeightConstant = newHeight
             self.layoutStackViews([.top])
             self.invalidateIntrinsicContentSize()
         }

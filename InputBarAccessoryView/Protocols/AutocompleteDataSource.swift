@@ -41,7 +41,7 @@ public extension AutocompleteDataSource {
     
         let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
         let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
-        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)], range: matchingRange)
+        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16)], range: matchingRange)
         let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
         stringWithPrefix.append(attributedString)
         cell.textLabel?.attributedText = stringWithPrefix

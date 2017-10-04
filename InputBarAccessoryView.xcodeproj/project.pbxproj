@@ -12,6 +12,11 @@
 		3876DA911F83530900C89326 /* AutocompleteDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8F1F83530900C89326 /* AutocompleteDelegate.swift */; };
 		3876DA921F83551400C89326 /* AutocompleteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8D1F83530200C89326 /* AutocompleteManager.swift */; };
 		3876DAA71F841ED900C89326 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */; };
+		3876DAA91F84C0DB00C89326 /* AttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */; };
+		3876DAAB1F84C22100C89326 /* ImageAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAA1F84C22100C89326 /* ImageAttachmentCell.swift */; };
+		3876DAAD1F84C42800C89326 /* AttachmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAC1F84C42800C89326 /* AttachmentManager.swift */; };
+		3876DAAF1F84C71F00C89326 /* AttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAE1F84C71F00C89326 /* AttachmentCell.swift */; };
+		3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */; };
 		38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */; };
 		38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */; };
 		38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */; };
@@ -28,6 +33,11 @@
 		3876DA8E1F83530900C89326 /* AutocompleteDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteDataSource.swift; sourceTree = "<group>"; };
 		3876DA8F1F83530900C89326 /* AutocompleteDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteDelegate.swift; sourceTree = "<group>"; };
 		3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsView.swift; sourceTree = "<group>"; };
+		3876DAAA1F84C22100C89326 /* ImageAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttachmentCell.swift; sourceTree = "<group>"; };
+		3876DAAC1F84C42800C89326 /* AttachmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentManager.swift; sourceTree = "<group>"; };
+		3876DAAE1F84C71F00C89326 /* AttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCell.swift; sourceTree = "<group>"; };
+		3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteTableView.swift; sourceTree = "<group>"; };
 		38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
 		38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				3876DA8D1F83530200C89326 /* AutocompleteManager.swift */,
+				3876DAAC1F84C42800C89326 /* AttachmentManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -101,6 +112,7 @@
 				38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */,
 				3876DA8E1F83530900C89326 /* AutocompleteDataSource.swift */,
 				3876DA8F1F83530900C89326 /* AutocompleteDelegate.swift */,
+				3876DAAE1F84C71F00C89326 /* AttachmentCell.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -117,10 +129,13 @@
 		38C867791F50A6AD00811974 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */,
+				3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */,
+				3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */,
+				3876DAAA1F84C22100C89326 /* ImageAttachmentCell.swift */,
 				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
 				38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */,
 				38C8677C1F50A6AD00811974 /* InputTextView.swift */,
-				3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -209,11 +224,16 @@
 				3876DA921F83551400C89326 /* AutocompleteManager.swift in Sources */,
 				38C867841F50A6AD00811974 /* InputTextView.swift in Sources */,
 				3876DA901F83530900C89326 /* AutocompleteDataSource.swift in Sources */,
+				3876DAAF1F84C71F00C89326 /* AttachmentCell.swift in Sources */,
+				3876DAA91F84C0DB00C89326 /* AttachmentsView.swift in Sources */,
 				38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */,
 				38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */,
 				3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */,
+				3876DAAB1F84C22100C89326 /* ImageAttachmentCell.swift in Sources */,
 				3876DAA71F841ED900C89326 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */,
+				3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */,
+				3876DAAD1F84C42800C89326 /* AttachmentManager.swift in Sources */,
 				38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,
 				3876DA911F83530900C89326 /* AutocompleteDelegate.swift in Sources */,

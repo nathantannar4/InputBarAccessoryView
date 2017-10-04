@@ -33,8 +33,8 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
     /// The autocomplete table for @mention or #hastag
-    open lazy var tableView: UITableView = { [weak self] in
-        let tableView = UITableView()
+    open lazy var tableView: AutocompleteTableView = { [weak self] in
+        let tableView = AutocompleteTableView()
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.backgroundColor = self?.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
@@ -76,6 +76,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     private var currentFilter: String? {
         didSet {
             tableView.reloadData()
+            tableView.invalidateIntrinsicContentSize()
             updateTableViewHeight()
         }
     }
@@ -116,6 +117,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
+        // Ensure that the text to be inserted is not using previous attributes
         (textView as? InputTextView)?.resetTypingAttributes()
         
         // User deleted the registered prefix
@@ -164,7 +166,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         autocompleteMap.removeAll()
     }
     
-    /// Updates the topStackView height constant in MessageInputBar to make room for the visible cells, but not more than the max visible allowed
+    /// Updates the topStackView height constant in InputBarAccessoryView to make room for the visible cells, but not more than the max visible allowed
     open func updateTableViewHeight() {
         
         let totalRows = currentAutocompleteText?.count ?? 0

@@ -9,7 +9,7 @@
 import UIKit
 import InputBarAccessoryView
 
-class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteDataSource {
+class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     lazy var bar: InputBarAccessoryView = { [unowned self] in
         let bar = InputBarAccessoryView()
@@ -20,6 +20,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         
         // default value is false
         bar.isAutocompleteEnabled = true
+        
         return bar
     }()
     
@@ -70,6 +71,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                             action: #selector(handleKeyboardButton))
         ]
         
+        slack()
         viewIsLoaded = true
     }
     
@@ -149,10 +151,18 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                 self.bar.textView.text.append("#")
                 
                 // We must call checkLastCharacter() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
-                self.bar.autocompleteManager.checkLastCharacter()            },
+                self.bar.autocompleteManager.checkLastCharacter()
+            },
             .flexibleSpace,
-            makeButton(named: "ic_library").onTextViewDidChange { button, textView in
-                button.isEnabled = textView.text.isEmpty
+            makeButton(named: "ic_library")
+                .configure {
+                    $0.tintColor = .red
+                }.onSelected {
+                    $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary
+                    self.present(imagePicker, animated: true, completion: nil)
             },
             bar.sendButton
                 .configure {
@@ -230,7 +240,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 30, height: 30), animated: viewIsLoaded)
             }.onSelected {
-                $0.tintColor = UIColor.blue
+                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             }.onDeselected {
                 $0.tintColor = UIColor.lightGray
             }.onTouchUpInside { _ in
@@ -277,20 +287,16 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         cell.tintColor = autocompleteManager.inputBarAccessoryView?.tintColor
         cell.separatorLine.isHidden = indexPath.row == (autocompleteManager.currentAutocompleteText ?? []).count - 1
         
-//        cell.imageView?.tintAdjustmentMode = .normal
-//        cell.imageView?.image = UIImage(named: "ic_user")
-//        cell.imageView?.backgroundColor = .lightGray
-//        cell.imageView?.layer.borderColor = cell.tintColor.cgColor
-//        cell.imageView?.layer.borderWidth = 1.5
-//        cell.imageView?.layer.cornerRadius = 8
-//        cell.imageView?.clipsToBounds = true
-//        
-//        if indexPath.row % 3 == 0 {
-//            cell.detailTextLabel?.text = "Online"
-//            cell.detailTextLabel?.textColor = UIColor(red: 76/255, green: 153/255, blue: 0, alpha: 1)
-//        }
-        
         return cell
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        dismiss(animated: true, completion: {
+            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                self.bar.attachmentManager.insertAttachment(pickedImage, at: self.bar.attachmentManager.attachments.count)
+            }
+        })
     }
 }
 
