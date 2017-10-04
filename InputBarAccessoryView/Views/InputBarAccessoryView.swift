@@ -115,8 +115,15 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
     
-    /// The object that manages autocomplete
-    open var autocompleteManager = AutocompleteManager()
+    /// The object that manages autocomplete. When set isAutocompleteEnabled is automatically set to TRUE
+    open var autocompleteManager = AutocompleteManager() {
+        willSet {
+            isAutocompleteEnabled = false
+        }
+        didSet {
+            isAutocompleteEnabled = true
+        }
+    }
     
     /// When set to TRUE the UITableView corresponding to the AutocompleteManager will be added to the top UIStackView
     open var isAutocompleteEnabled: Bool = false {

@@ -210,8 +210,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         // Move Cursor to the end of the inserted text
         textView.selectedRange = NSMakeRange(safeOffset(withText: textView.text) + textToInsert.characters.count, 0)
         
-        // After modifying the selectedRange we need to reset the typing attributes
-        
+        delegate?.autocomplete(self, didComplete: prefix, with: textToInsert)
         
         // Unregister
         unregisterCurrentPrefix()

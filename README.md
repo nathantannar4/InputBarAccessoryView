@@ -7,6 +7,15 @@
 pod 'InputBarAccessoryView'
 ```
 
+### Usage
+
+Add your app to the list of apps using this library and make a pull request.
+
+- [MessageKit](https://github.com/MessageKit/MessageKit) *(renamed to MessageInputBar)*
+<p>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo" height="50">
+</p>
+
 ### Requirements
 
 iOS 9.0+
@@ -26,14 +35,54 @@ The layout of the `InputBarAccessoryView` is made of of 3 `UIStackView`'s and an
 ```swift
 H:|-(padding.left)-[UIStackView(leftStackViewWidthContant)]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[UIStackView(rightStackViewWidthContant)]-(padding.right)-|
 
-V:|-(padding.top)-[InputTextView]-(textViewPadding.bottom)-[UIStackView]-(padding.bottom)-|
+V:|-(topStackViewPadding.top)-[UIStackView]-(topStackViewPadding.bottom)-[SeparatorLine]-(padding.top)-[InputTextView]-(textViewPadding.bottom)-[UIStackView]-(padding.bottom)-|
 ```
 
-It is important to note that each of the `UIStackView`'s to the left and right of the `InputTextView` are anchored by a width constraint. This way the `InputTextView` will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the `InputTextView` by setting the width constraint constant to 0.
+It is important to note that each of the `UIStackView`'s to the left and right of the `InputTextView` are anchored by a width constraint. This way the `InputTextView` will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the `InputTextView` by setting the width constraint constant to 0. The top `UIStackView`'s height is also constrained,
 
 ```swift
-func setLeftStackViewWidthContant(to newValue: CGFloat, animated: Bool)
-func setRightStackViewWidthContant(to newValue: CGFloat, animated: Bool)
+func setLeftStackViewWidthConstant(to newValue: CGFloat, animated: Bool)
+
+func setRightStackViewWidthConstant(to newValue: CGFloat, animated: Bool)
+
+func setTopStackViewHeightConstant(to newValue: CGFloat, animated: Bool)
+```
+
+
+## AutocompleteManager
+
+The `AutocompleteManager` holds the logic and views required for the autocomplete functionality which makes it easy to subclass and modify if you wish to add additional logic! Then you can set the `MessageInputBar`'s autocompleteManager property to your own
+
+```swift
+/// If the autocomplete matches should be made by casting the strings to lowercase
+open var isCaseSensitive = false
+    
+/// When TRUE, autocompleted text will be highlighted with the UITextView's tintColor with an alpha component
+open var highlightAutocompletes = true
+    
+/// The max visible rows visible in the autocomplete table before the user has to scroll throught them
+open var maxVisibleRows = 3
+    
+/// The prefices that the manager will recognize
+open var autocompletePrefixes: [Character] = ["@","#"]
+```
+
+### AutocompleteManagerDataSource
+
+By default an `AutocompleteCell` is returned to the `AutocompleteManager` thats title labels text is bolded to match the entered text.
+
+```swift
+// The autocomplete options for a given prefix. Called once when a prefix is entered and then cached until the prefix is unregistered
+func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
+    
+// Configure the cell to display in the `UITableView`
+func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
+```
+
+### AutocompleteManagerDataSource
+
+```swift
+func autocomplete(_ autocompleteManager: AutocompleteManager, didComplete prefix: Character, with text: String)
 ```
 
 ## InputBarButtonItem
@@ -66,27 +115,57 @@ Each `InputBarButtonItem` has properties that can hold actions that will be exec
 ```swift
 // MARK: - Hooks
     
-private var onTouchUpInsideAction: ((InputBarButtonItem)->Void)?
-private var onKeyboardEditingBeginsAction: ((InputBarButtonItem)->Void)?
-private var onKeyboardEditingEndsAction: ((InputBarButtonItem)->Void)?
-private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer)->Void)?
-private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView)->Void)?
-private var onSelectedAction: ((InputBarButtonItem)->Void)?
-private var onDeselectedAction: ((InputBarButtonItem)->Void)?
-private var onEnabledAction: ((InputBarButtonItem)->Void)?
-private var onDisabledAction: ((InputBarButtonItem)->Void)?
+public typealias InputBarButtonItemAction = ((InputBarButtonItem) -> Void)    
+    
+private var onTouchUpInsideAction: InputBarButtonItemAction?
+private var onKeyboardEditingBeginsAction: InputBarButtonItemAction?
+private var onKeyboardEditingEndsAction: InputBarButtonItemAction?
+private var onKeyboardSwipeGestureAction: ((InputBarButtonItem, UISwipeGestureRecognizer) -> Void)?
+private var onTextViewDidChangeAction: ((InputBarButtonItem, InputTextView) -> Void)?
+private var onSelectedAction: InputBarButtonItemAction?
+private var onDeselectedAction: InputBarButtonItemAction?
+private var onEnabledAction: InputBarButtonItemAction?
+private var onDisabledAction: InputBarButtonItemAction?
 ```
 
-## Author
+## InputBarAccessoryViewDelegate
 
-<img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="75" height="75">
-Nathan Tannar - https://nathantannar.me
+```swift
+func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String)
+
+// Useful for updating a UICollectionView or UITableView bottom inset    
+func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
+    
+func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)
+    
+func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
+```
+
+## Planned Features
+
+- [X] Autocomplete
+- [ ] Image view picker
+- [ ] Image support in the InputTextView
+- [ ] Text markup support in the InputTextView
+
+Have a suggestion? Make a PR!
+
+## Changelog
+
+- 1.0.0
+	- A more refined autocomplete
+	- Layout bug fixes
+
+*pre-release versions not documented*
+
+**Find a bug? Open an issue!**
+
+## Author
+<p>
+	<img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="100" height="100">
+</p>
+**Nathan Tannar** - [https://nathantannar.me](https://nathantannar.me)
 
 ## License
-
-##### InputBarAccessoryView was developed as a contribution to [MessageKit](https://github.com/MessageKit/MessageKit) where it was renamed to MessageInputBar.
-<p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit logo">
-</p>
 
 Distributed under the MIT license. See ``LICENSE`` for more information.
