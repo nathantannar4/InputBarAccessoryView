@@ -251,18 +251,18 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         cell.tintColor = autocompleteManager.inputBarAccessoryView?.tintColor
         cell.separatorLine.isHidden = indexPath.row == (autocompleteManager.currentAutocompleteText ?? []).count - 1
         
-        cell.imageView?.tintAdjustmentMode = .normal
-        cell.imageView?.image = UIImage(named: "ic_user")
-        cell.imageView?.backgroundColor = .lightGray
-        cell.imageView?.layer.borderColor = cell.tintColor.cgColor
-        cell.imageView?.layer.borderWidth = 1.5
-        cell.imageView?.layer.cornerRadius = 8
-        cell.imageView?.clipsToBounds = true
-        
-        if indexPath.row % 3 == 0 {
-            cell.detailTextLabel?.text = "Online"
-            cell.detailTextLabel?.textColor = UIColor(red: 76/255, green: 153/255, blue: 0, alpha: 1)
-        }
+//        cell.imageView?.tintAdjustmentMode = .normal
+//        cell.imageView?.image = UIImage(named: "ic_user")
+//        cell.imageView?.backgroundColor = .lightGray
+//        cell.imageView?.layer.borderColor = cell.tintColor.cgColor
+//        cell.imageView?.layer.borderWidth = 1.5
+//        cell.imageView?.layer.cornerRadius = 8
+//        cell.imageView?.clipsToBounds = true
+//        
+//        if indexPath.row % 3 == 0 {
+//            cell.detailTextLabel?.text = "Online"
+//            cell.detailTextLabel?.textColor = UIColor(red: 76/255, green: 153/255, blue: 0, alpha: 1)
+//        }
         
         return cell
     }
