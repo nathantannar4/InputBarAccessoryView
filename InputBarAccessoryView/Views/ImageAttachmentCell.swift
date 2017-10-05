@@ -88,14 +88,14 @@ open class ImageAttachmentCell: UICollectionViewCell, AttachmentCell {
     
     private func setupSubviews() {
         
-        addSubview(imageView)
-        addSubview(removeButton)
+        contentView.addSubview(imageView)
+        contentView.addSubview(removeButton)
     }
     
     private func setupConstraints() {
         
-        imageView.addConstraints(topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, topConstant: 10, leftConstant: 4, bottomConstant: 4, rightConstant: 10)
-        removeButton.addConstraints(topAnchor, right: rightAnchor, widthConstant: 20, heightConstant: 20)
+        imageView.addConstraints(contentView.topAnchor, left: contentView.leftAnchor, bottom: contentView.bottomAnchor, right: contentView.rightAnchor, topConstant: 10, leftConstant: 4, bottomConstant: 4, rightConstant: 10)
+        removeButton.addConstraints(contentView.topAnchor, right: contentView.rightAnchor, widthConstant: 20, heightConstant: 20)
     }
     
     // User Actions

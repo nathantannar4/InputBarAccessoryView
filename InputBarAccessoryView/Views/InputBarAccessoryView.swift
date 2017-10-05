@@ -28,6 +28,22 @@
 import Foundation
 import UIKit
 
+open class SeparatorLine: UIView {
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .lightGray
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: 0, height: 0.5)
+    }
+}
+
 open class InputBarAccessoryView: UIView {
     
     public enum UIStackViewPosition {

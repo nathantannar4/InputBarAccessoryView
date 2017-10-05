@@ -29,6 +29,12 @@ import UIKit
 
 open class AttachmentsView: UICollectionView {
     
+    // MARK: - Properties
+    
+    open override var intrinsicContentSize: CGSize {
+        return CGSize(width: 0, height: 100)
+    }
+    
     // MARK: - Initialization
     
     public init() {
@@ -37,7 +43,6 @@ open class AttachmentsView: UICollectionView {
         layout.minimumLineSpacing = 0
         layout.sectionInset.top = 5
         layout.sectionInset.bottom = 5
-        layout.itemSize = CGSize(width: 80, height: 80)
         layout.footerReferenceSize = CGSize(width: 5, height: 0)
         super.init(frame: .zero, collectionViewLayout: layout)
         setup()
@@ -57,5 +62,10 @@ open class AttachmentsView: UICollectionView {
         showsHorizontalScrollIndicator = true
         register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
         register(ImageAttachmentCell.self, forCellWithReuseIdentifier: ImageAttachmentCell.reuseIdentifier)
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+//        addBorder(side: .top, thickness: 0.5, color: .lightGray)
     }
 }

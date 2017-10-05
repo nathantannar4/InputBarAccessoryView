@@ -45,6 +45,12 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
         }
     }
     
+    // MARK: - Initialization
+    
+    public override init() {
+        super.init()
+    }
+    
     /// Performs an animated insertion of an attachment at an index
     ///
     /// - Parameter index: The index to insert the attachment at
