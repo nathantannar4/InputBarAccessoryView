@@ -62,6 +62,12 @@ open class InputTextView: UITextView {
         }
     }
     
+    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
+        didSet {
+            updateConstraintsForPlaceholderLabel()
+        }
+    }
+    
     override open var font: UIFont! {
         didSet {
             placeholderLabel.font = font
@@ -79,12 +85,6 @@ open class InputTextView: UITextView {
             placeholderLabelInsets = textContainerInset
         }
     }
-
-    open var placeholderLabelInsets: UIEdgeInsets = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4) {
-        didSet {
-            updateConstraintsForPlaceholderLabel()
-        }
-    }
     
     open override var scrollIndicatorInsets: UIEdgeInsets {
         didSet {
@@ -97,6 +97,16 @@ open class InputTextView: UITextView {
             }
         }
     }
+    
+    open lazy var defaultTextAttributes: [NSAttributedStringKey:Any] = { [weak self] in
+        return [NSAttributedStringKey.font : font,
+                NSAttributedStringKey.foregroundColor : UIColor.black]
+    }()
+    
+    open lazy var highlightedTextAttributes: [NSAttributedStringKey:Any] = { [weak self] in
+        return [NSAttributedStringKey.foregroundColor : tintColor,
+                NSAttributedStringKey.backgroundColor : tintColor.withAlphaComponent(0.2)]
+    }()
     
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
@@ -167,13 +177,44 @@ open class InputTextView: UITextView {
                                                object: nil)
     }
     
+    open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+        if action == #selector(paste(_:)) && UIPasteboard.general.image != nil {
+            return true
+        }
+        return super.canPerformAction(action, withSender: sender)
+    }
+    
+    // MARK: - Paste Support
+    
+    open override func paste(_ sender: Any?) {
+        
+        if let image = UIPasteboard.general.image {
+            insertImage(image, at: selectedRange)
+        } else {
+            super.paste(sender)
+        }
+    }
+    
+    open func insertImage(_ image: UIImage, at range: NSRange) {
+        
+        let textAttachment = NSTextAttachment()
+        textAttachment.image = image
+        let scaleFactor = textAttachment.image!.size.width / (frame.size.width - 10)
+        textAttachment.image = UIImage(cgImage: textAttachment.image!.cgImage!, scale: scaleFactor, orientation: .up)
+        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
+        let attributedString = NSMutableAttributedString(attributedString: attrStringWithImage)
+        attributedString.addAttributes(defaultTextAttributes, range: NSMakeRange(0, attributedString.length - 1))
+        textStorage.insert(attrStringWithImage, at: selectedRange.location)
+        layoutIfNeeded()
+    }
+    
     // MARK: - Attributed Text Highlighting
     
     open func resetTypingAttributes() {
-        typingAttributes = [
-            NSAttributedStringKey.font.rawValue : font,
-            NSAttributedStringKey.foregroundColor.rawValue : UIColor.black
-        ]
+        
+        var attrs = [String:Any]()
+        defaultTextAttributes.forEach { attrs[$0.key.rawValue] = $0.value }
+        typingAttributes = attrs
     }
     
     /// Finds the ranges of all substrings that start with the provided prefixes and sets those ranges background color to the InputTextView's tintColor
@@ -200,16 +241,8 @@ open class InputTextView: UITextView {
                 ranges.append(range)
             }
         }
-        let attrs: [NSAttributedStringKey:AnyObject] = [
-            NSAttributedStringKey.font : font,
-            NSAttributedStringKey.foregroundColor : textColor ?? .black
-        ]
-        let attributedString = NSMutableAttributedString(string: text, attributes: attrs)
-        let highlightAttrs: [NSAttributedStringKey:AnyObject] = [
-            NSAttributedStringKey.foregroundColor : tintColor,
-            NSAttributedStringKey.backgroundColor : tintColor.withAlphaComponent(0.2)
-        ]
-        ranges.forEach { attributedString.addAttributes(highlightAttrs, range: $0) }
+        let attributedString = NSMutableAttributedString(string: text, attributes: defaultTextAttributes)
+        ranges.forEach { attributedString.addAttributes(highlightedTextAttributes, range: $0) }
         attributedText = attributedString
     }
     
