@@ -32,6 +32,6 @@ open class AutocompleteTableView: UITableView {
     open override var intrinsicContentSize: CGSize {
         
         let rows = numberOfRows(inSection: 0) < 3 ? numberOfRows(inSection: 0)  : 3
-        return CGSize(width: super.intrinsicContentSize.width, height: CGFloat(rows) * rowHeight)
+        return CGSize(width: 0, height: CGFloat(rows) * rowHeight)
     }
 }

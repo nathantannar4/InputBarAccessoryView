@@ -31,8 +31,10 @@ open class AttachmentsView: UICollectionView {
     
     // MARK: - Properties
     
+    open var attachmentViewHeight: CGFloat = 100
+    
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: 0, height: 100)
+        return CGSize(width: 0, height: attachmentViewHeight)
     }
     
     // MARK: - Initialization

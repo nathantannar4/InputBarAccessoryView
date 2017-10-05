@@ -77,7 +77,6 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         didSet {
             tableView.reloadData()
             tableView.invalidateIntrinsicContentSize()
-            updateTableViewHeight()
         }
     }
     
@@ -153,6 +152,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     // MARK: - Autocomplete
     
     private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
+        
         currentPrefix = prefix
         currentPrefixRange = range
         autocompleteMap[prefix] = dataSource?.autocomplete(self, autocompleteTextFor: prefix) ?? []
@@ -160,18 +160,11 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     }
     
     private func unregisterCurrentPrefix() {
-        currentPrefix = nil
-        currentPrefixRange = nil
-        currentFilter = nil
-        autocompleteMap.removeAll()
-    }
-    
-    /// Updates the topStackView height constant in InputBarAccessoryView to make room for the visible cells, but not more than the max visible allowed
-    open func updateTableViewHeight() {
         
-        let totalRows = currentAutocompleteText?.count ?? 0
-        let visibleRows = maxVisibleRows < totalRows ? CGFloat(maxVisibleRows) : CGFloat(totalRows)
-        inputBarAccessoryView?.setTopStackViewHeightConstant(to: visibleRows * tableView.rowHeight, animated: false)
+        currentPrefixRange = nil
+        autocompleteMap.removeAll()
+        currentPrefix = nil
+        currentFilter = nil
     }
     
     /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
