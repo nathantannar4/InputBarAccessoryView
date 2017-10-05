@@ -7,6 +7,12 @@
 pod 'InputBarAccessoryView'
 ```
 
+### Installation via Carthage
+
+```ruby
+github "nathantannar4/InputBarAccessoryView"
+```
+
 ### Usage
 
 Add your app to the list of apps using this library and make a pull request.
