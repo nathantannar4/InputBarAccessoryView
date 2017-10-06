@@ -33,12 +33,7 @@ open class AutocompleteCell: UITableViewCell {
     }
     
     /// A boarder line anchored to the top of the view
-    open let separatorLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .lightGray
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
+    open let separatorLine = SeparatorLine()
     
     open var imageViewEdgeInsets: UIEdgeInsets = .zero
     

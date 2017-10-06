@@ -26,24 +26,23 @@ import UIKit
 
 open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     
-    open weak var dataSource: AutocompleteDataSource?
+    open weak var dataSource: AutocompleteManagerDataSource?
     
-    open weak var delegate: AutocompleteDelegate?
+    open weak var delegate: AutocompleteManagerDelegate?
     
-    open weak var inputBarAccessoryView: InputBarAccessoryView?
+    open weak var textView: InputTextView?
     
     /// The autocomplete table for @mention or #hastag
     open lazy var tableView: AutocompleteTableView = { [weak self] in
         let tableView = AutocompleteTableView()
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = self?.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
+        tableView.backgroundColor = .white
         tableView.rowHeight = 44
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
-    
     
     /// If the autocomplete matches should be made by casting the strings to lowercase
     open var isCaseSensitive = false
@@ -86,6 +85,14 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         super.init()
     }
     
+    open func reload() {
+        checkLastCharacter()
+    }
+    
+    open func invalidate() {
+        unregisterCurrentPrefix()
+    }
+    
     // MARK: - UITableViewDataSource
     
     open func numberOfSections(in tableView: UITableView) -> Int {
@@ -93,15 +100,15 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return currentAutocompleteText?.count ?? 0
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let prefix = currentPrefix, let filterText = currentFilter else { return UITableViewCell() }
-        let autocompleteText = currentAutocompleteText?[indexPath.row] ?? String()
-        return dataSource?.autocomplete(self, tableView: tableView, cellForRowAt: indexPath, for: (prefix, filterText, autocompleteText)) ?? UITableViewCell()
+        let autocompleteText = currentAutocompleteText?[indexPath.row] ?? "nil"
+        let cell = dataSource?.autocompleteManager(self, tableView: tableView, cellForRowAt: indexPath, for: (prefix, filterText, autocompleteText)) ?? UITableViewCell()
+        return cell
     }
     
     // MARK: - UITableViewDelegate
@@ -116,8 +123,9 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
+        self.textView = textView as? InputTextView
         // Ensure that the text to be inserted is not using previous attributes
-        (textView as? InputTextView)?.resetTypingAttributes()
+        self.textView?.resetTypingAttributes()
         
         // User deleted the registered prefix
         if let currentRange = currentPrefixRange {
@@ -153,14 +161,24 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
         
+        if let delegate = delegate {
+            if !delegate.autocompleteManager(self, shouldRegister: prefix, at: range) {
+                return
+            }
+        }
         currentPrefix = prefix
         currentPrefixRange = range
-        autocompleteMap[prefix] = dataSource?.autocomplete(self, autocompleteTextFor: prefix) ?? []
+        autocompleteMap[prefix] = dataSource?.autocompleteManager(self, autocompleteTextFor: prefix) ?? []
         currentFilter = String()
     }
     
     private func unregisterCurrentPrefix() {
         
+        if let delegate = delegate, let prefix = currentPrefix {
+            if !delegate.autocompleteManager(self, shouldUnregister: prefix) {
+                return
+            }
+        }
         currentPrefixRange = nil
         autocompleteMap.removeAll()
         currentPrefix = nil
@@ -168,9 +186,9 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     }
     
     /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
-    open func checkLastCharacter() {
+    private func checkLastCharacter() {
         
-        guard let characters = inputBarAccessoryView?.textView.text.characters, let char = characters.last else {
+        guard let characters = textView?.text.characters, let char = characters.last else {
             unregisterCurrentPrefix()
             return
         }
@@ -189,14 +207,22 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     @discardableResult
     public func autocomplete(with text: String) -> Bool {
         
-        guard let prefix = currentPrefix, let textView = inputBarAccessoryView?.textView, let filterText = currentFilter else {
+        guard let prefix = currentPrefix, let textView = textView, let filterText = currentFilter else {
             return false
         }
+        
         let leftIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text))
         let rightIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text) + filterText.characters.count)
         
         let range = leftIndex...rightIndex
         let textToInsert = String(prefix) + text.appending(" ")
+        
+        if let delegate = delegate {
+            if !delegate.autocompleteManager(self, shouldComplete: prefix, with: textToInsert) {
+                return false
+            }
+        }
+        
         textView.text.replaceSubrange(range, with: textToInsert)
         if highlightAutocompletes {
             textView.highlightSubstrings(with: autocompletePrefixes)
@@ -204,8 +230,6 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         // Move Cursor to the end of the inserted text
         textView.selectedRange = NSMakeRange(safeOffset(withText: textView.text) + textToInsert.characters.count, 0)
-        
-        delegate?.autocomplete(self, didComplete: prefix, with: textToInsert)
         
         // Unregister
         unregisterCurrentPrefix()

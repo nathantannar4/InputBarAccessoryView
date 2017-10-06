@@ -62,12 +62,8 @@ open class AttachmentsView: UICollectionView {
         backgroundColor = .white
         alwaysBounceHorizontal = true
         showsHorizontalScrollIndicator = true
-        register(UICollectionViewCell.self, forCellWithReuseIdentifier: "UICollectionViewCell")
+        setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        register(AttachmentCell.self, forCellWithReuseIdentifier: "AttachmentCell")
         register(ImageAttachmentCell.self, forCellWithReuseIdentifier: ImageAttachmentCell.reuseIdentifier)
-    }
-    
-    open override func layoutSubviews() {
-        super.layoutSubviews()
-//        addBorder(side: .top, thickness: 0.5, color: .lightGray)
     }
 }

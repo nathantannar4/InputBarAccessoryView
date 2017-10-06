@@ -29,7 +29,7 @@ import UIKit
 
 open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    open weak var inputBarAccessoryView: InputBarAccessoryView?
+    open weak var delegate: AttachmentManagerDelegate?
     
     open lazy var attachmentView: AttachmentsView = { [weak self] in
         let attachmentView = AttachmentsView()
@@ -40,8 +40,20 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     
     open var attachments = [AnyObject]() {
         didSet {
-            attachmentView.reloadData()
-            inputBarAccessoryView?.isAttachmentViewHidden = attachments.count == 0
+            reload()
+        }
+    }
+    
+    /// A flag you can use to determine if you want the manager to be always visible
+    open var isPersistent = false {
+        didSet {
+            reload()
+        }
+    }
+    
+    open var addAttachmentCellPressedBlock: ((AttachmentManager)->Void)? {
+        didSet {
+            reload()
         }
     }
     
@@ -51,17 +63,26 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
         super.init()
     }
     
+    open func reload() {
+        attachmentView.reloadData()
+        delegate?.attachmentManager(self, didReloadTo: attachments)
+    }
+    
+    open func invalidate() {
+        attachments.removeAll()
+    }
+    
     /// Performs an animated insertion of an attachment at an index
     ///
     /// - Parameter index: The index to insert the attachment at
     open func insertAttachment(_ attachment: AnyObject, at index: Int) {
         
-        inputBarAccessoryView?.isAttachmentViewHidden = false
         attachmentView.performBatchUpdates({
             self.attachments.insert(attachment, at: index)
             self.attachmentView.insertItems(at: [IndexPath(row: index, section: 0)])
         }, completion: { success in
             self.attachmentView.reloadData()
+            self.delegate?.attachmentManager(self, didInsert: attachment, at: index)
         })
     }
     
@@ -70,13 +91,23 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     /// - Parameter index: The index to remove the attachment at
     open func removeAttachment(at index: Int) {
         
+        let attachment = attachments[index]
         attachmentView.performBatchUpdates({
             self.attachments.remove(at: index)
             self.attachmentView.deleteItems(at: [IndexPath(row: index, section: 0)])
         }, completion: { success in
             self.attachmentView.reloadData()
-            self.inputBarAccessoryView?.isAttachmentViewHidden = self.attachments.count == 0
+            self.delegate?.attachmentManager(self, didRemove: attachment, at: index)
         })
+    }
+    
+    // MARK: - UICollectionViewDelegate
+    
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        if indexPath.row == attachments.count {
+            addAttachmentCellPressedBlock?(self)
+        }
     }
 
     // MARK: - UICollectionViewDataSource
@@ -86,22 +117,50 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     }
     
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attachments.count
+        return attachments.count + (addAttachmentCellPressedBlock != nil ? 1 : 0)
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        if indexPath.row == attachments.count {
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as? AttachmentCell else {
+                fatalError()
+            }
+            cell.deleteButton.isHidden = true
+            let frame = CGRect(origin: CGPoint(x: cell.bounds.origin.x,
+                                               y: cell.bounds.origin.y),
+                               size: CGSize(width: cell.bounds.width - cell.padding.left - cell.padding.right,
+                                            height: cell.bounds.height - cell.padding.top - cell.padding.bottom))
+            let strokeWidth: CGFloat = 3
+            let length: CGFloat = frame.width / 2
+            let vLayer = CAShapeLayer()
+            vLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (strokeWidth / 2),
+                                                           y: frame.midY - (length / 2),
+                                                           width: strokeWidth,
+                                                           height: length), cornerRadius: 5).cgPath
+            vLayer.fillColor = UIColor.lightGray.cgColor
+            let hLayer = CAShapeLayer()
+            hLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (length / 2),
+                                                           y: frame.midY - (strokeWidth / 2),
+                                                           width: length,
+                                                           height: strokeWidth), cornerRadius: 5).cgPath
+            hLayer.fillColor = UIColor.lightGray.cgColor
+            cell.containerView.layer.addSublayer(vLayer)
+            cell.containerView.layer.addSublayer(hLayer)
+            return cell
+        }
+        
         if let image = attachments[indexPath.row] as? UIImage {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as? ImageAttachmentCell else {
-                return collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath)
+                fatalError()
             }
             cell.indexPath = indexPath
             cell.manager = self
             cell.imageView.image = image
-            cell.removeButton.backgroundColor = inputBarAccessoryView?.tintColor ?? .lightGray
             return cell
         }
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "UICollectionViewCell", for: indexPath)
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout

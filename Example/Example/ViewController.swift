@@ -9,17 +9,14 @@
 import UIKit
 import InputBarAccessoryView
 
-class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteManagerDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    lazy var bar: InputBarAccessoryView = { [unowned self] in
+    lazy var bar: InputBarAccessoryView = { [weak self] in
         let bar = InputBarAccessoryView()
         bar.delegate = self
         
         // required to pass autocomplete strings to the manager
         bar.autocompleteManager.dataSource = self
-        
-        // default value is false
-        bar.isAutocompleteEnabled = true
         
         return bar
     }()
@@ -43,7 +40,19 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        bar.attachmentManager.isPersistent = true
+        bar.attachmentManager.addAttachmentCellPressedBlock = { [weak self] _ in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self?.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,14 +153,14 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
             makeButton(named: "ic_at").onSelected { _ in
                 self.bar.textView.text.append("@")
                 
-                // We must call checkLastCharacter() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
-                self.bar.autocompleteManager.checkLastCharacter()
+                // We must call reload() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
+                self.bar.autocompleteManager.reload()
             },
             makeButton(named: "ic_hashtag").onSelected { _ in
                 self.bar.textView.text.append("#")
                 
-                // We must call checkLastCharacter() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
-                self.bar.autocompleteManager.checkLastCharacter()
+                // We must call reload() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
+                self.bar.autocompleteManager.reload()
             },
             .flexibleSpace,
             makeButton(named: "ic_library")
@@ -229,7 +238,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         newBar.delegate = self
         bar = newBar
         bar.autocompleteManager.dataSource = self
-        bar.isAutocompleteEnabled = true
+//        bar.isAutocompleteEnabled = true
         reloadInputViews()
     }
     
@@ -256,7 +265,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         inputBar.textView.text = String()
     }
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
         
         var array: [String] = []
         for _ in 1...100 {
@@ -269,7 +278,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         return array
     }
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
         
         // The following is done by default if you do not override this function, you will need this if you implement your own `autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell `
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
@@ -283,9 +292,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         stringWithPrefix.append(attributedString)
         cell.textLabel?.attributedText = stringWithPrefix
         
-        cell.backgroundColor = autocompleteManager.inputBarAccessoryView?.backgroundView.backgroundColor ?? .white
-        cell.tintColor = autocompleteManager.inputBarAccessoryView?.tintColor
-        cell.separatorLine.isHidden = indexPath.row == (autocompleteManager.currentAutocompleteText ?? []).count - 1
+        cell.backgroundColor = .white
+        cell.tintColor = manager.textView?.tintColor ?? UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        cell.separatorLine.isHidden = indexPath.row == (manager.currentAutocompleteText ?? []).count - 1
         
         return cell
     }

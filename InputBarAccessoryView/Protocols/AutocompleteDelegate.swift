@@ -24,12 +24,26 @@
 
 import UIKit
 
-public protocol AutocompleteDelegate: class {
+public protocol AutocompleteManagerDelegate: class {
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, didComplete prefix: Character, with text: String)
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool
+    
+    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool
+    
+    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool
 }
 
-public extension AutocompleteDelegate {
+public extension AutocompleteManagerDelegate {
     
-    func autocomplete(_ autocompleteManager: AutocompleteManager, didComplete prefix: Character, with text: String) {}
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool {
+        return true
+    }
+    
+    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool {
+        return true
+    }
+    
+    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool {
+        return true
+    }
 }
