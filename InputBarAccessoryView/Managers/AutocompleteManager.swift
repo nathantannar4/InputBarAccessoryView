@@ -135,12 +135,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
             }
         }
         
-        guard let char = text.characters.first else { return true }
-        // If a space is typed or text is pasted with a space/newline unregister the current prefix
-        if char == " " || char == "\n" {
-            unregisterCurrentPrefix()
-            
-        } else if let prefix = currentPrefix {
+        if let prefix = currentPrefix {
             // A prefix is already regsitered so update the filter text
             let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
             let index = newText.index(newText.startIndex, offsetBy: safeOffset(withText: newText))
@@ -148,7 +143,13 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
                 .components(separatedBy: " ")
                 .first?
                 .replacingOccurrences(of: String(prefix), with: "")
-            
+        }
+        
+        guard let char = text.characters.first else { return true }
+        // If a space is typed or text is pasted with a space/newline unregister the current prefix
+        if char == " " || char == "\n" {
+            unregisterCurrentPrefix()
+           
         } else if autocompletePrefixes.contains(char), let range = Range(range) {
             // Check if the first character is a registered prefix
             registerCurrentPrefix(to: char, at: range)
@@ -254,5 +255,25 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
             return 0
         }
         return range.lowerBound
+    }
+    
+    open func defaultCell(in tableView: UITableView, at indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+            return UITableViewCell()
+        }
+        
+        let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
+        let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
+        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 16)], range: matchingRange)
+        let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
+        stringWithPrefix.append(attributedString)
+        cell.textLabel?.attributedText = stringWithPrefix
+        
+        cell.backgroundColor = .white
+        cell.tintColor = textView?.tintColor ?? UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        cell.separatorLine.isHidden = indexPath.row == (currentAutocompleteText ?? []).count - 1
+        
+        return cell
     }
 }

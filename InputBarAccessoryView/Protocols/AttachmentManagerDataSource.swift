@@ -1,5 +1,5 @@
 //
-//  AutocompleteManagerDataSource.swift
+//  AttachmentManagerDataSource.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,23 +22,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 10/1/17.
+//  Created by Nathan Tannar on 10/6/17.
 //
 
-import UIKit
+import Foundation
 
-public protocol AutocompleteManagerDataSource: class {
+public protocol AttachmentManagerDataSource: class {
     
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
-    
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
+    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AnyObject, at indexPath: IndexPath) -> AttachmentCell
 }
-
-public extension AutocompleteManagerDataSource {
-    
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
-        return manager.defaultCell(in: tableView, at: indexPath, for: arguments)
-    }
-}
-
-

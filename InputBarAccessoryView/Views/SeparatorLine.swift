@@ -31,20 +31,31 @@ open class SeparatorLine: UIView {
     
     // MARK: - Properties
     
+    open var height: CGFloat = 0.5 {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: 0, height: 0.5)
+        return CGSize(width: 0, height: height)
     }
     
     // MARK: - Initialization
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .lightGray
-        translatesAutoresizingMaskIntoConstraints = false
-        setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        setup()
     }
     
     required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        setup()
+    }
+    
+    private func setup() {
+        backgroundColor = .lightGray
+        translatesAutoresizingMaskIntoConstraints = false
+        setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
     }
 }

@@ -44,13 +44,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        bar.attachmentManager.isPersistent = true
-        bar.attachmentManager.addAttachmentCellPressedBlock = { [weak self] _ in
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            self?.present(imagePicker, animated: true, completion: nil)
-        }
+        
     }
     
     override func viewDidLoad() {
@@ -195,6 +189,14 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
             }
         ]
         items.forEach { $0.tintColor = .lightGray }
+        
+//        bar.attachmentManager.isPersistent = true //to always display the AttachmentView
+        bar.attachmentManager.addAttachmentCellPressedBlock = { [weak self] _ in
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self?.present(imagePicker, animated: true, completion: nil)
+        }
     
         // We can change the container insets if we want
         bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
@@ -236,9 +238,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         bar.textView.resignFirstResponder()
         let newBar = InputBarAccessoryView()
         newBar.delegate = self
+        newBar.attachmentManager.isPersistent = bar.attachmentManager.isPersistent
         bar = newBar
         bar.autocompleteManager.dataSource = self
-//        bar.isAutocompleteEnabled = true
         reloadInputViews()
     }
     
@@ -262,6 +264,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         
         label.text = text
+        
         inputBar.textView.text = String()
     }
     
@@ -280,21 +283,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     
     func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
         
-        // The following is done by default if you do not override this function, you will need this if you implement your own `autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell `
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
-            return UITableViewCell()
-        }
+        let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
         
-        let matchingRange = (arguments.autocompleteText as NSString).range(of: arguments.filterText, options: .caseInsensitive)
-        let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
-        attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 14)], range: matchingRange)
-        let stringWithPrefix = NSMutableAttributedString().normal(String(arguments.char))
-        stringWithPrefix.append(attributedString)
-        cell.textLabel?.attributedText = stringWithPrefix
-        
-        cell.backgroundColor = .white
-        cell.tintColor = manager.textView?.tintColor ?? UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        cell.separatorLine.isHidden = indexPath.row == (manager.currentAutocompleteText ?? []).count - 1
+        // or provide your own cell
         
         return cell
     }

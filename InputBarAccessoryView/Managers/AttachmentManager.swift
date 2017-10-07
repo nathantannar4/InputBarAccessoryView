@@ -31,6 +31,8 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     
     open weak var delegate: AttachmentManagerDelegate?
     
+    open weak var dataSource: AttachmentManagerDataSource?
+    
     open lazy var attachmentView: AttachmentsView = { [weak self] in
         let attachmentView = AttachmentsView()
         attachmentView.dataSource = self
@@ -51,6 +53,7 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
         }
     }
     
+    /// The block that will be called when the add attachment cell is pressed. When not nil, the add attachment cell is added
     open var addAttachmentCellPressedBlock: ((AttachmentManager)->Void)? {
         didSet {
             reload()
@@ -104,7 +107,6 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     // MARK: - UICollectionViewDelegate
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
         if indexPath.row == attachments.count {
             addAttachmentCellPressedBlock?(self)
         }
@@ -123,33 +125,27 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.row == attachments.count {
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as? AttachmentCell else {
-                fatalError()
-            }
-            cell.deleteButton.isHidden = true
-            let frame = CGRect(origin: CGPoint(x: cell.bounds.origin.x,
-                                               y: cell.bounds.origin.y),
-                               size: CGSize(width: cell.bounds.width - cell.padding.left - cell.padding.right,
-                                            height: cell.bounds.height - cell.padding.top - cell.padding.bottom))
-            let strokeWidth: CGFloat = 3
-            let length: CGFloat = frame.width / 2
-            let vLayer = CAShapeLayer()
-            vLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (strokeWidth / 2),
-                                                           y: frame.midY - (length / 2),
-                                                           width: strokeWidth,
-                                                           height: length), cornerRadius: 5).cgPath
-            vLayer.fillColor = UIColor.lightGray.cgColor
-            let hLayer = CAShapeLayer()
-            hLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (length / 2),
-                                                           y: frame.midY - (strokeWidth / 2),
-                                                           width: length,
-                                                           height: strokeWidth), cornerRadius: 5).cgPath
-            hLayer.fillColor = UIColor.lightGray.cgColor
-            cell.containerView.layer.addSublayer(vLayer)
-            cell.containerView.layer.addSublayer(hLayer)
-            return cell
+            return addAttachmentCell(in: collectionView, at: indexPath)
+        } else if let dataSource = dataSource {
+            return dataSource.attachmentManager(self, cellFor: attachments[indexPath.row], at: indexPath)
         }
+        return defaultCell(in: collectionView, for: attachments[indexPath.row], at: indexPath) ?? collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath)
+    }
+    
+    // MARK: - UICollectionViewDelegateFlowLayout
+    
+    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        var height = collectionView.frame.height
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            height -= (layout.sectionInset.bottom + layout.sectionInset.top)
+        }
+        return CGSize(width: height, height: height)
+    }
+    
+    // MARK: - Default Cells
+    
+    open func defaultCell(in collectionView: UICollectionView, for attachment: AnyObject, at indexPath: IndexPath) -> AttachmentCell? {
         
         if let image = attachments[indexPath.row] as? UIImage {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as? ImageAttachmentCell else {
@@ -160,17 +156,36 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
             cell.imageView.image = image
             return cell
         }
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath)
+        return nil
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout
-    
-    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    open func addAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
         
-        var height = collectionView.frame.height
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            height -= (layout.sectionInset.bottom + layout.sectionInset.top)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as? AttachmentCell else {
+            fatalError()
         }
-        return CGSize(width: height, height: height)
+        cell.deleteButton.isHidden = true
+        // Draw a plus
+        let frame = CGRect(origin: CGPoint(x: cell.bounds.origin.x,
+                                           y: cell.bounds.origin.y),
+                           size: CGSize(width: cell.bounds.width - cell.padding.left - cell.padding.right,
+                                        height: cell.bounds.height - cell.padding.top - cell.padding.bottom))
+        let strokeWidth: CGFloat = 3
+        let length: CGFloat = frame.width / 2
+        let vLayer = CAShapeLayer()
+        vLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (strokeWidth / 2),
+                                                       y: frame.midY - (length / 2),
+                                                       width: strokeWidth,
+                                                       height: length), cornerRadius: 5).cgPath
+        vLayer.fillColor = UIColor.lightGray.cgColor
+        let hLayer = CAShapeLayer()
+        hLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (length / 2),
+                                                       y: frame.midY - (strokeWidth / 2),
+                                                       width: length,
+                                                       height: strokeWidth), cornerRadius: 5).cgPath
+        hLayer.fillColor = UIColor.lightGray.cgColor
+        cell.containerView.layer.addSublayer(vLayer)
+        cell.containerView.layer.addSublayer(hLayer)
+        return cell
     }
 }

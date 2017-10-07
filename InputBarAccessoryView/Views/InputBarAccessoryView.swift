@@ -530,14 +530,17 @@ open class InputBarAccessoryView: UIView {
 extension InputBarAccessoryView: AttachmentManagerDelegate {
     
     open func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
+        sendButton.isEnabled = attachmentManager.attachments.count > 0
         setAttachmentManager(active: attachments.count > 0 || manager.isPersistent)
     }
     
     open func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
+        sendButton.isEnabled = attachmentManager.attachments.count > 0
         setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
     }
     
     open func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
+        sendButton.isEnabled = attachmentManager.attachments.count > 0
         setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
     }
     
@@ -550,6 +553,7 @@ extension InputBarAccessoryView: AttachmentManagerDelegate {
             let index = topStackView.arrangedSubviews.count
             topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
             topStackView.insertArrangedSubview(SeparatorLine(), at: index + 1)
+            topStackView.layoutIfNeeded()
         } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
             if let index = topStackView.arrangedSubviews.index(of: attachmentManager.attachmentView) {
                 let separatorIndex = index + 1
@@ -560,6 +564,7 @@ extension InputBarAccessoryView: AttachmentManagerDelegate {
                 }
             }
             topStackView.removeArrangedSubview(attachmentManager.attachmentView)
+            topStackView.layoutIfNeeded()
         }
     }
 }
@@ -589,6 +594,7 @@ extension InputBarAccessoryView: AutocompleteManagerDelegate {
             let index = topStackView.arrangedSubviews.first == separatorLine ? 1 : 0
             topStackView.insertArrangedSubview(autocompleteManager.tableView, at: index)
             topStackView.insertArrangedSubview(SeparatorLine(), at: index + 1)
+            topStackView.layoutIfNeeded()
         } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
             if let index = topStackView.arrangedSubviews.index(of: autocompleteManager.tableView) {
                 let separatorIndex = index + 1
@@ -599,6 +605,7 @@ extension InputBarAccessoryView: AutocompleteManagerDelegate {
                 }
             }
             topStackView.removeArrangedSubview(autocompleteManager.tableView)
+            topStackView.layoutIfNeeded()
         }
     }
 }
