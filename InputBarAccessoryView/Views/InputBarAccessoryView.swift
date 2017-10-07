@@ -144,7 +144,7 @@ open class InputBarAccessoryView: UIView {
     private(set) var isOverMaxTextViewHeight = false
     
     /// The maximum height of content not including the topStackView. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
-    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 3).rounded() {
+    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 4).rounded() {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()

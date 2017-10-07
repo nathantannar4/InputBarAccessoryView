@@ -19,7 +19,6 @@
 		3876DAAB1F84C22100C89326 /* AttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAA1F84C22100C89326 /* AttachmentCell.swift */; };
 		3876DAAD1F84C42800C89326 /* AttachmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAC1F84C42800C89326 /* AttachmentManager.swift */; };
 		3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */; };
-		3876DAB31F84E89300C89326 /* UIView+Borders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAB21F84E89300C89326 /* UIView+Borders.swift */; };
 		3877525D1F8834F0000E0AC5 /* ImageAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3877525C1F8834F0000E0AC5 /* ImageAttachmentCell.swift */; };
 		387752601F884FF3000E0AC5 /* AttachmentManagerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3877525F1F884FF3000E0AC5 /* AttachmentManagerDataSource.swift */; };
 		38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */; };
@@ -45,7 +44,6 @@
 		3876DAAA1F84C22100C89326 /* AttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCell.swift; sourceTree = "<group>"; };
 		3876DAAC1F84C42800C89326 /* AttachmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentManager.swift; sourceTree = "<group>"; };
 		3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteTableView.swift; sourceTree = "<group>"; };
-		3876DAB21F84E89300C89326 /* UIView+Borders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Borders.swift"; sourceTree = "<group>"; };
 		3877525C1F8834F0000E0AC5 /* ImageAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageAttachmentCell.swift; sourceTree = "<group>"; };
 		3877525F1F884FF3000E0AC5 /* AttachmentManagerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentManagerDataSource.swift; sourceTree = "<group>"; };
 		38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
@@ -122,7 +120,6 @@
 				38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */,
 				3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */,
 				38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */,
-				3876DAB21F84E89300C89326 /* UIView+Borders.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,7 +251,6 @@
 				3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */,
 				3876DAAB1F84C22100C89326 /* AttachmentCell.swift in Sources */,
 				3876DAA71F841ED900C89326 /* NSMutableAttributedString+Extensions.swift in Sources */,
-				3876DAB31F84E89300C89326 /* UIView+Borders.swift in Sources */,
 				38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */,
 				3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */,
 				381042271F87FDE500B1E61A /* AttachmentManagerDelegate.swift in Sources */,

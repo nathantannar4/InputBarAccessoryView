@@ -103,9 +103,9 @@ open class InputTextView: UITextView {
                 NSAttributedStringKey.foregroundColor : UIColor.black]
     }()
     
+    /// The text attributes applied to highlighted substrings
     open lazy var highlightedTextAttributes: [NSAttributedStringKey:Any] = { [weak self] in
-        return [NSAttributedStringKey.foregroundColor : tintColor,
-                NSAttributedStringKey.backgroundColor : tintColor.withAlphaComponent(0.2)]
+        return [NSAttributedStringKey.foregroundColor : tintColor]
     }()
     
     open weak var inputBarAccessoryView: InputBarAccessoryView?
@@ -189,23 +189,10 @@ open class InputTextView: UITextView {
     open override func paste(_ sender: Any?) {
         
         if let image = UIPasteboard.general.image {
-            insertImage(image, at: selectedRange)
+            inputBarAccessoryView?.attachmentManager.insertAttachment(image, at: 0)
         } else {
             super.paste(sender)
         }
-    }
-    
-    open func insertImage(_ image: UIImage, at range: NSRange) {
-        
-        let textAttachment = NSTextAttachment()
-        textAttachment.image = image
-        let scaleFactor = textAttachment.image!.size.width / (frame.size.width - 10)
-        textAttachment.image = UIImage(cgImage: textAttachment.image!.cgImage!, scale: scaleFactor, orientation: .up)
-        let attrStringWithImage = NSAttributedString(attachment: textAttachment)
-        let attributedString = NSMutableAttributedString(attributedString: attrStringWithImage)
-        attributedString.addAttributes(defaultTextAttributes, range: NSMakeRange(0, attributedString.length - 1))
-        textStorage.insert(attrStringWithImage, at: selectedRange.location)
-        layoutIfNeeded()
     }
     
     // MARK: - Attributed Text Highlighting
