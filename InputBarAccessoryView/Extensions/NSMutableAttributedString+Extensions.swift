@@ -30,7 +30,7 @@ import UIKit
 public extension NSMutableAttributedString {
  
     @discardableResult
-    func bold(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    func bold(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: fontSize),
             NSAttributedStringKey.foregroundColor : textColor
@@ -41,7 +41,7 @@ public extension NSMutableAttributedString {
     }
     
     @discardableResult
-    func medium(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    func medium(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.medium),
             NSAttributedStringKey.foregroundColor : textColor
@@ -52,7 +52,7 @@ public extension NSMutableAttributedString {
     }
     
     @discardableResult
-    func italic(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    func italic(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs: [NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.italicSystemFont(ofSize: fontSize),
             NSAttributedStringKey.foregroundColor : textColor
@@ -63,7 +63,7 @@ public extension NSMutableAttributedString {
     }
     
     @discardableResult
-    func normal(_ text: String, fontSize: CGFloat = 14, textColor: UIColor = .black) -> NSMutableAttributedString {
+    func normal(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
         let attrs:[NSAttributedStringKey:AnyObject] = [
             NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize),
             NSAttributedStringKey.foregroundColor : textColor

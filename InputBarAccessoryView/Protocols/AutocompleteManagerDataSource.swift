@@ -31,13 +31,19 @@ public protocol AutocompleteManagerDataSource: class {
     
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
     
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
+    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String
+    
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
 }
 
 public extension AutocompleteManagerDataSource {
     
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
         return manager.defaultCell(in: tableView, at: indexPath, for: arguments)
+    }
+    
+    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
+        return String(arguments.prefix) + arguments.autocompleteText
     }
 }
 

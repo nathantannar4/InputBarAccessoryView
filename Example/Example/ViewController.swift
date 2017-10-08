@@ -240,6 +240,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         newBar.delegate = self
         newBar.attachmentManager.isPersistent = bar.attachmentManager.isPersistent
         bar = newBar
+        bar.autocompleteManager.autocompletePrefixes = ["@","#",":"]
         bar.autocompleteManager.dataSource = self
         reloadInputViews()
     }
@@ -268,24 +269,51 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         inputBar.textView.text = String()
     }
     
+    
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
         
         var array: [String] = []
+        if prefix == ":" {
+            for key in String.EmojiKeys {
+                array.append(":" + key + ":")
+            }
+            return array
+        }
         for _ in 1...100 {
             if prefix == "@" {
                 array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
-            } else {
+            } else if prefix == "#" {
                 array.append(Lorem.word())
             }
         }
         return array
     }
     
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
         
+        // custom replacement text, the default returns arguments.autocompleteText
+        
+        if arguments.prefix == ":" {
+            return arguments.autocompleteText.EmojiRenderedString
+        }
+        return String(arguments.prefix) + arguments.autocompleteText
+    }
+    
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
+       
         let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
         
-        // or provide your own cell
+        // or provide your own logic
+        if arguments.prefix == ":" {
+            
+            let text = arguments.autocompleteText
+            let emoji = text.EmojiRenderedString
+            
+            let matchingRange = (text as NSString).range(of: arguments.filterText, options: .caseInsensitive)
+            let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
+            attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)], range: matchingRange)
+            cell.textLabel?.attributedText = attributedString.normal(" " + emoji)
+        }
         
         return cell
     }
