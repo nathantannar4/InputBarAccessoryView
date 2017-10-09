@@ -145,13 +145,19 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                 button.isEnabled = textView.text.isEmpty
             },
             makeButton(named: "ic_at").onSelected { _ in
-                self.bar.textView.text.append("@")
+                
+//                self.bar.textView.text.append("@") using the text property you will reset the text attributes
+                let newValue = NSMutableAttributedString(attributedString: self.bar.textView.attributedText).normal("@")
+                self.bar.textView.attributedText = newValue
                 
                 // We must call reload() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
                 self.bar.autocompleteManager.reload()
             },
             makeButton(named: "ic_hashtag").onSelected { _ in
-                self.bar.textView.text.append("#")
+                
+//                self.bar.textView.text.append("#") using the text property you will reset the text attributes
+                let newValue = NSMutableAttributedString(attributedString: self.bar.textView.attributedText).normal("#")
+                self.bar.textView.attributedText = newValue
                 
                 // We must call reload() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
                 self.bar.autocompleteManager.reload()
@@ -294,7 +300,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         // custom replacement text, the default returns arguments.autocompleteText
         
         if arguments.prefix == ":" {
-            return arguments.autocompleteText.EmojiRenderedString
+            return arguments.autocompleteText.EmojiRenderedString + " "
         }
         return String(arguments.prefix) + arguments.autocompleteText
     }

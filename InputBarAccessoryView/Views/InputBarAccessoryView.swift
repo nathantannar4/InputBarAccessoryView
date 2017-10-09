@@ -83,10 +83,9 @@ open class InputBarAccessoryView: UIView {
     }()
     
     /// The object that manages autocomplete
-    open lazy var autocompleteManager: AutocompleteManager = { [weak self] in
-        let manager = AutocompleteManager()
+    open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
+        let manager = AutocompleteManager(for: self.textView)
         manager.delegate = self
-        manager.textView = self?.textView
         return manager
     }()
     

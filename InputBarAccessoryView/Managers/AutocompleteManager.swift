@@ -33,11 +33,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     open weak var delegate: AutocompleteManagerDelegate?
     
-    open weak var textView: InputTextView? {
-        didSet {
-            textView?.delegate = self
-        }
-    }
+    private(set) public weak var textView: UITextView?
     
     /// The autocomplete table for @mention or #hastag
     open lazy var tableView: AutocompleteTableView = { [weak self] in
@@ -58,20 +54,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     open var maxVisibleRows = 3
     
     /// The prefices that the manager will recognize
-    open var autocompletePrefixes: [Character] = ["@","#"]
-    
-    /// The current autocomplete text options filtered by the text after the prefix
-    open var currentAutocompleteText: [String]? {
-        
-        guard let prefix = currentPrefix, let filter = currentFilter else { return nil }
-        if filter.isEmpty {
-            return autocompleteMap[prefix]
-        }
-        if isCaseSensitive {
-            return autocompleteMap[prefix]?.filter { $0.contains( filter ) }
-        }
-        return autocompleteMap[prefix]?.filter { $0.lowercased().contains(filter.lowercased()) }
-    }
+    open var autocompletePrefixes: [Character] = ["@"]
     
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body),
@@ -80,7 +63,8 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     /// The text attributes applied to highlighted substrings for each prefix
     open var highlightedTextAttributes: [Character:[NSAttributedStringKey:Any]] = ["@":[NSAttributedStringKey.foregroundColor : UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)]]
     
-    private var autocompleteMap = [Character:[String]]()
+    private var highlightedSubstrings = [Character:[String]]()
+    private var autocompleteText = [String]()
     private var currentPrefix: Character?
     private var currentPrefixRange: Range<Int>?
     private var currentFilter: String? {
@@ -92,12 +76,15 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     // MARK: - Initialization
     
-    public override init() {
+    public init(for textView: UITextView) {
         super.init()
+        self.textView = textView
+        self.textView?.delegate = self
     }
     
     open func reload() {
         checkLastCharacter()
+        highlightSubstrings()
     }
     
     open func invalidate() {
@@ -111,13 +98,14 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return currentAutocompleteText?.count ?? 0
+        print(currentAutocompleteText().count)
+        return currentAutocompleteText().count
     }
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let prefix = currentPrefix, let filterText = currentFilter else { return UITableViewCell() }
-        let autocompleteText = currentAutocompleteText?[indexPath.row] ?? "nil"
+        let autocompleteText = currentAutocompleteText()[indexPath.row]
         let cell = dataSource?.autocompleteManager(self, tableView: tableView, cellForRowAt: indexPath, for: (prefix, filterText, autocompleteText)) ?? UITableViewCell()
         return cell
     }
@@ -126,7 +114,8 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let replacementText = currentAutocompleteText?[indexPath.row], let prefix = currentPrefix, let filterText = currentFilter else { return }
+        guard let prefix = currentPrefix, let filterText = currentFilter else { return }
+        let replacementText = currentAutocompleteText()[indexPath.row]
         if let dataSource = dataSource {
             let customReplacementText = dataSource.autocompleteManager(self, replacementTextFor: (prefix, filterText, replacementText))
             autocomplete(with: customReplacementText)
@@ -134,7 +123,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         autocomplete(with: String(prefix) + replacementText)
     }
 
-    // MARK: -  UITextViewDelegate
+    // MARK: - UITextViewDelegate
    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
@@ -161,19 +150,23 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         guard let char = text.characters.first else { return true }
         // If a space is typed or text is pasted with a space/newline unregister the current prefix
-        if char == " " || char == "\n" {
+        if char == " " || char == Character("\n") {
             unregisterCurrentPrefix()
            
         } else if autocompletePrefixes.contains(char), let range = Range(range) {
-            // Check if the first character is a registered prefix
-            registerCurrentPrefix(to: char, at: range)
+            let previousText = (textView.text as NSString).substring(to: range.lowerBound)
+            if previousText.last == " " || previousText.last == Character("\n")  || previousText.last == nil {
+                // Check if the first character is a registered prefix
+                registerCurrentPrefix(to: char, at: range)
+            }
         }
         
         return true
     }
     
-    // MARK: - Attributed Text Highlighting
+    // MARK: - Text Highlighting
     
+    /// Resets the InputTextViews typingAttributes to defaultTextAttributes
     open func resetTypingAttributes() {
         
         var typingAttributes = [String:Any]()
@@ -181,92 +174,75 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         textView?.typingAttributes = typingAttributes
     }
     
-    // MARK: - Text Highlighting
-    
-    /// Finds the ranges of all substrings that start with the provided prefixes and sets those ranges background color to the InputTextView's tintColor
-    ///
-    /// - Parameter prefixes: The prefix the substring must begin with
-//    open func highlightSubstrings(with prefixes: [Character]) {
-//
-//        previousPrefixCharacters = prefixes
-//        let substrings = text.components(separatedBy: " ").filter {
-//            var hasPrefix = false
-//            for prefix in prefixes {
-//                if $0.hasPrefix(String(prefix)) && $0.count > 1 {
-//                    hasPrefix = true
-//                    break
-//                }
-//            }
-//            return hasPrefix
-//        }
-//        var ranges = [NSRange]()
-//        substrings.map { return rangesOf($0, in: text) }.flatMap { return $0 }.forEach {
-//            text.enumerateSubstrings(in: $0, options: .substringNotRequired) {
-//                (substring, substringRange, _, _) in
-//                let range = NSRange(substringRange, in: self.text)
-//                ranges.append(range)
-//            }
-//        }
-//        let attributedString = NSMutableAttributedString(string: text, attributes: defaultTextAttributes)
-//        ranges.forEach { attributedString.addAttributes(highlightedTextAttributes, range: $0) }
-//        attributedText = attributedString
-//    }
-    
-    
-    /// Adds the highlightedTextAttributes for the given prefix to the provided range in the textView
-    ///
-    /// - Parameters:
-    ///   - range: The range to add attributes too
-    ///   - prefix: The prefix used as the key in highlightedTextAttributes
-    open func highlightSubstring(at range: NSRange, for prefix: Character) {
+    /// Applies highlighting to substrings that begin with a registered prefix
+    open func highlightSubstrings() {
+
+        guard let textView = textView else { return }
+        let attributedString = NSMutableAttributedString(string: textView.text, attributes: defaultTextAttributes)
         
-        guard let textView = textView, let attributes = highlightedTextAttributes[prefix] else { return }
-        let oldAttributedText = NSMutableAttributedString(attributedString: textView.attributedText)
-        oldAttributedText.addAttributes(attributes, range: range)
-        textView.attributedText = oldAttributedText
-    }
-    
-    /// A helper method that returns all the ranges of a provided string in another string
-    ///
-    /// - Parameters:
-    ///   - string: Substrings to filter the ranges
-    ///   - text: The String to find ranges in
-    /// - Returns: The ranges of the string in text
-    private func rangesOf(_ string: String, in text: String) -> [Range<String.Index>] {
-        var ranges = [Range<String.Index>]()
-        var searchStartIndex = text.startIndex
-        
-        while searchStartIndex < text.endIndex, let range = text.range(of: string, range: searchStartIndex..<text.endIndex), !range.isEmpty {
-            ranges.append(range)
-            searchStartIndex = range.upperBound
+        // Get the substrings with a prefix
+        let substrings = textView.text
+            .components(separatedBy: " ")
+            .filter {
+                guard let prefix = $0.first, $0.count > 1 else { return false }
+                guard self.highlightedTextAttributes[prefix] != nil else { return false } // if there are no custom attributes
+                return self.autocompletePrefixes.contains(prefix)
         }
-        return ranges
+        
+        // Calculate the NSRange of each substring
+        substrings.forEach { substring in
+            var ranges = [NSRange]()
+            var searchStartIndex = textView.text.startIndex
+            while searchStartIndex < textView.text.endIndex, let range = textView.text.range(of: substring, range: searchStartIndex..<textView.text.endIndex), !range.isEmpty {
+                
+                let utf16 = textView.text.utf16
+                if let from = range.lowerBound.samePosition(in: utf16), let to = range.upperBound.samePosition(in: utf16) {
+                    let nsrange = NSRange(location: utf16.distance(from: utf16.startIndex, to: from),
+                                          length: utf16.distance(from: from, to: to))
+                    ranges.append(nsrange)
+                }
+                searchStartIndex = range.upperBound
+            }
+            // Apply the attributes
+            if let prefix = substring.first, let textAttributes = self.highlightedTextAttributes[prefix] {
+                print("Applying attrs: ", textAttributes, "\nTo prefix: ", prefix, "\nTo subtring: ", substring)
+                ranges.forEach { attributedString.addAttributes(textAttributes, range: $0) }
+            }
+        }
+        
+        // Set the new attributed string
+        textView.attributedText = attributedString
+
+        
+//        let attributedString = NSMutableAttributedString(string: textView.text, attributes: defaultTextAttributes)
+//        textView.text.enumerateSubstrings(in: textView.text.startIndex..<textView.text.endIndex, options: [.byWords]) { (substring, substringRange, _, _) in
+//            print(substring)
+//            guard let prefix = substring?.first else { return }
+//            guard let textAttributes = self.highlightedTextAttributes[prefix] else { return }
+//            guard self.autocompletePrefixes.contains(prefix) else { return }
+//            let range = NSRange(substringRange, in: textView.text)
+//            attributedString.addAttributes(textAttributes, range: range)
+//        }
+//        textView.attributedText = attributedString
     }
     
     // MARK: - Autocomplete
     
     private func registerCurrentPrefix(to prefix: Character, at range: Range<Int>) {
         
-        if let delegate = delegate {
-            if !delegate.autocompleteManager(self, shouldRegister: prefix, at: range) {
-                return
-            }
-        }
+        guard delegate?.autocompleteManager(self, shouldRegister: prefix, at: range) != false else { return }
         currentPrefix = prefix
         currentPrefixRange = range
-        autocompleteMap[prefix] = dataSource?.autocompleteManager(self, autocompleteTextFor: prefix) ?? []
+        autocompleteText = dataSource?.autocompleteManager(self, autocompleteTextFor: prefix) ?? []
         currentFilter = String()
     }
     
     private func unregisterCurrentPrefix() {
         
-        if let delegate = delegate, let prefix = currentPrefix {
-            if !delegate.autocompleteManager(self, shouldUnregister: prefix) {
-                return
-            }
-        }
+        guard let prefix = currentPrefix else { return }
+        guard delegate?.autocompleteManager(self, shouldUnregister: prefix) != false else { return }
         currentPrefixRange = nil
-        autocompleteMap.removeAll()
+        autocompleteText.removeAll()
         currentPrefix = nil
         currentFilter = nil
     }
@@ -282,25 +258,27 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
             registerCurrentPrefix(to: char, at: range)
         }
     }
+    
+    /// The current autocomplete text options filtered by the text after the prefix
+    open func currentAutocompleteText() -> [String] {
+        
+        guard let filter = currentFilter else { return [] }
+        guard !filter.isEmpty else { return autocompleteText }
+        guard isCaseSensitive else { return autocompleteText.filter { $0.lowercased().contains(filter.lowercased()) } }
+        return autocompleteText.filter { $0.contains( filter ) }
+    }
 
     /// Replaces the current prefix and filter text with the supplied text
     ///
     /// - Parameters:
     ///   - text: The replacement text
-    /// - Returns: If the autocomplete was successful
-    @discardableResult
-    public func autocomplete(with text: String) -> Bool {
+    public func autocomplete(with text: String) {
         
-        guard let prefix = currentPrefix, let textView = textView, let filterText = currentFilter, let prefixRange = currentPrefixRange else {
-            return false
-        }
+        guard let prefix = currentPrefix, let textView = textView, let filterText = currentFilter else { return }
+        guard delegate?.autocompleteManager(self, shouldComplete: prefix, with: text) != false else { return }
         
-        let textToInsert = text.appending(" ")
-        if let delegate = delegate {
-            if !delegate.autocompleteManager(self, shouldComplete: prefix, with: textToInsert) {
-                return false
-            }
-        }
+        let textToInsert = text + " "
+        
         // Calculate the range to replace
         let leftIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text))
         let rightIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text) + filterText.characters.count)
@@ -310,14 +288,13 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         textView.text.replaceSubrange(range, with: textToInsert)
         
         // Apply the highlight attributes
-        highlightSubstring(at: NSMakeRange(prefixRange.lowerBound, textToInsert.count - 1), for: prefix)
+        highlightSubstrings()
         
         // Move Cursor to the end of the inserted text
         textView.selectedRange = NSMakeRange(safeOffset(withText: textView.text) + textToInsert.count, 0)
         
         // Unregister
         unregisterCurrentPrefix()
-        return true
     }
     
     // MARK: - Helper Methods
@@ -357,7 +334,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         cell.backgroundColor = .white
         cell.tintColor = textView?.tintColor ?? UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        cell.separatorLine.isHidden = indexPath.row == (currentAutocompleteText ?? []).count - 1
+        cell.separatorLine.isHidden = indexPath.row == currentAutocompleteText().count - 1
         
         return cell
     }
