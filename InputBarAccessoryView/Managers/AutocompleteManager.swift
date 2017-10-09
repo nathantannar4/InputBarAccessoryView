@@ -98,7 +98,6 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     }
     
     open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(currentAutocompleteText().count)
         return currentAutocompleteText().count
     }
     
@@ -205,25 +204,12 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
             }
             // Apply the attributes
             if let prefix = substring.first, let textAttributes = self.highlightedTextAttributes[prefix] {
-                print("Applying attrs: ", textAttributes, "\nTo prefix: ", prefix, "\nTo subtring: ", substring)
                 ranges.forEach { attributedString.addAttributes(textAttributes, range: $0) }
             }
         }
         
         // Set the new attributed string
         textView.attributedText = attributedString
-
-        
-//        let attributedString = NSMutableAttributedString(string: textView.text, attributes: defaultTextAttributes)
-//        textView.text.enumerateSubstrings(in: textView.text.startIndex..<textView.text.endIndex, options: [.byWords]) { (substring, substringRange, _, _) in
-//            print(substring)
-//            guard let prefix = substring?.first else { return }
-//            guard let textAttributes = self.highlightedTextAttributes[prefix] else { return }
-//            guard self.autocompletePrefixes.contains(prefix) else { return }
-//            let range = NSRange(substringRange, in: textView.text)
-//            attributedString.addAttributes(textAttributes, range: range)
-//        }
-//        textView.attributedText = attributedString
     }
     
     // MARK: - Autocomplete
@@ -281,7 +267,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         // Calculate the range to replace
         let leftIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text))
-        let rightIndex = textView.text.index(textView.text.startIndex, offsetBy: safeOffset(withText: textView.text) + filterText.characters.count)
+        let rightIndex = textView.text.index(leftIndex, offsetBy: filterText.count)
         let range = leftIndex...rightIndex
         
         // Insert the text

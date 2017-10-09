@@ -279,12 +279,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
         
         var array: [String] = []
-        if prefix == ":" {
-            for key in String.EmojiKeys {
-                array.append(":" + key + ":")
-            }
-            return array
-        }
         for _ in 1...100 {
             if prefix == "@" {
                 array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
@@ -297,11 +291,8 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     
     func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
         
-        // custom replacement text, the default returns arguments.autocompleteText
-        
-        if arguments.prefix == ":" {
-            return arguments.autocompleteText.EmojiRenderedString + " "
-        }
+        // custom replacement text, the default returns is shown below
+    
         return String(arguments.prefix) + arguments.autocompleteText
     }
     
@@ -310,16 +301,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
         
         // or provide your own logic
-        if arguments.prefix == ":" {
-            
-            let text = arguments.autocompleteText
-            let emoji = text.EmojiRenderedString
-            
-            let matchingRange = (text as NSString).range(of: arguments.filterText, options: .caseInsensitive)
-            let attributedString = NSMutableAttributedString().normal(arguments.autocompleteText)
-            attributedString.addAttributes([NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)], range: matchingRange)
-            cell.textLabel?.attributedText = attributedString.normal(" " + emoji)
-        }
         
         return cell
     }
