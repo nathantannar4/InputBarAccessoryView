@@ -158,9 +158,13 @@ Have a suggestion? Make a PR!
 
 ## Changelog
 
+- 1.1.1
+        - AutocompleteManager bug fixes and customization improvements
+- 1.1.0
+        - AttactchmentManager
 - 1.0.0
-	- A more refined autocomplete
-	- Layout bug fixes
+	- A more refined AutocompleteManager
+	- Auto-layout bug fixes
 
 *pre-release versions not documented*
 
