@@ -37,6 +37,12 @@ open class InputTextView: UITextView {
             textViewTextDidChange()
         }
     }
+    
+    open override var attributedText: NSAttributedString! {
+        didSet {
+            textViewTextDidChange()
+        }
+    }
 
     open let placeholderLabel: UILabel = {
         let label = UILabel()

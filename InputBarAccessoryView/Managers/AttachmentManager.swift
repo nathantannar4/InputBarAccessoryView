@@ -136,9 +136,9 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var height = collectionView.frame.height
+        var height = collectionView.intrinsicContentSize.height
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            height -= (layout.sectionInset.bottom + layout.sectionInset.top)
+            height -= (layout.sectionInset.bottom + layout.sectionInset.top + collectionView.contentInset.top + collectionView.contentInset.bottom)
         }
         return CGSize(width: height, height: height)
     }

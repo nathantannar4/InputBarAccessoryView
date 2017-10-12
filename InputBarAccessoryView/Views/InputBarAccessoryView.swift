@@ -140,7 +140,7 @@ open class InputBarAccessoryView: UIView {
     
     private var previousIntrinsicContentSize: CGSize?
     
-    private(set) var isOverMaxTextViewHeight = false
+    private(set) public var isOverMaxTextViewHeight = false
     
     /// The maximum height of content not including the topStackView. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
     open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 4).rounded() {
@@ -151,30 +151,30 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    private(set) var leftStackViewWidthConstant: CGFloat = 0 {
+    private(set) public var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthConstant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    private(set) var rightStackViewWidthConstant: CGFloat = 52 {
+    private(set) public var rightStackViewWidthConstant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
         }
     }
 
     /// The InputBarItems held in the leftStackView
-    private(set) var leftStackViewItems: [InputBarButtonItem] = []
+    private(set) public var leftStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the rightStackView
-    private(set) var rightStackViewItems: [InputBarButtonItem] = []
+    private(set) public var rightStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    private(set) var bottomStackViewItems: [InputBarButtonItem] = []
+    private(set) public var bottomStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held in the topStackView
-    private(set) var topStackViewItems: [InputBarButtonItem] = []
+    private(set) public var topStackViewItems: [InputBarButtonItem] = []
     
     /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
     open var nonStackViewItems: [InputBarButtonItem] = []
@@ -349,6 +349,7 @@ open class InputBarAccessoryView: UIView {
             }
             textView.invalidateIntrinsicContentSize()
         }
+        
         return CGSize(width: bounds.width, height: heightToFit)
     }
     
@@ -543,7 +544,7 @@ extension InputBarAccessoryView: AttachmentManagerDelegate {
         setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
     }
     
-    /// Attempts to activate/deactive the AttachmentManager by inserting/removing it into the top UIStackView. Also inserts/removes a SeparatorLine below it
+    /// Attempts to activate/deactive the AttachmentManager by inserting/removing it into the top UIStackView
     ///
     /// - Parameter active: If the manager should be activated
     open func setAttachmentManager(active: Bool) {
@@ -551,17 +552,8 @@ extension InputBarAccessoryView: AttachmentManagerDelegate {
         if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
             let index = topStackView.arrangedSubviews.count
             topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
-            topStackView.insertArrangedSubview(SeparatorLine(), at: index + 1)
             topStackView.layoutIfNeeded()
         } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            if let index = topStackView.arrangedSubviews.index(of: attachmentManager.attachmentView) {
-                let separatorIndex = index + 1
-                if separatorIndex < topStackView.arrangedSubviews.count {
-                    if let separatorLine = topStackView.arrangedSubviews[separatorIndex] as? SeparatorLine {
-                        topStackView.removeArrangedSubview(separatorLine)
-                    }
-                }
-            }
             topStackView.removeArrangedSubview(attachmentManager.attachmentView)
             topStackView.layoutIfNeeded()
         }

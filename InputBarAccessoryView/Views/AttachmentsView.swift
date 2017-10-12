@@ -45,7 +45,8 @@ open class AttachmentsView: UICollectionView {
         layout.minimumLineSpacing = 0
         layout.sectionInset.top = 5
         layout.sectionInset.bottom = 5
-        layout.footerReferenceSize = CGSize(width: 5, height: 0)
+        layout.headerReferenceSize = CGSize(width: 12, height: 0)
+        layout.footerReferenceSize = CGSize(width: 12, height: 0)
         super.init(frame: .zero, collectionViewLayout: layout)
         setup()
     }

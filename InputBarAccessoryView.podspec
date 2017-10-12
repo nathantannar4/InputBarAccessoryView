@@ -33,6 +33,5 @@ Pod::Spec.new do |s|
     s.source_files = "InputBarAccessoryView/**/*.{swift}"
 
     # 9 - Resources
-    s.resources = "InputBarAccessoryView/Supporting Files/Emojis.json"
 
 end
