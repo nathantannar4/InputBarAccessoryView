@@ -1,5 +1,5 @@
 # InputBarAccessoryView
-<img src="./Assets/Banner.png">
+<img src="./Screenshots/Banner.png">
 
 ### Installation via CocoaPods
 
@@ -28,15 +28,19 @@ iOS 9.0+
 Swift 4
 XCode 9.0+
 
+### Documentation
+
+[Jazzy Generated Docs](https://nathantannar4.github.io/InputBarAccessoryView/)
+
 ### Screenshots
 
-<img src="./Assets/ScreenshotA.png" width="242" height="432"> <img src="./Assets/ScreenshotB.png" width="242" height="432"> <img src="./Assets/ScreenshotC.png" width="242" height="432"> <img src="./Assets/ScreenshotD.png" width="242" height="432"> <img src="./Assets/ScreenshotE.png" width="242" height="432"> <img src="./Assets/ScreenshotF.png" width="242" height="432">
+<img src="./Screenshots/ScreenshotA.png" width="242" height="432"> <img src="./Screenshots/ScreenshotB.png" width="242" height="432"> <img src="./Screenshots/ScreenshotC.png" width="242" height="432"> <img src="./Screenshots/ScreenshotD.png" width="242" height="432"> <img src="./Screenshots/ScreenshotE.png" width="242" height="432"> <img src="./Screenshots/ScreenshotF.png" width="242" height="432">
 
 ## Layout
 
 The layout of the `InputBarAccessoryView` is made of of 4  `UIStackView`'s and an `InputTextView` (subclass of `UITextView`). The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
 
-<img src="./Assets/Layout.png">
+<img src="./Screenshots/Layout.png">
 
 It is important to note that each of the `UIStackView`'s to the left and right of the `InputTextView` are anchored by a width constraint. This way the `InputTextView` will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the `InputTextView` by setting the width constraint constant to 0. The bottom and top stack views are not height constraint and rely on their `intrinsicContentSize`
 

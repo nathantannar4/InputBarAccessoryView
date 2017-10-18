@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData
+Example/.DS_Store
 
 ## Various settings
 *.pbxuser
