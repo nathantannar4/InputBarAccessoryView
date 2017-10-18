@@ -30,7 +30,7 @@ XCode 9.0+
 
 ### Documentation
 
-[Jazzy Generated Docs](https://nathantannar4.github.io/InputBarAccessoryView/)
+[Jazzy Generated Docs](https://nathantannar.me/InputBarAccessoryView/docs/)
 
 ### Screenshots
 
