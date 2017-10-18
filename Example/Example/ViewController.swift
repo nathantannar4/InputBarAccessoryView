@@ -74,8 +74,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                             action: #selector(handleKeyboardButton))
         ]
         
-        slack()
         viewIsLoaded = true
+        bar.textView.textAlignment = .center
+        bar.textView.placeholderLabel.textAlignment = .center
     }
     
     @objc
