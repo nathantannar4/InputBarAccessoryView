@@ -34,24 +34,16 @@ XCode 9.0+
 
 ## Layout
 
-The layout of the `InputBarAccessoryView` is made of of 3 `UIStackView`'s and an `InputTextView` (subclass of `UITextView`). The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
+The layout of the `InputBarAccessoryView` is made of of 4  `UIStackView`'s and an `InputTextView` (subclass of `UITextView`). The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
 
 <img src="./Assets/Layout.png">
 
-```swift
-H:|-(padding.left)-[UIStackView(leftStackViewWidthContant)]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[UIStackView(rightStackViewWidthContant)]-(padding.right)-|
-
-V:|-(topStackViewPadding.top)-[UIStackView]-(topStackViewPadding.bottom)-[SeparatorLine]-(padding.top)-[InputTextView]-(textViewPadding.bottom)-[UIStackView]-(padding.bottom)-|
-```
-
-It is important to note that each of the `UIStackView`'s to the left and right of the `InputTextView` are anchored by a width constraint. This way the `InputTextView` will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the `InputTextView` by setting the width constraint constant to 0. The top `UIStackView`'s height is also constrained,
+It is important to note that each of the `UIStackView`'s to the left and right of the `InputTextView` are anchored by a width constraint. This way the `InputTextView` will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the `InputTextView` by setting the width constraint constant to 0. The bottom and top stack views are not height constraint and rely on their `intrinsicContentSize`
 
 ```swift
 func setLeftStackViewWidthConstant(to newValue: CGFloat, animated: Bool)
 
 func setRightStackViewWidthConstant(to newValue: CGFloat, animated: Bool)
-
-func setTopStackViewHeightConstant(to newValue: CGFloat, animated: Bool)
 ```
 
 
@@ -85,7 +77,7 @@ func autocomplete(_ autocompleteManager: AutocompleteManager, autocompleteTextFo
 func autocomplete(_ autocompleteManager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (char: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
 ```
 
-### AutocompleteManagerDataSource
+### AutocompleteManagerDelegate
 
 ```swift
 func autocomplete(_ autocompleteManager: AutocompleteManager, didComplete prefix: Character, with text: String)
@@ -147,21 +139,17 @@ func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: S
 func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
 ```
 
-## Planned Features
-
-- [X] Autocomplete
-- [ ] Image view picker
-- [ ] Image support in the InputTextView
-- [ ] Text markup support in the InputTextView
-
 Have a suggestion? Make a PR!
 
 ## Changelog
 
+- 1.1.2
+        - Fixed issue where adjusting the `InputTextView`'s placeholder text alignment didn't work
+        - Fixed iPhone X support where the home indicator overlapped the `InputTextView`
 - 1.1.1
         - AutocompleteManager bug fixes and customization improvements
 - 1.1.0
-        - AttactchmentManager
+        - AttactchmentManager (Beta)
 - 1.0.0
 	- A more refined AutocompleteManager
 	- Auto-layout bug fixes
