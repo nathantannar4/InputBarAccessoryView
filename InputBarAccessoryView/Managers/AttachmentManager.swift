@@ -27,7 +27,7 @@
 
 import UIKit
 
-open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     open weak var delegate: AttachmentManagerDelegate?
     
@@ -49,14 +49,13 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     /// A flag you can use to determine if you want the manager to be always visible
     open var isPersistent = false {
         didSet {
-            reload()
+            attachmentView.reloadData()
         }
     }
     
-    /// The block that will be called when the add attachment cell is pressed. When not nil, the add attachment cell is added
-    open var addAttachmentCellPressedBlock: ((AttachmentManager)->Void)? {
+    open var showAddAttachmentCell = true {
         didSet {
-            reload()
+            attachmentView.reloadData()
         }
     }
     
@@ -66,14 +65,23 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
         super.init()
     }
     
+    // MARK: - InputManager
+    
     open func reload() {
         attachmentView.reloadData()
         delegate?.attachmentManager(self, didReloadTo: attachments)
+        delegate?.attachmentManager(self, shouldBecomeVisible: attachments.count > 0 || isPersistent)
     }
     
     open func invalidate() {
         attachments.removeAll()
     }
+    
+    open func handleInput(of object: AnyObject) {
+        insertAttachment(object, at: attachments.count)
+    }
+    
+    // MARK: - Attachment Management
     
     /// Performs an animated insertion of an attachment at an index
     ///
@@ -86,6 +94,7 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
         }, completion: { success in
             self.attachmentView.reloadData()
             self.delegate?.attachmentManager(self, didInsert: attachment, at: index)
+            self.delegate?.attachmentManager(self, shouldBecomeVisible: self.attachments.count > 0 || self.isPersistent)
         })
     }
     
@@ -101,6 +110,7 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
         }, completion: { success in
             self.attachmentView.reloadData()
             self.delegate?.attachmentManager(self, didRemove: attachment, at: index)
+            self.delegate?.attachmentManager(self, shouldBecomeVisible: self.attachments.count > 0 || self.isPersistent)
         })
     }
     
@@ -108,7 +118,8 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == attachments.count {
-            addAttachmentCellPressedBlock?(self)
+            delegate?.attachmentManager(self, didSelectAddAttachmentAt: indexPath.row)
+            delegate?.attachmentManager(self, shouldBecomeVisible: attachments.count > 0 || isPersistent)
         }
     }
 
@@ -119,17 +130,15 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     }
     
     open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attachments.count + (addAttachmentCellPressedBlock != nil ? 1 : 0)
+        return attachments.count + (showAddAttachmentCell ? 1 : 0)
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.row == attachments.count {
             return addAttachmentCell(in: collectionView, at: indexPath)
-        } else if let dataSource = dataSource {
-            return dataSource.attachmentManager(self, cellFor: attachments[indexPath.row], at: indexPath)
         }
-        return defaultCell(in: collectionView, for: attachments[indexPath.row], at: indexPath) ?? collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath)
+        return dataSource?.attachmentManager(self, cellFor: attachments[indexPath.row], at: indexPath.row) ?? defaultCell(in: collectionView, for: attachments[indexPath.row], at: indexPath)
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -145,7 +154,7 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
     
     // MARK: - Default Cells
     
-    open func defaultCell(in collectionView: UICollectionView, for attachment: AnyObject, at indexPath: IndexPath) -> AttachmentCell? {
+    open func defaultCell(in collectionView: UICollectionView, for attachment: AnyObject, at indexPath: IndexPath) -> AttachmentCell {
         
         if let image = attachments[indexPath.row] as? UIImage {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as? ImageAttachmentCell else {
@@ -156,7 +165,7 @@ open class AttachmentManager: NSObject, UICollectionViewDataSource, UICollection
             cell.imageView.image = image
             return cell
         }
-        return nil
+        return collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as! AttachmentCell
     }
     
     open func addAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {

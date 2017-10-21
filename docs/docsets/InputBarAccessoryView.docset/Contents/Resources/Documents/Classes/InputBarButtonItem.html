@@ -14,7 +14,7 @@
     <a title="InputBarButtonItem Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (17% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (49% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -55,9 +55,6 @@
                 <a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/InputBarAccessoryView/UIStackViewPosition.html">– UIStackViewPosition</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/InputBarButtonItem.html">InputBarButtonItem</a>
               </li>
               <li class="nav-group-task">
@@ -65,6 +62,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputStackView/Position.html">– Position</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/InputTextView.html">InputTextView</a>
@@ -82,6 +82,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Extensions/NSMutableAttributedString.html">NSMutableAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
               </li>
             </ul>
           </li>
@@ -103,6 +106,12 @@
               <li class="nav-group-task">
                 <a href="../Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputManager.html">InputManager</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -111,7 +120,21 @@
         <section>
           <section class="section">
             <h1>InputBarButtonItem</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>A InputItem that inherits from UIButton</p>
+<h2 id='important-notes' class='heading'>Important Notes</h2>
+
+<ol>
+<li>Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel</li>
+<li>Intended to be used in an <code><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code></li>
+<li>Default placeholder text is <q>Aa</q></li>
+<li>Will pass a pasted image it&rsquo;s <code><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>&lsquo;s <code><a href="../Protocols/InputManager.html">InputManager</a></code>s</li>
+</ol>
 
           </section>
           <section class="section task-group-section">
@@ -130,9 +153,23 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The spacing properties of the InputBarButtonItem</p>
+
+<ul>
+<li>fixed: The spacing is fixed</li>
+<li>flexible: The spacing is flexible</li>
+<li>none: There is no spacing</li>
+</ul>
 
                         <a href="../Classes/InputBarButtonItem/Spacing.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Spacing</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -161,7 +198,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set automatically when using the InputBarAccessoryView method &lsquo;setStackViewItems&rsquo;</p>
+                        <p>A weak reference to the InputBarAccessoryView that the InputBarButtonItem used in</p>
 
                       </div>
                       <div class="declaration">
@@ -188,8 +225,43 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The spacing property of the InputBarButtonItem</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">spacing</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarButtonItem/Spacing.html">Spacing</a></span> <span class="o">=</span> <span class="o">.</span><span class="k">none</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC4size33_7AA9E8E5A5A9256351E1E3D381812F97LLSC6CGSizeVSgv"></a>
+                    <a name="//apple_ref/swift/Property/size" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC4size33_7AA9E8E5A5A9256351E1E3D381812F97LLSC6CGSizeVSgv">size</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>When not nil this size overrides the intrinsicContentSize</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="k">var</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span> <span class="o">=</span> <span class="kt">CGSize</span><span class="p">(</span><span class="nv">width</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="mi">20</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -209,6 +281,41 @@
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC011parentStackD8PositionAA0ahD0C0I0OSgv"></a>
+                    <a name="//apple_ref/swift/Property/parentStackViewPosition" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC011parentStackD8PositionAA0ahD0C0I0OSgv">parentStackViewPosition</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A reference to the stack view position that the InputBarButtonItem is held in</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">parentStackViewPosition</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="o">.</span><span class="kt">Position</span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -280,8 +387,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Calls the onSelectedAction or onDeselectedAction when set</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">isHighlighted</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -299,8 +414,270 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
+                        <p>Calls the onEnabledAction or onDisabledAction when set</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">isEnabled</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Reactive%20Hooks"></a>
+                <a name="//apple_ref/swift/Section/Reactive Hooks" class="dashAnchor"></a>
+                <a href="#/Reactive%20Hooks">
+                  <h3 class="section-name">Reactive Hooks</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC21onTouchUpInsideAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onTouchUpInsideAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC21onTouchUpInsideAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onTouchUpInsideAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC29onKeyboardEditingBeginsAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onKeyboardEditingBeginsAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC29onKeyboardEditingBeginsAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onKeyboardEditingBeginsAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC27onKeyboardEditingEndsAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onKeyboardEditingEndsAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC27onKeyboardEditingEndsAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onKeyboardEditingEndsAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC28onKeyboardSwipeGestureAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyAC_So07UISwipeJ10RecognizerCtcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onKeyboardSwipeGestureAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC28onKeyboardSwipeGestureAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyAC_So07UISwipeJ10RecognizerCtcSgv">onKeyboardSwipeGestureAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC06onTextD15DidChangeAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyAC_AA0ahD0CtcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onTextViewDidChangeAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC06onTextD15DidChangeAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyAC_AA0ahD0CtcSgv">onTextViewDidChangeAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC16onSelectedAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onSelectedAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC16onSelectedAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onSelectedAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC18onDeselectedAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onDeselectedAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC18onDeselectedAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onDeselectedAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC15onEnabledAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onEnabledAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC15onEnabledAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onEnabledAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0aB10ButtonItemC16onDisabledAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv"></a>
+                    <a name="//apple_ref/swift/Property/onDisabledAction" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0aB10ButtonItemC16onDisabledAction33_7AA9E8E5A5A9256351E1E3D381812F97LLyACcSgv">onDisabledAction</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -332,6 +709,14 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -350,6 +735,14 @@
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -370,9 +763,28 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Setup"></a>
+                <a name="//apple_ref/swift/Section/Setup" class="dashAnchor"></a>
+                <a href="#/Setup">
+                  <h3 class="section-name">Setup</h3>
+                </a>
+              </div>
+              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -386,8 +798,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets up the default properties</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -416,8 +836,18 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the size of the InputBarButtonItem which overrides the intrinsicContentSize. When set to nil
+the default intrinsicContentSize is used. The new size will be laid out in the UIStackView that
+the InputBarButtonItem is held in</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setSize</span><span class="p">(</span><span class="n">_</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -446,8 +876,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Used to setup your own initial properties</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">configure</span><span class="p">(</span><span class="n">_</span> <span class="nv">item</span><span class="p">:</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -465,8 +907,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onKeyboardEditingBeginsAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onKeyboardEditingBegins</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -484,8 +938,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onKeyboardEditingEndsAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onKeyboardEditingEnds</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -503,8 +969,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onKeyboardSwipeGestureAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onKeyboardSwipeGesture</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">item</span><span class="p">:</span> <span class="kt">InputBarButtonItem</span><span class="p">,</span> <span class="n">_</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -522,8 +1000,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onTextViewDidChangeAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onTextViewDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="n">_</span> <span class="nv">item</span><span class="p">:</span> <span class="kt">InputBarButtonItem</span><span class="p">,</span> <span class="n">_</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -541,8 +1031,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onTouchUpInsideAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onTouchUpInside</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -560,8 +1062,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onSelectedAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onSelected</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -579,8 +1093,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onDeselectedAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onDeselected</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -598,8 +1124,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onEnabledAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onEnabled</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -617,8 +1155,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets the onDisabledAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">onDisabled</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kt">InputBarButtonItemAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
                       </div>
                     </section>
                   </div>
@@ -627,10 +1177,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Hook%20Executors"></a>
-                <a name="//apple_ref/swift/Section/Hook Executors" class="dashAnchor"></a>
-                <a href="#/Hook%20Executors">
-                  <h3 class="section-name">Hook Executors</h3>
+                <a name="/InputItem%20Protocol"></a>
+                <a name="//apple_ref/swift/Section/InputItem Protocol" class="dashAnchor"></a>
+                <a href="#/InputItem%20Protocol">
+                  <h3 class="section-name">InputItem Protocol</h3>
                 </a>
               </div>
               <ul>
@@ -647,8 +1197,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Executes the onTextViewDidChangeAction with the given textView</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">textViewDidChangeAction</span><span class="p">(</span><span class="n">with</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -666,8 +1224,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Executes the onKeyboardSwipeGestureAction with the given gesture</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">keyboardSwipeGestureAction</span><span class="p">(</span><span class="n">with</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -685,8 +1251,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Executes the onKeyboardEditingEndsAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">keyboardEditingEndsAction</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -704,8 +1278,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Executes the onKeyboardEditingBeginsAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">keyboardEditingBeginsAction</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -723,8 +1305,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Executes the onTouchUpInsideAction</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">touchUpInsideAction</span><span class="p">()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -733,10 +1323,10 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Static"></a>
-                <a name="//apple_ref/swift/Section/Static" class="dashAnchor"></a>
-                <a href="#/Static">
-                  <h3 class="section-name">Static</h3>
+                <a name="/Static%20Spacers"></a>
+                <a name="//apple_ref/swift/Section/Static Spacers" class="dashAnchor"></a>
+                <a href="#/Static%20Spacers">
+                  <h3 class="section-name">Static Spacers</h3>
                 </a>
               </div>
               <ul>
@@ -753,8 +1343,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>An InputBarButtonItem that&rsquo;s spacing property is set to be .flexible</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">flexibleSpace</span><span class="p">:</span> <span class="kt">InputBarButtonItem</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -772,8 +1370,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>An InputBarButtonItem that&rsquo;s spacing property is set to be .fixed with the width arguement</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">fixedSpace</span><span class="p">(</span><span class="n">_</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">InputBarButtonItem</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -783,7 +1389,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-18)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

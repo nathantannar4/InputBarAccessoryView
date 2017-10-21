@@ -13,7 +13,7 @@
     <a title="Classes  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">InputBarAccessoryView Docs</a> (17% documented)</p>
+        <p><a href="index.html">InputBarAccessoryView Docs</a> (49% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -54,9 +54,6 @@
                 <a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/InputBarAccessoryView/UIStackViewPosition.html">– UIStackViewPosition</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/InputBarButtonItem.html">InputBarButtonItem</a>
               </li>
               <li class="nav-group-task">
@@ -64,6 +61,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/InputStackView/Position.html">– Position</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/InputTextView.html">InputTextView</a>
@@ -81,6 +81,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Extensions/NSMutableAttributedString.html">NSMutableAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIView.html">UIView</a>
               </li>
             </ul>
           </li>
@@ -101,6 +104,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputManager.html">InputManager</a>
               </li>
             </ul>
           </li>
@@ -153,9 +162,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A UITextView can has a UILabel embedded for placeholder text</p>
+<h2 id='important-notes' class='heading'>Important Notes</h2>
+
+<ol>
+<li>Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel</li>
+<li>Intended to be used in an <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code></li>
+<li>Default placeholder text is <q>Aa</q></li>
+<li>Will pass a pasted image it&rsquo;s <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>&lsquo;s <code><a href="Protocols/InputManager.html">InputManager</a></code>s</li>
+</ol>
 
                         <a href="Classes/InputTextView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -273,9 +298,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A powerful InputAccessoryView ideal for messaging applications</p>
 
                         <a href="Classes/InputBarAccessoryView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -345,9 +378,24 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A UIStackView that&rsquo;s intended for holding <code><a href="Classes/InputBarButtonItem.html">InputBarButtonItem</a></code>s</p>
+<h2 id='important-notes' class='heading'>Important Notes</h2>
+
+<ol>
+<li>Default alignment is .fill</li>
+<li>Default distribution is .fill</li>
+<li>The distribution property needs to be based on its arranged subviews intrinsicContentSize so it is not recommended to change it</li>
+</ol>
 
                         <a href="Classes/InputStackView.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputStackView</span><span class="p">:</span> <span class="kt">UIStackView</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -393,9 +441,24 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A UIView thats intrinsicContentSize is overrided so an exact height can be specified</p>
+<h2 id='important-notes' class='heading'>Important Notes</h2>
+
+<ol>
+<li>Default height is 0.5</li>
+<li>Default backgroundColor is UIColor.lightGray</li>
+<li>Intended to be used in an <code><a href="Classes/InputStackView.html">InputStackView</a></code></li>
+</ol>
 
                         <a href="Classes/SeparatorLine.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">SeparatorLine</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -417,9 +480,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A InputItem that inherits from UIButton</p>
+<h2 id='important-notes' class='heading'>Important Notes</h2>
+
+<ol>
+<li>Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel</li>
+<li>Intended to be used in an <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code></li>
+<li>Default placeholder text is <q>Aa</q></li>
+<li>Will pass a pasted image it&rsquo;s <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>&lsquo;s <code><a href="Protocols/InputManager.html">InputManager</a></code>s</li>
+</ol>
 
                         <a href="Classes/InputBarButtonItem.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarButtonItem</span><span class="p">:</span> <span class="kt">UIButton</span><span class="p">,</span> <span class="kt"><a href="Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -429,7 +508,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-18)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

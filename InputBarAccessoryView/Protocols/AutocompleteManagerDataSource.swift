@@ -27,12 +27,36 @@
 
 import UIKit
 
+/// AutocompleteManagerDataSource is a protocol that passes data to the AutocompleteManager
 public protocol AutocompleteManagerDataSource: class {
     
+    /// The autocomplete options for the registered prefix. Called once a prefix is registered.
+    ///
+    /// - Parameters:
+    ///   - manager: The AutocompleteManager
+    ///   - prefix: The registered prefix
+    /// - Returns: An array of autocomplete options for the given prefix
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
     
+    
+    /// The text to autocomplete a prefix with if you need to specify a difference between the autocomplete text a user can select
+    /// with what is inserted.
+    ///
+    /// - Parameters:
+    ///   - manager: The AutocompleteManager
+    ///   - arguments: The registered prefix, current filter text after the prefix and the autocomplete text that the user has selected
+    /// - Returns: The string that the registered prefix will be autocomplete with. Default is `String(arguments.prefix) + arguments.autocompleteText`
     func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String
     
+    
+    /// The cell to populate the AutocompleteTableView with
+    ///
+    /// - Parameters:
+    ///   - manager: The AttachmentManager
+    ///   - tableView: The AttachmentManager's AutocompleteTableView
+    ///   - indexPath: The indexPath of the cell
+    ///   - arguments: The registered prefix, current filter text after the prefix and the autocomplete text that the user has selected
+    /// - Returns: A UITableViewCell to populate the AutocompleteTableView. Default is `manager.defaultCell(in: tableView, at: indexPath, for: arguments)`
     func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
 }
 

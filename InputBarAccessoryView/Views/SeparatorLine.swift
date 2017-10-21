@@ -27,10 +27,19 @@
 
 import UIKit
 
+/**
+ A UIView thats intrinsicContentSize is overrided so an exact height can be specified
+ 
+ ## Important Notes ##
+ 1. Default height is 0.5
+ 2. Default backgroundColor is UIColor.lightGray
+ 3. Intended to be used in an `InputStackView`
+ */
 open class SeparatorLine: UIView {
     
     // MARK: - Properties
     
+    /// The height of the line
     open var height: CGFloat = 0.5 {
         didSet {
             invalidateIntrinsicContentSize()
@@ -38,7 +47,7 @@ open class SeparatorLine: UIView {
     }
     
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: 0, height: height)
+        return CGSize(width: super.intrinsicContentSize.width, height: height)
     }
     
     // MARK: - Initialization
@@ -53,9 +62,10 @@ open class SeparatorLine: UIView {
         setup()
     }
     
-    private func setup() {
+    /// Sets up the default properties
+    open func setup() {
         backgroundColor = .lightGray
         translatesAutoresizingMaskIntoConstraints = false
-        setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
+        setContentHuggingPriority(.defaultHigh, for: .vertical)
     }
 }

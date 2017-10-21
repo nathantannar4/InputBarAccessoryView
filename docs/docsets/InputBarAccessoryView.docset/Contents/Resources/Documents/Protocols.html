@@ -13,7 +13,7 @@
     <a title="Protocols  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">InputBarAccessoryView Docs</a> (17% documented)</p>
+        <p><a href="index.html">InputBarAccessoryView Docs</a> (49% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -54,9 +54,6 @@
                 <a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/InputBarAccessoryView/UIStackViewPosition.html">– UIStackViewPosition</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/InputBarButtonItem.html">InputBarButtonItem</a>
               </li>
               <li class="nav-group-task">
@@ -64,6 +61,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/InputStackView/Position.html">– Position</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/InputTextView.html">InputTextView</a>
@@ -81,6 +81,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Extensions/NSMutableAttributedString.html">NSMutableAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIView.html">UIView</a>
               </li>
             </ul>
           </li>
@@ -101,6 +104,12 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputManager.html">InputManager</a>
               </li>
             </ul>
           </li>
@@ -129,9 +138,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>AttachmentManagerDataSource is a protocol to passes data to the AttachmentManager</p>
 
                         <a href="Protocols/AttachmentManagerDataSource.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AttachmentManagerDataSource</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -153,9 +170,49 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>AutocompleteManagerDataSource is a protocol that passes data to the AutocompleteManager</p>
 
                         <a href="Protocols/AutocompleteManagerDataSource.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AutocompleteManagerDataSource</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0A4ItemP"></a>
+                    <a name="//apple_ref/swift/Protocol/InputItem" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0A4ItemP">InputItem</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>InputItem is a protocol that links elements to the InputBarAccessoryView to make them reactive</p>
+
+                        <a href="Protocols/InputItem.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InputItem</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -177,9 +234,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>InputBarAccessoryViewDelegate is a protocol that can recieve notifications from the InputBarAccessoryView</p>
 
                         <a href="Protocols/InputBarAccessoryViewDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InputBarAccessoryViewDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -201,9 +266,17 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>AttachmentManagerDelegate is a protocol that can recieve notifications from the AttachmentManager</p>
 
                         <a href="Protocols/AttachmentManagerDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AttachmentManagerDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -225,9 +298,49 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>AutocompleteManagerDelegate is a protocol that more precisely define AutocompleteManager logic</p>
 
                         <a href="Protocols/AutocompleteManagerDelegate.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AutocompleteManagerDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0A7ManagerP"></a>
+                    <a name="//apple_ref/swift/Protocol/InputManager" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0A7ManagerP">InputManager</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>InputManager is a protocol that makes integrating plugins to the InputBarAccessoryView easy.</p>
+
+                        <a href="Protocols/InputManager.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InputManager</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -237,7 +350,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-18)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

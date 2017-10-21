@@ -27,7 +27,15 @@
 
 import Foundation
 
+/// AttachmentManagerDataSource is a protocol to passes data to the AttachmentManager
 public protocol AttachmentManagerDataSource: class {
     
-    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AnyObject, at indexPath: IndexPath) -> AttachmentCell
+    /// The AttachmentCell for the attachment that is to be inserted into the AttachmentView
+    ///
+    /// - Parameters:
+    ///   - manager: The AttachmentManager
+    ///   - attachment: The object
+    ///   - index: The index in the AttachmentView
+    /// - Returns: An AttachmentCell
+    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AnyObject, at index: Int) -> AttachmentCell
 }

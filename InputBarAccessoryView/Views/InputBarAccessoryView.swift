@@ -27,17 +27,16 @@
 
 import UIKit
 
+/// A powerful InputAccessoryView ideal for messaging applications
 open class InputBarAccessoryView: UIView {
-    
-    public enum UIStackViewPosition {
-        case left, right, bottom, top
-    }
     
     // MARK: - Properties
     
+    /// A delegate to broadcast notifications from the InputBarAccessoryView
     open weak var delegate: InputBarAccessoryViewDelegate?
     
-    /// The background UIView anchored to the bottom, left, and right of the InputBarAccessoryView with a top anchor equal to the bottom of the top UIStackView
+    /// The background UIView anchored to the bottom, left, and right of the InputBarAccessoryView
+    /// with a top anchor equal to the bottom of the top InputStackView
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +44,19 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
     
-    /// A backgroundView subview that adds a blur effect. Only added to the view when 'isTransparent' is set to TRUE
+    /// Also sets the backgroundView's backgroundColor to the newValue
+    open override var backgroundColor: UIColor? {
+        didSet {
+            backgroundView.backgroundColor = backgroundColor
+        }
+    }
+    
+    /**
+     A UIVisualEffectView that adds a blur effect to make the view appear transparent.
+     
+     ## Important Notes ##
+     1. The blurView is initially not added to the backgroundView to improve performance when not needed. When `isTranslucent` is set to TRUE for the first time the blurView is added and anchored to the `backgroundView`s edge anchors
+    */
     open var blurView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .light)
         let view = UIVisualEffectView(effect: blurEffect)
@@ -53,7 +64,7 @@ open class InputBarAccessoryView: UIView {
         return view
     }()
     
-    /// When set to true, the blurView is added to the backgroundView and anchored to all of its edges
+    /// Determines if the InputBarAccessoryView should have a translucent effect
     open var isTranslucent: Bool = false {
         didSet {
             if isTranslucent && blurView.superview == nil {
@@ -61,41 +72,54 @@ open class InputBarAccessoryView: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            backgroundView.backgroundColor = isTranslucent ? .clear : .white
+            backgroundView.backgroundColor = isTranslucent ? (backgroundView.backgroundColor?.withAlphaComponent(0.7) ?? UIColor.white.withAlphaComponent(0.7)) : .white
         }
     }
 
+    /// A SeparatorLine that is initially placed in the topStackView
     open let separatorLine = SeparatorLine()
     
+    /**
+     The InputStackView at the InputStackView.top position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .vertical
+     */
     open let topStackView = InputStackView(axis: .vertical, spacing: 0)
     
+    /**
+     The InputStackView at the InputStackView.left position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     */
     open let leftStackView = InputStackView(axis: .horizontal, spacing: 0)
     
+    /**
+     The InputStackView at the InputStackView.right position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     */
     open let rightStackView = InputStackView(axis: .horizontal, spacing: 0)
     
+    /**
+     The InputStackView at the InputStackView.bottom position
+     
+     ## Important Notes ##
+     1. It's axis is initially set to .horizontal
+     2. It's spacing is initially set to 15
+     */
     open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
     
-    /// The object that manages attachments
-    open lazy var attachmentManager: AttachmentManager = { [weak self] in
-        let manager = AttachmentManager()
-        manager.delegate = self
-        return manager
+    open lazy var inputTextView: InputTextView = { [weak self] in
+        let inputTextView = InputTextView()
+        inputTextView.translatesAutoresizingMaskIntoConstraints = false
+        inputTextView.inputBarAccessoryView = self
+        return inputTextView
     }()
     
-    /// The object that manages autocomplete
-    open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
-        let manager = AutocompleteManager(for: self.textView)
-        manager.delegate = self
-        return manager
-    }()
-    
-    open lazy var textView: InputTextView = { [weak self] in
-        let textView = InputTextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.inputBarAccessoryView = self
-        return textView
-    }()
-    
+    /// A InputBarButtonItem used as the send button and initially placed in the rightStackView
     open var sendButton: InputBarButtonItem = {
         return InputBarButtonItem()
             .configure {
@@ -108,22 +132,58 @@ open class InputBarAccessoryView: UIView {
         }
     }()
     
-    /// The anchor contants used by the UIStackViews and InputTextView to create padding within the InputBarAccessoryView
+    /**
+     The anchor contants used by the InputStackView's and InputTextView to create padding
+     within the InputBarAccessoryView
+     
+     ## Important Notes ##
+     
+     ````
+     V:|...-[InputStackView.top]-(padding.top)-[InputTextView]-(textViewPadding.bottom)-[InputStackView.bottom]-(padding.bottom)-|
+     
+     H:|-(padding.left)-[InputStackView.left(leftStackViewWidthConstant)]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[InputStackView.right(rightStackViewWidthConstant)]-(padding.right)-|
+     ````
+     
+     */
     open var padding: UIEdgeInsets = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12) {
         didSet {
             updatePadding()
         }
     }
     
-    /// Changes the padding insets on the top UIStackView's top, left and right constraint anchors
+    /**
+     The anchor constants used by the top InputStackView
+     
+     ## Important Notes ##
+     1. The topStackViewPadding.bottom property is not used. Use padding.top
+     
+     ````
+     V:|-(topStackViewPadding.top)-[InputStackView.top]-(padding.top)-[InputTextView]-...|
+     
+     H:|-(topStackViewPadding.left)-[InputStackView.top]-(topStackViewPadding.right)-|
+     ````
+     
+     */
     open var topStackViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             updateTopStackViewPadding()
         }
     }
     
-    /// Changes the padding insets on the UITextView's left, right and bottom constraint anchors
-    open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
+    /**
+     The anchor constants used by the InputStackView
+     
+     ## Important Notes ##
+     1. The inputTextViewPadding.top property is not used. Use padding.top
+     
+     ````
+     V:|...-(padding.top)-[InputTextView]-(inputTextViewPadding.bottom)-[InputStackView.bottom]-...|
+     
+     H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputTextViewPadding.left)-[InputStackView.left.right]-...|
+     ````
+     
+     */
+    open var inputTextViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
         didSet {
             updateTextViewPadding()
         }
@@ -138,14 +198,19 @@ open class InputBarAccessoryView: UIView {
         return size
     }
     
+    /// The intrinsicContentSize can change a lot so the delegate method
+    /// `inputBar(self, didChangeIntrinsicContentTo: size)` only needs to be called
+    /// when it's different
     private var previousIntrinsicContentSize: CGSize?
     
+    /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
+    /// improves the performance
     private(set) public var isOverMaxTextViewHeight = false
     
-    /// The maximum height of content not including the topStackView. When reached the delegate 'didChangeIntrinsicContentTo' will be called.
+    /// The maximum height that the InputTextView can reach
     open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 4).rounded() {
         didSet {
-            textViewHeightAnchor?.constant = maxTextViewHeight
+            inputTextViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
         }
     }
@@ -163,31 +228,34 @@ open class InputBarAccessoryView: UIView {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
         }
     }
+    
+    /// Holds the InputManager plugins that can be used to extend the functionality of the InputBarAccessoryView
+    open var inputManagers = [InputManager]()
 
     /// The InputBarItems held in the leftStackView
-    private(set) public var leftStackViewItems: [InputBarButtonItem] = []
+    private(set) public var leftStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the rightStackView
-    private(set) public var rightStackViewItems: [InputBarButtonItem] = []
+    private(set) public var rightStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    private(set) public var bottomStackViewItems: [InputBarButtonItem] = []
+    private(set) public var bottomStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the topStackView
-    private(set) public var topStackViewItems: [InputBarButtonItem] = []
+    private(set) public var topStackViewItems: [InputItem] = []
     
     /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
-    open var nonStackViewItems: [InputBarButtonItem] = []
+    open var nonStackViewItems: [InputItem] = []
     
     /// Returns a flatMap of all the items in each of the UIStackViews
-    public var items: [InputBarButtonItem] {
+    public var items: [InputItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, topStackViewItems, nonStackViewItems].flatMap { $0 }
     }
 
-    // MARK: - Auto-Layout Constraints
+    // MARK: - Auto-Layout Constraint Sets
     
-    private var textViewLayoutSet: NSLayoutConstraintSet?
-    private var textViewHeightAnchor: NSLayoutConstraint?
+    private var inputTextViewLayoutSet: NSLayoutConstraintSet?
+    private var inputTextViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
@@ -216,46 +284,48 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Setup
     
+    /// Sets up the default properties
     open func setup() {
         tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        backgroundColor = .clear
-        autoresizingMask = [.flexibleHeight, .flexibleBottomMargin]
+        autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
         setupObservers()
         setupGestureRecognizers()
     }
     
+    /// Adds the required notification observers
     private func setupObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.orientationDidChange),
                                                name: .UIDeviceOrientationDidChange, object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputBarAccessoryView.textViewDidChange),
+                                               selector: #selector(InputBarAccessoryView.inputTextViewDidChange),
                                                name: NSNotification.Name.UITextViewTextDidChange, object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputBarAccessoryView.textViewDidBeginEditing),
+                                               selector: #selector(InputBarAccessoryView.inputTextViewDidBeginEditing),
                                                name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputBarAccessoryView.textViewDidEndEditing),
+                                               selector: #selector(InputBarAccessoryView.inputTextViewDidEndEditing),
                                                name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
     }
     
+    /// Adds a UISwipeGestureRecognizer for each direction to the InputTextView
     private func setupGestureRecognizers() {
         let directions: [UISwipeGestureRecognizerDirection] = [.left, .right]
         for direction in directions {
             let gesture = UISwipeGestureRecognizer(target: self,
                                                    action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
             gesture.direction = direction
-            textView.addGestureRecognizer(gesture)
+            inputTextView.addGestureRecognizer(gesture)
         }
     }
     
+    /// Adds all of the subviews
     private func setupSubviews() {
-        
         addSubview(backgroundView)
         addSubview(topStackView)
-        addSubview(textView)
+        addSubview(inputTextView)
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
@@ -263,41 +333,42 @@ open class InputBarAccessoryView: UIView {
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
+    /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
-            bottom: topStackView.bottomAnchor.constraint(equalTo: textView.topAnchor, constant: -padding.top),
+            bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
             left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left),
             right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -topStackViewPadding.right)
         ).activate()
         
         backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
-        textViewLayoutSet = NSLayoutConstraintSet(
-            top:    textView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: textView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -textViewPadding.bottom),
-            left:   textView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
-            right:  textView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
+        inputTextViewLayoutSet = NSLayoutConstraintSet(
+            top:    inputTextView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
+            bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -inputTextViewPadding.bottom),
+            left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: inputTextViewPadding.left),
+            right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -inputTextViewPadding.right)
         ).activate()
-        textViewHeightAnchor = textView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
+        inputTextViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    textView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: leftStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
+            top:    inputTextView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
+            bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
             left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
         ).activate()
         
         rightStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    textView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: rightStackView.bottomAnchor.constraint(equalTo: textView.bottomAnchor, constant: 0),
+            top:    inputTextView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
+            bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
             right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
             width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
         ).activate()
         
         bottomStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    bottomStackView.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: textViewPadding.bottom),
+            top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: inputTextViewPadding.bottom),
             bottom: bottomStackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor, constant: -padding.bottom),
             left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
             right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
@@ -306,8 +377,9 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Constraint Layout Updates
     
+    /// Updates the constraint constants that correspond to the padding UIEdgeInsets
     private func updatePadding() {
-        textViewLayoutSet?.top?.constant = padding.top
+        inputTextViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.top?.constant = padding.top
         leftStackViewLayoutSet?.left?.constant = padding.left
         rightStackViewLayoutSet?.top?.constant = padding.top
@@ -317,48 +389,53 @@ open class InputBarAccessoryView: UIView {
         bottomStackViewLayoutSet?.bottom?.constant = -padding.bottom
     }
     
+    /// Updates the constraint constants that correspond to the inputTextViewPadding UIEdgeInsets
     private func updateTextViewPadding() {
-        textViewLayoutSet?.left?.constant = textViewPadding.left
-        textViewLayoutSet?.right?.constant = -textViewPadding.right
-        textViewLayoutSet?.bottom?.constant = -textViewPadding.bottom
-        bottomStackViewLayoutSet?.top?.constant = textViewPadding.bottom
+        inputTextViewLayoutSet?.left?.constant = inputTextViewPadding.left
+        inputTextViewLayoutSet?.right?.constant = -inputTextViewPadding.right
+        inputTextViewLayoutSet?.bottom?.constant = -inputTextViewPadding.bottom
+        bottomStackViewLayoutSet?.top?.constant = inputTextViewPadding.bottom
     }
     
+    /// Updates the constraint constants that correspond to the topStackViewPadding UIEdgeInsets
     private func updateTopStackViewPadding() {
         topStackViewLayoutSet?.top?.constant = topStackViewPadding.top
         topStackViewLayoutSet?.left?.constant = topStackViewPadding.left
         topStackViewLayoutSet?.right?.constant = -topStackViewPadding.right
     }
     
+    
+    /// Calculates the correct intrinsicContentSize of the InputBarAccessoryView
+    ///
+    /// - Returns: The required intrinsicContentSize
     open func calculateIntrinsicContentSize() -> CGSize {
         
-        let maxTextViewSize = CGSize(width: textView.bounds.width, height: .greatestFiniteMagnitude)
-        var heightToFit = textView.sizeThatFits(maxTextViewSize).height.rounded()
+        let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
+        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
         if heightToFit >= maxTextViewHeight {
             if !isOverMaxTextViewHeight {
-                textViewHeightAnchor?.isActive = true
-                textView.isScrollEnabled = true
+                inputTextViewHeightAnchor?.isActive = true
+                inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
             }
             heightToFit = maxTextViewHeight
         } else {
             if isOverMaxTextViewHeight {
-                textViewHeightAnchor?.isActive = false
-                textView.isScrollEnabled = false
+                inputTextViewHeightAnchor?.isActive = false
+                inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
             }
-            textView.invalidateIntrinsicContentSize()
+            inputTextView.invalidateIntrinsicContentSize()
         }
-        
         return CGSize(width: bounds.width, height: heightToFit)
     }
     
     // MARK: - Layout Helper Methods
     
-    /// Layout the given UIStackView's
+    /// Layout the given InputStackView's
     ///
-    /// - Parameter positions: The UIStackView's to layout
-    public func layoutStackViews(_ positions: [UIStackViewPosition] = [.left, .right, .bottom]) {
+    /// - Parameter positions: The InputStackView's to layout
+    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
         for position in positions {
             switch position {
             case .left:
@@ -377,41 +454,29 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Performs layout changes over the main thread
+    /// Performs a layout over the main thread
     ///
     /// - Parameters:
     ///   - animated: If the layout should be animated
-    ///   - animations: Code
+    ///   - animations: Animation logic
     internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
-        
-        topStackViewLayoutSet?.deactivate()
-        textViewLayoutSet?.deactivate()
-        leftStackViewLayoutSet?.deactivate()
-        rightStackViewLayoutSet?.deactivate()
-        bottomStackViewLayoutSet?.deactivate()
-        if animated {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            if animated {
                 UIView.animate(withDuration: 0.3, animations: animations)
+            } else {
+                animations()
             }
-        } else {
-            UIView.performWithoutAnimation { animations() }
         }
-        topStackViewLayoutSet?.activate()
-        textViewLayoutSet?.activate()
-        leftStackViewLayoutSet?.activate()
-        rightStackViewLayoutSet?.activate()
-        bottomStackViewLayoutSet?.activate()
     }
     
-    // MARK: - UIStackView InputBarButtonItem Methods
-    
-    /// Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the inputBarAccessoryView property of the InputBarButtonItem
+    /// Removes all of the arranged subviews from the InputStackView and adds the given items.
+    /// Sets the inputBarAccessoryView property of the InputBarButtonItem
     ///
     /// - Parameters:
-    ///   - items: New UIStackView arranged views
-    ///   - position: The targeted UIStackView
+    ///   - items: New InputStackView arranged views
+    ///   - position: The targeted InputStackView
     ///   - animated: If the layout should be animated
-    open func setStackViewItems(_ items: [InputBarButtonItem], forStack position: UIStackViewPosition, animated: Bool) {
+    open func setStackViewItems(_ items: [InputItem], forStack position: InputStackView.Position, animated: Bool) {
         
         func setNewItems() {
             switch position {
@@ -421,7 +486,9 @@ open class InputBarAccessoryView: UIView {
                 leftStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
                     $0.parentStackViewPosition = position
-                    leftStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        leftStackView.addArrangedSubview(view)
+                    }
                 }
                 leftStackView.layoutIfNeeded()
             case .right:
@@ -430,7 +497,9 @@ open class InputBarAccessoryView: UIView {
                 rightStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
                     $0.parentStackViewPosition = position
-                    rightStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        rightStackView.addArrangedSubview(view)
+                    }
                 }
                 rightStackView.layoutIfNeeded()
             case .bottom:
@@ -439,7 +508,9 @@ open class InputBarAccessoryView: UIView {
                 bottomStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
                     $0.parentStackViewPosition = position
-                    bottomStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        bottomStackView.addArrangedSubview(view)
+                    }
                 }
                 bottomStackView.layoutIfNeeded()
             case .top:
@@ -448,7 +519,9 @@ open class InputBarAccessoryView: UIView {
                 topStackViewItems.forEach {
                     $0.inputBarAccessoryView = self
                     $0.parentStackViewPosition = position
-                    topStackView.addArrangedSubview($0)
+                    if let view = $0 as? UIView {
+                        topStackView.addArrangedSubview(view)
+                    }
                 }
                 topStackView.layoutIfNeeded()
             }
@@ -487,116 +560,53 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Notifications/Hooks
     
+    /// Invalidates the intrinsicContentSize
     @objc
     open func orientationDidChange() {
         invalidateIntrinsicContentSize()
     }
-    
+
+    /// Enables/Disables the sendButton based on the InputTextView's text being empty
+    /// Calls each items `textViewDidChangeAction` method
+    /// Calls the delegates `textViewTextDidChangeTo` method
+    /// Invalidates the intrinsicContentSize
     @objc
-    open func textViewDidChange() {
-        let trimmedText = textView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        sendButton.isEnabled = !textView.text.isEmpty || attachmentManager.attachments.count > 0
-        items.forEach { $0.textViewDidChangeAction(with: self.textView) }
+    open func inputTextViewDidChange() {
+        let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        sendButton.isEnabled = !inputTextView.text.isEmpty
+        items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
         delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
         invalidateIntrinsicContentSize()
     }
     
+    /// Calls each items `keyboardEditingBeginsAction` method
     @objc
-    open func textViewDidBeginEditing() {
+    open func inputTextViewDidBeginEditing() {
         items.forEach { $0.keyboardEditingBeginsAction() }
     }
     
+    /// Calls each items `keyboardEditingEndsAction` method
     @objc
-    open func textViewDidEndEditing() {
+    open func inputTextViewDidEndEditing() {
         items.forEach { $0.keyboardEditingEndsAction() }
     }
     
     // MARK: - User Actions
     
+    /// Calls each items `keyboardSwipeGestureAction` method
+    /// Calls the delegates `didSwipeTextViewWith` method
     @objc
     open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
         items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
         delegate?.inputBar(self, didSwipeTextViewWith: gesture)
     }
     
+    /// Calls the delegates `didPressSendButtonWith` method
+    /// Assumes that the InputTextView's text has been set to empty and calls `inputTextViewDidChange()`
+    /// Invalidates each of the inputManagers
     open func didSelectSendButton() {
-        delegate?.inputBar(self, didPressSendButtonWith: textView.text)
-        textViewDidChange()
-        autocompleteManager.invalidate()
-        attachmentManager.invalidate()
-    }
-}
-
-extension InputBarAccessoryView: AttachmentManagerDelegate {
-    
-    open func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
-        sendButton.isEnabled = attachmentManager.attachments.count > 0
-        setAttachmentManager(active: attachments.count > 0 || manager.isPersistent)
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
-        sendButton.isEnabled = attachmentManager.attachments.count > 0
-        setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
-        sendButton.isEnabled = attachmentManager.attachments.count > 0
-        setAttachmentManager(active: manager.attachments.count > 0 || manager.isPersistent)
-    }
-    
-    /// Attempts to activate/deactive the AttachmentManager by inserting/removing it into the top UIStackView
-    ///
-    /// - Parameter active: If the manager should be activated
-    open func setAttachmentManager(active: Bool) {
-        
-        if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            let index = topStackView.arrangedSubviews.count
-            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
-            topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            topStackView.removeArrangedSubview(attachmentManager.attachmentView)
-            topStackView.layoutIfNeeded()
-        }
-    }
-}
-
-extension InputBarAccessoryView: AutocompleteManagerDelegate {
-    
-    open func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool {
-        setAutocompleteManager(active: true)
-        return true
-    }
-    
-    open func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool {
-        setAutocompleteManager(active: false)
-        return true
-    }
-    
-    public func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool {
-        return true
-    }
-    
-    /// Attempts to activate/deactive the AutocompleteManager by inserting/removing it into the top UIStackView. Also inserts/removes a SeparatorLine below it
-    ///
-    /// - Parameter active: If the manager should be activated
-    open func setAutocompleteManager(active: Bool) {
-        
-        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            let index = topStackView.arrangedSubviews.first == separatorLine ? 1 : 0
-            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: index)
-            topStackView.insertArrangedSubview(SeparatorLine(), at: index + 1)
-            topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            if let index = topStackView.arrangedSubviews.index(of: autocompleteManager.tableView) {
-                let separatorIndex = index + 1
-                if separatorIndex < topStackView.arrangedSubviews.count {
-                    if let separatorLine = topStackView.arrangedSubviews[separatorIndex] as? SeparatorLine {
-                        topStackView.removeArrangedSubview(separatorLine)
-                    }
-                }
-            }
-            topStackView.removeArrangedSubview(autocompleteManager.tableView)
-            topStackView.layoutIfNeeded()
-        }
+        delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
+        inputTextViewDidChange()
+        inputManagers.forEach { $0.invalidate() }
     }
 }

@@ -14,7 +14,7 @@
     <a title="AutocompleteManagerDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (17% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (49% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -55,9 +55,6 @@
                 <a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Classes/InputBarAccessoryView/UIStackViewPosition.html">– UIStackViewPosition</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="../Classes/InputBarButtonItem.html">InputBarButtonItem</a>
               </li>
               <li class="nav-group-task">
@@ -65,6 +62,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputStackView/Position.html">– Position</a>
               </li>
               <li class="nav-group-task">
                 <a href="../Classes/InputTextView.html">InputTextView</a>
@@ -82,6 +82,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Extensions/NSMutableAttributedString.html">NSMutableAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/UIView.html">UIView</a>
               </li>
             </ul>
           </li>
@@ -103,6 +106,12 @@
               <li class="nav-group-task">
                 <a href="../Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputManager.html">InputManager</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -111,12 +120,45 @@
         <section>
           <section class="section">
             <h1>AutocompleteManagerDelegate</h1>
-            <p>Undocumented</p>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">AutocompleteManagerDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+
+                </div>
+              </div>
+            <p>AutocompleteManagerDelegate is a protocol that more precisely define AutocompleteManager logic</p>
 
           </section>
           <section class="section task-group-section">
             <div class="task-group">
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView27AutocompleteManagerDelegateP012autocompleteF0yAA0eF0C_Sb19shouldBecomeVisibletF"></a>
+                    <a name="//apple_ref/swift/Method/autocompleteManager(_:shouldBecomeVisible:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView27AutocompleteManagerDelegateP012autocompleteF0yAA0eF0C_Sb19shouldBecomeVisibletF">autocompleteManager(_:shouldBecomeVisible:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Can be used to determine if the AutocompleteManager should be inserted into an InputStackView</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">autocompleteManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt"><a href="../Classes/AutocompleteManager.html">AutocompleteManager</a></span><span class="p">,</span> <span class="nv">shouldBecomeVisible</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -133,13 +175,24 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Determines if a prefix character should be registered to initialize the auto-complete selection table</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">autocompleteManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt"><a href="../Classes/AutocompleteManager.html">AutocompleteManager</a></span><span class="p">,</span> <span class="n">shouldRegister</span> <span class="nv">prefix</span><span class="p">:</span> <span class="kt">Character</span><span class="p">,</span> <span class="n">at</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">Range</span><span class="o">&lt;</span><span class="kt">Int</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>If the prefix should be registered. Default is TRUE</p>
                       </div>
                     </section>
                   </div>
@@ -160,13 +213,24 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Determines if a prefix character should be unregistered to de-initialize the auto-complete selection table</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">autocompleteManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt"><a href="../Classes/AutocompleteManager.html">AutocompleteManager</a></span><span class="p">,</span> <span class="n">shouldUnregister</span> <span class="nv">prefix</span><span class="p">:</span> <span class="kt">Character</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>If the prefix should be unregistered. Default is TRUE</p>
                       </div>
                     </section>
                   </div>
@@ -187,13 +251,24 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Determines if a prefix character can should be autocompleted</p>
 
                       </div>
                       <h4>Default Implementation</h4>
                       <div class="default_impl abstract">
-                        <p>Undocumented</p>
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">autocompleteManager</span><span class="p">(</span><span class="n">_</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt"><a href="../Classes/AutocompleteManager.html">AutocompleteManager</a></span><span class="p">,</span> <span class="n">shouldComplete</span> <span class="nv">prefix</span><span class="p">:</span> <span class="kt">Character</span><span class="p">,</span> <span class="n">with</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>If the prefix can be autocompleted. Default is TRUE</p>
                       </div>
                     </section>
                   </div>
@@ -203,7 +278,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-18)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

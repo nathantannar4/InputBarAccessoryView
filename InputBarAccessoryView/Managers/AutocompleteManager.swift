@@ -27,13 +27,13 @@
 
 import UIKit
 
-open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
+open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
     
     open weak var dataSource: AutocompleteManagerDataSource?
     
     open weak var delegate: AutocompleteManagerDelegate?
     
-    private(set) public weak var textView: UITextView?
+    private(set) public weak var inputTextView: InputTextView?
     
     /// The autocomplete table for @mention or #hastag
     open lazy var tableView: AutocompleteTableView = { [weak self] in
@@ -54,14 +54,16 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     open var maxVisibleRows = 3
     
     /// The prefices that the manager will recognize
-    open var autocompletePrefixes: [Character] = ["@"]
+    open var autocompletePrefixes: [Character] = ["@", "#"]
     
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedStringKey:Any] = [NSAttributedStringKey.font : UIFont.preferredFont(forTextStyle: .body),
                                                                    NSAttributedStringKey.foregroundColor : UIColor.black]
     
     /// The text attributes applied to highlighted substrings for each prefix
-    open var highlightedTextAttributes: [Character:[NSAttributedStringKey:Any]] = ["@":[NSAttributedStringKey.foregroundColor : UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)]]
+    open var highlightedTextAttributes: [Character:[NSAttributedStringKey:Any]] =
+        ["@":[NSAttributedStringKey.foregroundColor : UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
+              NSAttributedStringKey.backgroundColor : UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)]]
     
     private var highlightedSubstrings = [Character:[String]]()
     private var autocompleteText = [String]()
@@ -76,11 +78,13 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     // MARK: - Initialization
     
-    public init(for textView: UITextView) {
+    public init(for textView: InputTextView) {
         super.init()
-        self.textView = textView
-        self.textView?.delegate = self
+        self.inputTextView = textView
+        self.inputTextView?.delegate = self
     }
+    
+    // MARK: - InputManager
     
     open func reload() {
         checkLastCharacter()
@@ -89,6 +93,13 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     
     open func invalidate() {
         unregisterCurrentPrefix()
+    }
+    
+    open func handleInput(of object: AnyObject) {
+        guard let newText = object as? String, let textView = inputTextView else { return }
+        let newAttributedString = NSMutableAttributedString(attributedString: textView.attributedText).normal(newText)
+        textView.attributedText = newAttributedString
+        reload()
     }
     
     // MARK: - UITableViewDataSource
@@ -170,13 +181,13 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         
         var typingAttributes = [String:Any]()
         defaultTextAttributes.forEach { typingAttributes[$0.key.rawValue] = $0.value }
-        textView?.typingAttributes = typingAttributes
+        inputTextView?.typingAttributes = typingAttributes
     }
     
     /// Applies highlighting to substrings that begin with a registered prefix
     open func highlightSubstrings() {
 
-        guard let textView = textView else { return }
+        guard let textView = inputTextView else { return }
         let attributedString = NSMutableAttributedString(string: textView.text, attributes: defaultTextAttributes)
         
         // Get the substrings with a prefix
@@ -221,6 +232,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         currentPrefixRange = range
         autocompleteText = dataSource?.autocompleteManager(self, autocompleteTextFor: prefix) ?? []
         currentFilter = String()
+        delegate?.autocompleteManager(self, shouldBecomeVisible: true)
     }
     
     private func unregisterCurrentPrefix() {
@@ -231,12 +243,13 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         autocompleteText.removeAll()
         currentPrefix = nil
         currentFilter = nil
+        delegate?.autocompleteManager(self, shouldBecomeVisible: false)
     }
     
     /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
     private func checkLastCharacter() {
         
-        guard let characters = textView?.text.characters, let char = characters.last else {
+        guard let characters = inputTextView?.text.characters, let char = characters.last else {
             unregisterCurrentPrefix()
             return
         }
@@ -260,7 +273,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
     ///   - text: The replacement text
     public func autocomplete(with text: String) {
         
-        guard let prefix = currentPrefix, let textView = textView, let filterText = currentFilter else { return }
+        guard let prefix = currentPrefix, let textView = inputTextView, let filterText = currentFilter else { return }
         guard delegate?.autocompleteManager(self, shouldComplete: prefix, with: text) != false else { return }
         
         let textToInsert = text + " "
@@ -319,7 +332,7 @@ open class AutocompleteManager: NSObject, UITableViewDelegate, UITableViewDataSo
         cell.textLabel?.attributedText = stringWithPrefix
         
         cell.backgroundColor = .white
-        cell.tintColor = textView?.tintColor ?? UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        cell.tintColor = inputTextView?.tintColor ?? UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
         cell.separatorLine.isHidden = indexPath.row == currentAutocompleteText().count - 1
         
         return cell

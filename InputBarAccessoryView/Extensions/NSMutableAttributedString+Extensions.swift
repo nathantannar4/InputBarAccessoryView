@@ -27,7 +27,7 @@
 
 import UIKit
 
-public extension NSMutableAttributedString {
+extension NSMutableAttributedString {
  
     @discardableResult
     func bold(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {

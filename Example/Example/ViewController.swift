@@ -14,11 +14,23 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     lazy var bar: InputBarAccessoryView = { [weak self] in
         let bar = InputBarAccessoryView()
         bar.delegate = self
-        
-        // required to pass autocomplete strings to the manager
-        bar.autocompleteManager.dataSource = self
-        
         return bar
+    }()
+    
+    /// The object that manages attachments
+    open lazy var attachmentManager: AttachmentManager = { [weak self] in
+        let manager = AttachmentManager()
+        manager.delegate = self
+        return manager
+    }()
+
+    /// The object that manages autocomplete
+    open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
+        let manager = AutocompleteManager(for: self.bar.inputTextView)
+        manager.delegate = self
+        manager.dataSource = self
+        manager.autocompletePrefixes = ["@","#",":"]
+        return manager
     }()
     
     // Required to use an inputAccessoryView
@@ -41,17 +53,12 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         return label
     }()
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "InputBarAccessoryView"
         view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        bar.inputManagers = [attachmentManager, autocompleteManager]
         
         let imageView = UIImageView(image: UIImage(named: "NT Logo Blue"))
         imageView.contentMode = .scaleAspectFit
@@ -75,8 +82,6 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         ]
         
         viewIsLoaded = true
-        bar.textView.textAlignment = .center
-        bar.textView.placeholderLabel.textAlignment = .center
     }
     
     @objc
@@ -125,15 +130,15 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
         button.imageView?.contentMode = .scaleAspectFit
         button.tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
-        bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-        bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
-        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
-        bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        bar.textView.layer.borderWidth = 1.0
-        bar.textView.layer.cornerRadius = 16.0
-        bar.textView.layer.masksToBounds = true
-        bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        bar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        bar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        bar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
+        bar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+        bar.inputTextView.layer.borderWidth = 1.0
+        bar.inputTextView.layer.cornerRadius = 16.0
+        bar.inputTextView.layer.masksToBounds = true
+        bar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.setLeftStackViewWidthConstant(to: 36, animated: viewIsLoaded)
         bar.setStackViewItems([button], forStack: .left, animated: viewIsLoaded)
     }
@@ -146,22 +151,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                 button.isEnabled = textView.text.isEmpty
             },
             makeButton(named: "ic_at").onSelected { _ in
-                
-//                self.bar.textView.text.append("@") using the text property you will reset the text attributes
-                let newValue = NSMutableAttributedString(attributedString: self.bar.textView.attributedText).normal("@")
-                self.bar.textView.attributedText = newValue
-                
-                // We must call reload() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
-                self.bar.autocompleteManager.reload()
+                self.autocompleteManager.handleInput(of: "@" as AnyObject)
             },
             makeButton(named: "ic_hashtag").onSelected { _ in
-                
-//                self.bar.textView.text.append("#") using the text property you will reset the text attributes
-                let newValue = NSMutableAttributedString(attributedString: self.bar.textView.attributedText).normal("#")
-                self.bar.textView.attributedText = newValue
-                
-                // We must call reload() after because the previous append doesnt utilize the UITextView delegate that the autocomplete relies on
-                self.bar.autocompleteManager.reload()
+                self.autocompleteManager.handleInput(of: "#" as AnyObject)
             },
             .flexibleSpace,
             makeButton(named: "ic_library")
@@ -197,17 +190,11 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         ]
         items.forEach { $0.tintColor = .lightGray }
         
-//        bar.attachmentManager.isPersistent = true //to always display the AttachmentView
-        bar.attachmentManager.addAttachmentCellPressedBlock = { [weak self] _ in
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.sourceType = .photoLibrary
-            self?.present(imagePicker, animated: true, completion: nil)
-        }
-    
+//        attachmentManager.isPersistent = true //to always display the AttachmentView
+        
         // We can change the container insets if we want
-        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
-        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
+        bar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
     
         // Since we moved the send button to the bottom stack lets set the right stack width to 0
         bar.setRightStackViewWidthConstant(to: 0, animated: viewIsLoaded)
@@ -219,17 +206,17 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     @objc
     func iMessage() {
         none()
-        bar.textView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
-        bar.textView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
-        bar.textView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
-        bar.textView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
-        bar.textView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
-        bar.textView.layer.borderWidth = 1.0
-        bar.textView.layer.cornerRadius = 16.0
-        bar.textView.layer.masksToBounds = true
-        bar.textView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
+        bar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        bar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
+        bar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
+        bar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
+        bar.inputTextView.layer.borderColor = UIColor(red: 200/255, green: 200/255, blue: 200/255, alpha: 1).cgColor
+        bar.inputTextView.layer.borderWidth = 1.0
+        bar.inputTextView.layer.cornerRadius = 16.0
+        bar.inputTextView.layer.masksToBounds = true
+        bar.inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.setRightStackViewWidthConstant(to: 38, animated: viewIsLoaded)
-        bar.setStackViewItems([bar.sendButton, .fixedSpace(2)], forStack: .right, animated: viewIsLoaded)
+        bar.setStackViewItems([bar.sendButton, InputBarButtonItem.fixedSpace(2)], forStack: .right, animated: viewIsLoaded)
         bar.sendButton.imageView?.backgroundColor = bar.tintColor
         bar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         bar.sendButton.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
@@ -237,18 +224,20 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         bar.sendButton.title = nil
         bar.sendButton.imageView?.layer.cornerRadius = 16
         bar.sendButton.backgroundColor = .clear
-        bar.textViewPadding.right = -38
+        bar.inputTextViewPadding.right = -38
     }
     
     @objc
     func none() {
-        bar.textView.resignFirstResponder()
+        bar.inputTextView.resignFirstResponder()
+        bar.inputManagers.removeAll()
         let newBar = InputBarAccessoryView()
         newBar.delegate = self
-        newBar.attachmentManager.isPersistent = bar.attachmentManager.isPersistent
+        autocompleteManager = AutocompleteManager(for: newBar.inputTextView)
+        autocompleteManager.delegate = self
+        autocompleteManager.dataSource = self
+        newBar.inputManagers = [autocompleteManager, attachmentManager]
         bar = newBar
-        bar.autocompleteManager.autocompletePrefixes = ["@","#",":"]
-        bar.autocompleteManager.dataSource = self
         reloadInputViews()
     }
     
@@ -273,7 +262,7 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         
         label.text = text
         
-        inputBar.textView.text = String()
+        inputBar.inputTextView.text = String()
     }
     
     
@@ -293,10 +282,10 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
         
         // custom replacement text, the default returns is shown below
-    
         return String(arguments.prefix) + arguments.autocompleteText
     }
     
+    // This is only needed to override the default cell
     func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
        
         let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
@@ -310,9 +299,72 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         
         dismiss(animated: true, completion: {
             if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.bar.attachmentManager.insertAttachment(pickedImage, at: self.bar.attachmentManager.attachments.count)
+                self.attachmentManager.handleInput(of: pickedImage)
             }
         })
     }
 }
 
+extension ViewController: AttachmentManagerDelegate {
+    
+    open func attachmentManager(_ manager: AttachmentManager, shouldBecomeVisible: Bool) {
+        setAttachmentManager(active: shouldBecomeVisible)
+    }
+    
+    open func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
+        bar.sendButton.isEnabled = manager.attachments.count > 0
+    }
+    
+    open func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
+        bar.sendButton.isEnabled = manager.attachments.count > 0
+    }
+    
+    open func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
+        bar.sendButton.isEnabled = manager.attachments.count > 0
+    }
+    
+    open func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    /// Attempts to activate/deactive the AttachmentManager by inserting/removing it into the top UIStackView
+    ///
+    /// - Parameter active: If the manager should be activated
+    open func setAttachmentManager(active: Bool) {
+        
+        let topStackView = bar.topStackView
+        if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
+            let index = topStackView.arrangedSubviews.count
+            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
+            topStackView.layoutIfNeeded()
+        } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
+            topStackView.removeArrangedSubview(attachmentManager.attachmentView)
+            topStackView.layoutIfNeeded()
+        }
+    }
+}
+
+extension ViewController: AutocompleteManagerDelegate {
+    
+    open func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
+        setAutocompleteManager(active: shouldBecomeVisible)
+    }
+    
+    /// Attempts to activate/deactive the AutocompleteManager by inserting/removing it into the top UIStackView. Also inserts/removes a SeparatorLine below it
+    ///
+    /// - Parameter active: If the manager should be activated
+    open func setAutocompleteManager(active: Bool) {
+        
+        let topStackView = bar.topStackView
+        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: 1)
+            topStackView.layoutIfNeeded()
+        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
+            topStackView.removeArrangedSubview(autocompleteManager.tableView)
+            topStackView.layoutIfNeeded()
+        }
+    }
+}

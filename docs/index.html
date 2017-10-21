@@ -13,7 +13,7 @@
     <a title="InputBarAccessoryView  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">InputBarAccessoryView Docs</a> (17% documented)</p>
+        <p><a href="index.html">InputBarAccessoryView Docs</a> (49% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -54,9 +54,6 @@
                 <a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/InputBarAccessoryView/UIStackViewPosition.html">– UIStackViewPosition</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/InputBarButtonItem.html">InputBarButtonItem</a>
               </li>
               <li class="nav-group-task">
@@ -64,6 +61,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/InputStackView/Position.html">– Position</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/InputTextView.html">InputTextView</a>
@@ -81,6 +81,9 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Extensions/NSMutableAttributedString.html">NSMutableAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UIView.html">UIView</a>
               </li>
             </ul>
           </li>
@@ -102,6 +105,12 @@
               <li class="nav-group-task">
                 <a href="Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputManager.html">InputManager</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -112,7 +121,7 @@
             
             <h1 id='inputbaraccessoryview' class='heading'>InputBarAccessoryView</h1>
 
-<p><img src="./Assets/Banner.png"></p>
+<p><img src="./Screenshots/Banner.png"></p>
 <h3 id='installation-via-cocoapods' class='heading'>Installation via CocoaPods</h3>
 <pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span>
 </code></pre>
@@ -134,14 +143,17 @@
 <p>iOS 9.0+
 Swift 4
 XCode 9.0+</p>
+<h3 id='documentation' class='heading'>Documentation</h3>
+
+<p><a href="https://nathantannar.me/InputBarAccessoryView/docs/">Jazzy Generated Docs</a></p>
 <h3 id='screenshots' class='heading'>Screenshots</h3>
 
-<p><img src="./Assets/ScreenshotA.png" width="242" height="432"> <img src="./Assets/ScreenshotB.png" width="242" height="432"> <img src="./Assets/ScreenshotC.png" width="242" height="432"> <img src="./Assets/ScreenshotD.png" width="242" height="432"> <img src="./Assets/ScreenshotE.png" width="242" height="432"> <img src="./Assets/ScreenshotF.png" width="242" height="432"></p>
+<p><img src="./Screenshots/ScreenshotA.png" width="242" height="432"> <img src="./Screenshots/ScreenshotB.png" width="242" height="432"> <img src="./Screenshots/ScreenshotC.png" width="242" height="432"> <img src="./Screenshots/ScreenshotD.png" width="242" height="432"> <img src="./Screenshots/ScreenshotE.png" width="242" height="432"> <img src="./Screenshots/ScreenshotF.png" width="242" height="432"></p>
 <h2 id='layout' class='heading'>Layout</h2>
 
 <p>The layout of the <code>InputBarAccessoryView</code> is made of of 4  <code>UIStackView</code>&lsquo;s and an <code>InputTextView</code> (subclass of <code>UITextView</code>). The padding of the subviews can be easily adjusted by changing the <code>padding</code> and <code>textViewPadding</code> properties. The constraints will automatically be updated.</p>
 
-<p><img src="./Assets/Layout.png"></p>
+<p><img src="./Screenshots/Layout.png"></p>
 
 <p>It is important to note that each of the <code>UIStackView</code>&rsquo;s to the left and right of the <code>InputTextView</code> are anchored by a width constraint. This way the <code>InputTextView</code> will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the <code>InputTextView</code> by setting the width constraint constant to 0. The bottom and top stack views are not height constraint and rely on their <code>intrinsicContentSize</code></p>
 <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">setLeftStackViewWidthConstant</span><span class="p">(</span><span class="n">to</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span>
@@ -256,7 +268,7 @@ XCode 9.0+</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-18)</p>
+          <p>&copy; 2017 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2017-10-20)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

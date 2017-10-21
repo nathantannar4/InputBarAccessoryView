@@ -1,5 +1,5 @@
 //
-//  AutocompleteDelegate.swift
+//  InputManager.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017 Nathan Tannar.
@@ -22,31 +22,23 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 10/4/17.
+//  Copyright © 2017 Nathan Tannar. All rights reserved.
 //
 
 import UIKit
 
-public protocol AutocompleteManagerDelegate: class {
+/// InputManager is a protocol that makes integrating plugins to the InputBarAccessoryView easy.
+public protocol InputManager: class {
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool
+    /// Should reload the state if the InputManager
+    func reload()
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool
+    /// Should remove any content that the InputManager is managing
+    func invalidate()
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool
-}
-
-public extension AutocompleteManagerDelegate {
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: Range<Int>) -> Bool {
-        return true
-    }
-    
-    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool {
-        return true
-    }
-    
-    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool {
-        return true
-    }
+    /// Should handle the input of data types that an InputManager manages
+    ///
+    /// - Parameter object: The object to input
+    func handleInput(of object: AnyObject)
 }

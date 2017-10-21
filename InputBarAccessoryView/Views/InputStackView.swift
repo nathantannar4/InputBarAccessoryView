@@ -27,7 +27,25 @@
 
 import UIKit
 
+/**
+ A UIStackView that's intended for holding `InputBarButtonItem`s
+ 
+ ## Important Notes ##
+ 1. Default alignment is .fill
+ 2. Default distribution is .fill
+ 3. The distribution property needs to be based on its arranged subviews intrinsicContentSize so it is not recommended to change it
+ */
 open class InputStackView: UIStackView {
+    
+    /// The stack view position in the InputBarAccessoryView
+    ///
+    /// - left: Left Stack View
+    /// - right: Bottom Stack View
+    /// - bottom: Left Stack View
+    /// - top: Top Stack View
+    public enum Position {
+        case left, right, bottom, top
+    }
     
     // MARK: Initialization
     
@@ -48,8 +66,8 @@ open class InputStackView: UIStackView {
     
     // MARK: - Setup
     
-    private func setup() {
-        
+    /// Sets up the default properties
+    open func setup() {
         translatesAutoresizingMaskIntoConstraints = false
         distribution = .fill
         alignment = .fill
