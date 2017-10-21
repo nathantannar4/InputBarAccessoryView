@@ -86,14 +86,14 @@ open class InputTextView: UITextView {
     }
     
     /// The font of the InputTextView. When set the placeholderLabel's font is also updated
-    override open var font: UIFont! {
+    open override var font: UIFont! {
         didSet {
             placeholderLabel.font = font
         }
     }
     
     /// The textAlignment of the InputTextView. When set the placeholderLabel's textAlignment is also updated
-    override open var textAlignment: NSTextAlignment {
+    open override var textAlignment: NSTextAlignment {
         didSet {
             placeholderLabel.textAlignment = textAlignment
         }
@@ -130,7 +130,7 @@ open class InputTextView: UITextView {
         self.init(frame: .zero)
     }
     
-    override public init(frame: CGRect, textContainer: NSTextContainer?) {
+    public override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }

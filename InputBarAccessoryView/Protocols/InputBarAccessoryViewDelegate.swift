@@ -38,7 +38,6 @@ public protocol InputBarAccessoryViewDelegate: class {
     ///   - text: The current text in the InputBarAccessoryView's InputTextView
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String)
     
-    
     /// Called when the instrinsicContentSize of the InputBarAccessoryView has changed. Can be used for adjusting content insets
     /// on other views to make sure the InputBarAccessoryView does not cover up any other view
     ///
@@ -47,7 +46,6 @@ public protocol InputBarAccessoryViewDelegate: class {
     ///   - size: The new instrinsicContentSize
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize)
     
-    
     /// Called when the InputBarAccessoryView's InputTextView's text has changed. Useful for adding your own logic without the
     /// need of assigning a delegate or notification
     ///
@@ -55,7 +53,6 @@ public protocol InputBarAccessoryViewDelegate: class {
     ///   - inputBar: The InputBarAccessoryView
     ///   - text: The current text in the InputBarAccessoryView's InputTextView
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String)
-    
     
     /// Called when a swipe gesture was recognized on the InputBarAccessoryView's InputTextView
     ///

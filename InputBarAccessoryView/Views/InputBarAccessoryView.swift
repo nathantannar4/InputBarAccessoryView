@@ -189,7 +189,7 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    override open var intrinsicContentSize: CGSize {
+    open override var intrinsicContentSize: CGSize {
         let size = calculateIntrinsicContentSize()
         if previousIntrinsicContentSize != size {
             delegate?.inputBar(self, didChangeIntrinsicContentTo: size)
@@ -460,12 +460,23 @@ open class InputBarAccessoryView: UIView {
     ///   - animated: If the layout should be animated
     ///   - animations: Animation logic
     internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
-        DispatchQueue.main.async {
-            if animated {
+        defer {
+            inputTextViewLayoutSet?.activate()
+            leftStackViewLayoutSet?.activate()
+            rightStackViewLayoutSet?.activate()
+            bottomStackViewLayoutSet?.activate()
+        }
+        inputTextViewLayoutSet?.deactivate()
+        leftStackViewLayoutSet?.deactivate()
+        rightStackViewLayoutSet?.deactivate()
+        bottomStackViewLayoutSet?.deactivate()
+        if animated {
+            DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.3, animations: animations)
-            } else {
-                animations()
             }
+            
+        } else {
+            animations()
         }
     }
     

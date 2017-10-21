@@ -36,7 +36,6 @@ public protocol InputManager: class {
     /// Should remove any content that the InputManager is managing
     func invalidate()
     
-    
     /// Should handle the input of data types that an InputManager manages
     ///
     /// - Parameter object: The object to input
