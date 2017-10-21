@@ -14,7 +14,7 @@
     <a title="InputBarAccessoryView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (49% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (55% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -635,14 +635,16 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The intrinsicContentSize can change a lot so the delegate method
+<code>inputBar(self, didChangeIntrinsicContentTo: size)</code> only needs to be called
+when it&rsquo;s different</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="k">var</span> <span class="nv">previousIntrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -662,14 +664,15 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
+improves the performance</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">isOverMaxTextViewHeight</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
 
                         </div>
                       </div>
@@ -689,7 +692,7 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The maximum height of content not including the topStackView. When reached the delegate &lsquo;didChangeIntrinsicContentTo&rsquo; will be called.</p>
+                        <p>The maximum height that the InputTextView can reach</p>
 
                       </div>
                       <div class="declaration">
@@ -950,10 +953,10 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Auto-Layout%20Constraints"></a>
-                <a name="//apple_ref/swift/Section/Auto-Layout Constraints" class="dashAnchor"></a>
-                <a href="#/Auto-Layout%20Constraints">
-                  <h3 class="section-name">Auto-Layout Constraints</h3>
+                <a name="/Auto-Layout%20Constraint%20Sets"></a>
+                <a name="//apple_ref/swift/Section/Auto-Layout Constraint Sets" class="dashAnchor"></a>
+                <a href="#/Auto-Layout%20Constraint%20Sets">
+                  <h3 class="section-name">Auto-Layout Constraint Sets</h3>
                 </a>
               </div>
               <ul>
@@ -1289,14 +1292,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets up the default properties</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1316,14 +1319,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Adds the required notification observers</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">setupObservers</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1343,14 +1346,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Adds a UISwipeGestureRecognizer for each direction to the InputTextView</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">setupGestureRecognizers</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1370,14 +1373,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Adds all of the subviews</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">setupSubviews</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1397,14 +1400,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Sets up the initial constraints of each subview</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">setupConstraints</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1435,14 +1438,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Updates the constraint constants that correspond to the padding UIEdgeInsets</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">updatePadding</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1462,14 +1465,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Updates the constraint constants that correspond to the inputTextViewPadding UIEdgeInsets</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">updateTextViewPadding</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1489,14 +1492,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Updates the constraint constants that correspond to the topStackViewPadding UIEdgeInsets</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="kd">private</span> <span class="kd">func</span> <span class="nf">updateTopStackViewPadding</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1516,16 +1519,20 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Calculates the correct intrinsicContentSize of the InputBarAccessoryView</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">calculateIntrinsicContentSize</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The required intrinsicContentSize</p>
                       </div>
                     </section>
                   </div>
@@ -1554,7 +1561,7 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Layout the given UIStackView&rsquo;s</p>
+                        <p>Layout the given InputStackView&rsquo;s</p>
 
                       </div>
                       <div class="declaration">
@@ -1581,7 +1588,7 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Performs layout changes over the main thread</p>
+                        <p>Performs a layout over the main thread</p>
 
                       </div>
                       <div class="declaration">
@@ -1595,17 +1602,6 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     </section>
                   </div>
                 </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/UIStackView%20InputBarButtonItem%20Methods"></a>
-                <a name="//apple_ref/swift/Section/UIStackView InputBarButtonItem Methods" class="dashAnchor"></a>
-                <a href="#/UIStackView%20InputBarButtonItem%20Methods">
-                  <h3 class="section-name">UIStackView InputBarButtonItem Methods</h3>
-                </a>
-              </div>
-              <ul>
                 <li class="item">
                   <div>
                     <code>
@@ -1619,7 +1615,8 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Removes all of the arranged subviews from the UIStackView and adds the given items. Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
+                        <p>Removes all of the arranged subviews from the InputStackView and adds the given items.
+Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
 
                         <a href="../Classes/InputBarAccessoryView/setStackViewItems(_:forStack:animated:).html" class="slightly-smaller">See more</a>
                       </div>
@@ -1712,14 +1709,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Invalidates the intrinsicContentSize</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">orientationDidChange</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1739,14 +1736,17 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Enables/Disables the sendButton based on the InputTextView&rsquo;s text being empty
+Calls each items <code>textViewDidChangeAction</code> method
+Calls the delegates <code>textViewTextDidChangeTo</code> method
+Invalidates the intrinsicContentSize</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidChange</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1766,14 +1766,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Calls each items <code>keyboardEditingBeginsAction</code> method</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidBeginEditing</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1793,14 +1793,14 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Calls each items <code>keyboardEditingEndsAction</code> method</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidEndEditing</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1831,14 +1831,15 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Calls each items <code>keyboardSwipeGestureAction</code> method
+Calls the delegates <code>didSwipeTextViewWith</code> method</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">didSwipeTextView</span><span class="p">(</span><span class="n">_</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1858,14 +1859,16 @@ H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputT
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Calls the delegates <code>didPressSendButtonWith</code> method
+Assumes that the InputTextView&rsquo;s text has been set to empty and calls <code><a href="../Classes/InputBarAccessoryView.html#/c:@M@InputBarAccessoryView@objc(cs)InputBarAccessoryView(im)inputTextViewDidChange">inputTextViewDidChange()</a></code>
+Invalidates each of the inputManagers</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">didSelectSendButton</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
