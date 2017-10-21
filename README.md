@@ -147,6 +147,11 @@ Have a suggestion? Make a PR!
 
 ## Changelog
 
+- 1.2.0
+        - Better XCode docs
+        - `InputItem` is now a protocol that you can give to the `InputBarAccessoryView`
+        - `InputManager` is now a protocol that you can conform to make a plugin
+        - `AutocompleteManager` and `AttactchmentManager` are no longer members of  `InputBarAccessoryView` by default. You will need to create them and assign them to the `inputManager` property of the `InputBarAccessoryView`
 - 1.1.2
         - Fixed issue where adjusting the `InputTextView`'s placeholder text alignment didn't work
         - Fixed iPhone X support where the home indicator overlapped the `InputTextView`

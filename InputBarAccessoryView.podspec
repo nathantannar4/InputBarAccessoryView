@@ -5,13 +5,13 @@ Pod::Spec.new do |s|
     s.platform = :ios
     s.ios.deployment_target = '9.0'
     s.name = 'InputBarAccessoryView'
-    s.summary = "Make versatile and flexible InputBars"
-    s.description  = "A simple and highly customizable AccessoryView perfect for messaging applications."
+    s.summary = "Make powerful and flexible InputBars"
+    s.description  = "A simple and highly customizable InputAccessoryView perfect for messaging applications."
     s.requires_arc = true
     s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
     # 2 - Version
-    s.version = "1.1.2"
+    s.version = "1.2.0"
 
     # 3 - License
     s.license = { :type => "MIT", :file => "LICENSE" }
