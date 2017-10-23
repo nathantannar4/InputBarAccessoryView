@@ -29,7 +29,7 @@ import Foundation
 import UIKit
 
 /**
- A UITextView can has a UILabel embedded for placeholder text
+ A UITextView that has a UILabel embedded for placeholder text
  
  ## Important Notes ##
  1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel

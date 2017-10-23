@@ -31,10 +31,7 @@ import UIKit
  A InputItem that inherits from UIButton
  
  ## Important Notes ##
- 1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel
- 2. Intended to be used in an `InputBarAccessoryView`
- 3. Default placeholder text is "Aa"
- 4. Will pass a pasted image it's `InputBarAccessoryView`'s `InputManager`s
+ 1. Intended to be used in an `InputStackView`
  */
 open class InputBarButtonItem: UIButton, InputItem {
     
@@ -56,7 +53,8 @@ open class InputBarButtonItem: UIButton, InputItem {
     /// A weak reference to the InputBarAccessoryView that the InputBarButtonItem used in
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
-    /// The spacing property of the InputBarButtonItem
+    /// The spacing property of the InputBarButtonItem that determines the contentHuggingPriority and any
+    /// additional space to the intrinsicContentSize
     open var spacing: Spacing = .none {
         didSet {
             switch spacing {
