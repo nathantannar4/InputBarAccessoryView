@@ -158,7 +158,9 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
                 .replacingOccurrences(of: String(prefix), with: "")
         }
         
-        let char = Character(String(text.prefix(1)))
+        let prefix = String(text.prefix(1))
+        guard !prefix.isEmpty else { return true }
+        let char = Character(prefix)
         // If a space is typed or text is pasted with a space/newline unregister the current prefix
         if char == " " || char == Character("\n") {
             unregisterCurrentPrefix()
@@ -253,7 +255,9 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
             unregisterCurrentPrefix()
             return
         }
-        let char = Character(String(text.suffix(1)))
+        let suffix = String(text.suffix(1))
+        guard !suffix.isEmpty else { return unregisterCurrentPrefix() }
+        let char = Character(suffix)
         if autocompletePrefixes.contains(char), let range = Range(NSMakeRange(text.count - 1, 0)) {
             registerCurrentPrefix(to: char, at: range)
         }
