@@ -199,8 +199,8 @@ open class InputBarAccessoryView: UIView {
         let size = calculateIntrinsicContentSize()
         if previousIntrinsicContentSize != size {
             delegate?.inputBar(self, didChangeIntrinsicContentTo: size)
+            previousIntrinsicContentSize = size
         }
-        previousIntrinsicContentSize = size
         return size
     }
     
@@ -445,7 +445,6 @@ open class InputBarAccessoryView: UIView {
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
             }
-            inputTextView.invalidateIntrinsicContentSize()
         }
         return CGSize(width: bounds.width, height: heightToFit)
     }
