@@ -84,8 +84,13 @@ open class InputBarAccessoryView: UIView {
      
      ## Important Notes ##
      1. It's axis is initially set to .vertical
+     1. It's alignment is initially set to .fill
      */
-    open let topStackView = InputStackView(axis: .vertical, spacing: 0)
+    open let topStackView: InputStackView = {
+        let stackView = InputStackView(axis: .vertical, spacing: 0)
+        stackView.alignment = .fill
+        return stackView
+    }()
     
     /**
      The InputStackView at the InputStackView.left position
@@ -112,6 +117,7 @@ open class InputBarAccessoryView: UIView {
      */
     open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
     
+    /// The InputTextView a user can input a message in
     open lazy var inputTextView: InputTextView = { [weak self] in
         let inputTextView = InputTextView()
         inputTextView.translatesAutoresizingMaskIntoConstraints = false
@@ -341,8 +347,7 @@ open class InputBarAccessoryView: UIView {
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
             left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left),
             right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -topStackViewPadding.right)
-        ).activate()
-        
+        )
         backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
         inputTextViewLayoutSet = NSLayoutConstraintSet(
@@ -353,52 +358,41 @@ open class InputBarAccessoryView: UIView {
         ).activate()
         inputTextViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
         
+        leftStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    leftStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
+            bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
+            left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
+        )
+        
+        rightStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    rightStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
+            bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
+            right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
+            width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
+        )
+        
+        bottomStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
+            bottom: bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
+            left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
+        )
+        
         if #available(iOS 11.0, *) {
-            
-            leftStackViewLayoutSet = NSLayoutConstraintSet(
-                top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
-                bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
-                left:   leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left),
-                width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
-            ).activate()
-            
-            rightStackViewLayoutSet = NSLayoutConstraintSet(
-                top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
-                bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
-                right:  rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right),
-                width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
-            ).activate()
-            
-            bottomStackViewLayoutSet = NSLayoutConstraintSet(
-                top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
-                bottom: bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom),
-                left:   bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left),
-                right:  bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            ).activate()
-            
-        } else {
-            
-            leftStackViewLayoutSet = NSLayoutConstraintSet(
-                top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
-                bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
-                left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-                width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
-            ).activate()
-            
-            rightStackViewLayoutSet = NSLayoutConstraintSet(
-                top:    inputTextView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top),
-                bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
-                right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
-                width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
-            ).activate()
-            
-            bottomStackViewLayoutSet = NSLayoutConstraintSet(
-                top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor),
-                bottom: bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-                left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-                right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
-            ).activate()
+            // Switch to safeAreaLayoutGuide
+            topStackViewLayoutSet?.left = topStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: topStackViewPadding.left)
+            topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: topStackViewPadding.right)
+            leftStackViewLayoutSet?.left = leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
+            rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
+            bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
+            bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
         }
+        topStackViewLayoutSet?.activate()
+        leftStackViewLayoutSet?.activate()
+        rightStackViewLayoutSet?.activate()
+        bottomStackViewLayoutSet?.activate()
     }
     
     // MARK: - Constraint Layout Updates
@@ -491,11 +485,13 @@ open class InputBarAccessoryView: UIView {
             leftStackViewLayoutSet?.activate()
             rightStackViewLayoutSet?.activate()
             bottomStackViewLayoutSet?.activate()
+            topStackViewLayoutSet?.activate()
         }
         inputTextViewLayoutSet?.deactivate()
         leftStackViewLayoutSet?.deactivate()
         rightStackViewLayoutSet?.deactivate()
         bottomStackViewLayoutSet?.deactivate()
+        topStackViewLayoutSet?.deactivate()
         if animated {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.3, animations: animations)

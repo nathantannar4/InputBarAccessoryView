@@ -70,6 +70,6 @@ open class InputStackView: UIStackView {
     open func setup() {
         translatesAutoresizingMaskIntoConstraints = false
         distribution = .fill
-        alignment = .fill
+        alignment = .bottom
     }
 }

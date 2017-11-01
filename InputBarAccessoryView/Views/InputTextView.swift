@@ -161,14 +161,16 @@ open class InputTextView: UITextView {
     }
     
     /// Adds the placeholderLabel to the view and sets up its initial constraints
-    private func addPlaceholderLabel() {
+    private func setupPlaceholderLabel() {
         
         addSubview(placeholderLabel)
         placeholderLabelConstraintSet = NSLayoutConstraintSet(
-            top:    placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
-            bottom: placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
-            left:   placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
-            width:  placeholderLabel.widthAnchor.constraint(equalTo: widthAnchor, constant: -(placeholderLabelInsets.left + placeholderLabelInsets.right))
+            top:     placeholderLabel.topAnchor.constraint(equalTo: topAnchor, constant: placeholderLabelInsets.top),
+            bottom:  placeholderLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -placeholderLabelInsets.bottom),
+            left:    placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
+            right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: (placeholderLabelInsets.left + placeholderLabelInsets.right)),
+            centerX: placeholderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
         ).activate()
     }
     
@@ -178,7 +180,7 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.top?.constant = placeholderLabelInsets.top
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
-        placeholderLabelConstraintSet?.width?.constant = -(placeholderLabelInsets.left + placeholderLabelInsets.right)
+        placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.right
     }
     
     /// Adds a notification for .UITextViewTextDidChange to detect when the placeholderLabel

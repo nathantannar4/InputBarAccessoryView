@@ -1,15 +1,34 @@
 //
-//  ViewController.swift
-//  Example
+//  ExampleViewController.swift
+//  InputBarAccessoryView Example
 //
-//  Created by Nathan Tannar on 8/18/17.
-//  Copyright © 2017 Nathan Tannar. All rights reserved.
+//  Copyright © 2017 Nathan Tannar.
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+//  Created by Nathan Tannar on 10/4/17.
 //
 
 import UIKit
 import InputBarAccessoryView
 
-class ViewController: UIViewController, InputBarAccessoryViewDelegate, AutocompleteManagerDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ExampleViewController: UIViewController {
     
     lazy var bar: InputBarAccessoryView = { [weak self] in
         let bar = InputBarAccessoryView()
@@ -255,6 +274,9 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
                 print("Item Tapped")
         }
     }
+}
+
+extension ExampleViewController: InputBarAccessoryViewDelegate {
     
     // MARK: - InputBarAccessoryViewDelegate
     
@@ -264,7 +286,72 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
         
         inputBar.inputTextView.text = String()
     }
+}
+
+extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        dismiss(animated: true, completion: {
+            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+                self.attachmentManager.handleInput(of: pickedImage)
+            }
+        })
+    }
+}
+
+extension ExampleViewController: AttachmentManagerDelegate {
+    
+    // MARK: - AttachmentManagerDataSource
+    
+//    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AnyObject, at index: Int) -> AttachmentCell {
+//
+//    }
+    
+    // MARK: - AttachmentManagerDelegate
+    
+    func attachmentManager(_ manager: AttachmentManager, shouldBecomeVisible: Bool) {
+        setAttachmentManager(active: shouldBecomeVisible)
+    }
+    
+    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
+        bar.sendButton.isEnabled = manager.attachments.count > 0
+    }
+    
+    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
+        bar.sendButton.isEnabled = manager.attachments.count > 0
+    }
+    
+    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
+        bar.sendButton.isEnabled = manager.attachments.count > 0
+    }
+    
+    func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // MARK: - AttachmentManagerDelegate Helper
+    
+    func setAttachmentManager(active: Bool) {
+        
+        let topStackView = bar.topStackView
+        if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
+            let index = topStackView.arrangedSubviews.count
+            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
+            topStackView.layoutIfNeeded()
+        } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
+            topStackView.removeArrangedSubview(attachmentManager.attachmentView)
+            topStackView.layoutIfNeeded()
+        }
+    }
+}
+
+extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
+    
+    // MARK: - AutocompleteManagerDataSource
     
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
         
@@ -287,76 +374,21 @@ class ViewController: UIViewController, InputBarAccessoryViewDelegate, Autocompl
     
     // This is only needed to override the default cell
     func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
-       
+        
         let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
-        
         // or provide your own logic
-        
         return cell
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        dismiss(animated: true, completion: {
-            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.attachmentManager.handleInput(of: pickedImage)
-            }
-        })
-    }
-}
-
-extension ViewController: AttachmentManagerDelegate {
+    // MARK: - AutocompleteManagerDelegate
     
-    open func attachmentManager(_ manager: AttachmentManager, shouldBecomeVisible: Bool) {
-        setAttachmentManager(active: shouldBecomeVisible)
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
-        bar.sendButton.isEnabled = manager.attachments.count > 0
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
-        bar.sendButton.isEnabled = manager.attachments.count > 0
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
-        bar.sendButton.isEnabled = manager.attachments.count > 0
-    }
-    
-    open func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    /// Attempts to activate/deactive the AttachmentManager by inserting/removing it into the top UIStackView
-    ///
-    /// - Parameter active: If the manager should be activated
-    open func setAttachmentManager(active: Bool) {
-        
-        let topStackView = bar.topStackView
-        if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            let index = topStackView.arrangedSubviews.count
-            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
-            topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            topStackView.removeArrangedSubview(attachmentManager.attachmentView)
-            topStackView.layoutIfNeeded()
-        }
-    }
-}
-
-extension ViewController: AutocompleteManagerDelegate {
-    
-    open func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
+    func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
         setAutocompleteManager(active: shouldBecomeVisible)
     }
     
-    /// Attempts to activate/deactive the AutocompleteManager by inserting/removing it into the top UIStackView. Also inserts/removes a SeparatorLine below it
-    ///
-    /// - Parameter active: If the manager should be activated
-    open func setAutocompleteManager(active: Bool) {
+    // MARK: - AutocompleteManagerDelegate Helper
+    
+    func setAutocompleteManager(active: Bool) {
         
         let topStackView = bar.topStackView
         if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
