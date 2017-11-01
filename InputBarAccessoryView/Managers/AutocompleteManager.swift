@@ -158,7 +158,7 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
                 .replacingOccurrences(of: String(prefix), with: "")
         }
         
-        guard let char = text.characters.first else { return true }
+        let char = Character(String(text.prefix(1)))
         // If a space is typed or text is pasted with a space/newline unregister the current prefix
         if char == " " || char == Character("\n") {
             unregisterCurrentPrefix()
@@ -249,11 +249,12 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
     /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
     private func checkLastCharacter() {
         
-        guard let characters = inputTextView?.text.characters, let char = characters.last else {
+        guard let text = inputTextView?.text else {
             unregisterCurrentPrefix()
             return
         }
-        if autocompletePrefixes.contains(char), let range = Range(NSMakeRange(characters.count - 1, 0)) {
+        let char = Character(String(text.suffix(1)))
+        if autocompletePrefixes.contains(char), let range = Range(NSMakeRange(text.count - 1, 0)) {
             registerCurrentPrefix(to: char, at: range)
         }
     }
@@ -304,11 +305,11 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
     private func safeOffset(withText text: String) -> Int {
         
         guard let range = currentPrefixRange else { return 0 }
-        if text.characters.count == 0 {
+        if text.count == 0 {
             return 0
         }
-        if range.lowerBound > (text.characters.count - 1) {
-            return text.characters.count - 1
+        if range.lowerBound > (text.count - 1) {
+            return text.count - 1
         }
         if range.lowerBound < 0 {
             return 0

@@ -157,7 +157,7 @@ open class InputTextView: UITextView {
                                              bottom: .leastNonzeroMagnitude,
                                              right: .leastNonzeroMagnitude)
         addObservers()
-        addPlaceholderLabel()
+        setupPlaceholderLabel()
     }
     
     /// Adds the placeholderLabel to the view and sets up its initial constraints

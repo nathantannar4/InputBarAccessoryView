@@ -109,7 +109,7 @@ public extension String {
         var randomString = ""
         
         (1...length).forEach { _ in
-            let randomIndex: Int = .random(0..<string.characters.count)
+            let randomIndex: Int = .random(0..<string.count)
             let c = string.index(string.startIndex, offsetBy: randomIndex)
             randomString += String(string[c])
         }
