@@ -84,7 +84,7 @@ open class InputBarAccessoryView: UIView {
      
      ## Important Notes ##
      1. It's axis is initially set to .vertical
-     1. It's alignment is initially set to .fill
+     2. It's alignment is initially set to .fill
      */
     open let topStackView: InputStackView = {
         let stackView = InputStackView(axis: .vertical, spacing: 0)
@@ -444,6 +444,7 @@ open class InputBarAccessoryView: UIView {
                 inputTextViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
+                inputTextView.invalidateIntrinsicContentSize()
             }
         }
         return CGSize(width: bounds.width, height: heightToFit)
