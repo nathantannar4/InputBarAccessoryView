@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/LICENSE">
+      location = "group:README.md">
    </FileRef>
    <FileRef
-      location = "group:README.md">
+      location = "group:LICENSE">
    </FileRef>
    <FileRef
       location = "group:InputBarAccessoryView.podspec">

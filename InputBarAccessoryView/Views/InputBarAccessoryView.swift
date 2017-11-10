@@ -207,7 +207,7 @@ open class InputBarAccessoryView: UIView {
     /// The intrinsicContentSize can change a lot so the delegate method
     /// `inputBar(self, didChangeIntrinsicContentTo: size)` only needs to be called
     /// when it's different
-    private var previousIntrinsicContentSize: CGSize?
+    private(set) public var previousIntrinsicContentSize: CGSize?
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
@@ -262,7 +262,6 @@ open class InputBarAccessoryView: UIView {
     
     private var inputTextViewLayoutSet: NSLayoutConstraintSet?
     private var inputTextViewHeightAnchor: NSLayoutConstraint?
-    private var topStackViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
@@ -455,7 +454,9 @@ open class InputBarAccessoryView: UIView {
     /// Layout the given InputStackView's
     ///
     /// - Parameter positions: The InputStackView's to layout
-    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom]) {
+    public func layoutStackViews(_ positions: [InputStackView.Position] = [.left, .right, .bottom, .top]) {
+        
+        guard superview != nil else { return }
         for position in positions {
             switch position {
             case .left:
@@ -511,6 +512,7 @@ open class InputBarAccessoryView: UIView {
     ///   - animated: If the layout should be animated
     open func setStackViewItems(_ items: [InputItem], forStack position: InputStackView.Position, animated: Bool) {
         
+        guard superview != nil else { return }
         func setNewItems() {
             switch position {
             case .left:
@@ -574,6 +576,7 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) { 
             self.leftStackViewWidthConstant = newValue
             self.layoutStackViews([.left])
+            guard self.superview != nil else { return }
             self.layoutIfNeeded()
         }
     }
@@ -587,6 +590,7 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) { 
             self.rightStackViewWidthConstant = newValue
             self.layoutStackViews([.right])
+            guard self.superview != nil else { return }
             self.layoutIfNeeded()
         }
     }
