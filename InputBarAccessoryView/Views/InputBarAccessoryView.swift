@@ -334,13 +334,14 @@ open class InputBarAccessoryView: UIView {
         addSubview(leftStackView)
         addSubview(rightStackView)
         addSubview(bottomStackView)
-        topStackView.addArrangedSubview(separatorLine)
+        addSubview(separatorLine)
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
+        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
@@ -524,6 +525,7 @@ open class InputBarAccessoryView: UIView {
                         leftStackView.addArrangedSubview(view)
                     }
                 }
+                guard superview != nil else { return }
                 leftStackView.layoutIfNeeded()
             case .right:
                 rightStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -535,6 +537,7 @@ open class InputBarAccessoryView: UIView {
                         rightStackView.addArrangedSubview(view)
                     }
                 }
+                guard superview != nil else { return }
                 rightStackView.layoutIfNeeded()
             case .bottom:
                 bottomStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -546,6 +549,7 @@ open class InputBarAccessoryView: UIView {
                         bottomStackView.addArrangedSubview(view)
                     }
                 }
+                guard superview != nil else { return }
                 bottomStackView.layoutIfNeeded()
             case .top:
                 topStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
@@ -557,6 +561,7 @@ open class InputBarAccessoryView: UIView {
                         topStackView.addArrangedSubview(view)
                     }
                 }
+                guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
         }
