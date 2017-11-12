@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
     # 2 - Version
-    s.version = "1.3.2"
+    s.version = "1.3.3"
 
     # 3 - License
     s.license = { :type => "MIT", :file => "LICENSE" }
@@ -27,7 +27,6 @@ Pod::Spec.new do |s|
 
     # 7 - Dependencies
     s.framework = "UIKit"
-    s.framework = "Foundation"
 
     # 8 - Source Files
     s.source_files = "InputBarAccessoryView/**/*.{swift}"

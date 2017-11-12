@@ -207,14 +207,14 @@ open class InputBarAccessoryView: UIView {
     /// The intrinsicContentSize can change a lot so the delegate method
     /// `inputBar(self, didChangeIntrinsicContentTo: size)` only needs to be called
     /// when it's different
-    private(set) public var previousIntrinsicContentSize: CGSize?
+    public private(set) var previousIntrinsicContentSize: CGSize?
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
-    private(set) public var isOverMaxTextViewHeight = false
+    public private(set) var isOverMaxTextViewHeight = false
     
     /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 4).rounded() {
+    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 6).rounded() {
         didSet {
             inputTextViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
@@ -222,14 +222,14 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// The fixed widthAnchor constant of the leftStackView
-    private(set) public var leftStackViewWidthConstant: CGFloat = 0 {
+    public private(set) var leftStackViewWidthConstant: CGFloat = 0 {
         didSet {
             leftStackViewLayoutSet?.width?.constant = leftStackViewWidthConstant
         }
     }
     
     /// The fixed widthAnchor constant of the rightStackView
-    private(set) public var rightStackViewWidthConstant: CGFloat = 52 {
+    public private(set) var rightStackViewWidthConstant: CGFloat = 52 {
         didSet {
             rightStackViewLayoutSet?.width?.constant = rightStackViewWidthConstant
         }
@@ -239,16 +239,16 @@ open class InputBarAccessoryView: UIView {
     open var inputManagers = [InputManager]()
 
     /// The InputBarItems held in the leftStackView
-    private(set) public var leftStackViewItems: [InputItem] = []
+    public private(set) var leftStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the rightStackView
-    private(set) public var rightStackViewItems: [InputItem] = []
+    public private(set) var rightStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the bottomStackView
-    private(set) public var bottomStackViewItems: [InputItem] = []
+    public private(set) var bottomStackViewItems: [InputItem] = []
     
     /// The InputBarItems held in the topStackView
-    private(set) public var topStackViewItems: [InputItem] = []
+    public private(set) var topStackViewItems: [InputItem] = []
     
     /// The InputBarItems held to make use of their hooks but they are not automatically added to a UIStackView
     open var nonStackViewItems: [InputItem] = []
@@ -512,7 +512,6 @@ open class InputBarAccessoryView: UIView {
     ///   - animated: If the layout should be animated
     open func setStackViewItems(_ items: [InputItem], forStack position: InputStackView.Position, animated: Bool) {
         
-        guard superview != nil else { return }
         func setNewItems() {
             switch position {
             case .left:
