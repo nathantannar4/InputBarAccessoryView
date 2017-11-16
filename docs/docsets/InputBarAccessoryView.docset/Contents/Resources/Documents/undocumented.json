@@ -359,205 +359,86 @@
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 201,
-      "symbol": "InputBarAccessoryView.previousIntrinsicContentSize",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 203,
-      "symbol": "InputBarAccessoryView.isOverMaxTextViewHeight",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 252,
+      "line": 257,
       "symbol": "InputBarAccessoryView.inputTextViewLayoutSet",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 253,
+      "line": 258,
       "symbol": "InputBarAccessoryView.inputTextViewHeightAnchor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 254,
+      "line": 259,
       "symbol": "InputBarAccessoryView.topStackViewHeightAnchor",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 255,
+      "line": 260,
       "symbol": "InputBarAccessoryView.topStackViewLayoutSet",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 256,
+      "line": 261,
       "symbol": "InputBarAccessoryView.leftStackViewLayoutSet",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 257,
+      "line": 262,
       "symbol": "InputBarAccessoryView.rightStackViewLayoutSet",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 258,
+      "line": 263,
       "symbol": "InputBarAccessoryView.bottomStackViewLayoutSet",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 262,
+      "line": 267,
       "symbol": "InputBarAccessoryView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 266,
+      "line": 271,
       "symbol": "InputBarAccessoryView.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 271,
+      "line": 276,
       "symbol": "InputBarAccessoryView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 276,
+      "line": 281,
       "symbol": "InputBarAccessoryView.deinit",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 282,
-      "symbol": "InputBarAccessoryView.setup()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 291,
-      "symbol": "InputBarAccessoryView.setupObservers()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 306,
-      "symbol": "InputBarAccessoryView.setupGestureRecognizers()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 316,
-      "symbol": "InputBarAccessoryView.setupSubviews()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 328,
-      "symbol": "InputBarAccessoryView.setupConstraints()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 371,
-      "symbol": "InputBarAccessoryView.updatePadding()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 382,
-      "symbol": "InputBarAccessoryView.updateTextViewPadding()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 389,
-      "symbol": "InputBarAccessoryView.updateTopStackViewPadding()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 395,
-      "symbol": "InputBarAccessoryView.calculateIntrinsicContentSize()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 478,
+      "line": 481,
       "symbol": "InputBarAccessoryView.setStackViewItems(_:forStack:animated:).setNewItems()",
       "symbol_kind": "source.lang.swift.decl.function.free",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 561,
-      "symbol": "InputBarAccessoryView.orientationDidChange()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 566,
-      "symbol": "InputBarAccessoryView.inputTextViewDidChange()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 575,
-      "symbol": "InputBarAccessoryView.inputTextViewDidBeginEditing()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 580,
-      "symbol": "InputBarAccessoryView.inputTextViewDidEndEditing()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 587,
-      "symbol": "InputBarAccessoryView.didSwipeTextView(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/Active iOS Projects/InputBarAccessoryView/InputBarAccessoryView/Views/InputBarAccessoryView.swift",
-      "line": 592,
-      "symbol": "InputBarAccessoryView.didSelectSendButton()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {

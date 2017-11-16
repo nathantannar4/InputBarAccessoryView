@@ -72,7 +72,8 @@ open class InputBarAccessoryView: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            backgroundView.backgroundColor = isTranslucent ? (backgroundView.backgroundColor?.withAlphaComponent(0.7) ?? UIColor.white.withAlphaComponent(0.7)) : .white
+            let color: UIColor = backgroundView.backgroundColor ?? .white
+            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color
         }
     }
 
