@@ -395,6 +395,16 @@ open class InputBarAccessoryView: UIView {
         bottomStackViewLayoutSet?.activate()
     }
     
+    open override func didMoveToWindow() {
+        super.didMoveToWindow()
+        if #available(iOS 11.0, *) {
+            guard let window = window else { return }
+            
+            // bottomAnchor must be set to the window to avoid a memory leak issue
+            bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+        }
+    }
+    
     // MARK: - Constraint Layout Updates
     
     /// Updates the constraint constants that correspond to the padding UIEdgeInsets
@@ -433,7 +443,6 @@ open class InputBarAccessoryView: UIView {
             previousIntrinsicContentSize = cachedIntrinsicContentSize
         }
     }
-    
     
     /// Calculates the correct intrinsicContentSize of the InputBarAccessoryView
     ///
