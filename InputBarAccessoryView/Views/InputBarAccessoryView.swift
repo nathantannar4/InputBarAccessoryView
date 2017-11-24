@@ -343,7 +343,7 @@ open class InputBarAccessoryView: UIView {
         
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
         topStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
+            top:    topStackView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
             left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left),
             right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -topStackViewPadding.right)
@@ -398,9 +398,8 @@ open class InputBarAccessoryView: UIView {
     open override func didMoveToWindow() {
         super.didMoveToWindow()
         if #available(iOS 11.0, *) {
-            guard let window = window else { return }
-            
-            // bottomAnchor must be set to the window to avoid a memory leak issue
+            // Respect iPhone X safeAreaInsets
+            guard let window = window, UIScreen.main.nativeBounds.height == 2436 else { return }
             bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
         }
     }
@@ -466,7 +465,10 @@ open class InputBarAccessoryView: UIView {
                 inputTextView.invalidateIntrinsicContentSize()
             }
         }
-        return CGSize(width: bounds.width, height: heightToFit)
+        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + inputTextViewPadding.top + inputTextViewPadding.bottom
+        let stackViewHeights = topStackView.bounds.height + bottomStackView.bounds.height
+        let height = heightToFit + totalPadding + stackViewHeights
+        return CGSize(width: bounds.width, height: height)
     }
     
     // MARK: - Layout Helper Methods

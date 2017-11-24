@@ -28,7 +28,7 @@
 import UIKit
 import InputBarAccessoryView
 
-class ExampleViewController: UIViewController {
+class ExampleViewController: UITableViewController {
     
     lazy var bar: InputBarAccessoryView = { [weak self] in
         let bar = InputBarAccessoryView()
@@ -65,33 +65,16 @@ class ExampleViewController: UIViewController {
     // We only want to adjust animate changes in the bar when the view is loaded
     var viewIsLoaded = false
     
-    var label: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    var messages = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "InputBarAccessoryView"
-        view.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
+        view.backgroundColor = .white
+        tableView.keyboardDismissMode = .interactive
+        tableView.tableFooterView = UIView()
         bar.inputManagers = [attachmentManager, autocompleteManager]
-        
-        let imageView = UIImageView(image: UIImage(named: "NT Logo Blue"))
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(imageView)
-        view.addSubview(label)
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            imageView.heightAnchor.constraint(equalToConstant: 200),
-            imageView.widthAnchor.constraint(equalToConstant: 200),
-            label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        ])
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
@@ -274,6 +257,16 @@ class ExampleViewController: UIViewController {
                 print("Item Tapped")
         }
     }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return messages.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = messages[indexPath.row]
+        return cell
+    }
 }
 
 extension ExampleViewController: InputBarAccessoryViewDelegate {
@@ -281,10 +274,10 @@ extension ExampleViewController: InputBarAccessoryViewDelegate {
     // MARK: - InputBarAccessoryViewDelegate
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        
-        label.text = text
-        
+        messages.append(text)
         inputBar.inputTextView.text = String()
+        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+        tableView.insertRows(at: [indexPath], with: .automatic)
     }
 }
 
