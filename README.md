@@ -147,6 +147,11 @@ Have a suggestion? Make a PR!
 
 ## Changelog
 
+- 1.4.0
+        - iPhone X Fixes
+        - IntrinsicContentSize caching to increase performance
+- 1.3.0
+        - iPhone X Fixes
 - 1.2.0
         - Better XCode docs
         - `InputItem` is now a protocol that you can give to the `InputBarAccessoryView`

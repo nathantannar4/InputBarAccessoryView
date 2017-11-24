@@ -196,19 +196,18 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
+    /// Returns the most recent size calculated by `calculateIntrinsicContentSize()`
     open override var intrinsicContentSize: CGSize {
-        let size = calculateIntrinsicContentSize()
-        if previousIntrinsicContentSize != size {
-            delegate?.inputBar(self, didChangeIntrinsicContentTo: size)
-            previousIntrinsicContentSize = size
-        }
-        return size
+        return cachedIntrinsicContentSize
     }
     
     /// The intrinsicContentSize can change a lot so the delegate method
     /// `inputBar(self, didChangeIntrinsicContentTo: size)` only needs to be called
     /// when it's different
     public private(set) var previousIntrinsicContentSize: CGSize?
+    
+    /// The most recent calculation of the intrinsicContentSize
+    private var cachedIntrinsicContentSize: CGSize = .zero
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
@@ -423,6 +422,16 @@ open class InputBarAccessoryView: UIView {
         topStackViewLayoutSet?.top?.constant = topStackViewPadding.top
         topStackViewLayoutSet?.left?.constant = topStackViewPadding.left
         topStackViewLayoutSet?.right?.constant = -topStackViewPadding.right
+    }
+
+    /// Invalidates the view’s intrinsic content size
+    open override func invalidateIntrinsicContentSize() {
+        super.invalidateIntrinsicContentSize()
+        cachedIntrinsicContentSize = calculateIntrinsicContentSize()
+        if previousIntrinsicContentSize != cachedIntrinsicContentSize {
+            delegate?.inputBar(self, didChangeIntrinsicContentTo: cachedIntrinsicContentSize)
+            previousIntrinsicContentSize = cachedIntrinsicContentSize
+        }
     }
     
     
