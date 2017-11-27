@@ -355,7 +355,7 @@ open class InputBarAccessoryView: UIView {
             bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -inputTextViewPadding.bottom),
             left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: inputTextViewPadding.left),
             right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -inputTextViewPadding.right)
-        ).activate()
+        )
         inputTextViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
@@ -389,10 +389,7 @@ open class InputBarAccessoryView: UIView {
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
         }
-        topStackViewLayoutSet?.activate()
-        leftStackViewLayoutSet?.activate()
-        rightStackViewLayoutSet?.activate()
-        bottomStackViewLayoutSet?.activate()
+        activateConstraints()
     }
     
     open override func didMoveToWindow() {
@@ -443,20 +440,20 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Calculates the correct intrinsicContentSize of the InputBarAccessoryView
+    /// Calculates the correct intrinsicContentSize of the MessageInputBar
     ///
     /// - Returns: The required intrinsicContentSize
     open func calculateIntrinsicContentSize() -> CGSize {
         
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        var heightToFit = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
-        if heightToFit >= maxTextViewHeight {
+        var inputTextViewHeight = inputTextView.sizeThatFits(maxTextViewSize).height.rounded()
+        if inputTextViewHeight >= maxTextViewHeight {
             if !isOverMaxTextViewHeight {
                 inputTextViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
             }
-            heightToFit = maxTextViewHeight
+            inputTextViewHeight = maxTextViewHeight
         } else {
             if isOverMaxTextViewHeight {
                 inputTextViewHeightAnchor?.isActive = false
@@ -466,8 +463,8 @@ open class InputBarAccessoryView: UIView {
             }
         }
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + inputTextViewPadding.top + inputTextViewPadding.bottom
-        let stackViewHeights = topStackView.bounds.height + bottomStackView.bounds.height
-        let height = heightToFit + totalPadding + stackViewHeights
+        let verticalStackViewHeight = bottomStackView.frame.height + topStackView.frame.height
+        let height = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: bounds.width, height: height)
     }
     
@@ -503,26 +500,33 @@ open class InputBarAccessoryView: UIView {
     ///   - animated: If the layout should be animated
     ///   - animations: Animation logic
     internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
-        defer {
-            inputTextViewLayoutSet?.activate()
-            leftStackViewLayoutSet?.activate()
-            rightStackViewLayoutSet?.activate()
-            bottomStackViewLayoutSet?.activate()
-            topStackViewLayoutSet?.activate()
+        deactivateConstraints()
+        if animated {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.3, animations: animations)
+            }
+        } else {
+            UIView.performWithoutAnimation { animations() }
         }
+        activateConstraints()
+    }
+    
+    /// Activates the NSLayoutConstraintSet's
+    private func activateConstraints() {
+        inputTextViewLayoutSet?.activate()
+        leftStackViewLayoutSet?.activate()
+        rightStackViewLayoutSet?.activate()
+        bottomStackViewLayoutSet?.activate()
+        topStackViewLayoutSet?.activate()
+    }
+    
+    /// Deactivates the NSLayoutConstraintSet's
+    private func deactivateConstraints() {
         inputTextViewLayoutSet?.deactivate()
         leftStackViewLayoutSet?.deactivate()
         rightStackViewLayoutSet?.deactivate()
         bottomStackViewLayoutSet?.deactivate()
         topStackViewLayoutSet?.deactivate()
-        if animated {
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.3, animations: animations)
-            }
-            
-        } else {
-            animations()
-        }
     }
     
     /// Removes all of the arranged subviews from the InputStackView and adds the given items.
