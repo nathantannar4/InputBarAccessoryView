@@ -463,8 +463,7 @@ open class InputBarAccessoryView: UIView {
             }
         }
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + inputTextViewPadding.top + inputTextViewPadding.bottom
-        let verticalStackViewHeight = bottomStackView.frame.height + topStackView.frame.height
-        let height = inputTextViewHeight + totalPadding + verticalStackViewHeight
+        let height = inputTextViewHeight + totalPadding
         return CGSize(width: bounds.width, height: height)
     }
     

@@ -332,8 +332,7 @@ extension ExampleViewController: AttachmentManagerDelegate {
         
         let topStackView = bar.topStackView
         if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
-            let index = topStackView.arrangedSubviews.count
-            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: index)
+            topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: topStackView.arrangedSubviews.count)
             topStackView.layoutIfNeeded()
         } else if !active && topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
             topStackView.removeArrangedSubview(attachmentManager.attachmentView)
@@ -385,7 +384,7 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
         
         let topStackView = bar.topStackView
         if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: 1)
+            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
             topStackView.layoutIfNeeded()
         } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
             topStackView.removeArrangedSubview(autocompleteManager.tableView)
