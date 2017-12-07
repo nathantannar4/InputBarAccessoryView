@@ -207,7 +207,7 @@ open class InputBarAccessoryView: UIView {
     public private(set) var previousIntrinsicContentSize: CGSize?
     
     /// The most recent calculation of the intrinsicContentSize
-    private var cachedIntrinsicContentSize: CGSize = .zero
+    private lazy var cachedIntrinsicContentSize: CGSize = calculateIntrinsicContentSize()
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
@@ -349,7 +349,7 @@ open class InputBarAccessoryView: UIView {
         
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
         topStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    topStackView.topAnchor.constraint(equalTo: separatorLine.bottomAnchor, constant: topStackViewPadding.top),
+            top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
             left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left),
             right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -topStackViewPadding.right)
@@ -391,7 +391,6 @@ open class InputBarAccessoryView: UIView {
             topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: topStackViewPadding.right)
             leftStackViewLayoutSet?.left = leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
             bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
             bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
         }
@@ -602,6 +601,7 @@ open class InputBarAccessoryView: UIView {
                 guard superview != nil else { return }
                 topStackView.layoutIfNeeded()
             }
+            invalidateIntrinsicContentSize()
         }
         
         performLayout(animated) {

@@ -72,4 +72,9 @@ open class InputStackView: UIStackView {
         distribution = .fill
         alignment = .bottom
     }
+    
+    open override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        superview?.invalidateIntrinsicContentSize()
+    }
 }
