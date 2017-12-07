@@ -71,7 +71,7 @@ class ExampleViewController: UITableViewController {
         super.viewDidLoad()
         
         title = "InputBarAccessoryView"
-        view.backgroundColor = .white
+        view.backgroundColor = .groupTableViewBackground
         tableView.keyboardDismissMode = .interactive
         tableView.tableFooterView = UIView()
         bar.inputManagers = [attachmentManager, autocompleteManager]
