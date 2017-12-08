@@ -73,6 +73,7 @@ open class AutocompleteManager: NSObject, InputManager, UITableViewDelegate, UIT
         didSet {
             tableView.reloadData()
             tableView.invalidateIntrinsicContentSize()
+            tableView.superview?.layoutIfNeeded()
         }
     }
     

@@ -35,12 +35,20 @@ open class InputBarAccessoryView: UIView {
     /// A delegate to broadcast notifications from the InputBarAccessoryView
     open weak var delegate: InputBarAccessoryViewDelegate?
     
-    /// The background UIView anchored to the bottom, left, and right of the InputBarAccessoryView
+    /// The background UIView anchored to the bottom, left, and right of the MessageInputBar
     /// with a top anchor equal to the bottom of the top InputStackView
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
+        return view
+    }()
+    
+    /// A content UIView that holds the left/right/bottom InputStackViews and InputTextView. Anchored to the bottom of the
+    /// topStackView and inset by the padding UIEdgeInsets
+    open var contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -146,9 +154,9 @@ open class InputBarAccessoryView: UIView {
      ## Important Notes ##
      
      ````
-     V:|...-[InputStackView.top]-(padding.top)-[InputTextView]-(textViewPadding.bottom)-[InputStackView.bottom]-(padding.bottom)-|
+     V:|...[InputStackView.top]-(padding.top)-[contentView]-(padding.bottom)-|
      
-     H:|-(padding.left)-[InputStackView.left(leftStackViewWidthConstant)]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[InputStackView.right(rightStackViewWidthConstant)]-(padding.right)-|
+     H:|-(padding.left)-[contentView]-(padding.right)-|
      ````
      
      */
@@ -180,17 +188,14 @@ open class InputBarAccessoryView: UIView {
     /**
      The anchor constants used by the InputStackView
      
-     ## Important Notes ##
-     1. The inputTextViewPadding.top property is not used. Use padding.top
-     
      ````
-     V:|...-(padding.top)-[InputTextView]-(inputTextViewPadding.bottom)-[InputStackView.bottom]-...|
+     V:|...-(padding.top)-(textViewPadding.top)-[InputTextView]-(textViewPadding.bottom)-[InputStackView.bottom]-...|
      
-     H:|...-[InputStackView.left]-(inputTextViewPadding.left)-[InputTextView]-(inputTextViewPadding.left)-[InputStackView.left.right]-...|
+     H:|...-[InputStackView.left]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[InputStackView.right]-...|
      ````
      
      */
-    open var inputTextViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) {
+    open var textViewPadding: UIEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 8) {
         didSet {
             updateTextViewPadding()
         }
@@ -216,7 +221,7 @@ open class InputBarAccessoryView: UIView {
     /// The maximum height that the InputTextView can reach
     open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 5).rounded() {
         didSet {
-            inputTextViewHeightAnchor?.constant = maxTextViewHeight
+            textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
         }
     }
@@ -266,12 +271,14 @@ open class InputBarAccessoryView: UIView {
 
     // MARK: - Auto-Layout Constraint Sets
     
-    private var inputTextViewLayoutSet: NSLayoutConstraintSet?
-    private var inputTextViewHeightAnchor: NSLayoutConstraint?
+    private var textViewLayoutSet: NSLayoutConstraintSet?
+    private var textViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
+    private var contentViewLayoutSet: NSLayoutConstraintSet?
+    private var windowAnchor: NSLayoutConstraint?
     
     // MARK: - Initialization
     
@@ -293,11 +300,16 @@ open class InputBarAccessoryView: UIView {
         NotificationCenter.default.removeObserver(self)
     }
     
+    open override func didMoveToWindow() {
+        super.didMoveToWindow()
+        setupConstraints(to: window)
+    }
+    
     // MARK: - Setup
     
     /// Sets up the default properties
     open func setup() {
-        tintColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
@@ -334,80 +346,94 @@ open class InputBarAccessoryView: UIView {
     
     /// Adds all of the subviews
     private func setupSubviews() {
+        
         addSubview(backgroundView)
         addSubview(topStackView)
-        addSubview(inputTextView)
-        addSubview(leftStackView)
-        addSubview(rightStackView)
-        addSubview(bottomStackView)
+        addSubview(contentView)
         addSubview(separatorLine)
+        contentView.addSubview(inputTextView)
+        contentView.addSubview(leftStackView)
+        contentView.addSubview(rightStackView)
+        contentView.addSubview(bottomStackView)
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
+        // The constraints within the MessageInputBar
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
+        backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
-            bottom: topStackView.bottomAnchor.constraint(equalTo: inputTextView.topAnchor, constant: -padding.top),
+            bottom: topStackView.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -padding.top),
             left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left),
             right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -topStackViewPadding.right)
         )
-        backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
-        inputTextViewLayoutSet = NSLayoutConstraintSet(
-            top:    inputTextView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -inputTextViewPadding.bottom),
-            left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: inputTextViewPadding.left),
-            right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -inputTextViewPadding.right)
-        )
-        inputTextViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
-        
-        leftStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    leftStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
-            left:   leftStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-            width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
-        )
-        
-        rightStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    rightStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
-            right:  rightStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right),
-            width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
-        )
-        
-        bottomStackViewLayoutSet = NSLayoutConstraintSet(
-            top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: inputTextViewPadding.bottom),
-            bottom: bottomStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-            left:   bottomStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
-            right:  bottomStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
+        contentViewLayoutSet = NSLayoutConstraintSet(
+            top:    contentView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
+            bottom: contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
+            left:   contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left),
+            right:  contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -padding.right)
         )
         
         if #available(iOS 11.0, *) {
             // Switch to safeAreaLayoutGuide
+            contentViewLayoutSet?.bottom = contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
+            contentViewLayoutSet?.left = contentView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
+            contentViewLayoutSet?.right = contentView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+            
             topStackViewLayoutSet?.left = topStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: topStackViewPadding.left)
-            topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: topStackViewPadding.right)
-            leftStackViewLayoutSet?.left = leftStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
-            rightStackViewLayoutSet?.right = rightStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
-            bottomStackViewLayoutSet?.left = bottomStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left)
-            bottomStackViewLayoutSet?.right = bottomStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -padding.right)
+            topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -topStackViewPadding.right)
         }
+        
+        // Constraints Within the contentView
+        textViewLayoutSet = NSLayoutConstraintSet(
+            top:    inputTextView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: textViewPadding.top),
+            bottom: inputTextView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -textViewPadding.bottom),
+            left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
+            right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
+        )
+        textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
+        
+        leftStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    leftStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            bottom: leftStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
+            left:   leftStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            width:  leftStackView.widthAnchor.constraint(equalToConstant: leftStackViewWidthConstant)
+        )
+        
+        rightStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    rightStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
+            bottom: rightStackView.bottomAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: 0),
+            right:  rightStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0),
+            width:  rightStackView.widthAnchor.constraint(equalToConstant: rightStackViewWidthConstant)
+        )
+        
+        bottomStackViewLayoutSet = NSLayoutConstraintSet(
+            top:    bottomStackView.topAnchor.constraint(equalTo: inputTextView.bottomAnchor, constant: textViewPadding.bottom),
+            bottom: bottomStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0),
+            left:   bottomStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
+            right:  bottomStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0)
+        )
         activateConstraints()
     }
     
-    open override func didMoveToWindow() {
-        super.didMoveToWindow()
+    /// Respect iPhone X safeAreaInsets
+    /// Adds a constraint to anchor the bottomAnchor of the contentView to the window's safeAreaLayoutGuide.bottomAnchor
+    ///
+    /// - Parameter window: The window to anchor to
+    private func setupConstraints(to window: UIWindow?) {
         if #available(iOS 11.0, *) {
-            // Respect iPhone X safeAreaInsets
             guard UIScreen.main.nativeBounds.height == 2436 else { return }
             if let window = window {
-                bottomStackViewLayoutSet?.bottom?.isActive = false
-                bottomStackViewLayoutSet?.bottom = bottomStackView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-                // Needs to be less than .defaultHigh so constraints don't break
-                bottomStackViewLayoutSet?.bottom?.priority = UILayoutPriority(rawValue: 750)
-                activateConstraints()
+                windowAnchor?.isActive = false
+                windowAnchor = contentView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                windowAnchor?.constant = -padding.bottom
+                windowAnchor?.priority = UILayoutPriority(rawValue: 750)
+                windowAnchor?.isActive = true
             }
         }
     }
@@ -416,22 +442,20 @@ open class InputBarAccessoryView: UIView {
     
     /// Updates the constraint constants that correspond to the padding UIEdgeInsets
     private func updatePadding() {
-        inputTextViewLayoutSet?.top?.constant = padding.top
-        leftStackViewLayoutSet?.top?.constant = padding.top
-        leftStackViewLayoutSet?.left?.constant = padding.left
-        rightStackViewLayoutSet?.top?.constant = padding.top
-        rightStackViewLayoutSet?.right?.constant = -padding.right
-        bottomStackViewLayoutSet?.left?.constant = padding.left
-        bottomStackViewLayoutSet?.right?.constant = -padding.right
-        bottomStackViewLayoutSet?.bottom?.constant = -padding.bottom
+        contentViewLayoutSet?.top?.constant = padding.top
+        contentViewLayoutSet?.left?.constant = padding.left
+        contentViewLayoutSet?.right?.constant = -padding.right
+        contentViewLayoutSet?.bottom?.constant = -padding.bottom
+        windowAnchor?.constant = -padding.bottom
     }
     
-    /// Updates the constraint constants that correspond to the inputTextViewPadding UIEdgeInsets
+    /// Updates the constraint constants that correspond to the textViewPadding UIEdgeInsets
     private func updateTextViewPadding() {
-        inputTextViewLayoutSet?.left?.constant = inputTextViewPadding.left
-        inputTextViewLayoutSet?.right?.constant = -inputTextViewPadding.right
-        inputTextViewLayoutSet?.bottom?.constant = -inputTextViewPadding.bottom
-        bottomStackViewLayoutSet?.top?.constant = inputTextViewPadding.bottom
+        textViewLayoutSet?.top?.constant = textViewPadding.top
+        textViewLayoutSet?.left?.constant = textViewPadding.left
+        textViewLayoutSet?.right?.constant = -textViewPadding.right
+        textViewLayoutSet?.bottom?.constant = -textViewPadding.bottom
+        bottomStackViewLayoutSet?.top?.constant = textViewPadding.bottom
     }
     
     /// Updates the constraint constants that correspond to the topStackViewPadding UIEdgeInsets
@@ -444,7 +468,6 @@ open class InputBarAccessoryView: UIView {
     /// Invalidates the view’s intrinsic content size
     open override func invalidateIntrinsicContentSize() {
         super.invalidateIntrinsicContentSize()
-        [topStackView, bottomStackView, inputTextView].forEach { $0.invalidateIntrinsicContentSize() }
         cachedIntrinsicContentSize = calculateIntrinsicContentSize()
         if previousIntrinsicContentSize != cachedIntrinsicContentSize {
             delegate?.inputBar(self, didChangeIntrinsicContentTo: cachedIntrinsicContentSize)
@@ -460,22 +483,25 @@ open class InputBarAccessoryView: UIView {
         var inputTextViewHeight = requiredInputTextViewHeight
         if inputTextViewHeight >= maxTextViewHeight {
             if !isOverMaxTextViewHeight {
-                inputTextViewHeightAnchor?.isActive = true
+                textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
             }
             inputTextViewHeight = maxTextViewHeight
         } else {
             if isOverMaxTextViewHeight {
-                inputTextViewHeightAnchor?.isActive = false
+                textViewHeightAnchor?.isActive = false
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
+                inputTextView.invalidateIntrinsicContentSize()
             }
         }
         
         // Calculate the required height
-        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + inputTextViewPadding.top + inputTextViewPadding.bottom
-        let verticalStackViewHeight = topStackView.bounds.height + bottomStackView.bounds.height
+        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
+        let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
+        let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
+        let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
         let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: bounds.width, height: requiredHeight)
     }
@@ -525,7 +551,8 @@ open class InputBarAccessoryView: UIView {
     
     /// Activates the NSLayoutConstraintSet's
     private func activateConstraints() {
-        inputTextViewLayoutSet?.activate()
+        contentViewLayoutSet?.activate()
+        textViewLayoutSet?.activate()
         leftStackViewLayoutSet?.activate()
         rightStackViewLayoutSet?.activate()
         bottomStackViewLayoutSet?.activate()
@@ -534,7 +561,8 @@ open class InputBarAccessoryView: UIView {
     
     /// Deactivates the NSLayoutConstraintSet's
     private func deactivateConstraints() {
-        inputTextViewLayoutSet?.deactivate()
+        contentViewLayoutSet?.deactivate()
+        textViewLayoutSet?.deactivate()
         leftStackViewLayoutSet?.deactivate()
         rightStackViewLayoutSet?.deactivate()
         bottomStackViewLayoutSet?.deactivate()

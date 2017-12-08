@@ -226,7 +226,7 @@ class ExampleViewController: UITableViewController {
         bar.sendButton.title = nil
         bar.sendButton.imageView?.layer.cornerRadius = 16
         bar.sendButton.backgroundColor = .clear
-        bar.inputTextViewPadding.right = -38
+        bar.textViewPadding.right = -38
     }
     
     @objc

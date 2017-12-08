@@ -28,7 +28,7 @@
 import UIKit
 
 /**
- A UIStackView that's intended for holding `InputBarButtonItem`s
+ A UIStackView that's intended for holding `InputItem`s
  
  ## Important Notes ##
  1. Default alignment is .fill
@@ -75,6 +75,9 @@ open class InputStackView: UIStackView {
     
     open override func layoutIfNeeded() {
         super.layoutIfNeeded()
+        
+        // We need to invalidate the size of the superview (InputBarAccessoryView) in case the subview heights
+        // have changed and thus the superview size needs to change
         superview?.invalidateIntrinsicContentSize()
     }
 }
