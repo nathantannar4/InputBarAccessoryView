@@ -218,8 +218,11 @@ open class InputBarAccessoryView: UIView {
     /// improves the performance
     public private(set) var isOverMaxTextViewHeight = false
     
+    /// A boolean that determines if the maxTextViewHeight should be auto updated on device rotation
+    open var shouldAutoUpdateMaxTextViewHeight = true
+    
     /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 5).rounded() {
+    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 5).rounded(.down) {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
@@ -506,6 +509,20 @@ open class InputBarAccessoryView: UIView {
         return CGSize(width: bounds.width, height: requiredHeight)
     }
     
+    
+    /// Returns the max height the InputTextView can grow to based on the UIScreen
+    ///
+    /// - Returns: Max Height
+    open func calculateMaxTextViewHeight() -> CGFloat {
+        if UIScreen.main.bounds.height > UIScreen.main.bounds.width {
+            // isPortrait
+            return (UIScreen.main.bounds.height / 3).rounded(.down)
+        } else {
+            // isLandscape
+            return (UIScreen.main.bounds.height / 2).rounded(.down)
+        }
+    }
+    
     // MARK: - Layout Helper Methods
     
     /// Layout the given InputStackView's
@@ -670,6 +687,9 @@ open class InputBarAccessoryView: UIView {
     /// Invalidates the intrinsicContentSize
     @objc
     open func orientationDidChange() {
+        if shouldAutoUpdateMaxTextViewHeight {
+            maxTextViewHeight = calculateMaxTextViewHeight()
+        }
         invalidateIntrinsicContentSize()
     }
 
