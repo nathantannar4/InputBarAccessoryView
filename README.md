@@ -150,6 +150,7 @@ Have a suggestion? Make a PR!
 - 1.4.0
         - iPhone X Fixes
         - IntrinsicContentSize caching to increase performance
+        - Auto Manage maxTextViewHeight
 - 1.3.0
         - iPhone X Fixes
 - 1.2.0
