@@ -48,7 +48,7 @@ class ExampleViewController: UITableViewController {
         let manager = AutocompleteManager(for: self.bar.inputTextView)
         manager.delegate = self
         manager.dataSource = self
-        manager.autocompletePrefixes = ["@","#",":"]
+        manager.autocompletePrefixes = ["@","#"]
         return manager
     }()
     
@@ -67,11 +67,13 @@ class ExampleViewController: UITableViewController {
     
     var messages = [String]()
     
+    let githawkImages: [UIImage] = [#imageLiteral(resourceName: "ic_eye"), #imageLiteral(resourceName: "ic_bold"), #imageLiteral(resourceName: "ic_italic"), #imageLiteral(resourceName: "ic_at"), #imageLiteral(resourceName: "ic_list"), #imageLiteral(resourceName: "ic_code"), #imageLiteral(resourceName: "ic_link"), #imageLiteral(resourceName: "ic_hashtag"), #imageLiteral(resourceName: "ic_upload")]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "InputBarAccessoryView"
-        view.backgroundColor = .groupTableViewBackground
+        view.backgroundColor = .white
         tableView.keyboardDismissMode = .interactive
         tableView.tableFooterView = UIView()
         bar.inputManagers = [attachmentManager, autocompleteManager]
@@ -82,6 +84,9 @@ class ExampleViewController: UITableViewController {
                             target: self,
                             action: #selector(handleKeyboardButton))
         ]
+        
+        messages = Lorem.sentences(nbSentences: 20)
+        tableView.reloadData()
         
         viewIsLoaded = true
     }
@@ -106,9 +111,14 @@ class ExampleViewController: UITableViewController {
                     self.messenger()
                 })
             }),
+            UIAlertAction(title: "GitHawk", style: .default, handler: { _ in
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
+                    self.githawk()
+                })
+            }),
             UIAlertAction(title: "Default", style: .default, handler: { _ in
                 DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-                    self.none()
+                    self.resetInputBar()
                 })
             }),
             UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -119,7 +129,7 @@ class ExampleViewController: UITableViewController {
     
     @objc
     func messenger() {
-        none()
+        resetInputBar()
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
             if gesture.direction == .left {
@@ -147,7 +157,7 @@ class ExampleViewController: UITableViewController {
 
     @objc
     func slack() {
-        none()
+        resetInputBar()
         let items = [
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
@@ -192,8 +202,6 @@ class ExampleViewController: UITableViewController {
         ]
         items.forEach { $0.tintColor = .lightGray }
         
-//        attachmentManager.isPersistent = true //to always display the AttachmentView
-        
         // We can change the container insets if we want
         bar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
@@ -207,8 +215,8 @@ class ExampleViewController: UITableViewController {
     
     @objc
     func iMessage() {
-        none()
-        bar.inputTextView.backgroundColor = UIColor(red: 245/255, green: 245/255, blue: 245/255, alpha: 1)
+        resetInputBar()
+        bar.inputTextView.backgroundColor = UIColor(red: 250/255, green: 250/255, blue: 250/255, alpha: 1)
         bar.inputTextView.placeholderTextColor = UIColor(red: 0.6, green: 0.6, blue: 0.6, alpha: 1)
         bar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
         bar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
@@ -232,7 +240,29 @@ class ExampleViewController: UITableViewController {
     }
     
     @objc
-    func none() {
+    func githawk() {
+        resetInputBar()
+        bar.inputTextView.placeholder = "Leave a comment"
+        bar.sendButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        bar.sendButton.setSize(CGSize(width: 36, height: 36), animated: viewIsLoaded)
+        bar.sendButton.image = #imageLiteral(resourceName: "ic_send").withRenderingMode(.alwaysTemplate)
+        bar.sendButton.title = nil
+        bar.sendButton.tintColor = bar.tintColor
+        
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.itemSize = CGSize(width: 20, height: 20)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+        let collectionView = AttachmentsView(frame: .zero, collectionViewLayout: layout)
+        collectionView.intrinsicContentHeight = 20
+        collectionView.dataSource = self
+        collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)
+        bar.bottomStackView.addArrangedSubview(collectionView)
+        collectionView.reloadData()
+    }
+    
+    @objc
+    func resetInputBar() {
         bar.inputTextView.resignFirstResponder()
         bar.inputManagers.removeAll()
         let newBar = InputBarAccessoryView()
@@ -266,9 +296,31 @@ class ExampleViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
+        cell.textLabel?.font = .systemFont(ofSize: 13)
         cell.textLabel?.text = messages[indexPath.row]
+        cell.textLabel?.numberOfLines = 0
         return cell
     }
+}
+
+extension ExampleViewController: UICollectionViewDataSource {
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return githawkImages.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as! ImageCell
+        cell.imageView.image = githawkImages[indexPath.section].withRenderingMode(.alwaysTemplate)
+        cell.imageView.tintColor = .black
+        return cell
+    }
+    
 }
 
 extension ExampleViewController: InputBarAccessoryViewDelegate {
@@ -297,11 +349,6 @@ extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationCo
 
 extension ExampleViewController: AttachmentManagerDelegate {
     
-    // MARK: - AttachmentManagerDataSource
-    
-//    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AnyObject, at index: Int) -> AttachmentCell {
-//
-//    }
     
     // MARK: - AttachmentManagerDelegate
     

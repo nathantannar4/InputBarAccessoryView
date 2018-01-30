@@ -31,10 +31,14 @@ open class AttachmentsView: UICollectionView {
     
     // MARK: - Properties
     
-    open var attachmentViewHeight: CGFloat = 100
+    open var intrinsicContentHeight: CGFloat = 100 {
+        didSet {
+            invalidateIntrinsicContentSize()
+        }
+    }
     
     open override var intrinsicContentSize: CGSize {
-        return CGSize(width: 0, height: attachmentViewHeight)
+        return CGSize(width: 0, height: intrinsicContentHeight)
     }
     
     // MARK: - Initialization
@@ -48,6 +52,11 @@ open class AttachmentsView: UICollectionView {
         layout.headerReferenceSize = CGSize(width: 12, height: 0)
         layout.footerReferenceSize = CGSize(width: 12, height: 0)
         super.init(frame: .zero, collectionViewLayout: layout)
+        setup()
+    }
+    
+    public override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+        super.init(frame: frame, collectionViewLayout: layout)
         setup()
     }
     
