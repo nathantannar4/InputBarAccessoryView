@@ -147,6 +147,8 @@ Have a suggestion? Make a PR!
 
 ## Changelog
 
+-1.5.0
+        - Stability and bug fixes
 - 1.4.0
         - iPhone X Fixes
         - IntrinsicContentSize caching to increase performance

@@ -85,7 +85,7 @@ open class InputBarAccessoryView: UIView {
         }
     }
 
-    /// A SeparatorLine that is initially placed in the topStackView
+    /// A SeparatorLine that is anchored at the top of the InputBarAccessoryView
     open let separatorLine = SeparatorLine()
     
     /**
@@ -221,8 +221,8 @@ open class InputBarAccessoryView: UIView {
     /// A boolean that determines if the maxTextViewHeight should be auto updated on device rotation
     open var shouldAutoUpdateMaxTextViewHeight = true
     
-    /// The maximum height that the InputTextView can reach
-    open var maxTextViewHeight: CGFloat = (UIScreen.main.bounds.height / 5).rounded(.down) {
+    /// The maximum height that the InputTextView can reach. Automatically set with `calculateMaxTextViewHeight()`
+    open var maxTextViewHeight: CGFloat = 0 {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
             invalidateIntrinsicContentSize()
@@ -282,6 +282,7 @@ open class InputBarAccessoryView: UIView {
     private var bottomStackViewLayoutSet: NSLayoutConstraintSet?
     private var contentViewLayoutSet: NSLayoutConstraintSet?
     private var windowAnchor: NSLayoutConstraint?
+    private var backgroundViewBottomAnchor: NSLayoutConstraint?
     
     // MARK: - Initialization
     
@@ -327,13 +328,13 @@ open class InputBarAccessoryView: UIView {
                                                name: .UIDeviceOrientationDidChange, object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.inputTextViewDidChange),
-                                               name: NSNotification.Name.UITextViewTextDidChange, object: nil)
+                                               name: NSNotification.Name.UITextViewTextDidChange, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.inputTextViewDidBeginEditing),
-                                               name: NSNotification.Name.UITextViewTextDidBeginEditing, object: nil)
+                                               name: NSNotification.Name.UITextViewTextDidBeginEditing, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.inputTextViewDidEndEditing),
-                                               name: NSNotification.Name.UITextViewTextDidEndEditing, object: nil)
+                                               name: NSNotification.Name.UITextViewTextDidEndEditing, object: inputTextView)
     }
     
     /// Adds a UISwipeGestureRecognizer for each direction to the InputTextView
@@ -366,7 +367,9 @@ open class InputBarAccessoryView: UIView {
         
         // The constraints within the MessageInputBar
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
-        backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+        backgroundViewBottomAnchor = backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor)
+        backgroundViewBottomAnchor?.isActive = true
+        backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, right: rightAnchor)
         
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
@@ -399,6 +402,7 @@ open class InputBarAccessoryView: UIView {
             left:   inputTextView.leftAnchor.constraint(equalTo: leftStackView.rightAnchor, constant: textViewPadding.left),
             right:  inputTextView.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -textViewPadding.right)
         )
+        maxTextViewHeight = calculateMaxTextViewHeight()
         textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
         
         leftStackViewLayoutSet = NSLayoutConstraintSet(
@@ -437,6 +441,7 @@ open class InputBarAccessoryView: UIView {
                 windowAnchor?.constant = -padding.bottom
                 windowAnchor?.priority = UILayoutPriority(rawValue: 750)
                 windowAnchor?.isActive = true
+                backgroundViewBottomAnchor?.constant = 34
             }
         }
     }
@@ -445,6 +450,7 @@ open class InputBarAccessoryView: UIView {
     
     /// Updates the constraint constants that correspond to the padding UIEdgeInsets
     private func updatePadding() {
+        topStackViewLayoutSet?.bottom?.constant = -padding.top
         contentViewLayoutSet?.top?.constant = padding.top
         contentViewLayoutSet?.left?.constant = padding.left
         contentViewLayoutSet?.right?.constant = -padding.right
@@ -514,13 +520,10 @@ open class InputBarAccessoryView: UIView {
     ///
     /// - Returns: Max Height
     open func calculateMaxTextViewHeight() -> CGFloat {
-        if UIScreen.main.bounds.height > UIScreen.main.bounds.width {
-            // isPortrait
+        if traitCollection.verticalSizeClass == .regular {
             return (UIScreen.main.bounds.height / 3).rounded(.down)
-        } else {
-            // isLandscape
-            return (UIScreen.main.bounds.height / 2).rounded(.down)
         }
+        return (UIScreen.main.bounds.height / 5).rounded(.down)
     }
     
     // MARK: - Layout Helper Methods
@@ -685,6 +688,18 @@ open class InputBarAccessoryView: UIView {
     // MARK: - Notifications/Hooks
     
     /// Invalidates the intrinsicContentSize
+    open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
+            if shouldAutoUpdateMaxTextViewHeight {
+                maxTextViewHeight = calculateMaxTextViewHeight()
+            } else {
+                invalidateIntrinsicContentSize()
+            }
+        }
+    }
+    
+    /// Invalidates the intrinsicContentSize
     @objc
     open func orientationDidChange() {
         if shouldAutoUpdateMaxTextViewHeight {
@@ -700,8 +715,12 @@ open class InputBarAccessoryView: UIView {
     @objc
     open func inputTextViewDidChange() {
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        sendButton.isEnabled = !inputTextView.text.isEmpty
+        
+        sendButton.isEnabled = !trimmedText.isEmpty || inputTextView.images.count > 0
+        inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
+        
         items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
+        
         delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
         
         if requiredInputTextViewHeight != inputTextView.bounds.height {

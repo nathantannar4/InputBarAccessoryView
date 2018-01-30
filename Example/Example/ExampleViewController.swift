@@ -227,6 +227,8 @@ class ExampleViewController: UITableViewController {
         bar.sendButton.imageView?.layer.cornerRadius = 16
         bar.sendButton.backgroundColor = .clear
         bar.textViewPadding.right = -38
+        bar.separatorLine.isHidden = true
+        bar.isTranslucent = true
     }
     
     @objc
