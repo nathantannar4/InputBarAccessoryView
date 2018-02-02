@@ -37,6 +37,9 @@
                 <a href="../Classes/AttachmentManager.html">AttachmentManager</a>
               </li>
               <li class="nav-group-task">
+                <a href="../Classes/AttachmentManager/Attachment.html">– Attachment</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="../Classes/AttachmentsView.html">AttachmentsView</a>
               </li>
               <li class="nav-group-task">
@@ -100,6 +103,17 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structs</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AutocompleteSession.html">AutocompleteSession</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -115,6 +129,37 @@
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC0E0O"></a>
+                    <a name="//apple_ref/swift/Enum/Attachment" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC0E0O">Attachment</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                        <a href="../Classes/AttachmentManager/Attachment.html" class="slightly-smaller">See more</a>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties%20[Public]"></a>
+                <a name="//apple_ref/swift/Section/Properties [Public]" class="dashAnchor"></a>
+                <a href="#/Properties%20[Public]">
+                  <h3 class="section-name">Properties [Public]</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:21InputBarAccessoryView17AttachmentManagerC8delegateAA0eF8Delegate_pSgXwv"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
                     <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC8delegateAA0eF8Delegate_pSgXwv">delegate</a>
@@ -125,8 +170,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A protocol that can recieve notifications from the <code>AttachmentManager</code></p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AttachmentManagerDelegate.html">AttachmentManagerDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -144,8 +197,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A protocol to passes data to the <code>AttachmentManager</code></p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">dataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AttachmentManagerDataSource.html">AttachmentManagerDataSource</a></span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -172,9 +233,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC11attachmentsSayyXlGv"></a>
+                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC11attachmentsSayAC0E0OGv"></a>
                     <a name="//apple_ref/swift/Property/attachments" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC11attachmentsSayyXlGv">attachments</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC11attachmentsSayAC0E0OGv">attachments</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -182,8 +243,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The attachments that the managers holds</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">attachments</span> <span class="o">=</span> <span class="p">[</span><span class="kt"><a href="../Classes/AttachmentManager/Attachment.html">Attachment</a></span><span class="p">]()</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -228,8 +297,16 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>A flag to determine if the AddAttachmentCell is visible</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">showAddAttachmentCell</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -278,9 +355,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0A7ManagerP6reloadyyF"></a>
-                    <a name="//apple_ref/swift/Method/reload()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0A7ManagerP6reloadyyF">reload()</a>
+                    <a name="/s:21InputBarAccessoryView0A7ManagerP10reloadDatayyF"></a>
+                    <a name="//apple_ref/swift/Method/reloadData()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0A7ManagerP10reloadDatayyF">reloadData()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -294,7 +371,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">reload</span><span class="p">()</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">reloadData</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -304,9 +381,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0A7ManagerP10invalidateyyF"></a>
+                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC10invalidateyyF"></a>
                     <a name="//apple_ref/swift/Method/invalidate()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0A7ManagerP10invalidateyyF">invalidate()</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC10invalidateyyF">invalidate()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -314,7 +391,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Invalidates the <code>AttachmentManagers</code> session by removing all attachments</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -330,9 +408,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0A7ManagerP06handleA0yyXl2of_tF"></a>
+                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC06handleA0yyXl2of_tF"></a>
                     <a name="//apple_ref/swift/Method/handleInput(of:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0A7ManagerP06handleA0yyXl2of_tF">handleInput(of:)</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC06handleA0yyXl2of_tF">handleInput(of:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -340,7 +418,8 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        
+                        <p>Appends the object to the attachments</p>
+
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
@@ -357,19 +436,19 @@
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/Attachment%20Management"></a>
-                <a name="//apple_ref/swift/Section/Attachment Management" class="dashAnchor"></a>
-                <a href="#/Attachment%20Management">
-                  <h3 class="section-name">Attachment Management</h3>
+                <a name="/API%20[Public]"></a>
+                <a name="//apple_ref/swift/Section/API [Public]" class="dashAnchor"></a>
+                <a href="#/API%20[Public]">
+                  <h3 class="section-name">API [Public]</h3>
                 </a>
               </div>
               <ul>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC06insertE0yyXl_Si2attF"></a>
+                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC06insertE0yAC0E0O_Si2attF"></a>
                     <a name="//apple_ref/swift/Method/insertAttachment(_:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC06insertE0yyXl_Si2attF">insertAttachment(_:at:)</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC06insertE0yAC0E0O_Si2attF">insertAttachment(_:at:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -384,7 +463,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">insertAttachment</span><span class="p">(</span><span class="n">_</span> <span class="nv">attachment</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
+                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">insertAttachment</span><span class="p">(</span><span class="n">_</span> <span class="nv">attachment</span><span class="p">:</span> <span class="kt"><a href="../Classes/AttachmentManager/Attachment.html">Attachment</a></span><span class="p">,</span> <span class="n">at</span> <span class="nv">index</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -432,9 +511,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:didSelectItemAtIndexPath:"></a>
+                    <a name="/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:didSelectItemAtIndexPath:"></a>
                     <a name="//apple_ref/swift/Method/collectionView(_:didSelectItemAt:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:didSelectItemAtIndexPath:">collectionView(_:didSelectItemAt:)</a>
+                    <a class="token" href="#/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:didSelectItemAtIndexPath:">collectionView(_:didSelectItemAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -481,9 +560,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:numberOfItemsInSection:"></a>
+                    <a name="/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:numberOfItemsInSection:"></a>
                     <a name="//apple_ref/swift/Method/collectionView(_:numberOfItemsInSection:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:numberOfItemsInSection:">collectionView(_:numberOfItemsInSection:)</a>
+                    <a class="token" href="#/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:numberOfItemsInSection:">collectionView(_:numberOfItemsInSection:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -500,9 +579,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:cellForItemAtIndexPath:"></a>
+                    <a name="/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:cellForItemAtIndexPath:"></a>
                     <a name="//apple_ref/swift/Method/collectionView(_:cellForItemAt:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:cellForItemAtIndexPath:">collectionView(_:cellForItemAt:)</a>
+                    <a class="token" href="#/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:cellForItemAtIndexPath:">collectionView(_:cellForItemAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -530,58 +609,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:layout:sizeForItemAtIndexPath:"></a>
+                    <a name="/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:layout:sizeForItemAtIndexPath:"></a>
                     <a name="//apple_ref/swift/Method/collectionView(_:layout:sizeForItemAt:)" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:layout:sizeForItemAtIndexPath:">collectionView(_:layout:sizeForItemAt:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="task-group">
-              <div class="task-name-container">
-                <a name="/Default%20Cells"></a>
-                <a name="//apple_ref/swift/Section/Default Cells" class="dashAnchor"></a>
-                <a href="#/Default%20Cells">
-                  <h3 class="section-name">Default Cells</h3>
-                </a>
-              </div>
-              <ul>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC11defaultCellAA0eH0CSo012UICollectionD0C2in_yXl3for10Foundation9IndexPathV2attF"></a>
-                    <a name="//apple_ref/swift/Method/defaultCell(in:for:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC11defaultCellAA0eH0CSo012UICollectionD0C2in_yXl3for10Foundation9IndexPathV2attF">defaultCell(in:for:at:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:21InputBarAccessoryView17AttachmentManagerC03addE4CellAA0eH0CSo012UICollectionD0C2in_10Foundation9IndexPathV2attF"></a>
-                    <a name="//apple_ref/swift/Method/addAttachmentCell(in:at:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView17AttachmentManagerC03addE4CellAA0eH0CSo012UICollectionD0C2in_10Foundation9IndexPathV2attF">addAttachmentCell(in:at:)</a>
+                    <a class="token" href="#/c:@CM@InputBarAccessoryView@objc(cs)AttachmentManager(im)collectionView:layout:sizeForItemAtIndexPath:">collectionView(_:layout:sizeForItemAt:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -600,7 +630,7 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-01-29)</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

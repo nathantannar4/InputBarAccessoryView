@@ -2,6 +2,13 @@
   "warnings": [
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
+      "line": null,
+      "symbol": "AttachmentManager",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
       "line": 30,
       "symbol": "AttachmentManager",
       "symbol_kind": "source.lang.swift.decl.class",
@@ -10,168 +17,175 @@
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
       "line": 32,
-      "symbol": "AttachmentManager.delegate",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "AttachmentManager.Attachment",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
+      "line": 33,
+      "symbol": "AttachmentManager.Attachment.image",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
       "line": 34,
-      "symbol": "AttachmentManager.dataSource",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "symbol": "AttachmentManager.Attachment.url",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
+      "line": 35,
+      "symbol": "AttachmentManager.Attachment.data",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
       "line": 36,
+      "symbol": "AttachmentManager.Attachment.other",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
+      "line": 47,
       "symbol": "AttachmentManager.attachmentView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 43,
-      "symbol": "AttachmentManager.attachments",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 56,
-      "symbol": "AttachmentManager.showAddAttachmentCell",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 64,
+      "line": 65,
       "symbol": "AttachmentManager.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 119,
+      "line": 139,
       "symbol": "AttachmentManager.collectionView(_:didSelectItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 128,
+      "line": 148,
       "symbol": "AttachmentManager.numberOfItems(inSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 132,
+      "line": 152,
       "symbol": "AttachmentManager.collectionView(_:numberOfItemsInSection:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 136,
+      "line": 156,
       "symbol": "AttachmentManager.collectionView(_:cellForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 146,
+      "line": 188,
       "symbol": "AttachmentManager.collectionView(_:layout:sizeForItemAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 157,
-      "symbol": "AttachmentManager.defaultCell(in:for:at:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": null,
+      "symbol": "AutocompleteManager",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AttachmentManager.swift",
-      "line": 171,
-      "symbol": "AttachmentManager.addAttachmentCell(in:at:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": null,
+      "symbol": "AutocompleteManager",
+      "symbol_kind": "source.lang.swift.decl.extension",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
       "line": 30,
+      "symbol": "AutocompleteCompletion",
+      "symbol_kind": "source.lang.swift.decl.struct",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 38,
+      "symbol": "AutocompleteCompletion.init(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 42,
+      "symbol": "AutocompleteCompletion.init(_:displayText:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 56,
+      "symbol": "AutocompleteSession.init(prefix:range:filter:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 64,
       "symbol": "AutocompleteManager",
       "symbol_kind": "source.lang.swift.decl.class",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 32,
-      "symbol": "AutocompleteManager.dataSource",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 34,
-      "symbol": "AutocompleteManager.delegate",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 36,
-      "symbol": "AutocompleteManager.inputTextView",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 82,
+      "line": 146,
       "symbol": "AutocompleteManager.init(for:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 108,
-      "symbol": "AutocompleteManager.numberOfSections(in:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 112,
-      "symbol": "AutocompleteManager.tableView(_:numberOfRowsInSection:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 116,
-      "symbol": "AutocompleteManager.tableView(_:cellForRowAt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 126,
-      "symbol": "AutocompleteManager.tableView(_:didSelectRowAt:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 139,
+      "line": 270,
       "symbol": "AutocompleteManager.textView(_:shouldChangeTextIn:replacementText:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
-      "line": 327,
-      "symbol": "AutocompleteManager.defaultCell(in:at:for:)",
+      "line": 346,
+      "symbol": "AutocompleteManager.numberOfSections(in:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 350,
+      "symbol": "AutocompleteManager.tableView(_:numberOfRowsInSection:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 354,
+      "symbol": "AutocompleteManager.tableView(_:cellForRowAt:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Managers/AutocompleteManager.swift",
+      "line": 364,
+      "symbol": "AutocompleteManager.tableView(_:didSelectRowAt:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
@@ -381,27 +395,34 @@
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/AttachmentsView.swift",
       "line": 34,
-      "symbol": "AttachmentsView.attachmentViewHeight",
+      "symbol": "AttachmentsView.intrinsicContentHeight",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/AttachmentsView.swift",
-      "line": 36,
+      "line": 40,
       "symbol": "AttachmentsView.intrinsicContentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/AttachmentsView.swift",
-      "line": 42,
+      "line": 46,
       "symbol": "AttachmentsView.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/AttachmentsView.swift",
-      "line": 54,
+      "line": 58,
+      "symbol": "AttachmentsView.init(frame:collectionViewLayout:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/AttachmentsView.swift",
+      "line": 63,
       "symbol": "AttachmentsView.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -415,7 +436,7 @@
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/AutocompleteTableView.swift",
-      "line": 32,
+      "line": 35,
       "symbol": "AutocompleteTableView.intrinsicContentSize",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
@@ -429,63 +450,63 @@
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 34,
+      "line": 38,
       "symbol": "AttachmentCell.containerView",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 43,
+      "line": 47,
       "symbol": "AttachmentCell.padding",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 49,
+      "line": 53,
       "symbol": "AttachmentCell.deleteButton",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 60,
+      "line": 64,
       "symbol": "AttachmentCell.attachment",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 62,
+      "line": 66,
       "symbol": "AttachmentCell.indexPath",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 64,
+      "line": 68,
       "symbol": "AttachmentCell.manager",
       "symbol_kind": "source.lang.swift.decl.var.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 70,
+      "line": 74,
       "symbol": "AttachmentCell.init(frame:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 75,
+      "line": 79,
       "symbol": "AttachmentCell.init(coder:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/nathantannar/Documents/iOS/InputBarAccessoryView/InputBarAccessoryView/Views/Manager Views/Cells/AttachmentCell.swift",
-      "line": 80,
+      "line": 84,
       "symbol": "AttachmentCell.prepareForReuse()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
