@@ -32,6 +32,20 @@ XCode 9.0+
 
 <img src="./Screenshots/ScreenshotA.png" width="242" height="432"> <img src="./Screenshots/ScreenshotB.png" width="242" height="432"> <img src="./Screenshots/ScreenshotC.png" width="242" height="432"> <img src="./Screenshots/ScreenshotD.png" width="242" height="432"> <img src="./Screenshots/ScreenshotE.png" width="242" height="432"> <img src="./Screenshots/ScreenshotF.png" width="242" height="432">
 
+### Featured In
+
+Add your app to the list of apps using this library and make a pull request.
+
+- [MessageKit](https://github.com/MessageKit/MessageKit) *(renamed to MessageInputBar)*
+<p>
+  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit Logo" height="50">
+</p>
+
+- [MessageViewController](https://github.com/GitHawkApp/MessageViewController) *(Autocomplete Highlighting Algorithm)*
+<p>
+  <img src="https://avatars3.githubusercontent.com/u/32285710?s=200&v=4" title="GitHawk Logo" height="50">
+</p>
+
 ## Layout
 
 The layout of the `InputBarAccessoryView` is made of of 4  `InputStackView`'s and an `InputTextView`. The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
@@ -97,19 +111,6 @@ private var onDisabledAction: InputBarButtonItemAction?
 *pre-release versions not documented*
 
 **Find a bug? Open an issue!**
-
-### Usage
-
-Add your app to the list of apps using this library and make a pull request.
-
-- [MessageKit](https://github.com/MessageKit/MessageKit) *(renamed to MessageInputBar)*
-<p>
-  <img src="https://raw.githubusercontent.com/MessageKit/MessageKit/master/Assets/mklogo.png" title="MessageKit Logo" height="50">
-</p>
-- [MessageViewController](https://github.com/GitHawkApp/MessageViewController) *(Autocomplete Highlighting Algorithm)*
-<p>
-  <img src="https://avatars3.githubusercontent.com/u/32285710?s=200&v=4" title="GitHawk Logo" height="50">
-</p>
 
 ## Author
 <p>
