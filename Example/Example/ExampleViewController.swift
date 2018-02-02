@@ -394,32 +394,24 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
     
     // MARK: - AutocompleteManagerDataSource
     
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String] {
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion] {
         
-        var array: [String] = []
+        var array: [AutocompleteCompletion] = []
         for _ in 1...100 {
             if prefix == "@" {
-                array.append(Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased())
+                let name = Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased()
+                array.append(AutocompleteCompletion(name))
             } else if prefix == "#" {
-                array.append(Lorem.word())
+                array.append(AutocompleteCompletion(Lorem.word()))
             }
         }
         return array
     }
     
-    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
-        
-        // custom replacement text, the default returns is shown below
-        return String(arguments.prefix) + arguments.autocompleteText
-    }
-    
-    // This is only needed to override the default cell
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
-        
-        let cell = manager.defaultCell(in: tableView, at: indexPath, for: arguments)
-        // or provide your own logic
-        return cell
-    }
+//    Optional
+//    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
+//
+//    }
     
     // MARK: - AutocompleteManagerDelegate
     

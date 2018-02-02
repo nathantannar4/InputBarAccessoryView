@@ -30,45 +30,46 @@ import UIKit
 /// AutocompleteManagerDataSource is a protocol that passes data to the AutocompleteManager
 public protocol AutocompleteManagerDataSource: class {
     
-    /// The autocomplete options for the registered prefix. Called once a prefix is registered.
+    /// The autocomplete options for the registered prefix.
     ///
     /// - Parameters:
     ///   - manager: The AutocompleteManager
     ///   - prefix: The registered prefix
-    /// - Returns: An array of autocomplete options for the given prefix
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteTextFor prefix: Character) -> [String]
+    /// - Returns: An array of `AutocompleteCompletion` options for the given prefix
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion]
     
-    
-    /// The text to autocomplete a prefix with if you need to specify a difference between the autocomplete text a user can select
-    /// with what is inserted.
+    /// The cell to populate the `AutocompleteTableView` with
     ///
     /// - Parameters:
-    ///   - manager: The AutocompleteManager
-    ///   - arguments: The registered prefix, current filter text after the prefix and the autocomplete text that the user has selected
-    /// - Returns: The string that the registered prefix will be autocomplete with. Default is `String(arguments.prefix) + arguments.autocompleteText`
-    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String
-    
-    
-    /// The cell to populate the AutocompleteTableView with
-    ///
-    /// - Parameters:
-    ///   - manager: The AttachmentManager
-    ///   - tableView: The AttachmentManager's AutocompleteTableView
-    ///   - indexPath: The indexPath of the cell
-    ///   - arguments: The registered prefix, current filter text after the prefix and the autocomplete text that the user has selected
-    /// - Returns: A UITableViewCell to populate the AutocompleteTableView. Default is `manager.defaultCell(in: tableView, at: indexPath, for: arguments)`
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell
+    ///   - manager: The `AttachmentManager` that sources the UITableViewDataSource
+    ///   - tableView: The `AttachmentManager`'s `AutocompleteTableView`
+    ///   - indexPath: The `IndexPath` of the cell
+    ///   - session: The current `Session` of the `AutocompleteManager`
+    /// - Returns: A UITableViewCell to populate the `AutocompleteTableView`
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell
 }
 
 public extension AutocompleteManagerDataSource {
     
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> UITableViewCell {
-        return manager.defaultCell(in: tableView, at: indexPath, for: arguments)
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+            fatalError("AutocompleteCell is not registered")
+        }
+        
+        let completionText = (session.completion?.displayText ?? session.completion?.text) ?? ""
+        
+        // Bolds the text that currently matches the filter
+        let matchingRange = (completionText as NSString).range(of: session.filter, options: .caseInsensitive)
+        let attributedString = NSMutableAttributedString().normal(completionText)
+        attributedString.addAttributes([.font: UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)], range: matchingRange)
+        let stringWithPrefix = NSMutableAttributedString().normal(String(session.prefix))
+        stringWithPrefix.append(attributedString)
+        cell.textLabel?.attributedText = stringWithPrefix
+        cell.backgroundColor = .white
+        cell.separatorLine.isHidden = tableView.numberOfRows(inSection: indexPath.section) - 1 == indexPath.row
+        return cell
+        
     }
     
-    func autocompleteManager(_ manager: AutocompleteManager, replacementTextFor arguments: (prefix: Character, filterText: String, autocompleteText: String)) -> String {
-        return String(arguments.prefix) + arguments.autocompleteText
-    }
 }
-
-

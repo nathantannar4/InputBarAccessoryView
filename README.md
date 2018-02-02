@@ -53,7 +53,7 @@ func setRightStackViewWidthConstant(to newValue: CGFloat, animated: Bool)
 
 ## AutocompleteManager
 
-The `AutocompleteManager` holds the logic and views required for the autocomplete functionality which makes it easy to subclass and modify if you wish to add additional logic! Then you can set the `MessageInputBar`'s autocompleteManager property to your own
+The `AutocompleteManager` holds the logic and views required for the autocomplete functionality which makes it easy to subclass and modify if you wish to add additional logic! Then you can set the `InputBarAccessoryView`'s autocompleteManager property to your own
 
 ```swift
 /// If the autocomplete matches should be made by casting the strings to lowercase

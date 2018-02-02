@@ -42,7 +42,7 @@ open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource
     
     open var attachments = [AnyObject]() {
         didSet {
-            reload()
+            reloadData()
         }
     }
     
@@ -67,7 +67,7 @@ open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource
     
     // MARK: - InputManager
     
-    open func reload() {
+    open func reloadData() {
         attachmentView.reloadData()
         delegate?.attachmentManager(self, didReloadTo: attachments)
         delegate?.attachmentManager(self, shouldBecomeVisible: attachments.count > 0 || isPersistent)

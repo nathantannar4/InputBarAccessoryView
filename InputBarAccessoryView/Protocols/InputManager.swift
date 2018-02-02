@@ -27,16 +27,16 @@
 
 import UIKit
 
-/// InputManager is a protocol that makes integrating plugins to the InputBarAccessoryView easy.
+/// `InputManager` is a protocol that makes integrating plugins to the `InputBarAccessoryView` easy.
 public protocol InputManager: class {
     
-    /// Should reload the state if the InputManager
-    func reload()
+    /// Should reload the state if the `InputManager`
+    func reloadData()
     
-    /// Should remove any content that the InputManager is managing
+    /// Should remove any content that the `InputManager` is managing
     func invalidate()
     
-    /// Should handle the input of data types that an InputManager manages
+    /// Should handle the input of data types that an `InputManager` manages
     ///
     /// - Parameter object: The object to input
     func handleInput(of object: AnyObject)
