@@ -28,6 +28,10 @@ XCode 9.0+
 
 > See the Example project to see how you can make the iMessage, Slack, Facebook and GitHawk input bars!
 
+### Demo
+
+<img src="./Screenshots/Demo.gif" width="275" height="600">
+
 ### Screenshots
 
 <img src="./Screenshots/ScreenshotA.png" width="242" height="432"> <img src="./Screenshots/ScreenshotB.png" width="242" height="432"> <img src="./Screenshots/ScreenshotC.png" width="242" height="432"> <img src="./Screenshots/ScreenshotD.png" width="242" height="432"> <img src="./Screenshots/ScreenshotE.png" width="242" height="432"> <img src="./Screenshots/ScreenshotF.png" width="242" height="432">
