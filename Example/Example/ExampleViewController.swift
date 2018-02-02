@@ -69,6 +69,23 @@ class ExampleViewController: UITableViewController {
     
     let githawkImages: [UIImage] = [#imageLiteral(resourceName: "ic_eye"), #imageLiteral(resourceName: "ic_bold"), #imageLiteral(resourceName: "ic_italic"), #imageLiteral(resourceName: "ic_at"), #imageLiteral(resourceName: "ic_list"), #imageLiteral(resourceName: "ic_code"), #imageLiteral(resourceName: "ic_link"), #imageLiteral(resourceName: "ic_hashtag"), #imageLiteral(resourceName: "ic_upload")]
     
+    var nameAutocompletes: [AutocompleteCompletion] = {
+        var array: [AutocompleteCompletion] = []
+        for _ in 1...100 {
+            let name = Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased()
+            array.append(AutocompleteCompletion(name))
+        }
+        return array
+    }()
+    
+    var hastagAutocompletes: [AutocompleteCompletion] = {
+        var array: [AutocompleteCompletion] = []
+        for _ in 1...100 {
+            array.append(AutocompleteCompletion(Lorem.word()))
+        }
+        return array
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,8 +102,8 @@ class ExampleViewController: UITableViewController {
                             action: #selector(handleKeyboardButton))
         ]
         
-        messages = Lorem.sentences(nbSentences: 20)
-        tableView.reloadData()
+//        messages = Lorem.sentences(nbSentences: 20)
+//        tableView.reloadData()
         
         viewIsLoaded = true
     }
@@ -396,16 +413,12 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
     
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion] {
         
-        var array: [AutocompleteCompletion] = []
-        for _ in 1...100 {
-            if prefix == "@" {
-                let name = Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased()
-                array.append(AutocompleteCompletion(name))
-            } else if prefix == "#" {
-                array.append(AutocompleteCompletion(Lorem.word()))
-            }
+        if prefix == "@" {
+            return nameAutocompletes
+        } else if prefix == "#" {
+            return hastagAutocompletes
         }
-        return array
+        return []
     }
     
 //    Optional
