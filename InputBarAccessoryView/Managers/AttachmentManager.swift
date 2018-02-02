@@ -27,10 +27,21 @@
 
 import UIKit
 
-open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+open class AttachmentManager: NSObject, InputManager {
     
+    public enum Attachment {
+        case image(UIImage)
+        case url(URL)
+        case data(Data)
+        case other(AnyObject)
+    }
+    
+    // MARK: - Properties [Public]
+    
+    /// A protocol that can recieve notifications from the `AttachmentManager`
     open weak var delegate: AttachmentManagerDelegate?
     
+    /// A protocol to passes data to the `AttachmentManager`
     open weak var dataSource: AttachmentManagerDataSource?
     
     open lazy var attachmentView: AttachmentsView = { [weak self] in
@@ -40,24 +51,14 @@ open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource
         return attachmentView
     }()
     
-    open var attachments = [AnyObject]() {
-        didSet {
-            reloadData()
-        }
-    }
+    /// The attachments that the managers holds
+    private(set) public var attachments = [Attachment]() { didSet { reloadData() } }
     
     /// A flag you can use to determine if you want the manager to be always visible
-    open var isPersistent = false {
-        didSet {
-            attachmentView.reloadData()
-        }
-    }
+    open var isPersistent = false { didSet { attachmentView.reloadData() } }
     
-    open var showAddAttachmentCell = true {
-        didSet {
-            attachmentView.reloadData()
-        }
-    }
+    /// A flag to determine if the AddAttachmentCell is visible
+    open var showAddAttachmentCell = true { didSet { attachmentView.reloadData() } }
     
     // MARK: - Initialization
     
@@ -73,20 +74,35 @@ open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource
         delegate?.attachmentManager(self, shouldBecomeVisible: attachments.count > 0 || isPersistent)
     }
     
+    /// Invalidates the `AttachmentManagers` session by removing all attachments
     open func invalidate() {
-        attachments.removeAll()
+        attachments = []
     }
     
+    /// Appends the object to the attachments
+    ///
+    /// - Parameter object: The object to append
     open func handleInput(of object: AnyObject) {
-        insertAttachment(object, at: attachments.count)
+        let attachment: Attachment
+        if let image = object as? UIImage {
+            attachment = .image(image)
+        } else if let url = object as? URL {
+            attachment = .url(url)
+        } else if let data = object as? Data {
+            attachment = .data(data)
+        } else {
+            attachment = .other(object)
+        }
+        
+        insertAttachment(attachment, at: attachments.count)
     }
     
-    // MARK: - Attachment Management
+    // MARK: - API [Public]
     
     /// Performs an animated insertion of an attachment at an index
     ///
     /// - Parameter index: The index to insert the attachment at
-    open func insertAttachment(_ attachment: AnyObject, at index: Int) {
+    open func insertAttachment(_ attachment: Attachment, at index: Int) {
         
         attachmentView.performBatchUpdates({
             self.attachments.insert(attachment, at: index)
@@ -114,63 +130,73 @@ open class AttachmentManager: NSObject, InputManager, UICollectionViewDataSource
         })
     }
     
+}
+
+extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
     // MARK: - UICollectionViewDelegate
     
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    final public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == attachments.count {
             delegate?.attachmentManager(self, didSelectAddAttachmentAt: indexPath.row)
             delegate?.attachmentManager(self, shouldBecomeVisible: attachments.count > 0 || isPersistent)
         }
     }
-
+    
     // MARK: - UICollectionViewDataSource
     
-    open func numberOfItems(inSection section: Int) -> Int {
+    final public func numberOfItems(inSection section: Int) -> Int {
         return 1
     }
     
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    final public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return attachments.count + (showAddAttachmentCell ? 1 : 0)
     }
     
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    final public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.row == attachments.count {
+        if indexPath.row == attachments.count && showAddAttachmentCell {
             return addAttachmentCell(in: collectionView, at: indexPath)
         }
-        return dataSource?.attachmentManager(self, cellFor: attachments[indexPath.row], at: indexPath.row) ?? defaultCell(in: collectionView, for: attachments[indexPath.row], at: indexPath)
+        
+        let attachment = attachments[indexPath.row]
+        
+        if let cell = dataSource?.attachmentManager(self, cellFor: attachment, at: indexPath.row) {
+            return cell
+        } else {
+            
+            // Only images are supported by default
+            switch attachment {
+            case .image(let image):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as? ImageAttachmentCell else {
+                    fatalError()
+                }
+                cell.attachment = attachment
+                cell.indexPath = indexPath
+                cell.manager = self
+                cell.imageView.image = image
+                return cell
+            default:
+                return collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as! AttachmentCell
+            }
+            
+        }
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
     
-    open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    final public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        var height = collectionView.intrinsicContentSize.height
+        var height = attachmentView.intrinsicContentHeight
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             height -= (layout.sectionInset.bottom + layout.sectionInset.top + collectionView.contentInset.top + collectionView.contentInset.bottom)
         }
         return CGSize(width: height, height: height)
     }
     
-    // MARK: - Default Cells
-    
-    open func defaultCell(in collectionView: UICollectionView, for attachment: AnyObject, at indexPath: IndexPath) -> AttachmentCell {
+    private func addAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
         
-        if let image = attachments[indexPath.row] as? UIImage {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as? ImageAttachmentCell else {
-                fatalError()
-            }
-            cell.indexPath = indexPath
-            cell.manager = self
-            cell.imageView.image = image
-            return cell
-        }
-        return collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as! AttachmentCell
-    }
-    
-    open func addAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "AttachmentCell", for: indexPath) as? AttachmentCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as? AttachmentCell else {
             fatalError()
         }
         cell.deleteButton.isHidden = true

@@ -37,5 +37,5 @@ public protocol AttachmentManagerDataSource: class {
     ///   - attachment: The object
     ///   - index: The index in the AttachmentView
     /// - Returns: An AttachmentCell
-    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AnyObject, at index: Int) -> AttachmentCell
+    func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AttachmentManager.Attachment, at index: Int) -> AttachmentCell
 }

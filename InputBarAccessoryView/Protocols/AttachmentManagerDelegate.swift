@@ -44,7 +44,7 @@ public protocol AttachmentManagerDelegate: class {
     ///   - manager: The AttachmentManager
     ///   - attachment: The attachment that was inserted
     ///   - index: The index of the attachment in the AttachmentManager's attachments array
-    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int)
+    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AttachmentManager.Attachment, at index: Int)
     
     /// Notifys when an attachment has been removed from the AttachmentManager
     ///
@@ -52,14 +52,14 @@ public protocol AttachmentManagerDelegate: class {
     ///   - manager: The AttachmentManager
     ///   - attachment: The attachment that was removed
     ///   - index: The index of the attachment in the AttachmentManager's attachments array
-    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int)
+    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AttachmentManager.Attachment, at index: Int)
     
     /// Notifys when the AttachmentManager was reloaded
     ///
     /// - Parameters:
     ///   - manager: The AttachmentManager
     ///   - attachments: The AttachmentManager's attachments array
-    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject])
+    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AttachmentManager.Attachment])
     
     /// Notifys when the AddAttachmentCell was selected
     ///
@@ -71,11 +71,11 @@ public protocol AttachmentManagerDelegate: class {
 
 public extension AttachmentManagerDelegate {
     
-    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {}
+    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AttachmentManager.Attachment, at index: Int) {}
     
-    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {}
+    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AttachmentManager.Attachment, at index: Int) {}
     
-    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {}
+    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AttachmentManager.Attachment]) {}
     
     func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {}
 }

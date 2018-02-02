@@ -73,7 +73,7 @@ open class AttachmentsView: UICollectionView {
         alwaysBounceHorizontal = true
         showsHorizontalScrollIndicator = true
         setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
-        register(AttachmentCell.self, forCellWithReuseIdentifier: "AttachmentCell")
+        register(AttachmentCell.self, forCellWithReuseIdentifier: AttachmentCell.reuseIdentifier)
         register(ImageAttachmentCell.self, forCellWithReuseIdentifier: ImageAttachmentCell.reuseIdentifier)
     }
 }

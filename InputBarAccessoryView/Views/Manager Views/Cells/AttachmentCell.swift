@@ -31,6 +31,10 @@ open class AttachmentCell: UICollectionViewCell {
     
     // MARK: - Properties
     
+    class var reuseIdentifier: String {
+        return "AttachmentCell"
+    }
+    
     open let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +61,7 @@ open class AttachmentCell: UICollectionViewCell {
         return button
     }()
     
-    open var attachment: AnyObject?
+    open var attachment: AttachmentManager.Attachment?
     
     open var indexPath: IndexPath?
     

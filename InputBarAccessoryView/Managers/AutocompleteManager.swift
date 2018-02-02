@@ -75,11 +75,7 @@ open class AutocompleteManager: NSObject, InputManager {
     private(set) public weak var inputTextView: InputTextView?
     
     /// An ongoing session reference that holds the prefix, range and text to complete with
-    private(set) public var currentSession: AutocompleteSession? {
-        didSet {
-            layoutIfNeeded()
-        }
-    }
+    private(set) public var currentSession: AutocompleteSession? { didSet { layoutIfNeeded() } }
     
     /// The `AutocompleteTableView` that renders available autocompletes for the `currentSession`
     open lazy var tableView: AutocompleteTableView = { [weak self] in
