@@ -86,9 +86,9 @@ private var onDisabledAction: InputBarButtonItemAction?
 
 ## Changelog
 
--1.5.1
+- 1.5.1
         - Optimize AutocompleteManager & AttachmentManager
--1.5.0
+- 1.5.0
         - Stability and bug fixes
 - 1.4.0
         - iPhone X Fixes
