@@ -442,10 +442,18 @@ extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteM
         return []
     }
     
-//    Optional
-//    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
-//
-//    }
+    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+            fatalError("AutocompleteCell is not registered")
+        }
+        let users = SampleData.shared.users
+        let name = session.completion?.text ?? ""
+        let user = users.filter { return $0.name == name }.first
+        cell.imageView?.image = user?.image
+        cell.textLabel?.text = session.completion?.displayText ?? session.completion?.text
+        return cell
+    }
     
     // MARK: - AutocompleteManagerDelegate
     

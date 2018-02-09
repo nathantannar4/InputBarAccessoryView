@@ -30,10 +30,10 @@ import UIKit
 public struct AutocompleteCompletion {
     
     // The string used for sorting and to autocomplete a prefix
-    var text: String
+    public var text: String
     
     // An optional string to display instead of `text`, for example emojis
-    var displayText: String?
+    public var displayText: String?
     
     public init(_ text: String) {
         self.text = text
@@ -48,10 +48,10 @@ public struct AutocompleteCompletion {
 /// A structure containing data on the `AutocompleteManager`'s session
 public struct AutocompleteSession {
     
-    let prefix: String
-    var range: NSRange
-    var filter: String
-    var completion: AutocompleteCompletion?
+    public let prefix: String
+    public var range: NSRange
+    public var filter: String
+    public var completion: AutocompleteCompletion?
     
     public init?(prefix: String?, range: NSRange?, filter: String?) {
         guard let pfx = prefix, let rng = range, let flt = filter else { return nil }
