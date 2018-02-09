@@ -1,5 +1,5 @@
 //
-//  ExampleViewController.swift
+//  ConversationViewController.swift
 //  InputBarAccessoryView Example
 //
 //  Copyright © 2017-2018 Nathan Tannar.
@@ -28,7 +28,17 @@
 import UIKit
 import InputBarAccessoryView
 
-class ExampleViewController: UITableViewController {
+class ConversationCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class ConversationViewController: UITableViewController {
     
     lazy var bar: InputBarAccessoryView = { [weak self] in
         let bar = InputBarAccessoryView()
@@ -48,7 +58,8 @@ class ExampleViewController: UITableViewController {
         let manager = AutocompleteManager(for: self.bar.inputTextView)
         manager.delegate = self
         manager.dataSource = self
-        manager.autocompletePrefixes = ["@","#"]
+        manager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
+        manager.register(prefix: "#")
         return manager
     }()
     
@@ -65,18 +76,9 @@ class ExampleViewController: UITableViewController {
     // We only want to adjust animate changes in the bar when the view is loaded
     var viewIsLoaded = false
     
-    var messages = [String]()
+    var conversation: SampleData.Conversation
     
     let githawkImages: [UIImage] = [#imageLiteral(resourceName: "ic_eye"), #imageLiteral(resourceName: "ic_bold"), #imageLiteral(resourceName: "ic_italic"), #imageLiteral(resourceName: "ic_at"), #imageLiteral(resourceName: "ic_list"), #imageLiteral(resourceName: "ic_code"), #imageLiteral(resourceName: "ic_link"), #imageLiteral(resourceName: "ic_hashtag"), #imageLiteral(resourceName: "ic_upload")]
-    
-    var nameAutocompletes: [AutocompleteCompletion] = {
-        var array: [AutocompleteCompletion] = []
-        for _ in 1...100 {
-            let name = Randoms.randomFakeName().replacingOccurrences(of: " ", with: ".").lowercased()
-            array.append(AutocompleteCompletion(name))
-        }
-        return array
-    }()
     
     var hastagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
@@ -86,12 +88,21 @@ class ExampleViewController: UITableViewController {
         return array
     }()
     
+    init(conversation: SampleData.Conversation) {
+        self.conversation = conversation
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "InputBarAccessoryView"
         view.backgroundColor = .white
         tableView.keyboardDismissMode = .interactive
+        tableView.register(ConversationCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
         bar.inputManagers = [attachmentManager, autocompleteManager]
         
@@ -101,9 +112,6 @@ class ExampleViewController: UITableViewController {
                             target: self,
                             action: #selector(handleKeyboardButton))
         ]
-        
-//        messages = Lorem.sentences(nbSentences: 20)
-//        tableView.reloadData()
         
         viewIsLoaded = true
     }
@@ -287,6 +295,8 @@ class ExampleViewController: UITableViewController {
         autocompleteManager = AutocompleteManager(for: newBar.inputTextView)
         autocompleteManager.delegate = self
         autocompleteManager.dataSource = self
+        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
+        autocompleteManager.register(prefix: "#")
         newBar.inputManagers = [autocompleteManager, attachmentManager]
         bar = newBar
         reloadInputViews()
@@ -308,19 +318,27 @@ class ExampleViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return conversation.messages.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.font = .systemFont(ofSize: 13)
-        cell.textLabel?.text = messages[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.imageView?.image = conversation.messages[indexPath.row].user.image
+        cell.imageView?.layer.cornerRadius = 5
+        cell.imageView?.clipsToBounds = true
+        cell.textLabel?.text = conversation.messages[indexPath.row].user.name
+        cell.textLabel?.font = .boldSystemFont(ofSize: 15)
         cell.textLabel?.numberOfLines = 0
+        cell.detailTextLabel?.textColor = .darkGray
+        cell.detailTextLabel?.font = .systemFont(ofSize: 14)
+        cell.detailTextLabel?.text = conversation.messages[indexPath.row].text
+        cell.detailTextLabel?.numberOfLines = 0
+        cell.selectionStyle = .none
         return cell
     }
 }
 
-extension ExampleViewController: UICollectionViewDataSource {
+extension ConversationViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return githawkImages.count
@@ -340,19 +358,20 @@ extension ExampleViewController: UICollectionViewDataSource {
     
 }
 
-extension ExampleViewController: InputBarAccessoryViewDelegate {
+extension ConversationViewController: InputBarAccessoryViewDelegate {
     
     // MARK: - InputBarAccessoryViewDelegate
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        messages.append(text)
+        conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
         inputBar.inputTextView.text = String()
-        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+        let indexPath = IndexPath(row: conversation.messages.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
 }
 
-extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ConversationViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
@@ -364,7 +383,7 @@ extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
-extension ExampleViewController: AttachmentManagerDelegate {
+extension ConversationViewController: AttachmentManagerDelegate {
     
     
     // MARK: - AttachmentManagerDelegate
@@ -407,14 +426,16 @@ extension ExampleViewController: AttachmentManagerDelegate {
     }
 }
 
-extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
+extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
     
     // MARK: - AutocompleteManagerDataSource
     
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion] {
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: String) -> [AutocompleteCompletion] {
         
         if prefix == "@" {
-            return nameAutocompletes
+            return conversation.users
+                .filter { $0.name != SampleData.shared.currentUser.name }
+                .map { AutocompleteCompletion($0.name) }
         } else if prefix == "#" {
             return hastagAutocompletes
         }

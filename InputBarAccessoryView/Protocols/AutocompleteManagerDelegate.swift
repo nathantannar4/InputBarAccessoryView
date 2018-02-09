@@ -44,7 +44,7 @@ public protocol AutocompleteManagerDelegate: class {
     ///   - prefix: The prefix `Character` could be registered
     ///   - range: The `NSRange` of the prefix in the UITextView managed by the AutocompleteManager
     /// - Returns: If the prefix should be registered. Default is TRUE
-    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: NSRange) -> Bool
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: String, at range: NSRange) -> Bool
     
     /// Determines if a prefix character should be unregistered to de-initialize the auto-complete selection table
     ///
@@ -53,7 +53,7 @@ public protocol AutocompleteManagerDelegate: class {
     ///   - prefix: The prefix character could be unregistered
     ///   - range: The range of the prefix in the UITextView managed by the AutocompleteManager
     /// - Returns: If the prefix should be unregistered. Default is TRUE
-    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool
+    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: String) -> Bool
     
     /// Determines if a prefix character can should be autocompleted
     ///
@@ -62,20 +62,20 @@ public protocol AutocompleteManagerDelegate: class {
     ///   - prefix: The prefix character that is currently registered
     ///   - text: The text to autocomplete with
     /// - Returns: If the prefix can be autocompleted. Default is TRUE
-    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool
+    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: String, with text: String) -> Bool
 }
 
 public extension AutocompleteManagerDelegate {
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: Character, at range: NSRange) -> Bool {
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: String, at range: NSRange) -> Bool {
         return true
     }
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: Character) -> Bool {
+    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: String) -> Bool {
         return true
     }
     
-    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: Character, with text: String) -> Bool {
+    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: String, with text: String) -> Bool {
         return true
     }
 }

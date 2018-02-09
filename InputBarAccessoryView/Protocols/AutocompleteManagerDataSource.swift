@@ -36,7 +36,7 @@ public protocol AutocompleteManagerDataSource: class {
     ///   - manager: The AutocompleteManager
     ///   - prefix: The registered prefix
     /// - Returns: An array of `AutocompleteCompletion` options for the given prefix
-    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: Character) -> [AutocompleteCompletion]
+    func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: String) -> [AutocompleteCompletion]
     
     /// The cell to populate the `AutocompleteTableView` with
     ///

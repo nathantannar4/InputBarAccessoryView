@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Nathan.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icons8-anonymous_mask.png",
       "scale" : "2x"
     },
     {

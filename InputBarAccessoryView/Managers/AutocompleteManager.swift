@@ -48,12 +48,12 @@ public struct AutocompleteCompletion {
 /// A structure containing data on the `AutocompleteManager`'s session
 public struct AutocompleteSession {
     
-    let prefix: Character
+    let prefix: String
     var range: NSRange
     var filter: String
     var completion: AutocompleteCompletion?
     
-    public init?(prefix: Character?, range: NSRange?, filter: String?) {
+    public init?(prefix: String?, range: NSRange?, filter: String?) {
         guard let pfx = prefix, let rng = range, let flt = filter else { return nil }
         self.prefix = pfx
         self.range = rng
@@ -87,7 +87,7 @@ open class AutocompleteManager: NSObject, InputManager {
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
-        }()
+    }()
     
     /// If the autocomplete matches should be made by casting the strings to lowercase.
     /// Default value is `FALSE`
@@ -101,26 +101,17 @@ open class AutocompleteManager: NSObject, InputManager {
     /// Default value is `TRUE`
     open var keepPrefixOnCompletion = true
     
-    /// The prefices that the manager will recognize
-    /// Default value is `["@"]`
-    open var autocompletePrefixes: [Character] = ["@"]
-    
-    /// The delimiters that cause a current autocomplete session to become invalidated when typed.
-    /// Default value is `[" ", "\n"]`
-    open var autocompleteDelimiters: [Character] = [" ", "\n"]
-    
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedStringKey: Any] =
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
     
-    /// The text attributes applied to highlighted substrings for each prefix
-    /// Default value applys blue tint highlighting to the `@` prefix
-    open var autocompleteTextAttributes: [Character: [NSAttributedStringKey: Any]] =
-        ["@": [.font: UIFont.preferredFont(forTextStyle: .body),
-               .foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),
-               .backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)]]
-    
     // MARK: - Properties [Private]
+    
+    /// The prefices that the manager will recognize
+    private var autocompletePrefixes = Set<String>()
+    
+    /// The text attributes applied to highlighted substrings for each prefix
+    private var autocompleteTextAttributes = [String: [NSAttributedStringKey: Any]]()
     
     /// A key used for referencing which substrings were autocompletes
     private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.messagekit.autocompletekey")
@@ -153,21 +144,19 @@ open class AutocompleteManager: NSObject, InputManager {
     
     /// Reloads the InputManager's session
     open func reloadData() {
-        
-        /// Checks the last character in the UITextView, if it matches an autocomplete prefix it is registered as the current
-        guard let text = inputTextView?.text else { return unregisterCurrentPrefix() }
-        let suffix = String(text.suffix(1))
-        guard !suffix.isEmpty else { return unregisterCurrentPrefix() }
-        let char = Character(suffix)
-        if autocompletePrefixes.contains(char) {
-            let range = NSRange(location: text.count - 1, length: 0)
-            registerCurrentPrefix(to: char, at: range)
+
+        guard let result = inputTextView?.find(prefixes: autocompletePrefixes) else {
+            invalidate()
+            return
         }
+        let wordWithoutPrefix = (result.word as NSString).substring(from: result.prefix.utf16.count)
+        guard let session = AutocompleteSession(prefix: result.prefix, range: result.range, filter: wordWithoutPrefix) else { return }
+        registerCurrentSession(to: session)
     }
     
     /// Invalidates the InputManager's session
     open func invalidate() {
-        unregisterCurrentPrefix()
+        unregisterCurrentSession()
     }
     
     /// Passes an object into the InputManager's session to handle
@@ -184,6 +173,16 @@ open class AutocompleteManager: NSObject, InputManager {
     
     // MARK: - API [Public]
     
+    open func register(prefix: String, with attributedTextAttributes: [NSAttributedStringKey:Any]? = nil) {
+        autocompletePrefixes.insert(prefix)
+        autocompleteTextAttributes[prefix] = attributedTextAttributes
+    }
+    
+    open func unregister(prefix: String) {
+        autocompletePrefixes.remove(prefix)
+        autocompleteTextAttributes[prefix] = nil
+    }
+    
     /// Replaces the current prefix and filter text with the supplied text
     ///
     /// - Parameters:
@@ -193,29 +192,30 @@ open class AutocompleteManager: NSObject, InputManager {
         guard let textView = inputTextView else { return }
         guard delegate?.autocompleteManager(self, shouldComplete: session.prefix, with: session.filter) != false else { return }
         
-        let textToInsert = (keepPrefixOnCompletion ? String(session.prefix) : "") + (session.completion?.text ?? "")
-        
-        // Apply the autocomplete attributes
-        var attrs = autocompleteTextAttributes[session.prefix] ?? defaultTextAttributes
-        attrs[NSAttributedAutocompleteKey] = true
-        let newAttributedString = NSAttributedString(string: textToInsert, attributes: attrs)
-        
         // Create a range that overlaps the prefix
-        let range = NSRange(location: session.range.location, length: 1)
+        let prefixLength = session.prefix.utf16.count
+        let insertionRange = NSRange(
+            location: session.range.location + (keepPrefixOnCompletion ? prefixLength : 0),
+            length: session.filter.utf16.count + (!keepPrefixOnCompletion ? prefixLength : 0)
+        )
+        
+        // Transform range
+        guard let range = Range(insertionRange, in: textView.text) else { return }
+        let nsrange = NSRange(range, in: textView.text)
         
         // Replace the attributedText with a modified version
-        let newAttributedText = textView.attributedText.replacingCharacters(in: range, with: newAttributedString)
-        if appendSpaceOnCompletion {
-            newAttributedText.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
-        }
-        textView.attributedText = newAttributedText
+        let autocomplete = session.completion?.text ?? ""
+        insertAutocomplete(autocomplete, at: session, for: nsrange)
         
         // Move Cursor to the end of the inserted text
-        let newLocation = textToInsert.count + (appendSpaceOnCompletion ? 1 : 0)
-        textView.selectedRange = NSRange(location: range.location + newLocation, length: 0)
+        let selectedLocation = insertionRange.location + autocomplete.utf16.count + (appendSpaceOnCompletion ? 1 : 0)
+        textView.selectedRange = NSRange(
+            location: selectedLocation,
+            length: 0
+        )
         
         // End the session
-        unregisterCurrentPrefix()
+        unregisterCurrentSession()
     }
     
     // MARK: - API [Private]
@@ -228,20 +228,48 @@ open class AutocompleteManager: NSObject, InputManager {
         inputTextView?.typingAttributes = typingAttributes
     }
     
-    /// Initializes a session with a new `Selection` object for the given prefix and range
+    
+    /// Inserts an autocomplete for a given selection
     ///
     /// - Parameters:
-    ///   - prefix: The Character to register as the prefix of the Selection
-    ///   - range: The NSRange to register for the Selection
-    private func registerCurrentPrefix(to prefix: Character, at range: NSRange) {
+    ///   - autocomplete: The 'String' to autocomplete to
+    ///   - sesstion: The 'AutocompleteSession'
+    ///   - range: The 'NSRange' to insert over
+    private func insertAutocomplete(_ autocomplete: String, at session: AutocompleteSession, for range: NSRange) {
         
-        guard delegate?.autocompleteManager(self, shouldRegister: prefix, at: range) != false else { return }
-        currentSession = AutocompleteSession(prefix: prefix, range: range, filter: "")
+        guard let textView = inputTextView else { return }
+        
+        // Apply the autocomplete attributes
+        var attrs = autocompleteTextAttributes[session.prefix] ?? defaultTextAttributes
+        attrs[NSAttributedAutocompleteKey] = true
+        let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
+        let newAttributedString = NSAttributedString(string: newString, attributes: attrs)
+        
+        // Modify the NSRange to include the prefix length
+        let rangeModifier = keepPrefixOnCompletion ? session.prefix.count : 0
+        let highlightedRange = NSRange(location: range.location - rangeModifier, length: range.length + rangeModifier)
+        
+        // Replace the attributedText with a modified version including the autocompete
+        let newAttributedText = textView.attributedText.replacingCharacters(in: highlightedRange, with: newAttributedString)
+        if appendSpaceOnCompletion {
+            newAttributedText.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
+        }
+        textView.attributedText = newAttributedText
+    }
+    
+    /// Initializes a session with a new `AutocompleteSession` object
+    ///
+    /// - Parameters:
+    ///   - session: The session to register
+    private func registerCurrentSession(to session: AutocompleteSession) {
+        
+        guard delegate?.autocompleteManager(self, shouldRegister: session.prefix, at: session.range) != false else { return }
+        currentSession = session
         delegate?.autocompleteManager(self, shouldBecomeVisible: true)
     }
     
     /// Invalidates the `currentSession` session if it existed
-    private func unregisterCurrentPrefix() {
+    private func unregisterCurrentSession() {
         
         guard let session = currentSession else { return }
         guard delegate?.autocompleteManager(self, shouldUnregister: session.prefix) != false else { return }
@@ -267,7 +295,11 @@ extension AutocompleteManager: UITextViewDelegate {
     
     // MARK: - UITextViewDelegate
     
-    final public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+    public func textViewDidChange(_ textView: UITextView) {
+        reloadData()
+    }
+    
+    public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         
         // Ensure that the text to be inserted is not using previous attributes
         preserveTypingAttributes()
@@ -295,45 +327,10 @@ extension AutocompleteManager: UITextViewDelegate {
                     textView.attributedText = textView.attributedText.replacingCharacters(in: range, with: emptyString)
                     textView.selectedRange = NSRange(location: range.location, length: 0)
                 })
-                
+                unregisterCurrentSession()
                 return false
             }
         }
-        
-        if let currentRange = currentSession?.range {
-            // User deleted the registered prefix
-            if currentRange.lowerBound >= range.lowerBound {
-                unregisterCurrentPrefix()
-                return true
-            }
-        }
-        
-        if let prefix = currentSession?.prefix {
-            // A prefix is already regsitered so update the filter text
-            let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-            let index = newText.index(newText.startIndex, offsetBy: newText.count)
-            currentSession?.filter = newText[index...].components(separatedBy: " ").first?.replacingOccurrences(of: String(prefix), with: "") ?? ""
-        }
-        
-        let prefix = String(text.prefix(1))
-        guard !prefix.isEmpty else { return true }
-        let char = Character(prefix)
-        
-        // If a delimiter is typed unregister the current prefix
-        if autocompleteDelimiters.contains(char) {
-            unregisterCurrentPrefix()
-            
-        } else if autocompletePrefixes.contains(char) {
-            
-            // Autocomplete sessions begin with a prefix that is preceeded by a delimiter (or nil)
-            let previousText = (textView.text as NSString).substring(to: range.lowerBound)
-            if let previousChar = previousText.last, autocompleteDelimiters.contains(previousChar) {
-                registerCurrentPrefix(to: char, at: range)
-            } else if previousText.last == nil {
-                registerCurrentPrefix(to: char, at: range)
-            }
-        }
-        
         return true
     }
     
