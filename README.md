@@ -1,6 +1,11 @@
-<img src="./Screenshots/Banner.png">
+<img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Banner.png">
 
-# Featuring Reactive Changes, Autocomplete and more!
+# InputBarAccessoryView
+> Featuring Reactive Changes, Autocomplete and more!
+
+[![CocoaPods](https://img.shields.io/cocoapods/dt/InputBarAccessoryView.svg)]()
+[![CocoaPods](https://img.shields.io/cocoapods/dw/InputBarAccessoryView.svg)]()
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](paypal.me/nathantannar)
 
 ### Installation via CocoaPods
 
@@ -30,11 +35,11 @@ XCode 9.0+
 
 ### Demo
 
-<img src="./Screenshots/Demo.gif" width="275" height="600">
+<img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Demo.gif" width="275" height="600">
 
 ### Screenshots
 
-<img src="./Screenshots/ScreenshotA.png" width="242" height="432"> <img src="./Screenshots/ScreenshotB.png" width="242" height="432"> <img src="./Screenshots/ScreenshotC.png" width="242" height="432"> <img src="./Screenshots/ScreenshotD.png" width="242" height="432"> <img src="./Screenshots/ScreenshotE.png" width="242" height="432"> <img src="./Screenshots/ScreenshotF.png" width="242" height="432">
+<img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotA.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotB.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotC.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotD.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotE.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotF.png" width="242" height="432">
 
 ### Featured In
 
@@ -54,7 +59,7 @@ Add your app to the list of apps using this library and make a pull request.
 
 The layout of the `InputBarAccessoryView` is made of of 4  `InputStackView`'s and an `InputTextView`. The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
 
-<img src="./Screenshots/Layout.png">
+<img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Layout.png">
 
 It is important to note that each of the `InputStackView `'s to the left and right of the `InputTextView` are anchored by a width constraint. This way the `InputTextView` will always fill the space inbetween in addition to providing methods that can easily be called to hide all buttons to the right or left of the `InputTextView` by setting the width constraint constant to 0. The bottom and top stack views are not height constraint and rely on their `intrinsicContentSize`
 
