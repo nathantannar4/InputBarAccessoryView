@@ -1,11 +1,21 @@
 <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Banner.png">
 
 # InputBarAccessoryView
-> Featuring Reactive Changes, Autocomplete and more!
 
 [![CocoaPods](https://img.shields.io/cocoapods/dt/InputBarAccessoryView.svg)]()
 [![CocoaPods](https://img.shields.io/cocoapods/dw/InputBarAccessoryView.svg)]()
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](paypal.me/nathantannar)
+
+### Features
+
+- [x] A growing `UITextView` with a fixed max size
+- [x] Image paste support
+- [x] RxSwift inspired reactive components that respond to given events
+- [x] Top/Bottom/Left/Right `UIStackView`s that act as toolbars to place buttons
+- [x] Drop in autocomplete for any given prefix
+- [x] Drop in attachment view for file/photo management
+- [x] Plugin support for your own `InputManager`s
+- [x] iPhone X Support
 
 ### Installation via CocoaPods
 
