@@ -13,6 +13,7 @@
 - [x] RxSwift inspired reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `UIStackView`s that act as toolbars to place buttons
 - [x] Drop in autocomplete for any given prefix
+- [x] Autocomplete attributed text highlighting
 - [x] Drop in attachment view for file/photo management
 - [x] Plugin support for your own `InputManager`s
 - [x] iPhone X Support
