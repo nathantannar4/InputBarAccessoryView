@@ -8,13 +8,14 @@
 
 ### Features
 
-- [x] A growing `UITextView` with a fixed max size
+- [x] A growing `UITextView` with optional fixed height
 - [x] Image paste support
 - [x] RxSwift inspired reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `UIStackView`s that act as toolbars to place buttons
 - [x] Drop in autocomplete for any given prefix
 - [x] Autocomplete attributed text highlighting
 - [x] Drop in attachment view for file/photo management
+- [x] Drop in Slack style `TypingIndicator`
 - [x] Plugin support for your own `InputManager`s
 - [x] iPhone X Support
 
@@ -104,6 +105,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 
 - 1.5.3
         - [WIP] `TypingIndicator` InputItem view added, see example
+        - `shouldForceTextViewMaxHeight` property added
 - 1.5.2
         - Better autocomplete detection
 - 1.5.1

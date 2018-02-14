@@ -211,7 +211,12 @@ open class InputBarAccessoryView: UIView {
     /// improves the performance
     public private(set) var isOverMaxTextViewHeight = false
     
-    /// A boolean that determines if the maxTextViewHeight should be auto updated on device rotation
+    /// A boolean that when set as `TRUE` will always enable the `InputTextView` to be anchored to the
+    /// height of `maxTextViewHeight`
+    /// The default value is `FALSE`
+    public private(set) var shouldForceTextViewMaxHeight = false
+    
+    /// A boolean that determines if the `maxTextViewHeight` should be auto updated on device rotation
     open var shouldAutoUpdateMaxTextViewHeight = true
     
     /// The maximum height that the InputTextView can reach. Automatically set with `calculateMaxTextViewHeight()`
@@ -492,7 +497,7 @@ open class InputBarAccessoryView: UIView {
             inputTextViewHeight = maxTextViewHeight
         } else {
             if isOverMaxTextViewHeight {
-                textViewHeightAnchor?.isActive = false
+                textViewHeightAnchor?.isActive = false || shouldForceTextViewMaxHeight
                 inputTextView.isScrollEnabled = false
                 isOverMaxTextViewHeight = false
                 inputTextView.invalidateIntrinsicContentSize()
@@ -659,8 +664,8 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) { 
             self.leftStackViewWidthConstant = newValue
             self.layoutStackViews([.left])
-            guard self.superview != nil else { return }
-            self.layoutIfNeeded()
+            guard self.superview?.superview != nil else { return }
+            self.superview?.superview?.layoutIfNeeded()
         }
     }
     
@@ -673,8 +678,22 @@ open class InputBarAccessoryView: UIView {
         performLayout(animated) { 
             self.rightStackViewWidthConstant = newValue
             self.layoutStackViews([.right])
-            guard self.superview != nil else { return }
-            self.layoutIfNeeded()
+            guard self.superview?.superview != nil else { return }
+            self.superview?.superview?.layoutIfNeeded()
+        }
+    }
+    
+    /// Sets the `shouldForceTextViewMaxHeight` property
+    ///
+    /// - Parameters:
+    ///   - newValue: New boolean value
+    ///   - animated: If the layout should be animated
+    open func setShouldForceMaxTextViewHeight(to newValue: Bool, animated: Bool) {
+        performLayout(animated) {
+            self.shouldForceTextViewMaxHeight = newValue
+            self.textViewHeightAnchor?.isActive = newValue
+            guard self.superview?.superview != nil else { return }
+            self.superview?.superview?.layoutIfNeeded()
         }
     }
     

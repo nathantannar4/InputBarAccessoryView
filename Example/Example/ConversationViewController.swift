@@ -112,8 +112,6 @@ class ConversationViewController: UITableViewController {
         tableView.keyboardDismissMode = .interactive
         tableView.register(ConversationCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
-        bar.inputManagers = [attachmentManager, autocompleteManager]
-        bar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
@@ -126,6 +124,8 @@ class ConversationViewController: UITableViewController {
                             action: #selector(handleTypingButton))
         ]
         
+//        resetInputBar()
+        slack()
         viewIsLoaded = true
     }
     
@@ -216,19 +216,21 @@ class ConversationViewController: UITableViewController {
         resetInputBar()
         let items = [
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
-                button.isEnabled = textView.text.isEmpty
+                    button.isEnabled = textView.text.isEmpty
+                }.onSelected {
+                    $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             },
-            makeButton(named: "ic_at").onSelected { _ in
+            makeButton(named: "ic_at").onSelected {
                 self.autocompleteManager.handleInput(of: "@" as AnyObject)
+                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             },
-            makeButton(named: "ic_hashtag").onSelected { _ in
+            makeButton(named: "ic_hashtag").onSelected {
                 self.autocompleteManager.handleInput(of: "#" as AnyObject)
+                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
             },
             .flexibleSpace,
             makeButton(named: "ic_library")
-                .configure {
-                    $0.tintColor = .red
-                }.onSelected {
+                .onSelected {
                     $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
                     let imagePicker = UIImagePickerController()
                     imagePicker.delegate = self
@@ -262,9 +264,20 @@ class ConversationViewController: UITableViewController {
         bar.inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         bar.inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
     
-        // Since we moved the send button to the bottom stack lets set the right stack width to 0
-        bar.setRightStackViewWidthConstant(to: 0, animated: viewIsLoaded)
-        
+        let maxSizeItem = InputBarButtonItem()
+            .configure {
+                $0.image = UIImage(named: "icons8-expand")?.withRenderingMode(.alwaysTemplate)
+                $0.tintColor = .darkGray
+                $0.setSize(CGSize(width: 20, height: 20), animated: viewIsLoaded)
+            }.onSelected {
+                let oldValue = $0.inputBarAccessoryView?.shouldForceTextViewMaxHeight ?? false
+                $0.image = oldValue ? UIImage(named: "icons8-expand")?.withRenderingMode(.alwaysTemplate) : UIImage(named: "icons8-collapse")?.withRenderingMode(.alwaysTemplate)
+                $0.inputBarAccessoryView?.setShouldForceMaxTextViewHeight(to: !oldValue, animated: self.viewIsLoaded)
+        }
+        bar.rightStackView.alignment = .top
+        bar.setStackViewItems([maxSizeItem], forStack: .right, animated: viewIsLoaded)
+        bar.setRightStackViewWidthConstant(to: 20, animated: viewIsLoaded)
+    
         // Finally set the items
         bar.setStackViewItems(items, forStack: .bottom, animated: viewIsLoaded)
     }

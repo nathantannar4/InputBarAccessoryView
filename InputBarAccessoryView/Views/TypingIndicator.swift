@@ -42,7 +42,7 @@ open class TypingIndicator: UIView, InputItem {
     }
     
     /// An array of names/ids that will be parsed and displayed as the typing users
-    private(set) public var usersTyping: [String] = []
+    public private(set) var usersTyping: [String] = []
     
     open let label: UILabel = {
         let label = UILabel()
