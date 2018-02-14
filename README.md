@@ -102,6 +102,10 @@ private var onDisabledAction: InputBarButtonItemAction?
 
 ## Changelog
 
+- 1.5.3
+        - [WIP] `TypingIndicator` InputItem view added, see example
+- 1.5.2
+        - Better autocomplete detection
 - 1.5.1
         - Optimize AutocompleteManager & AttachmentManager
 - 1.5.0

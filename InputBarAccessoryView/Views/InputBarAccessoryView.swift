@@ -32,7 +32,7 @@ open class InputBarAccessoryView: UIView {
     
     // MARK: - Properties
     
-    /// A delegate to broadcast notifications from the InputBarAccessoryView
+    /// A delegate to broadcast notifications from the `InputBarAccessoryView`
     open weak var delegate: InputBarAccessoryViewDelegate?
     
     /// The background UIView anchored to the bottom, left, and right of the MessageInputBar
@@ -51,13 +51,6 @@ open class InputBarAccessoryView: UIView {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    /// Also sets the backgroundView's backgroundColor to the newValue
-    open override var backgroundColor: UIColor? {
-        didSet {
-            backgroundView.backgroundColor = backgroundColor
-        }
-    }
     
     /**
      A UIVisualEffectView that adds a blur effect to make the view appear transparent.
@@ -366,7 +359,7 @@ open class InputBarAccessoryView: UIView {
     private func setupConstraints() {
         
         // The constraints within the MessageInputBar
-        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: 1)
+        separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: separatorLine.height)
         backgroundViewBottomAnchor = backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor)
         backgroundViewBottomAnchor?.isActive = true
         backgroundView.addConstraints(topStackView.bottomAnchor, left: leftAnchor, right: rightAnchor)
@@ -507,7 +500,7 @@ open class InputBarAccessoryView: UIView {
         }
         
         // Calculate the required height
-        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
+        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom + separatorLine.height
         let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
         let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight

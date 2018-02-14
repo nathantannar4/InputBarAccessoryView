@@ -87,4 +87,19 @@ open class AutocompleteCell: UITableViewCell {
         let imageViewSize = CGSize(width: imageViewFrame.size.width - imageViewEdgeInsets.left - imageViewEdgeInsets.right, height: imageViewFrame.size.height - imageViewEdgeInsets.top - imageViewEdgeInsets.bottom)
         imageView?.frame = CGRect(origin: imageViewOrigin, size: imageViewSize)
     }
+    
+    // MARK: - API [Public]
+    
+    open func attributedText(matching session: AutocompleteSession) -> NSMutableAttributedString {
+        
+        let completionText = (session.completion?.displayText ?? session.completion?.text) ?? ""
+        
+        // Bolds the text that currently matches the filter
+        let matchingRange = (completionText as NSString).range(of: session.filter, options: .caseInsensitive)
+        let attributedString = NSMutableAttributedString().normal(completionText)
+        attributedString.addAttributes([.font: UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)], range: matchingRange)
+        let stringWithPrefix = NSMutableAttributedString().normal(String(session.prefix))
+        stringWithPrefix.append(attributedString)
+        return stringWithPrefix
+    }
 }

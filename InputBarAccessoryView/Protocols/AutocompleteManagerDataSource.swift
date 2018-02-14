@@ -57,15 +57,7 @@ public extension AutocompleteManagerDataSource {
             fatalError("AutocompleteCell is not registered")
         }
         
-        let completionText = (session.completion?.displayText ?? session.completion?.text) ?? ""
-        
-        // Bolds the text that currently matches the filter
-        let matchingRange = (completionText as NSString).range(of: session.filter, options: .caseInsensitive)
-        let attributedString = NSMutableAttributedString().normal(completionText)
-        attributedString.addAttributes([.font: UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)], range: matchingRange)
-        let stringWithPrefix = NSMutableAttributedString().normal(String(session.prefix))
-        stringWithPrefix.append(attributedString)
-        cell.textLabel?.attributedText = stringWithPrefix
+        cell.textLabel?.attributedText = cell.attributedText(matching: session)
         cell.backgroundColor = .white
         cell.separatorLine.isHidden = tableView.numberOfRows(inSection: indexPath.section) - 1 == indexPath.row
         return cell

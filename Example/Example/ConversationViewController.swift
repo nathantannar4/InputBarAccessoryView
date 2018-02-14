@@ -46,6 +46,12 @@ class ConversationViewController: UITableViewController {
         return bar
     }()
     
+    open lazy var typingIdicator: TypingIndicator = { [weak self] in
+        let view = TypingIndicator()
+        view.delegate = self
+        return view
+    }()
+    
     /// The object that manages attachments
     open lazy var attachmentManager: AttachmentManager = { [weak self] in
         let manager = AttachmentManager()
@@ -76,6 +82,8 @@ class ConversationViewController: UITableViewController {
     // We only want to adjust animate changes in the bar when the view is loaded
     var viewIsLoaded = false
     
+    var usersTyping = 0
+    
     var conversation: SampleData.Conversation
     
     let githawkImages: [UIImage] = [#imageLiteral(resourceName: "ic_eye"), #imageLiteral(resourceName: "ic_bold"), #imageLiteral(resourceName: "ic_italic"), #imageLiteral(resourceName: "ic_at"), #imageLiteral(resourceName: "ic_list"), #imageLiteral(resourceName: "ic_code"), #imageLiteral(resourceName: "ic_link"), #imageLiteral(resourceName: "ic_hashtag"), #imageLiteral(resourceName: "ic_upload")]
@@ -105,15 +113,38 @@ class ConversationViewController: UITableViewController {
         tableView.register(ConversationCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
         bar.inputManagers = [attachmentManager, autocompleteManager]
+        bar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
         
         navigationItem.rightBarButtonItems = [
             UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
                             style: .plain,
                             target: self,
-                            action: #selector(handleKeyboardButton))
+                            action: #selector(handleKeyboardButton)),
+            UIBarButtonItem(image: UIImage(named: "ic_typing"),
+                            style: .plain,
+                            target: self,
+                            action: #selector(handleTypingButton))
         ]
         
         viewIsLoaded = true
+    }
+    
+    @objc
+    func handleTypingButton() {
+        
+        usersTyping += 1
+        switch usersTyping {
+        case 1:
+            typingIdicator.setUsersTyping(to: [conversation.users[0].name])
+        case 2:
+            typingIdicator.setUsersTyping(to: [conversation.users[0].name, conversation.users[1].name])
+        case 3:
+            typingIdicator.setUsersTyping(to: [conversation.users[0].name, conversation.users[1].name, conversation.users[2].name])
+        default:
+            typingIdicator.setUsersTyping(to: [])
+            usersTyping = 0
+        }
+        
     }
     
     @objc
@@ -298,6 +329,7 @@ class ConversationViewController: UITableViewController {
         autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
         autocompleteManager.register(prefix: "#")
         newBar.inputManagers = [autocompleteManager, attachmentManager]
+        newBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
         bar = newBar
         reloadInputViews()
     }
@@ -383,6 +415,14 @@ extension ConversationViewController: UIImagePickerControllerDelegate, UINavigat
     }
 }
 
+extension ConversationViewController: TypingIndicatorDelegate {
+    
+    func typingIndicator(_ typingIndicator: TypingIndicator, currentUserIsTyping isTyping: Bool) {
+        print("Current User isTyping: \(isTyping)")
+    }
+    
+}
+
 extension ConversationViewController: AttachmentManagerDelegate {
     
     
@@ -451,7 +491,7 @@ extension ConversationViewController: AutocompleteManagerDelegate, AutocompleteM
         let name = session.completion?.text ?? ""
         let user = users.filter { return $0.name == name }.first
         cell.imageView?.image = user?.image
-        cell.textLabel?.text = session.completion?.displayText ?? session.completion?.text
+        cell.textLabel?.attributedText = cell.attributedText(matching: session)
         return cell
     }
     
