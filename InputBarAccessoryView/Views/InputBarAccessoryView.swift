@@ -216,10 +216,13 @@ open class InputBarAccessoryView: UIView {
     /// The default value is `FALSE`
     public private(set) var shouldForceTextViewMaxHeight = false
     
-    /// A boolean that determines if the `maxTextViewHeight` should be auto updated on device rotation
+    /// A boolean that determines if the `maxTextViewHeight` should be maintained automatically.
+    /// To control the maximum height of the view yourself, set this to `false`.
     open var shouldAutoUpdateMaxTextViewHeight = true
-    
-    /// The maximum height that the InputTextView can reach. Automatically set with `calculateMaxTextViewHeight()`
+
+    /// The maximum height that the InputTextView can reach.
+    /// This is set automatically when `shouldAutoUpdateMaxTextViewHeight` is true.
+    /// To control the height yourself, make sure to set `shouldAutoUpdateMaxTextViewHeight` to false.
     open var maxTextViewHeight: CGFloat = 0 {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
