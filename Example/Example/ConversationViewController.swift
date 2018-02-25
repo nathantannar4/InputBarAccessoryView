@@ -64,8 +64,6 @@ class ConversationViewController: UITableViewController {
         let manager = AutocompleteManager(for: self.bar.inputTextView)
         manager.delegate = self
         manager.dataSource = self
-        manager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
-        manager.register(prefix: "#")
         return manager
     }()
     
@@ -124,8 +122,7 @@ class ConversationViewController: UITableViewController {
                             action: #selector(handleTypingButton))
         ]
         
-//        resetInputBar()
-        slack()
+        resetInputBar()
         viewIsLoaded = true
     }
     
@@ -343,6 +340,7 @@ class ConversationViewController: UITableViewController {
         autocompleteManager.register(prefix: "#")
         newBar.inputManagers = [autocompleteManager, attachmentManager]
         newBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
+        newBar.isSizeTransitionSmooth = true
         bar = newBar
         reloadInputViews()
     }

@@ -111,15 +111,21 @@ open class InputBarButtonItem: UIButton, InputItem {
     
     /// Calls the onSelectedAction or onDeselectedAction when set
     open override var isHighlighted: Bool {
-        didSet {
-            if isHighlighted {
+        get {
+            return super.isHighlighted
+        }
+        set {
+            guard newValue != isHighlighted else { return }
+            super.isHighlighted = newValue
+            if newValue {
                 onSelectedAction?(self)
             } else {
                 onDeselectedAction?(self)
             }
+
         }
     }
-    
+
     /// Calls the onEnabledAction or onDisabledAction when set
     open override var isEnabled: Bool {
         didSet {

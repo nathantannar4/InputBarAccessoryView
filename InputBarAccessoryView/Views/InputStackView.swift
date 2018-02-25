@@ -73,11 +73,4 @@ open class InputStackView: UIStackView {
         alignment = .bottom
     }
     
-    open override func layoutIfNeeded() {
-        super.layoutIfNeeded()
-        
-        // We need to invalidate the size of the superview (InputBarAccessoryView) in case the subview heights
-        // have changed and thus the superview size needs to change
-        superview?.invalidateIntrinsicContentSize()
-    }
 }

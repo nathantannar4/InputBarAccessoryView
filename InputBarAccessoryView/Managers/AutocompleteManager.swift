@@ -108,18 +108,27 @@ open class AutocompleteManager: NSObject, InputManager {
     // MARK: - Properties [Private]
     
     /// The prefices that the manager will recognize
-    private var autocompletePrefixes = Set<String>()
+    public private(set) var autocompletePrefixes = Set<String>()
     
     /// The text attributes applied to highlighted substrings for each prefix
-    private var autocompleteTextAttributes = [String: [NSAttributedStringKey: Any]]()
+    public private(set) var autocompleteTextAttributes = [String: [NSAttributedStringKey: Any]]()
     
     /// A key used for referencing which substrings were autocompletes
-    private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.messagekit.autocompletekey")
+    private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.system.autocompletekey")
+    
+    /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
+    private let paragraphStyle: NSMutableParagraphStyle = {
+        let style = NSMutableParagraphStyle()
+        style.paragraphSpacingBefore = 2
+        style.lineHeightMultiple = 1
+        return style
+    }()
     
     /// A reference to `defaultTextAttributes` that adds the NSAttributedAutocompleteKey
     private var typingTextAttributes: [NSAttributedStringKey: Any] {
         var attributes = defaultTextAttributes
         attributes[NSAttributedAutocompleteKey] = false
+        attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
     
@@ -176,6 +185,7 @@ open class AutocompleteManager: NSObject, InputManager {
     open func register(prefix: String, with attributedTextAttributes: [NSAttributedStringKey:Any]? = nil) {
         autocompletePrefixes.insert(prefix)
         autocompleteTextAttributes[prefix] = attributedTextAttributes
+        autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
     }
     
     open func unregister(prefix: String) {
