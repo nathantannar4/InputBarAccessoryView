@@ -77,9 +77,6 @@ open class InputBarAccessoryView: UIView {
             backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color
         }
     }
-    
-    /// Determines if the layout for a new `intrinsicContentSize` should be animated
-    open var isSizeTransitionSmooth: Bool = false
 
     /// A SeparatorLine that is anchored at the top of the InputBarAccessoryView
     open let separatorLine = SeparatorLine()
@@ -318,6 +315,7 @@ open class InputBarAccessoryView: UIView {
     /// Sets up the default properties
     open func setup() {
         
+        backgroundColor = .white
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
@@ -481,17 +479,10 @@ open class InputBarAccessoryView: UIView {
     /// Invalidates the view’s intrinsic content size
     open override func invalidateIntrinsicContentSize() {
         super.invalidateIntrinsicContentSize()
-        
         cachedIntrinsicContentSize = calculateIntrinsicContentSize()
-        
         if previousIntrinsicContentSize != cachedIntrinsicContentSize {
             delegate?.inputBar(self, didChangeIntrinsicContentTo: cachedIntrinsicContentSize)
             previousIntrinsicContentSize = cachedIntrinsicContentSize
-            
-            guard isSizeTransitionSmooth else { return }
-            performLayout(isSizeTransitionSmooth, {
-                self.superview?.superview?.layoutIfNeeded()
-            })
         }
     }
     

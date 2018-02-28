@@ -104,7 +104,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 ## Changelog
 
 - 1.5.4
-        - `isSizeTransitionSmooth` property added to animate layout on a new intrinsicContentSize
+        - Bug Fixes
 - 1.5.3
         - [WIP] `TypingIndicator` InputItem view added, see example
         - `shouldForceTextViewMaxHeight` property added
