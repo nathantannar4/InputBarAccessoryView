@@ -340,7 +340,6 @@ class ConversationViewController: UITableViewController {
         autocompleteManager.register(prefix: "#")
         newBar.inputManagers = [autocompleteManager, attachmentManager]
         newBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
-        newBar.isSizeTransitionSmooth = true
         bar = newBar
         reloadInputViews()
     }
