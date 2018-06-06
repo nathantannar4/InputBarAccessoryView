@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
     # 2 - Version
-    s.version = "1.5.4"
+    s.version = "2.0.0"
 
     # 3 - License
     s.license = { :type => "MIT", :file => "LICENSE" }

@@ -55,8 +55,11 @@ class NSLayoutConstraintSet {
     
     /// All of the currently configured constraints
     private var availableConstraints: [NSLayoutConstraint] {
-        return [top, bottom, left, right, centerX, centerY, width, height]
-            .compactMap {$0}
+        #if swift(>=4.1)
+            return [top, bottom, left, right, centerX, centerY, width, height].compactMap {$0}
+        #else
+            return [top, bottom, left, right, centerX, centerY, width, height].flatMap {$0}
+        #endif
     }
     
     /// Activates all of the non-nil constraints
