@@ -27,7 +27,7 @@
 
 import UIKit
 
-open class AutocompleteManager: NSObject, InputManager {
+open class AutocompleteManager: NSObject, InputPlugin {
     
     // MARK: - Properties [Public]
     
@@ -115,9 +115,9 @@ open class AutocompleteManager: NSObject, InputManager {
         self.inputTextView?.delegate = self
     }
     
-    // MARK: - InputManager
+    // MARK: - InputPlugin
     
-    /// Reloads the InputManager's session
+    /// Reloads the InputPlugin's session
     open func reloadData() {
 
         guard let result = inputTextView?.find(prefixes: autocompletePrefixes) else {
@@ -129,12 +129,12 @@ open class AutocompleteManager: NSObject, InputManager {
         registerCurrentSession(to: session)
     }
     
-    /// Invalidates the InputManager's session
+    /// Invalidates the InputPlugin's session
     open func invalidate() {
         unregisterCurrentSession()
     }
     
-    /// Passes an object into the InputManager's session to handle
+    /// Passes an object into the InputPlugin's session to handle
     ///
     /// - Parameter object: A string to append
     open func handleInput(of object: AnyObject) {

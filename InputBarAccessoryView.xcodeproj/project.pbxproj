@@ -32,7 +32,7 @@
 		38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */; };
 		38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */; };
 		38C867841F50A6AD00811974 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677C1F50A6AD00811974 /* InputTextView.swift */; };
-		38D29FE91F97CBA400E59362 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D29FE81F97CBA400E59362 /* InputManager.swift */; };
+		38D29FE91F97CBA400E59362 /* InputPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D29FE81F97CBA400E59362 /* InputPlugin.swift */; };
 		38EA6D66202E58BF00E329BE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EA6D65202E58BF00E329BE /* String+Extensions.swift */; };
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
@@ -66,7 +66,7 @@
 		38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryView.swift; sourceTree = "<group>"; };
 		38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarButtonItem.swift; sourceTree = "<group>"; };
 		38C8677C1F50A6AD00811974 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
-		38D29FE81F97CBA400E59362 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputManager.swift; path = InputBarAccessoryView/Protocols/InputManager.swift; sourceTree = SOURCE_ROOT; };
+		38D29FE81F97CBA400E59362 /* InputPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputPlugin.swift; path = InputBarAccessoryView/Protocols/InputPlugin.swift; sourceTree = SOURCE_ROOT; };
 		38EA6D65202E58BF00E329BE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
 		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
@@ -99,13 +99,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3876DA8C1F8352F800C89326 /* Managers */ = {
+		3876DA8C1F8352F800C89326 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
 				38F0C1ED20C7802300FF8DD3 /* AutocompleteManager */,
 				38F0C1EE20C7802B00FF8DD3 /* AttachmentManager */,
 			);
-			path = Managers;
+			path = Plugins;
 			sourceTree = "<group>";
 		};
 		38C867701F50A6AD00811974 /* InputBarAccessoryView */ = {
@@ -113,7 +113,7 @@
 			children = (
 				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
 				38F0C1F820C780F100FF8DD3 /* Experimental */,
-				3876DA8C1F8352F800C89326 /* Managers */,
+				3876DA8C1F8352F800C89326 /* Plugins */,
 				38C867791F50A6AD00811974 /* Views */,
 				38F0C1EC20C77FA000FF8DD3 /* Models */,
 				38F0C1EB20C77F9900FF8DD3 /* Controls */,
@@ -139,7 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */,
-				38D29FE81F97CBA400E59362 /* InputManager.swift */,
+				38D29FE81F97CBA400E59362 /* InputPlugin.swift */,
 				3891276C1F980F0300702C05 /* InputItem.swift */,
 			);
 			path = Protocols;
@@ -372,7 +372,7 @@
 				381042231F85FD1300B1E61A /* SeparatorLine.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,
 				3876DA911F83530900C89326 /* AutocompleteManagerDelegate.swift in Sources */,
-				38D29FE91F97CBA400E59362 /* InputManager.swift in Sources */,
+				38D29FE91F97CBA400E59362 /* InputPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

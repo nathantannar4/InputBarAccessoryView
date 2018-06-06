@@ -16,7 +16,7 @@
 - [x] Autocomplete attributed text highlighting
 - [x] Drop in attachment view for file/photo management
 - [x] Drop in Slack style `TypingIndicator`
-- [x] Plugin support for your own `InputManager`s
+- [x] Plugin support for your own `InputPlugin`s
 - [x] iPhone X Support
 
 ### Installation via CocoaPods
@@ -123,8 +123,8 @@ private var onDisabledAction: InputBarButtonItemAction?
 - 1.2.0
         - Better XCode docs
         - `InputItem` is now a protocol that you can give to the `InputBarAccessoryView`
-        - `InputManager` is now a protocol that you can conform to make a plugin
-        - `AutocompleteManager` and `AttactchmentManager` are no longer members of  `InputBarAccessoryView` by default. You will need to create them and assign them to the `inputManager` property of the `InputBarAccessoryView`
+        - `InputPlugin` is now a protocol that you can conform to make a plugin
+        - `AutocompleteManager` and `AttactchmentManager` are no longer members of  `InputBarAccessoryView` by default. You will need to create them and assign them to the `InputPlugin` property of the `InputBarAccessoryView`
 - 1.1.2
         - Fixed issue where adjusting the `InputTextView`'s placeholder text alignment didn't work
         - Fixed iPhone X support where the home indicator overlapped the `InputTextView`

@@ -27,7 +27,7 @@
 
 import UIKit
 
-open class AttachmentManager: NSObject, InputManager {
+open class AttachmentManager: NSObject, InputPlugin {
     
     public enum Attachment {
         case image(UIImage)
@@ -66,7 +66,7 @@ open class AttachmentManager: NSObject, InputManager {
         super.init()
     }
     
-    // MARK: - InputManager
+    // MARK: - InputPlugin
     
     open func reloadData() {
         attachmentView.reloadData()

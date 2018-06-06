@@ -35,7 +35,7 @@ open class InputBarAccessoryView: UIView {
     /// A delegate to broadcast notifications from the `InputBarAccessoryView`
     open weak var delegate: InputBarAccessoryViewDelegate?
     
-    /// The background UIView anchored to the bottom, left, and right of the MessageInputBar
+    /// The background UIView anchored to the bottom, left, and right of the InputBarAccessoryView
     /// with a top anchor equal to the bottom of the top InputStackView
     open var backgroundView: UIView = {
         let view = UIView()
@@ -250,8 +250,8 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Holds the InputManager plugins that can be used to extend the functionality of the InputBarAccessoryView
-    open var inputManagers = [InputManager]()
+    /// Holds the InputPlugin plugins that can be used to extend the functionality of the InputBarAccessoryView
+    open var InputPlugins = [InputPlugin]()
 
     /// The InputBarItems held in the leftStackView
     public private(set) var leftStackViewItems: [InputItem] = []
@@ -367,7 +367,7 @@ open class InputBarAccessoryView: UIView {
     /// Sets up the initial constraints of each subview
     private func setupConstraints() {
         
-        // The constraints within the MessageInputBar
+        // The constraints within the InputBarAccessoryView
         separatorLine.addConstraints(topAnchor, left: leftAnchor, right: rightAnchor, heightConstant: separatorLine.height)
         backgroundViewBottomAnchor = backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor)
         backgroundViewBottomAnchor?.isActive = true
@@ -486,7 +486,7 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Calculates the correct intrinsicContentSize of the MessageInputBar
+    /// Calculates the correct intrinsicContentSize of the InputBarAccessoryView
     ///
     /// - Returns: The required intrinsicContentSize
     open func calculateIntrinsicContentSize() -> CGSize {
@@ -771,10 +771,10 @@ open class InputBarAccessoryView: UIView {
     
     /// Calls the delegates `didPressSendButtonWith` method
     /// Assumes that the InputTextView's text has been set to empty and calls `inputTextViewDidChange()`
-    /// Invalidates each of the inputManagers
+    /// Invalidates each of the InputPlugins
     open func didSelectSendButton() {
         delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
         inputTextViewDidChange()
-        inputManagers.forEach { $0.invalidate() }
+        InputPlugins.forEach { $0.invalidate() }
     }
 }

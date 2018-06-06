@@ -35,7 +35,7 @@ import UIKit
  1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel
  2. Intended to be used in an `InputBarAccessoryView`
  3. Default placeholder text is "Aa"
- 4. Will pass a pasted image it's `InputBarAccessoryView`'s `InputManager`s
+ 4. Will pass a pasted image it's `InputBarAccessoryView`'s `InputPlugin`s
  */
 open class InputTextView: UITextView {
     
@@ -232,7 +232,7 @@ open class InputTextView: UITextView {
         if isImagePasteEnabled {
             pasteImageInTextContainer(with: image)
         } else {
-            inputBarAccessoryView?.inputManagers.forEach { $0.handleInput(of: image) }
+            inputBarAccessoryView?.InputPlugins.forEach { $0.handleInput(of: image) }
         }
     }
     
@@ -269,7 +269,7 @@ open class InputTextView: UITextView {
         let location = selectedRange.location + (isEmpty ? 2 : 3)
         selectedRange = NSRange(location: location, length: 0)
         
-        // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
+        // Broadcast a notification to recievers such as the InputBarAccessoryView which will handle resizing
         NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
     }
     

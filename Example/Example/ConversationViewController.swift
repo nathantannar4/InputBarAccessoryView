@@ -330,7 +330,7 @@ class ConversationViewController: UITableViewController {
     @objc
     func resetInputBar() {
         bar.inputTextView.resignFirstResponder()
-        bar.inputManagers.removeAll()
+        bar.InputPlugins.removeAll()
         let newBar = InputBarAccessoryView()
         newBar.delegate = self
         autocompleteManager = AutocompleteManager(for: newBar.inputTextView)
@@ -338,7 +338,7 @@ class ConversationViewController: UITableViewController {
         autocompleteManager.dataSource = self
         autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
         autocompleteManager.register(prefix: "#")
-        newBar.inputManagers = [autocompleteManager, attachmentManager]
+        newBar.InputPlugins = [autocompleteManager, attachmentManager]
         newBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
         bar = newBar
         reloadInputViews()
