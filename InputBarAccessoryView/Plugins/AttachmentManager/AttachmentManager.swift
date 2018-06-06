@@ -33,7 +33,6 @@ open class AttachmentManager: NSObject, InputPlugin {
         case image(UIImage)
         case url(URL)
         case data(Data)
-        case other(AnyObject)
     }
     
     // MARK: - Properties [Public]
@@ -82,7 +81,7 @@ open class AttachmentManager: NSObject, InputPlugin {
     /// Appends the object to the attachments
     ///
     /// - Parameter object: The object to append
-    open func handleInput(of object: AnyObject) {
+    open func handleInput(of object: AnyObject) -> Bool {
         let attachment: Attachment
         if let image = object as? UIImage {
             attachment = .image(image)
@@ -91,10 +90,11 @@ open class AttachmentManager: NSObject, InputPlugin {
         } else if let data = object as? Data {
             attachment = .data(data)
         } else {
-            attachment = .other(object)
+            return false
         }
         
         insertAttachment(attachment, at: attachments.count)
+        return true
     }
     
     // MARK: - API [Public]

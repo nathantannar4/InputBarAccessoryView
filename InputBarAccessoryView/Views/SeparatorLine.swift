@@ -42,7 +42,7 @@ open class SeparatorLine: UIView {
     /// The height of the line
     open var height: CGFloat = 1.0 {
         didSet {
-            constraints.filter { $0.identifier == "height" }.forEach { $0.constant = height }
+            constraints.filter { $0.identifier == "height" }.forEach { $0.constant = height } // Assumes constraint was given an identifier
             invalidateIntrinsicContentSize()
         }
     }

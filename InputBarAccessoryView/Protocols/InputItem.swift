@@ -31,7 +31,7 @@ import UIKit
 public protocol InputItem: class {
     
     /// A weak reference to the InputBarAccessoryView. Set when inserted into an InputStackView
-    weak var inputBarAccessoryView: InputBarAccessoryView? { get set }
+    var inputBarAccessoryView: InputBarAccessoryView? { get set }
     
     /// A reference to the InputStackView that the InputItem is contained in. Set when inserted into an InputStackView
     var parentStackViewPosition: InputStackView.Position? { get set }

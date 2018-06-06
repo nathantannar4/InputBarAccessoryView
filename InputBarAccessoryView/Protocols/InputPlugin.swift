@@ -39,5 +39,5 @@ public protocol InputPlugin: class {
     /// Should handle the input of data types that an `InputPlugin` manages
     ///
     /// - Parameter object: The object to input
-    func handleInput(of object: AnyObject)
+    func handleInput(of object: AnyObject) -> Bool
 }

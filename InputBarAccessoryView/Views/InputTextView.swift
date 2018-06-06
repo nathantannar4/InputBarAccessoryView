@@ -206,12 +206,20 @@ open class InputTextView: UITextView {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputTextView.redrawTextAttachments),
                                                name: .UIDeviceOrientationDidChange, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(InputTextView.textViewTextDidChange),
+                                               name: .UITextViewTextDidChange, object: nil)
     }
     
     // MARK: - Notifications
     
     private func postTextViewDidChangeNotification() {
         NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+    }
+    
+    @objc
+    private func textViewTextDidChange() {
+        placeholderLabel.isHidden = !text.isEmpty
     }
     
     // MARK: - Image Paste Support
@@ -232,7 +240,11 @@ open class InputTextView: UITextView {
         if isImagePasteEnabled {
             pasteImageInTextContainer(with: image)
         } else {
-            inputBarAccessoryView?.InputPlugins.forEach { $0.handleInput(of: image) }
+            for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
+                if plugin.handleInput(of: image) {
+                    return
+                }
+            }
         }
     }
     
@@ -269,8 +281,8 @@ open class InputTextView: UITextView {
         let location = selectedRange.location + (isEmpty ? 2 : 3)
         selectedRange = NSRange(location: location, length: 0)
         
-        // Broadcast a notification to recievers such as the InputBarAccessoryView which will handle resizing
-        NotificationCenter.default.post(name: .UITextViewTextDidChange, object: self)
+        // Broadcast a notification to recievers such as the MessageInputBar which will handle resizing
+        postTextViewDidChangeNotification()
     }
     
     /// Returns an NSTextAttachment the provided image that will fit inside the NSTextContainer
@@ -315,32 +327,50 @@ open class InputTextView: UITextView {
     private func parseForComponents() -> [Any] {
         
         var components = [Any]()
-        let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttributes(in: range, options: []) { (object, range, _) in
-            
-            if object.keys.contains(.attachment) {
-                if let attachment = object[.attachment] as? NSTextAttachment {
-                    if let image = attachment.image {
-                        components.append(image)
-                    } else if let image = attachment.image(forBounds: attachment.bounds,
-                                                           textContainer: nil,
-                                                           characterIndex: range.location) {
-                        components.append(image)
-                    }
-                }
-            } else {
-                let stringValue = attributedText.attributedSubstring(from: range).string.trimmingCharacters(in: .whitespacesAndNewlines)
-                if !stringValue.isEmpty {
-                    if let lastComponent = components.last as? String {
-                        // Appent to the last component
-                        components[components.count - 1] = lastComponent + " " + stringValue
-                    } else {
-                        // Previous component was an image
-                        components.append(stringValue)
-                    }
+        var attachments = [(NSRange, UIImage)]()
+        let length = attributedText.length
+        let range = NSRange(location: 0, length: length)
+        attributedText.enumerateAttribute(.attachment, in: range) { (object, range, _) in
+            if let attachment = object as? NSTextAttachment {
+                if let image = attachment.image {
+                    attachments.append((range, image))
+                } else if let image = attachment.image(forBounds: attachment.bounds,
+                                                       textContainer: nil,
+                                                       characterIndex: range.location) {
+                    attachments.append((range,image))
                 }
             }
         }
+        
+        var curLocation = 0
+        if attachments.count == 0 {
+            let text = attributedText.string.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !text.isEmpty {
+                components.append(text)
+            }
+        }
+        else {
+            attachments.forEach { (attachment) in
+                let (range, image) = attachment
+                if curLocation < range.location {
+                    let textRange = NSMakeRange(curLocation, range.location)
+                    let text = attributedText.attributedSubstring(from: textRange).string.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !text.isEmpty {
+                        components.append(text)
+                    }
+                }
+                
+                curLocation = range.location + range.length
+                components.append(image)
+            }
+            if curLocation < length - 1  {
+                let text = attributedText.attributedSubstring(from: NSMakeRange(curLocation, length - curLocation)).string.trimmingCharacters(in: .whitespacesAndNewlines)
+                if !text.isEmpty {
+                    components.append(text)
+                }
+            }
+        }
+        
         return components
     }
     
@@ -361,5 +391,6 @@ open class InputTextView: UITextView {
         })
         layoutManager.invalidateLayout(forCharacterRange: range, actualCharacterRange: nil)
     }
+    
 }
 

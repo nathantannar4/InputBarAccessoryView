@@ -407,6 +407,7 @@ extension ConversationViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
         inputBar.inputTextView.text = String()
+        inputBar.invalidatePlugins()
         let indexPath = IndexPath(row: conversation.messages.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)

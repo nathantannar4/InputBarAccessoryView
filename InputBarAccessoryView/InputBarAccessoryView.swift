@@ -230,6 +230,9 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
+    /// A boolean that determines whether the sendButton's `isEnabled` state should be managed automatically.
+    open var shouldManageSendButtonEnabledState = true
+    
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
@@ -251,7 +254,7 @@ open class InputBarAccessoryView: UIView {
     }
     
     /// Holds the InputPlugin plugins that can be used to extend the functionality of the InputBarAccessoryView
-    open var InputPlugins = [InputPlugin]()
+    open var inputPlugins = [InputPlugin]()
 
     /// The InputBarItems held in the leftStackView
     public private(set) var leftStackViewItems: [InputItem] = []
@@ -730,15 +733,22 @@ open class InputBarAccessoryView: UIView {
     /// Invalidates the intrinsicContentSize
     @objc
     open func inputTextViewDidChange() {
+        
         let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
         
-        sendButton.isEnabled = !trimmedText.isEmpty || inputTextView.images.count > 0
-        inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
+        if shouldManageSendButtonEnabledState {
+            var isEnabled = !trimmedText.isEmpty
+            if !isEnabled {
+                // The images property is more resource intensive so only use it if needed
+                isEnabled = inputTextView.images.count > 0
+            }
+            sendButton.isEnabled = isEnabled
+        }
         
+        // Capture change before iterating over the InputItem's
         let shouldInvalidateIntrinsicContentSize = requiredInputTextViewHeight != inputTextView.bounds.height
         
         items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
-        
         delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
         
         if shouldInvalidateIntrinsicContentSize {
@@ -759,6 +769,18 @@ open class InputBarAccessoryView: UIView {
         items.forEach { $0.keyboardEditingEndsAction() }
     }
     
+    // MARK: - Plugins
+    
+    /// Reloads each of the plugins
+    open func reloadPlugins() {
+        inputPlugins.forEach { $0.reloadData() }
+    }
+    
+    /// Invalidates each of the plugins
+    open func invalidatePlugins() {
+        inputPlugins.forEach { $0.invalidate() }
+    }
+    
     // MARK: - User Actions
     
     /// Calls each items `keyboardSwipeGestureAction` method
@@ -774,7 +796,5 @@ open class InputBarAccessoryView: UIView {
     /// Invalidates each of the InputPlugins
     open func didSelectSendButton() {
         delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
-        inputTextViewDidChange()
-        InputPlugins.forEach { $0.invalidate() }
     }
 }

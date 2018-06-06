@@ -137,13 +137,14 @@ open class AutocompleteManager: NSObject, InputPlugin {
     /// Passes an object into the InputPlugin's session to handle
     ///
     /// - Parameter object: A string to append
-    open func handleInput(of object: AnyObject) {
-        guard let newText = object as? String, let textView = inputTextView else { return }
+    open func handleInput(of object: AnyObject) -> Bool {
+        guard let newText = object as? String, let textView = inputTextView else { return false }
         let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
         let newAttributedString = NSAttributedString(string: newText, attributes: typingTextAttributes)
         attributedString.append(newAttributedString)
         textView.attributedText = attributedString
         reloadData()
+        return true
     }
     
     // MARK: - API [Public]
