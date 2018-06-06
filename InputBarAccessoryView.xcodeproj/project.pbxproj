@@ -28,12 +28,14 @@
 		38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */; };
 		38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */; };
 		38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */; };
-		38C867811F50A6AD00811974 /* NTAccessoryView.h in Headers */ = {isa = PBXBuildFile; fileRef = 38C867781F50A6AD00811974 /* NTAccessoryView.h */; };
+		38C867811F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 38C867781F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h */; };
 		38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */; };
 		38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */; };
 		38C867841F50A6AD00811974 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677C1F50A6AD00811974 /* InputTextView.swift */; };
 		38D29FE91F97CBA400E59362 /* InputManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D29FE81F97CBA400E59362 /* InputManager.swift */; };
 		38EA6D66202E58BF00E329BE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EA6D65202E58BF00E329BE /* String+Extensions.swift */; };
+		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
+		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,12 +62,14 @@
 		38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDelegate.swift; sourceTree = "<group>"; };
 		38C867771F50A6AD00811974 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		38C867781F50A6AD00811974 /* NTAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTAccessoryView.h; sourceTree = "<group>"; };
+		38C867781F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "InputBarAccessoryView-Bridging-Header.h"; sourceTree = "<group>"; };
 		38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryView.swift; sourceTree = "<group>"; };
 		38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarButtonItem.swift; sourceTree = "<group>"; };
 		38C8677C1F50A6AD00811974 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		38D29FE81F97CBA400E59362 /* InputManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputManager.swift; path = InputBarAccessoryView/Protocols/InputManager.swift; sourceTree = SOURCE_ROOT; };
 		38EA6D65202E58BF00E329BE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
+		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,37 +102,21 @@
 		3876DA8C1F8352F800C89326 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				3876DA8D1F83530200C89326 /* AutocompleteManager.swift */,
-				3876DAAC1F84C42800C89326 /* AttachmentManager.swift */,
+				38F0C1ED20C7802300FF8DD3 /* AutocompleteManager */,
+				38F0C1EE20C7802B00FF8DD3 /* AttachmentManager */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		3877525E1F884FBD000E0AC5 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				3876DAAA1F84C22100C89326 /* AttachmentCell.swift */,
-				3877525C1F8834F0000E0AC5 /* ImageAttachmentCell.swift */,
-				3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
-		3891276E1F98148600702C05 /* Manager Views */ = {
-			isa = PBXGroup;
-			children = (
-				3877525E1F884FBD000E0AC5 /* Cells */,
-				3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */,
-				3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */,
-			);
-			path = "Manager Views";
 			sourceTree = "<group>";
 		};
 		38C867701F50A6AD00811974 /* InputBarAccessoryView */ = {
 			isa = PBXGroup;
 			children = (
+				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
+				38F0C1F820C780F100FF8DD3 /* Experimental */,
 				3876DA8C1F8352F800C89326 /* Managers */,
 				38C867791F50A6AD00811974 /* Views */,
+				38F0C1EC20C77FA000FF8DD3 /* Models */,
+				38F0C1EB20C77F9900FF8DD3 /* Controls */,
 				38C867741F50A6AD00811974 /* Protocols */,
 				38C867711F50A6AD00811974 /* Extensions */,
 				38C867761F50A6AD00811974 /* Supporting Files */,
@@ -139,7 +127,6 @@
 		38C867711F50A6AD00811974 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */,
 				3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */,
 				3892AEA3202E427F006AF939 /* UITextView+Extensions.swift */,
 				38EA6D65202E58BF00E329BE /* String+Extensions.swift */,
@@ -152,13 +139,8 @@
 			isa = PBXGroup;
 			children = (
 				38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */,
-				3876DA8F1F83530900C89326 /* AutocompleteManagerDelegate.swift */,
-				3876DA8E1F83530900C89326 /* AutocompleteManagerDataSource.swift */,
-				381042261F87FDE500B1E61A /* AttachmentManagerDelegate.swift */,
-				3877525F1F884FF3000E0AC5 /* AttachmentManagerDataSource.swift */,
-				38C6DF902030BAA000B61E79 /* TypingIndicatorDelegate.swift */,
-				3891276C1F980F0300702C05 /* InputItem.swift */,
 				38D29FE81F97CBA400E59362 /* InputManager.swift */,
+				3891276C1F980F0300702C05 /* InputItem.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -167,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				38C867771F50A6AD00811974 /* Info.plist */,
-				38C867781F50A6AD00811974 /* NTAccessoryView.h */,
+				38C867781F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -175,15 +157,111 @@
 		38C867791F50A6AD00811974 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3891276E1F98148600702C05 /* Manager Views */,
-				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
-				38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */,
 				38C8677C1F50A6AD00811974 /* InputTextView.swift */,
 				381042241F87F34900B1E61A /* InputStackView.swift */,
-				38C6DF8E2030B92900B61E79 /* TypingIndicator.swift */,
 				381042221F85FD1300B1E61A /* SeparatorLine.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		38F0C1EB20C77F9900FF8DD3 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
+		38F0C1EC20C77FA000FF8DD3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		38F0C1ED20C7802300FF8DD3 /* AutocompleteManager */ = {
+			isa = PBXGroup;
+			children = (
+				3876DA8D1F83530200C89326 /* AutocompleteManager.swift */,
+				38F0C1EF20C7804100FF8DD3 /* Views */,
+				38F0C1F520C7809E00FF8DD3 /* Models */,
+				38F0C1F620C780B000FF8DD3 /* Protocols */,
+			);
+			path = AutocompleteManager;
+			sourceTree = "<group>";
+		};
+		38F0C1EE20C7802B00FF8DD3 /* AttachmentManager */ = {
+			isa = PBXGroup;
+			children = (
+				3876DAAC1F84C42800C89326 /* AttachmentManager.swift */,
+				38F0C1F020C7804600FF8DD3 /* Views */,
+				38F0C1F720C780C600FF8DD3 /* Protocols */,
+			);
+			path = AttachmentManager;
+			sourceTree = "<group>";
+		};
+		38F0C1EF20C7804100FF8DD3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3876DAB01F84D9DA00C89326 /* AutocompleteTableView.swift */,
+				3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		38F0C1F020C7804600FF8DD3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */,
+				3876DAAA1F84C22100C89326 /* AttachmentCell.swift */,
+				3877525C1F8834F0000E0AC5 /* ImageAttachmentCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		38F0C1F520C7809E00FF8DD3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */,
+				38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		38F0C1F620C780B000FF8DD3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				3876DA8F1F83530900C89326 /* AutocompleteManagerDelegate.swift */,
+				3876DA8E1F83530900C89326 /* AutocompleteManagerDataSource.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		38F0C1F720C780C600FF8DD3 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				381042261F87FDE500B1E61A /* AttachmentManagerDelegate.swift */,
+				3877525F1F884FF3000E0AC5 /* AttachmentManagerDataSource.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		38F0C1F820C780F100FF8DD3 /* Experimental */ = {
+			isa = PBXGroup;
+			children = (
+				38F0C1F920C7810300FF8DD3 /* TypingIndicator */,
+			);
+			path = Experimental;
+			sourceTree = "<group>";
+		};
+		38F0C1F920C7810300FF8DD3 /* TypingIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				38C6DF8E2030B92900B61E79 /* TypingIndicator.swift */,
+				38C6DF902030BAA000B61E79 /* TypingIndicatorDelegate.swift */,
+			);
+			path = TypingIndicator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,7 +271,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38C867811F50A6AD00811974 /* NTAccessoryView.h in Headers */,
+				38C867811F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,7 +302,7 @@
 		383B837A1F4787E200027965 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Nathan Tannar";
 				TargetAttributes = {
 					383B83821F4787E200027965 = {
@@ -273,10 +351,12 @@
 				3876DA901F83530900C89326 /* AutocompleteManagerDataSource.swift in Sources */,
 				38EA6D66202E58BF00E329BE /* String+Extensions.swift in Sources */,
 				3876DAA91F84C0DB00C89326 /* AttachmentsView.swift in Sources */,
+				38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */,
 				3892AEA4202E427F006AF939 /* UITextView+Extensions.swift in Sources */,
 				3891276D1F980F0300702C05 /* InputItem.swift in Sources */,
 				38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */,
 				38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */,
+				38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */,
 				3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */,
 				38C6DF8F2030B92900B61E79 /* TypingIndicator.swift in Sources */,
 				3876DAAB1F84C22100C89326 /* AttachmentCell.swift in Sources */,
@@ -313,6 +393,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -320,6 +401,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -374,6 +456,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -381,6 +464,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;

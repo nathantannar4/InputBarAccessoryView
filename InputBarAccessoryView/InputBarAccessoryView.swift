@@ -735,11 +735,13 @@ open class InputBarAccessoryView: UIView {
         sendButton.isEnabled = !trimmedText.isEmpty || inputTextView.images.count > 0
         inputTextView.placeholderLabel.isHidden = !inputTextView.text.isEmpty
         
+        let shouldInvalidateIntrinsicContentSize = requiredInputTextViewHeight != inputTextView.bounds.height
+        
         items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
         
         delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
         
-        if requiredInputTextViewHeight != inputTextView.bounds.height {
+        if shouldInvalidateIntrinsicContentSize {
             // Prevent un-needed content size invalidation
             invalidateIntrinsicContentSize()
         }

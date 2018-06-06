@@ -27,40 +27,6 @@
 
 import UIKit
 
-public struct AutocompleteCompletion {
-    
-    // The string used for sorting and to autocomplete a prefix
-    public var text: String
-    
-    // An optional string to display instead of `text`, for example emojis
-    public var displayText: String?
-    
-    public init(_ text: String) {
-        self.text = text
-    }
-    
-    public init(_ text: String, displayText: String) {
-        self.text = text
-        self.displayText = displayText
-    }
-}
-
-/// A structure containing data on the `AutocompleteManager`'s session
-public struct AutocompleteSession {
-    
-    public let prefix: String
-    public var range: NSRange
-    public var filter: String
-    public var completion: AutocompleteCompletion?
-    
-    public init?(prefix: String?, range: NSRange?, filter: String?) {
-        guard let pfx = prefix, let rng = range, let flt = filter else { return nil }
-        self.prefix = pfx
-        self.range = rng
-        self.filter = flt
-    }
-}
-
 open class AutocompleteManager: NSObject, InputManager {
     
     // MARK: - Properties [Public]
