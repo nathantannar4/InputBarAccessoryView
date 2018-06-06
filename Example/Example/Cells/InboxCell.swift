@@ -1,0 +1,19 @@
+//
+//  InboxCell.swift
+//  Example
+//
+//  Created by Nathan Tannar on 2018-06-06.
+//  Copyright © 2018 Nathan Tannar. All rights reserved.
+//
+
+import UIKit
+
+class InboxCell: UITableViewCell {
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
