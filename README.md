@@ -9,7 +9,7 @@
 ### Features
 
 - [x] A growing `UITextView` with optional fixed height
-- [x] Image paste support
+- [x] Image paste support   
 - [x] RxSwift inspired reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `UIStackView`s that act as toolbars to place buttons
 - [x] Drop in autocomplete for any given prefix

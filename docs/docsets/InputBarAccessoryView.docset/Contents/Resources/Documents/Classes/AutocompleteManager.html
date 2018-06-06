@@ -14,7 +14,7 @@
     <a title="AutocompleteManager Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -75,6 +75,9 @@
               <li class="nav-group-task">
                 <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -99,12 +102,15 @@
                 <a href="../Protocols/InputItem.html">InputItem</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/InputManager.html">InputManager</a>
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
@@ -120,6 +126,12 @@
         <section>
           <section class="section">
             <h1>AutocompleteManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">AutocompleteManager</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputPlugin.html">InputPlugin</a></span></code></pre>
+
+                </div>
+              </div>
             <p>Undocumented</p>
 
           </section>
@@ -136,9 +148,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC10dataSourceAA0ef4DataH0_pSgXwv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC10dataSourceAA0ef4DataH0_pSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/dataSource" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC10dataSourceAA0ef4DataH0_pSgXwv">dataSource</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC10dataSourceAA0ef4DataH0_pSgXwvp">dataSource</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -153,7 +165,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">dataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AutocompleteManagerDataSource.html">AutocompleteManagerDataSource</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">dataSource</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AutocompleteManagerDataSource.html">AutocompleteManagerDataSource</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -163,9 +175,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC8delegateAA0eF8Delegate_pSgXwv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC8delegateAA0eF8Delegate_pSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC8delegateAA0eF8Delegate_pSgXwv">delegate</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC8delegateAA0eF8Delegate_pSgXwvp">delegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -180,7 +192,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AutocompleteManagerDelegate.html">AutocompleteManagerDelegate</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/AutocompleteManagerDelegate.html">AutocompleteManagerDelegate</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -190,9 +202,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC09inputTextD0AA0ahD0CSgXwv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC09inputTextD0AA0ahD0CSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/inputTextView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC09inputTextD0AA0ahD0CSgXwv">inputTextView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC09inputTextD0AA0ahD0CSgXwvp">inputTextView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -207,7 +219,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">inputTextView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">inputTextView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -217,9 +229,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC14currentSessionAA0eH0VSgv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC14currentSessionAA0eH0VSgvp"></a>
                     <a name="//apple_ref/swift/Property/currentSession" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC14currentSessionAA0eH0VSgv">currentSession</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC14currentSessionAA0eH0VSgvp">currentSession</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -234,7 +246,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">currentSession</span><span class="p">:</span> <span class="kt"><a href="../Structs/AutocompleteSession.html">AutocompleteSession</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">currentSession</span><span class="p">:</span> <span class="kt"><a href="../Structs/AutocompleteSession.html">AutocompleteSession</a></span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -244,9 +256,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC05tableD0AA0e5TableD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC05tableD0AA0e5TableD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/tableView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC05tableD0AA0e5TableD0Cv">tableView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC05tableD0AA0e5TableD0Cvp">tableView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -254,14 +266,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The <code><a href="../Classes/AutocompleteTableView.html">AutocompleteTableView</a></code> that renders available autocompletes for the <code><a href="../Classes/AutocompleteManager.html#/s:21InputBarAccessoryView19AutocompleteManagerC14currentSessionAA0eH0VSgv">currentSession</a></code></p>
+                        <p>The <code><a href="../Classes/AutocompleteTableView.html">AutocompleteTableView</a></code> that renders available autocompletes for the <code><a href="../Classes/AutocompleteManager.html#/s:21InputBarAccessoryView19AutocompleteManagerC14currentSessionAA0eH0VSgvp">currentSession</a></code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt"><a href="../Classes/AutocompleteTableView.html">AutocompleteTableView</a></span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="k">in</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt"><a href="../Classes/AutocompleteTableView.html">AutocompleteTableView</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -271,9 +283,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC15isCaseSensitiveSbv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC15isCaseSensitiveSbvp"></a>
                     <a name="//apple_ref/swift/Property/isCaseSensitive" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC15isCaseSensitiveSbv">isCaseSensitive</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC15isCaseSensitiveSbvp">isCaseSensitive</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -289,7 +301,7 @@ Default value is <code>FALSE</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isCaseSensitive</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isCaseSensitive</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -299,9 +311,9 @@ Default value is <code>FALSE</code></p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC23appendSpaceOnCompletionSbv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC23appendSpaceOnCompletionSbvp"></a>
                     <a name="//apple_ref/swift/Property/appendSpaceOnCompletion" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC23appendSpaceOnCompletionSbv">appendSpaceOnCompletion</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC23appendSpaceOnCompletionSbvp">appendSpaceOnCompletion</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -317,7 +329,7 @@ Default value is <code>TRUE</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">appendSpaceOnCompletion</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">appendSpaceOnCompletion</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -327,9 +339,9 @@ Default value is <code>TRUE</code></p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC22keepPrefixOnCompletionSbv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC22keepPrefixOnCompletionSbvp"></a>
                     <a name="//apple_ref/swift/Property/keepPrefixOnCompletion" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC22keepPrefixOnCompletionSbv">keepPrefixOnCompletion</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC22keepPrefixOnCompletionSbvp">keepPrefixOnCompletion</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -345,7 +357,7 @@ Default value is <code>TRUE</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">keepPrefixOnCompletion</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">keepPrefixOnCompletion</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -355,65 +367,9 @@ Default value is <code>TRUE</code></p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC20autocompletePrefixesSays9CharacterVGv"></a>
-                    <a name="//apple_ref/swift/Property/autocompletePrefixes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC20autocompletePrefixesSays9CharacterVGv">autocompletePrefixes</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The prefices that the manager will recognize
-Default value is <code>[&quot;@&quot;]</code></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">autocompletePrefixes</span><span class="p">:</span> <span class="p">[</span><span class="kt">Character</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">"@"</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC22autocompleteDelimitersSays9CharacterVGv"></a>
-                    <a name="//apple_ref/swift/Property/autocompleteDelimiters" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC22autocompleteDelimitersSays9CharacterVGv">autocompleteDelimiters</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>The delimiters that cause a current autocomplete session to become invalidated when typed.
-Default value is <code>[&quot; &quot;, &quot;\n&quot;]</code></p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">autocompleteDelimiters</span><span class="p">:</span> <span class="p">[</span><span class="kt">Character</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s">" "</span><span class="p">,</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">]</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC21defaultTextAttributess10DictionaryVySC21NSAttributedStringKeyVypGv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC21defaultTextAttributess10DictionaryVySC21NSAttributedStringKeyVypGvp"></a>
                     <a name="//apple_ref/swift/Property/defaultTextAttributes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC21defaultTextAttributess10DictionaryVySC21NSAttributedStringKeyVypGv">defaultTextAttributes</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC21defaultTextAttributess10DictionaryVySC21NSAttributedStringKeyVypGvp">defaultTextAttributes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -428,7 +384,45 @@ Default value is <code>[&quot; &quot;, &quot;\n&quot;]</code></p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">defaultTextAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedStringKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">defaultTextAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedStringKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties%20[Private]"></a>
+                <a name="//apple_ref/swift/Section/Properties [Private]" class="dashAnchor"></a>
+                <a href="#/Properties%20[Private]">
+                  <h3 class="section-name">Properties [Private]</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC20autocompletePrefixess3SetVySSGvp"></a>
+                    <a name="//apple_ref/swift/Property/autocompletePrefixes" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC20autocompletePrefixess3SetVySSGvp">autocompletePrefixes</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The prefices that the manager will recognize</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">autocompletePrefixes</span><span class="p">:</span> <span class="kt">Set</span><span class="o">&lt;</span><span class="kt">String</span><span class="o">&gt;</span></code></pre>
 
                         </div>
                       </div>
@@ -438,9 +432,9 @@ Default value is <code>[&quot; &quot;, &quot;\n&quot;]</code></p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC26autocompleteTextAttributess10DictionaryVys9CharacterVAFySC21NSAttributedStringKeyVypGGv"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC26autocompleteTextAttributess10DictionaryVySSAFySC21NSAttributedStringKeyVypGGvp"></a>
                     <a name="//apple_ref/swift/Property/autocompleteTextAttributes" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC26autocompleteTextAttributess10DictionaryVys9CharacterVAFySC21NSAttributedStringKeyVypGGv">autocompleteTextAttributes</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC26autocompleteTextAttributess10DictionaryVySSAFySC21NSAttributedStringKeyVypGGvp">autocompleteTextAttributes</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -448,15 +442,14 @@ Default value is <code>[&quot; &quot;, &quot;\n&quot;]</code></p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The text attributes applied to highlighted substrings for each prefix
-Default value applys blue tint highlighting to the <code>@</code> prefix</p>
+                        <p>The text attributes applied to highlighted substrings for each prefix</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">autocompleteTextAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">Character</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedStringKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]]</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">autocompleteTextAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span> <span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedStringKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]]</span></code></pre>
 
                         </div>
                       </div>
@@ -490,6 +483,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="k">for</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -497,10 +498,10 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
             </div>
             <div class="task-group">
               <div class="task-name-container">
-                <a name="/InputManager"></a>
-                <a name="//apple_ref/swift/Section/InputManager" class="dashAnchor"></a>
-                <a href="#/InputManager">
-                  <h3 class="section-name">InputManager</h3>
+                <a name="/InputPlugin"></a>
+                <a name="//apple_ref/swift/Section/InputPlugin" class="dashAnchor"></a>
+                <a href="#/InputPlugin">
+                  <h3 class="section-name">InputPlugin</h3>
                 </a>
               </div>
               <ul>
@@ -517,14 +518,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Reloads the InputManager&rsquo;s session</p>
+                        <p>Reloads the InputPlugin&rsquo;s session</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">reloadData</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">reloadData</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -544,14 +545,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Invalidates the InputManager&rsquo;s session</p>
+                        <p>Invalidates the InputPlugin&rsquo;s session</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">invalidate</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">invalidate</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -561,9 +562,9 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC06handleA0yyXl2of_tF"></a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC06handleA0SbyXl2of_tF"></a>
                     <a name="//apple_ref/swift/Method/handleInput(of:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC06handleA0yyXl2of_tF">handleInput(of:)</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC06handleA0SbyXl2of_tF">handleInput(of:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -571,16 +572,36 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Passes an object into the InputManager&rsquo;s session to handle</p>
+                        <p>Passes an object into the InputPlugin&rsquo;s session to handle</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">handleInput</span><span class="p">(</span><span class="n">of</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">handleInput</span><span class="p">(</span><span class="n">of</span> <span class="nv">object</span><span class="p">:</span> <span class="kt">AnyObject</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>object</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A string to append</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -596,6 +617,60 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                 </a>
               </div>
               <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC8registerySS6prefix_s10DictionaryVySC21NSAttributedStringKeyVypGSg4withtF"></a>
+                    <a name="//apple_ref/swift/Method/register(prefix:with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC8registerySS6prefix_s10DictionaryVySC21NSAttributedStringKeyVypGSg4withtF">register(prefix:with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">register</span><span class="p">(</span><span class="nv">prefix</span><span class="p">:</span> <span class="kt">String</span><span class="p">,</span> <span class="n">with</span> <span class="nv">attributedTextAttributes</span><span class="p">:</span> <span class="p">[</span><span class="kt">NSAttributedStringKey</span><span class="p">:</span><span class="kt">Any</span><span class="p">]?</span> <span class="o">=</span> <span class="kc">nil</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteManagerC10unregisterySS6prefix_tF"></a>
+                    <a name="//apple_ref/swift/Method/unregister(prefix:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteManagerC10unregisterySS6prefix_tF">unregister(prefix:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">unregister</span><span class="p">(</span><span class="nv">prefix</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -616,9 +691,28 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">autocomplete</span><span class="p">(</span><span class="n">with</span> <span class="nv">session</span><span class="p">:</span> <span class="kt"><a href="../Structs/AutocompleteSession.html">AutocompleteSession</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">autocomplete</span><span class="p">(</span><span class="n">with</span> <span class="nv">session</span><span class="p">:</span> <span class="kt"><a href="../Structs/AutocompleteSession.html">AutocompleteSession</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The replacement text</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -637,6 +731,33 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/c:@CM@InputBarAccessoryView@objc(cs)AutocompleteManager(im)textViewDidChange:"></a>
+                    <a name="//apple_ref/swift/Method/textViewDidChange(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@CM@InputBarAccessoryView@objc(cs)AutocompleteManager(im)textViewDidChange:">textViewDidChange(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">textViewDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt">UITextView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/c:@CM@InputBarAccessoryView@objc(cs)AutocompleteManager(im)textView:shouldChangeTextInRange:replacementText:"></a>
                     <a name="//apple_ref/swift/Method/textView(_:shouldChangeTextIn:replacementText:)" class="dashAnchor"></a>
                     <a class="token" href="#/c:@CM@InputBarAccessoryView@objc(cs)AutocompleteManager(im)textView:shouldChangeTextInRange:replacementText:">textView(_:shouldChangeTextIn:replacementText:)</a>
@@ -649,6 +770,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">textView</span><span class="p">(</span><span class="n">_</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt">UITextView</span><span class="p">,</span> <span class="n">shouldChangeTextIn</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">,</span> <span class="n">replacementText</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -680,6 +809,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">numberOfSections</span><span class="p">(</span><span class="k">in</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -699,6 +836,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">numberOfRowsInSection</span> <span class="nv">section</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -717,6 +862,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">cellForRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UITableViewCell</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -748,6 +901,14 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">final</span> <span class="kd">public</span> <span class="kd">func</span> <span class="nf">tableView</span><span class="p">(</span><span class="n">_</span> <span class="nv">tableView</span><span class="p">:</span> <span class="kt">UITableView</span><span class="p">,</span> <span class="n">didSelectRowAt</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -756,8 +917,8 @@ Default value applys blue tint highlighting to the <code>@</code> prefix</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

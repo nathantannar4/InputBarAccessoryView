@@ -14,7 +14,7 @@
     <a title="InputBarAccessoryViewDelegate Protocol Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -75,6 +75,9 @@
               <li class="nav-group-task">
                 <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -99,12 +102,15 @@
                 <a href="../Protocols/InputItem.html">InputItem</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/InputManager.html">InputManager</a>
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
@@ -122,7 +128,7 @@
             <h1>InputBarAccessoryViewDelegate</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InputBarAccessoryViewDelegate</span><span class="p">:</span> <span class="kd">class</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">InputBarAccessoryViewDelegate</span> <span class="p">:</span> <span class="kt">AnyObject</span></code></pre>
 
                 </div>
               </div>
@@ -159,9 +165,40 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">didPressSendButtonWith</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">didPressSendButtonWith</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inputBar</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The InputBarAccessoryView</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The current text in the InputBarAccessoryView&rsquo;s InputTextView</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -194,9 +231,40 @@ on other views to make sure the InputBarAccessoryView does not cover up any othe
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">didChangeIntrinsicContentTo</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">didChangeIntrinsicContentTo</span> <span class="nv">size</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inputBar</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The InputBarAccessoryView</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>size</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The new instrinsicContentSize</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -229,9 +297,40 @@ need of assigning a delegate or notification</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">textViewTextDidChangeTo</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">textViewTextDidChangeTo</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inputBar</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The InputBarAccessoryView</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>text</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The current text in the InputBarAccessoryView&rsquo;s InputTextView</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -263,9 +362,40 @@ need of assigning a delegate or notification</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">didSwipeTextViewWith</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">inputBar</span><span class="p">(</span><span class="n">_</span> <span class="nv">inputBar</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">,</span> <span class="n">didSwipeTextViewWith</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inputBar</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The InputBarAccessoryView</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>gesture</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The gesture that was recognized</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -275,8 +405,8 @@ need of assigning a delegate or notification</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

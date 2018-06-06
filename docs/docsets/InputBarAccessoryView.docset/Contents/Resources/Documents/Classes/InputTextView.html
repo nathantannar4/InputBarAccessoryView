@@ -14,7 +14,7 @@
     <a title="InputTextView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -75,6 +75,9 @@
               <li class="nav-group-task">
                 <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -99,12 +102,15 @@
                 <a href="../Protocols/InputItem.html">InputItem</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/InputManager.html">InputManager</a>
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
@@ -122,7 +128,7 @@
             <h1>InputTextView</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span> <span class="p">:</span> <span class="kt">UITextView</span></code></pre>
 
                 </div>
               </div>
@@ -133,7 +139,7 @@
 <li>Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel</li>
 <li>Intended to be used in an <code><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code></li>
 <li>Default placeholder text is <q>Aa</q></li>
-<li>Will pass a pasted image it&rsquo;s <code><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>&lsquo;s <code><a href="../Protocols/InputManager.html">InputManager</a></code>s</li>
+<li>Will pass a pasted image it&rsquo;s <code><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>&lsquo;s <code><a href="../Protocols/InputPlugin.html">InputPlugin</a></code>s</li>
 </ol>
 
           </section>
@@ -167,7 +173,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">text</span><span class="p">:</span> <span class="kt">String</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -194,7 +200,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">attributedText</span><span class="p">:</span> <span class="kt">NSAttributedString</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -204,9 +210,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C6imagesSaySo7UIImageCGv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C6imagesSaySo7UIImageCGvp"></a>
                     <a name="//apple_ref/swift/Property/images" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C6imagesSaySo7UIImageCGv">images</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C6imagesSaySo7UIImageCGvp">images</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -221,7 +227,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">images</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIImage</span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">images</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIImage</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -231,9 +237,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C10componentsSayypGv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C10componentsSayypGvp"></a>
                     <a name="//apple_ref/swift/Property/components" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C10componentsSayypGv">components</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C10componentsSayypGvp">components</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -248,7 +254,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">components</span><span class="p">:</span> <span class="p">[</span><span class="kt">Any</span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -258,9 +264,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C19isImagePasteEnabledSbv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C19isImagePasteEnabledSbvp"></a>
                     <a name="//apple_ref/swift/Property/isImagePasteEnabled" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C19isImagePasteEnabledSbv">isImagePasteEnabled</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C19isImagePasteEnabledSbvp">isImagePasteEnabled</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -275,7 +281,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isImagePasteEnabled</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -285,9 +291,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C16placeholderLabelSo7UILabelCv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C16placeholderLabelSo7UILabelCvp"></a>
                     <a name="//apple_ref/swift/Property/placeholderLabel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C16placeholderLabelSo7UILabelCv">placeholderLabel</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C16placeholderLabelSo7UILabelCvp">placeholderLabel</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -302,7 +308,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">let</span> <span class="nv">placeholderLabel</span><span class="p">:</span> <span class="kt">UILabel</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">placeholderLabel</span><span class="p">:</span> <span class="kt">UILabel</span></code></pre>
 
                         </div>
                       </div>
@@ -312,9 +318,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C11placeholderSSSgv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C11placeholderSSSgvp"></a>
                     <a name="//apple_ref/swift/Property/placeholder" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C11placeholderSSSgv">placeholder</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C11placeholderSSSgvp">placeholder</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -329,7 +335,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">placeholder</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="o">=</span> <span class="s">"Aa"</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">placeholder</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -339,9 +345,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C011placeholderE5ColorSo7UIColorCSgv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C011placeholderE5ColorSo7UIColorCSgvp"></a>
                     <a name="//apple_ref/swift/Property/placeholderTextColor" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C011placeholderE5ColorSo7UIColorCSgv">placeholderTextColor</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C011placeholderE5ColorSo7UIColorCSgvp">placeholderTextColor</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -356,7 +362,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">placeholderTextColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="o">=</span> <span class="o">.</span><span class="n">lightGray</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">placeholderTextColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -366,9 +372,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C22placeholderLabelInsetsSC06UIEdgeH0Vv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C22placeholderLabelInsetsSC06UIEdgeH0Vvp"></a>
                     <a name="//apple_ref/swift/Property/placeholderLabelInsets" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C22placeholderLabelInsetsSC06UIEdgeH0Vv">placeholderLabelInsets</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C22placeholderLabelInsetsSC06UIEdgeH0Vvp">placeholderLabelInsets</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -383,7 +389,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">placeholderLabelInsets</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="o">=</span> <span class="kt">UIEdgeInsets</span><span class="p">(</span><span class="nv">top</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">left</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="nv">bottom</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span> <span class="nv">right</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">placeholderLabelInsets</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -410,7 +416,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">font</span><span class="p">:</span> <span class="kt">UIFont</span><span class="o">!</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">font</span><span class="p">:</span> <span class="kt">UIFont</span><span class="o">!</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -437,7 +443,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">textAlignment</span><span class="p">:</span> <span class="kt">NSTextAlignment</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">textAlignment</span><span class="p">:</span> <span class="kt">NSTextAlignment</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -464,7 +470,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">textContainerInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">textContainerInset</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -491,7 +497,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">scrollIndicatorInsets</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -501,9 +507,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView0a4TextD0C05inputbcD0A2ACSgXwv"></a>
+                    <a name="/s:21InputBarAccessoryView0a4TextD0C05inputbcD0A2ACSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/inputBarAccessoryView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C05inputbcD0A2ACSgXwv">inputBarAccessoryView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0a4TextD0C05inputbcD0A2ACSgXwvp">inputBarAccessoryView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -518,7 +524,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">inputBarAccessoryView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">inputBarAccessoryView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -556,7 +562,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -583,7 +589,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">,</span> <span class="nv">textContainer</span><span class="p">:</span> <span class="kt">NSTextContainer</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -610,7 +616,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -648,7 +654,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -686,7 +692,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">canPerformAction</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">Selector</span><span class="p">,</span> <span class="n">withSender</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -713,7 +719,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputTextView</span><span class="p">:</span> <span class="kt">UITextView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">paste</span><span class="p">(</span><span class="n">_</span> <span class="nv">sender</span><span class="p">:</span> <span class="kt">Any</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -725,8 +731,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

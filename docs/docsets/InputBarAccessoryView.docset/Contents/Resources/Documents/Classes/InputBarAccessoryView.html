@@ -14,7 +14,7 @@
     <a title="InputBarAccessoryView Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -75,6 +75,9 @@
               <li class="nav-group-task">
                 <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -99,12 +102,15 @@
                 <a href="../Protocols/InputItem.html">InputItem</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/InputManager.html">InputManager</a>
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
@@ -122,7 +128,7 @@
             <h1>InputBarAccessoryView</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span> <span class="p">:</span> <span class="kt">UIView</span></code></pre>
 
                 </div>
               </div>
@@ -142,9 +148,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC8delegateAA0abcD8Delegate_pSgXwv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC8delegateAA0abcD8Delegate_pSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC8delegateAA0abcD8Delegate_pSgXwv">delegate</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC8delegateAA0abcD8Delegate_pSgXwvp">delegate</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -152,14 +158,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A delegate to broadcast notifications from the InputBarAccessoryView</p>
+                        <p>A delegate to broadcast notifications from the <code>InputBarAccessoryView</code></p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a></span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a></span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -169,9 +175,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC010backgroundD0So6UIViewCv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC010backgroundD0So6UIViewCvp"></a>
                     <a name="//apple_ref/swift/Property/backgroundView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010backgroundD0So6UIViewCv">backgroundView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010backgroundD0So6UIViewCvp">backgroundView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -179,7 +185,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The background UIView anchored to the bottom, left, and right of the MessageInputBar
+                        <p>The background UIView anchored to the bottom, left, and right of the InputBarAccessoryView
 with a top anchor equal to the bottom of the top InputStackView</p>
 
                       </div>
@@ -187,7 +193,7 @@ with a top anchor equal to the bottom of the top InputStackView</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">backgroundView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">backgroundView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
 
                         </div>
                       </div>
@@ -197,9 +203,9 @@ with a top anchor equal to the bottom of the top InputStackView</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC07contentD0So6UIViewCv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC07contentD0So6UIViewCvp"></a>
                     <a name="//apple_ref/swift/Property/contentView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC07contentD0So6UIViewCv">contentView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC07contentD0So6UIViewCvp">contentView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -215,7 +221,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">UIView</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">contentView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
 
                         </div>
                       </div>
@@ -225,36 +231,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/c:@M@InputBarAccessoryView@objc(cs)InputBarAccessoryView(py)backgroundColor"></a>
-                    <a name="//apple_ref/swift/Property/backgroundColor" class="dashAnchor"></a>
-                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)InputBarAccessoryView(py)backgroundColor">backgroundColor</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Also sets the backgroundView&rsquo;s backgroundColor to the newValue</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">backgroundColor</span><span class="p">:</span> <span class="kt">UIColor</span><span class="p">?</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:21InputBarAccessoryViewAAC04blurD0So014UIVisualEffectD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC04blurD0So014UIVisualEffectD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/blurView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC04blurD0So014UIVisualEffectD0Cv">blurView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC04blurD0So014UIVisualEffectD0Cvp">blurView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -266,7 +245,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
 <h2 id='important-notes' class='heading'>Important Notes</h2>
 
 <ol>
-<li>The blurView is initially not added to the backgroundView to improve performance when not needed. When <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC13isTranslucentSbv">isTranslucent</a></code> is set to TRUE for the first time the blurView is added and anchored to the <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC010backgroundD0So6UIViewCv">backgroundView</a></code>s edge anchors</li>
+<li>The blurView is initially not added to the backgroundView to improve performance when not needed. When <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC13isTranslucentSbvp">isTranslucent</a></code> is set to TRUE for the first time the blurView is added and anchored to the <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC010backgroundD0So6UIViewCvp">backgroundView</a></code>s edge anchors</li>
 </ol>
 
                       </div>
@@ -274,7 +253,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">blurView</span><span class="p">:</span> <span class="kt">UIVisualEffectView</span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">blurView</span><span class="p">:</span> <span class="kt">UIVisualEffectView</span></code></pre>
 
                         </div>
                       </div>
@@ -284,9 +263,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC13isTranslucentSbv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC13isTranslucentSbvp"></a>
                     <a name="//apple_ref/swift/Property/isTranslucent" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC13isTranslucentSbv">isTranslucent</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC13isTranslucentSbvp">isTranslucent</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -301,7 +280,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">isTranslucent</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">isTranslucent</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -311,9 +290,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC13separatorLineAA09SeparatorF0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC13separatorLineAA09SeparatorF0Cvp"></a>
                     <a name="//apple_ref/swift/Property/separatorLine" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC13separatorLineAA09SeparatorF0Cv">separatorLine</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC13separatorLineAA09SeparatorF0Cvp">separatorLine</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -328,7 +307,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">let</span> <span class="nv">separatorLine</span> <span class="o">=</span> <span class="kt"><a href="../Classes/SeparatorLine.html">SeparatorLine</a></span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">separatorLine</span><span class="p">:</span> <span class="kt"><a href="../Classes/SeparatorLine.html">SeparatorLine</a></span></code></pre>
 
                         </div>
                       </div>
@@ -338,9 +317,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC08topStackD0AA0afD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC08topStackD0AA0afD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/topStackView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08topStackD0AA0afD0Cv">topStackView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08topStackD0AA0afD0Cvp">topStackView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -361,7 +340,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">let</span> <span class="nv">topStackView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">topStackView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span></code></pre>
 
                         </div>
                       </div>
@@ -371,9 +350,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC09leftStackD0AA0afD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC09leftStackD0AA0afD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/leftStackView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09leftStackD0AA0afD0Cv">leftStackView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09leftStackD0AA0afD0Cvp">leftStackView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -393,7 +372,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">let</span> <span class="nv">leftStackView</span> <span class="o">=</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="p">(</span><span class="nv">axis</span><span class="p">:</span> <span class="o">.</span><span class="n">horizontal</span><span class="p">,</span> <span class="nv">spacing</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">leftStackView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span></code></pre>
 
                         </div>
                       </div>
@@ -403,9 +382,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC010rightStackD0AA0afD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC010rightStackD0AA0afD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/rightStackView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010rightStackD0AA0afD0Cv">rightStackView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010rightStackD0AA0afD0Cvp">rightStackView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -425,7 +404,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">let</span> <span class="nv">rightStackView</span> <span class="o">=</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="p">(</span><span class="nv">axis</span><span class="p">:</span> <span class="o">.</span><span class="n">horizontal</span><span class="p">,</span> <span class="nv">spacing</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">rightStackView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span></code></pre>
 
                         </div>
                       </div>
@@ -435,9 +414,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC011bottomStackD0AA0afD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC011bottomStackD0AA0afD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/bottomStackView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC011bottomStackD0AA0afD0Cv">bottomStackView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC011bottomStackD0AA0afD0Cvp">bottomStackView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -458,7 +437,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">let</span> <span class="nv">bottomStackView</span> <span class="o">=</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="p">(</span><span class="nv">axis</span><span class="p">:</span> <span class="o">.</span><span class="n">horizontal</span><span class="p">,</span> <span class="nv">spacing</span><span class="p">:</span> <span class="mi">15</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">bottomStackView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span></code></pre>
 
                         </div>
                       </div>
@@ -468,9 +447,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC09inputTextD0AA0afD0Cv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC09inputTextD0AA0afD0Cvp"></a>
                     <a name="//apple_ref/swift/Property/inputTextView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09inputTextD0AA0afD0Cv">inputTextView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09inputTextD0AA0afD0Cvp">inputTextView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -485,7 +464,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">inputTextView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span> <span class="o">=</span> <span class="p">{</span> <span class="p">[</span><span class="k">weak</span> <span class="k">self</span><span class="p">]</span> <span class="k">in</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">inputTextView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -495,9 +474,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC10sendButtonAA0abF4ItemCv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC10sendButtonAA0abF4ItemCvp"></a>
                     <a name="//apple_ref/swift/Property/sendButton" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC10sendButtonAA0abF4ItemCv">sendButton</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC10sendButtonAA0abF4ItemCvp">sendButton</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -512,7 +491,7 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">sendButton</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarButtonItem.html">InputBarButtonItem</a></span> <span class="o">=</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">sendButton</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarButtonItem.html">InputBarButtonItem</a></span></code></pre>
 
                         </div>
                       </div>
@@ -522,9 +501,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC7paddingSC12UIEdgeInsetsVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC7paddingSC12UIEdgeInsetsVvp"></a>
                     <a name="//apple_ref/swift/Property/padding" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC7paddingSC12UIEdgeInsetsVv">padding</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC7paddingSC12UIEdgeInsetsVvp">padding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -535,9 +514,9 @@ topStackView and inset by the padding UIEdgeInsets</p>
                         <p>The anchor contants used by the InputStackView&rsquo;s and InputTextView to create padding
 within the InputBarAccessoryView</p>
 <h2 id='important-notes' class='heading'>Important Notes</h2>
-<pre class="highlight plaintext"><code>V:|...[InputStackView.top]-(padding.top)-[contentView]-(padding.bottom)-|
+<pre class="highlight swift"><code><span class="kt">V</span><span class="p">:</span><span class="o">|...</span><span class="p">[</span><span class="kt">InputStackView</span><span class="o">.</span><span class="n">top</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">padding</span><span class="o">.</span><span class="n">top</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="n">contentView</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">padding</span><span class="o">.</span><span class="n">bottom</span><span class="p">)</span><span class="o">-|</span>
 
-H:|-(padding.left)-[contentView]-(padding.right)-|
+<span class="kt">H</span><span class="p">:</span><span class="o">|-</span><span class="p">(</span><span class="n">padding</span><span class="o">.</span><span class="n">left</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="n">contentView</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">padding</span><span class="o">.</span><span class="n">right</span><span class="p">)</span><span class="o">-|</span>
 </code></pre>
 
                       </div>
@@ -545,7 +524,7 @@ H:|-(padding.left)-[contentView]-(padding.right)-|
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">padding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="o">=</span> <span class="kt">UIEdgeInsets</span><span class="p">(</span><span class="nv">top</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">left</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span> <span class="nv">bottom</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span> <span class="nv">right</span><span class="p">:</span> <span class="mi">12</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">padding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -555,9 +534,9 @@ H:|-(padding.left)-[contentView]-(padding.right)-|
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC08topStackD7PaddingSC12UIEdgeInsetsVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC08topStackD7PaddingSC12UIEdgeInsetsVvp"></a>
                     <a name="//apple_ref/swift/Property/topStackViewPadding" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08topStackD7PaddingSC12UIEdgeInsetsVv">topStackViewPadding</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08topStackD7PaddingSC12UIEdgeInsetsVvp">topStackViewPadding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -571,9 +550,9 @@ H:|-(padding.left)-[contentView]-(padding.right)-|
 <ol>
 <li>The topStackViewPadding.bottom property is not used. Use padding.top</li>
 </ol>
-<pre class="highlight plaintext"><code>V:|-(topStackViewPadding.top)-[InputStackView.top]-(padding.top)-[InputTextView]-...|
+<pre class="highlight swift"><code><span class="kt">V</span><span class="p">:</span><span class="o">|-</span><span class="p">(</span><span class="n">topStackViewPadding</span><span class="o">.</span><span class="n">top</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputStackView</span><span class="o">.</span><span class="n">top</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">padding</span><span class="o">.</span><span class="n">top</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputTextView</span><span class="p">]</span><span class="o">-...|</span>
 
-H:|-(topStackViewPadding.left)-[InputStackView.top]-(topStackViewPadding.right)-|
+<span class="kt">H</span><span class="p">:</span><span class="o">|-</span><span class="p">(</span><span class="n">topStackViewPadding</span><span class="o">.</span><span class="n">left</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputStackView</span><span class="o">.</span><span class="n">top</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">topStackViewPadding</span><span class="o">.</span><span class="n">right</span><span class="p">)</span><span class="o">-|</span>
 </code></pre>
 
                       </div>
@@ -581,7 +560,7 @@ H:|-(topStackViewPadding.left)-[InputStackView.top]-(topStackViewPadding.right)-
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">topStackViewPadding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="o">=</span> <span class="kt">UIEdgeInsets</span><span class="p">(</span><span class="nv">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">right</span><span class="p">:</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">topStackViewPadding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -591,9 +570,9 @@ H:|-(topStackViewPadding.left)-[InputStackView.top]-(topStackViewPadding.right)-
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC04textD7PaddingSC12UIEdgeInsetsVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC04textD7PaddingSC12UIEdgeInsetsVvp"></a>
                     <a name="//apple_ref/swift/Property/textViewPadding" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC04textD7PaddingSC12UIEdgeInsetsVv">textViewPadding</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC04textD7PaddingSC12UIEdgeInsetsVvp">textViewPadding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -602,9 +581,9 @@ H:|-(topStackViewPadding.left)-[InputStackView.top]-(topStackViewPadding.right)-
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The anchor constants used by the InputStackView</p>
-<pre class="highlight plaintext"><code>V:|...-(padding.top)-(textViewPadding.top)-[InputTextView]-(textViewPadding.bottom)-[InputStackView.bottom]-...|
+<pre class="highlight swift"><code><span class="kt">V</span><span class="p">:</span><span class="o">|...-</span><span class="p">(</span><span class="n">padding</span><span class="o">.</span><span class="n">top</span><span class="p">)</span><span class="o">-</span><span class="p">(</span><span class="n">textViewPadding</span><span class="o">.</span><span class="n">top</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputTextView</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">textViewPadding</span><span class="o">.</span><span class="n">bottom</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputStackView</span><span class="o">.</span><span class="n">bottom</span><span class="p">]</span><span class="o">-...|</span>
 
-H:|...-[InputStackView.left]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[InputStackView.right]-...|
+<span class="kt">H</span><span class="p">:</span><span class="o">|...-</span><span class="p">[</span><span class="kt">InputStackView</span><span class="o">.</span><span class="n">left</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">textViewPadding</span><span class="o">.</span><span class="n">left</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputTextView</span><span class="p">]</span><span class="o">-</span><span class="p">(</span><span class="n">textViewPadding</span><span class="o">.</span><span class="n">right</span><span class="p">)</span><span class="o">-</span><span class="p">[</span><span class="kt">InputStackView</span><span class="o">.</span><span class="n">right</span><span class="p">]</span><span class="o">-...|</span>
 </code></pre>
 
                       </div>
@@ -612,7 +591,7 @@ H:|...-[InputStackView.left]-(textViewPadding.left)-[InputTextView]-(textViewPad
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">textViewPadding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="o">=</span> <span class="kt">UIEdgeInsets</span><span class="p">(</span><span class="nv">top</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">left</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">bottom</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">right</span><span class="p">:</span> <span class="mi">8</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">textViewPadding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -639,7 +618,7 @@ H:|...-[InputStackView.left]-(textViewPadding.left)-[InputTextView]-(textViewPad
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -649,9 +628,9 @@ H:|...-[InputStackView.left]-(textViewPadding.left)-[InputTextView]-(textViewPad
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC28previousIntrinsicContentSizeSC6CGSizeVSgv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC28previousIntrinsicContentSizeSC6CGSizeVSgvp"></a>
                     <a name="//apple_ref/swift/Property/previousIntrinsicContentSize" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC28previousIntrinsicContentSizeSC6CGSizeVSgv">previousIntrinsicContentSize</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC28previousIntrinsicContentSizeSC6CGSizeVSgvp">previousIntrinsicContentSize</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -668,7 +647,7 @@ when it&rsquo;s different</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">previousIntrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">previousIntrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span><span class="p">?</span></code></pre>
 
                         </div>
                       </div>
@@ -678,9 +657,9 @@ when it&rsquo;s different</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC013isOverMaxTextD6HeightSbv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC013isOverMaxTextD6HeightSbvp"></a>
                     <a name="//apple_ref/swift/Property/isOverMaxTextViewHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC013isOverMaxTextD6HeightSbv">isOverMaxTextViewHeight</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC013isOverMaxTextD6HeightSbvp">isOverMaxTextViewHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -696,7 +675,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isOverMaxTextViewHeight</span> <span class="o">=</span> <span class="kc">false</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">isOverMaxTextViewHeight</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -706,9 +685,38 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC023shouldAutoUpdateMaxTextD6HeightSbv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC015shouldForceTextD9MaxHeightSbvp"></a>
+                    <a name="//apple_ref/swift/Property/shouldForceTextViewMaxHeight" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC015shouldForceTextD9MaxHeightSbvp">shouldForceTextViewMaxHeight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A boolean that when set as <code>TRUE</code> will always enable the <code><a href="../Classes/InputTextView.html">InputTextView</a></code> to be anchored to the
+height of <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC07maxTextD6Height12CoreGraphics7CGFloatVvp">maxTextViewHeight</a></code>
+The default value is <code>FALSE</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">shouldForceTextViewMaxHeight</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryViewAAC023shouldAutoUpdateMaxTextD6HeightSbvp"></a>
                     <a name="//apple_ref/swift/Property/shouldAutoUpdateMaxTextViewHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC023shouldAutoUpdateMaxTextD6HeightSbv">shouldAutoUpdateMaxTextViewHeight</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC023shouldAutoUpdateMaxTextD6HeightSbvp">shouldAutoUpdateMaxTextViewHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -716,14 +724,15 @@ improves the performance</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>A boolean that determines if the maxTextViewHeight should be auto updated on device rotation</p>
+                        <p>A boolean that determines if the <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC07maxTextD6Height12CoreGraphics7CGFloatVvp">maxTextViewHeight</a></code> should be maintained automatically.
+To control the maximum height of the view yourself, set this to <code>false</code>.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">shouldAutoUpdateMaxTextViewHeight</span> <span class="o">=</span> <span class="kc">true</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">shouldAutoUpdateMaxTextViewHeight</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -733,9 +742,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC07maxTextD6Height12CoreGraphics7CGFloatVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC07maxTextD6Height12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/maxTextViewHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC07maxTextD6Height12CoreGraphics7CGFloatVv">maxTextViewHeight</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC07maxTextD6Height12CoreGraphics7CGFloatVvp">maxTextViewHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -743,14 +752,16 @@ improves the performance</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The maximum height that the InputTextView can reach. Automatically set with <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC016calculateMaxTextD6Height12CoreGraphics7CGFloatVyF">calculateMaxTextViewHeight()</a></code></p>
+                        <p>The maximum height that the InputTextView can reach.
+This is set automatically when <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC023shouldAutoUpdateMaxTextD6HeightSbvp">shouldAutoUpdateMaxTextViewHeight</a></code> is true.
+To control the height yourself, make sure to set <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC023shouldAutoUpdateMaxTextD6HeightSbvp">shouldAutoUpdateMaxTextViewHeight</a></code> to false.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">maxTextViewHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">maxTextViewHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -760,9 +771,36 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC08requireda4TextD6Height12CoreGraphics7CGFloatVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC34shouldManageSendButtonEnabledStateSbvp"></a>
+                    <a name="//apple_ref/swift/Property/shouldManageSendButtonEnabledState" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC34shouldManageSendButtonEnabledStateSbvp">shouldManageSendButtonEnabledState</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A boolean that determines whether the sendButton&rsquo;s <code>isEnabled</code> state should be managed automatically.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">shouldManageSendButtonEnabledState</span><span class="p">:</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryViewAAC08requireda4TextD6Height12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/requiredInputTextViewHeight" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08requireda4TextD6Height12CoreGraphics7CGFloatVv">requiredInputTextViewHeight</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08requireda4TextD6Height12CoreGraphics7CGFloatVvp">requiredInputTextViewHeight</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -777,7 +815,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">requiredInputTextViewHeight</span><span class="p">:</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">requiredInputTextViewHeight</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -787,9 +825,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC09leftStackD13WidthConstant12CoreGraphics7CGFloatVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC09leftStackD13WidthConstant12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/leftStackViewWidthConstant" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09leftStackD13WidthConstant12CoreGraphics7CGFloatVv">leftStackViewWidthConstant</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09leftStackD13WidthConstant12CoreGraphics7CGFloatVvp">leftStackViewWidthConstant</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -804,7 +842,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">leftStackViewWidthConstant</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">leftStackViewWidthConstant</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -814,9 +852,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC010rightStackD13WidthConstant12CoreGraphics7CGFloatVv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC010rightStackD13WidthConstant12CoreGraphics7CGFloatVvp"></a>
                     <a name="//apple_ref/swift/Property/rightStackViewWidthConstant" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010rightStackD13WidthConstant12CoreGraphics7CGFloatVv">rightStackViewWidthConstant</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010rightStackD13WidthConstant12CoreGraphics7CGFloatVvp">rightStackViewWidthConstant</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -831,7 +869,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">rightStackViewWidthConstant</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="o">=</span> <span class="mi">52</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">rightStackViewWidthConstant</span><span class="p">:</span> <span class="kt">CGFloat</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -841,9 +879,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC13inputManagersSayAA0A7Manager_pGv"></a>
-                    <a name="//apple_ref/swift/Property/inputManagers" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC13inputManagersSayAA0A7Manager_pGv">inputManagers</a>
+                    <a name="/s:21InputBarAccessoryViewAAC12inputPluginsSayAA0A6Plugin_pGvp"></a>
+                    <a name="//apple_ref/swift/Property/inputPlugins" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC12inputPluginsSayAA0A6Plugin_pGvp">inputPlugins</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -851,14 +889,14 @@ improves the performance</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Holds the InputManager plugins that can be used to extend the functionality of the InputBarAccessoryView</p>
+                        <p>Holds the InputPlugin plugins that can be used to extend the functionality of the InputBarAccessoryView</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">inputManagers</span> <span class="o">=</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputManager.html">InputManager</a></span><span class="p">]()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">inputPlugins</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputPlugin.html">InputPlugin</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -868,9 +906,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC09leftStackD5ItemsSayAA0A4Item_pGv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC09leftStackD5ItemsSayAA0A4Item_pGvp"></a>
                     <a name="//apple_ref/swift/Property/leftStackViewItems" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09leftStackD5ItemsSayAA0A4Item_pGv">leftStackViewItems</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC09leftStackD5ItemsSayAA0A4Item_pGvp">leftStackViewItems</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -885,7 +923,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">leftStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">leftStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -895,9 +933,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC010rightStackD5ItemsSayAA0A4Item_pGv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC010rightStackD5ItemsSayAA0A4Item_pGvp"></a>
                     <a name="//apple_ref/swift/Property/rightStackViewItems" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010rightStackD5ItemsSayAA0A4Item_pGv">rightStackViewItems</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC010rightStackD5ItemsSayAA0A4Item_pGvp">rightStackViewItems</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -912,7 +950,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">rightStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">rightStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -922,9 +960,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC011bottomStackD5ItemsSayAA0A4Item_pGv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC011bottomStackD5ItemsSayAA0A4Item_pGvp"></a>
                     <a name="//apple_ref/swift/Property/bottomStackViewItems" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC011bottomStackD5ItemsSayAA0A4Item_pGv">bottomStackViewItems</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC011bottomStackD5ItemsSayAA0A4Item_pGvp">bottomStackViewItems</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -939,7 +977,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">bottomStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">bottomStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -949,9 +987,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC08topStackD5ItemsSayAA0A4Item_pGv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC08topStackD5ItemsSayAA0A4Item_pGvp"></a>
                     <a name="//apple_ref/swift/Property/topStackViewItems" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08topStackD5ItemsSayAA0A4Item_pGv">topStackViewItems</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08topStackD5ItemsSayAA0A4Item_pGvp">topStackViewItems</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -966,7 +1004,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">topStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">topStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -976,9 +1014,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC08nonStackD5ItemsSayAA0A4Item_pGv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC08nonStackD5ItemsSayAA0A4Item_pGvp"></a>
                     <a name="//apple_ref/swift/Property/nonStackViewItems" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08nonStackD5ItemsSayAA0A4Item_pGv">nonStackViewItems</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC08nonStackD5ItemsSayAA0A4Item_pGvp">nonStackViewItems</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -993,7 +1031,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">var</span> <span class="nv">nonStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">nonStackViewItems</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span></code></pre>
 
                         </div>
                       </div>
@@ -1003,9 +1041,9 @@ improves the performance</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryViewAAC5itemsSayAA0A4Item_pGv"></a>
+                    <a name="/s:21InputBarAccessoryViewAAC5itemsSayAA0A4Item_pGvp"></a>
                     <a name="//apple_ref/swift/Property/items" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryViewAAC5itemsSayAA0A4Item_pGv">items</a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC5itemsSayAA0A4Item_pGvp">items</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -1020,7 +1058,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">]</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -1058,7 +1096,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1085,7 +1123,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1112,7 +1150,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1139,7 +1177,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">class</span> <span class="kt">InputBarAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">didMoveToWindow</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1177,7 +1215,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setup</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1215,7 +1253,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">invalidateIntrinsicContentSize</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">invalidateIntrinsicContentSize</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1235,14 +1273,14 @@ improves the performance</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Calculates the correct intrinsicContentSize of the MessageInputBar</p>
+                        <p>Calculates the correct intrinsicContentSize of the InputBarAccessoryView</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">calculateIntrinsicContentSize</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">calculateIntrinsicContentSize</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGSize</span></code></pre>
 
                         </div>
                       </div>
@@ -1273,7 +1311,7 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">calculateMaxTextViewHeight</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">calculateMaxTextViewHeight</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">CGFloat</span></code></pre>
 
                         </div>
                       </div>
@@ -1315,9 +1353,28 @@ improves the performance</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">layoutStackViews</span><span class="p">(</span><span class="n">_</span> <span class="nv">positions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="o">.</span><span class="kt">Position</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="k">left</span><span class="p">,</span> <span class="o">.</span><span class="k">right</span><span class="p">,</span> <span class="o">.</span><span class="n">bottom</span><span class="p">,</span> <span class="o">.</span><span class="n">top</span><span class="p">])</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">layoutStackViews</span><span class="p">(</span><span class="n">_</span> <span class="nv">positions</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="o">.</span><span class="kt">Position</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="o">.</span><span class="n">left</span><span class="p">,</span> <span class="o">.</span><span class="n">right</span><span class="p">,</span> <span class="o">.</span><span class="n">bottom</span><span class="p">,</span> <span class="o">.</span><span class="n">top</span><span class="p">])</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>positions</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The InputStackView&rsquo;s to layout</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1343,9 +1400,52 @@ Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setStackViewItems</span><span class="p">(</span><span class="n">_</span> <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">],</span> <span class="n">forStack</span> <span class="nv">position</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="o">.</span><span class="kt">Position</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setStackViewItems</span><span class="p">(</span><span class="n">_</span> <span class="nv">items</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span><span class="p">],</span> <span class="n">forStack</span> <span class="nv">position</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="o">.</span><span class="kt">Position</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>items</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>New InputStackView arranged views</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>position</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The targeted InputStackView</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If the layout should be animated</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1370,9 +1470,40 @@ Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setLeftStackViewWidthConstant</span><span class="p">(</span><span class="n">to</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setLeftStackViewWidthConstant</span><span class="p">(</span><span class="n">to</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newValue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>New widthAnchor constant</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If the layout should be animated</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1397,9 +1528,98 @@ Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">setRightStackViewWidthConstant</span><span class="p">(</span><span class="n">to</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setRightStackViewWidthConstant</span><span class="p">(</span><span class="n">to</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">CGFloat</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newValue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>New widthAnchor constant</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If the layout should be animated</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryViewAAC021setShouldForceMaxTextD6HeightySb2to_Sb8animatedtF"></a>
+                    <a name="//apple_ref/swift/Method/setShouldForceMaxTextViewHeight(to:animated:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC021setShouldForceMaxTextD6HeightySb2to_Sb8animatedtF">setShouldForceMaxTextViewHeight(to:animated:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets the <code><a href="../Classes/InputBarAccessoryView.html#/s:21InputBarAccessoryViewAAC015shouldForceTextD9MaxHeightSbvp">shouldForceTextViewMaxHeight</a></code> property</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setShouldForceMaxTextViewHeight</span><span class="p">(</span><span class="n">to</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">,</span> <span class="nv">animated</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>newValue</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>New boolean value</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>animated</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>If the layout should be animated</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -1435,7 +1655,7 @@ Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">traitCollectionDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">previousTraitCollection</span><span class="p">:</span> <span class="kt">UITraitCollection</span><span class="p">?)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">traitCollectionDidChange</span><span class="p">(</span><span class="n">_</span> <span class="nv">previousTraitCollection</span><span class="p">:</span> <span class="kt">UITraitCollection</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -1462,7 +1682,8 @@ Sets the inputBarAccessoryView property of the InputBarButtonItem</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">orientationDidChange</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">orientationDidChange</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1492,7 +1713,8 @@ Invalidates the intrinsicContentSize</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidChange</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidChange</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1519,7 +1741,8 @@ Invalidates the intrinsicContentSize</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidBeginEditing</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidBeginEditing</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1546,7 +1769,73 @@ Invalidates the intrinsicContentSize</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidEndEditing</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">inputTextViewDidEndEditing</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Plugins"></a>
+                <a name="//apple_ref/swift/Section/Plugins" class="dashAnchor"></a>
+                <a href="#/Plugins">
+                  <h3 class="section-name">Plugins</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryViewAAC13reloadPluginsyyF"></a>
+                    <a name="//apple_ref/swift/Method/reloadPlugins()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC13reloadPluginsyyF">reloadPlugins()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Reloads each of the plugins</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">reloadPlugins</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryViewAAC17invalidatePluginsyyF"></a>
+                    <a name="//apple_ref/swift/Method/invalidatePlugins()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryViewAAC17invalidatePluginsyyF">invalidatePlugins()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Invalidates each of the plugins</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">invalidatePlugins</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1585,7 +1874,8 @@ Calls the delegates <code>didSwipeTextViewWith</code> method</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">didSwipeTextView</span><span class="p">(</span><span class="n">_</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">didSwipeTextView</span><span class="p">(</span><span class="n">_</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -1607,14 +1897,14 @@ Calls the delegates <code>didSwipeTextViewWith</code> method</p>
                       <div class="abstract">
                         <p>Calls the delegates <code>didPressSendButtonWith</code> method
 Assumes that the InputTextView&rsquo;s text has been set to empty and calls <code><a href="../Classes/InputBarAccessoryView.html#/c:@M@InputBarAccessoryView@objc(cs)InputBarAccessoryView(im)inputTextViewDidChange">inputTextViewDidChange()</a></code>
-Invalidates each of the inputManagers</p>
+Invalidates each of the InputPlugins</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="n">open</span> <span class="kd">func</span> <span class="nf">didSelectSendButton</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">didSelectSendButton</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -1626,8 +1916,8 @@ Invalidates each of the inputManagers</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

@@ -14,7 +14,7 @@
     <a title="AttachmentCell Class Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -75,6 +75,9 @@
               <li class="nav-group-task">
                 <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -99,12 +102,15 @@
                 <a href="../Protocols/InputItem.html">InputItem</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/InputManager.html">InputManager</a>
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
@@ -120,6 +126,12 @@
         <section>
           <section class="section">
             <h1>AttachmentCell</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">AttachmentCell</span> <span class="p">:</span> <span class="kt">UICollectionViewCell</span></code></pre>
+
+                </div>
+              </div>
             <p>Undocumented</p>
 
           </section>
@@ -136,9 +148,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView14AttachmentCellC09containerD0So6UIViewCv"></a>
+                    <a name="/s:21InputBarAccessoryView14AttachmentCellC09containerD0So6UIViewCvp"></a>
                     <a name="//apple_ref/swift/Property/containerView" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC09containerD0So6UIViewCv">containerView</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC09containerD0So6UIViewCvp">containerView</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -149,15 +161,23 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">containerView</span><span class="p">:</span> <span class="kt">UIView</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView14AttachmentCellC7paddingSC12UIEdgeInsetsVv"></a>
+                    <a name="/s:21InputBarAccessoryView14AttachmentCellC7paddingSC12UIEdgeInsetsVvp"></a>
                     <a name="//apple_ref/swift/Property/padding" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC7paddingSC12UIEdgeInsetsVv">padding</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC7paddingSC12UIEdgeInsetsVvp">padding</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -168,15 +188,23 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">padding</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView14AttachmentCellC12deleteButtonSo8UIButtonCv"></a>
+                    <a name="/s:21InputBarAccessoryView14AttachmentCellC12deleteButtonSo8UIButtonCvp"></a>
                     <a name="//apple_ref/swift/Property/deleteButton" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC12deleteButtonSo8UIButtonCv">deleteButton</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC12deleteButtonSo8UIButtonCvp">deleteButton</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -187,15 +215,23 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">lazy</span> <span class="k">var</span> <span class="nv">deleteButton</span><span class="p">:</span> <span class="kt">UIButton</span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView14AttachmentCellC10attachmentAA0E7ManagerC0E0OSgv"></a>
+                    <a name="/s:21InputBarAccessoryView14AttachmentCellC10attachmentAA0E7ManagerC0E0OSgvp"></a>
                     <a name="//apple_ref/swift/Property/attachment" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC10attachmentAA0E7ManagerC0E0OSgv">attachment</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC10attachmentAA0E7ManagerC0E0OSgvp">attachment</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -206,15 +242,23 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">attachment</span><span class="p">:</span> <span class="kt"><a href="../Classes/AttachmentManager.html">AttachmentManager</a></span><span class="o">.</span><span class="kt">Attachment</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView14AttachmentCellC9indexPath10Foundation05IndexH0VSgv"></a>
+                    <a name="/s:21InputBarAccessoryView14AttachmentCellC9indexPath10Foundation05IndexH0VSgvp"></a>
                     <a name="//apple_ref/swift/Property/indexPath" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC9indexPath10Foundation05IndexH0VSgv">indexPath</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC9indexPath10Foundation05IndexH0VSgvp">indexPath</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -225,15 +269,23 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">indexPath</span><span class="p">:</span> <span class="kt">IndexPath</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView14AttachmentCellC7managerAA0E7ManagerCSgXwv"></a>
+                    <a name="/s:21InputBarAccessoryView14AttachmentCellC7managerAA0E7ManagerCSgXwvp"></a>
                     <a name="//apple_ref/swift/Property/manager" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC7managerAA0E7ManagerCSgXwv">manager</a>
+                    <a class="token" href="#/s:21InputBarAccessoryView14AttachmentCellC7managerAA0E7ManagerCSgXwvp">manager</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -243,6 +295,14 @@
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">manager</span><span class="p">:</span> <span class="kt"><a href="../Classes/AttachmentManager.html">AttachmentManager</a></span><span class="p">?</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -274,6 +334,14 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -292,6 +360,14 @@
                       <div class="abstract">
                         <p>Undocumented</p>
 
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
                       </div>
                     </section>
                   </div>
@@ -312,6 +388,14 @@
                         <p>Undocumented</p>
 
                       </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="kd">func</span> <span class="nf">prepareForReuse</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
                     </section>
                   </div>
                 </li>
@@ -320,8 +404,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>

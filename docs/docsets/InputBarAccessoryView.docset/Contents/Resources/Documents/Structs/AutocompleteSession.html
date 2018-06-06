@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>AutocompleteSession Struct Reference</title>
+    <title>AutocompleteSession Structure Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset='utf-8'>
@@ -11,17 +11,17 @@
   </head>
   <body>
     <a name="//apple_ref/swift/Struct/AutocompleteSession" class="dashAnchor"></a>
-    <a title="AutocompleteSession Struct Reference"></a>
+    <a title="AutocompleteSession Structure Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
         <a href="../index.html">InputBarAccessoryView Reference</a>
         <img id="carat" src="../img/carat.png" />
-        AutocompleteSession Struct Reference
+        AutocompleteSession Structure Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -75,6 +75,9 @@
               <li class="nav-group-task">
                 <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -99,12 +102,15 @@
                 <a href="../Protocols/InputItem.html">InputItem</a>
               </li>
               <li class="nav-group-task">
-                <a href="../Protocols/InputManager.html">InputManager</a>
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
               </li>
             </ul>
           </li>
           <li class="nav-group-name">
-            <a href="../Structs.html">Structs</a>
+            <a href="../Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
@@ -122,7 +128,7 @@
             <h1>AutocompleteSession</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AutocompleteSession</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AutocompleteSession</span></code></pre>
 
                 </div>
               </div>
@@ -135,9 +141,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:21InputBarAccessoryView19AutocompleteSessionVACSgs9CharacterVSg6prefix_SC8_NSRangeVSg5rangeSSSg6filtertcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(prefix:range:filter:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteSessionVACSgs9CharacterVSg6prefix_SC8_NSRangeVSg5rangeSSSg6filtertcfc">init(prefix:range:filter:)</a>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteSessionV6prefixSSvp"></a>
+                    <a name="//apple_ref/swift/Property/prefix" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteSessionV6prefixSSvp">prefix</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -152,7 +158,115 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">AutocompleteSession</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">prefix</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteSessionV5rangeSC8_NSRangeVvp"></a>
+                    <a name="//apple_ref/swift/Property/range" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteSessionV5rangeSC8_NSRangeVvp">range</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteSessionV6filterSSvp"></a>
+                    <a name="//apple_ref/swift/Property/filter" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteSessionV6filterSSvp">filter</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">filter</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteSessionV10completionAA0E10CompletionVSgvp"></a>
+                    <a name="//apple_ref/swift/Property/completion" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteSessionV10completionAA0E10CompletionVSgvp">completion</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">completion</span><span class="p">:</span> <span class="kt"><a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView19AutocompleteSessionVACSgSSSg6prefix_SC8_NSRangeVSg5rangeAE6filtertcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(prefix:range:filter:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView19AutocompleteSessionVACSgSSSg6prefix_SC8_NSRangeVSg5rangeAE6filtertcfc">init(prefix:range:filter:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="nv">prefix</span><span class="p">:</span> <span class="kt">String</span><span class="p">?,</span> <span class="nv">range</span><span class="p">:</span> <span class="kt">NSRange</span><span class="p">?,</span> <span class="nv">filter</span><span class="p">:</span> <span class="kt">String</span><span class="p">?)</span></code></pre>
 
                         </div>
                       </div>
@@ -164,8 +278,8 @@
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-02-02)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.8.2</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>
     </div>
