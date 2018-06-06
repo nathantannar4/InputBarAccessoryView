@@ -1,5 +1,5 @@
 //
-//  ImageAttachmentsView.swift
+//  AttachmentCollectionView.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017-2018 Nathan Tannar.
@@ -27,7 +27,7 @@
 
 import UIKit
 
-open class AttachmentsView: UICollectionView {
+open class AttachmentCollectionView: UICollectionView {
     
     // MARK: - Properties
     

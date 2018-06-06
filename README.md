@@ -102,7 +102,11 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
-
+- 2.0.0
+        - API Stability
+        - Bug Fixes
+        - `InputManager` renamed to `InputPlugin`
+        - Added `shouldManageSendButtonEnabledState` to `InputBarAccessoryView`
 - 1.5.4
         - Bug Fixes
 - 1.5.3

@@ -319,7 +319,7 @@ class ConversationViewController: UITableViewController {
         layout.scrollDirection = .horizontal
         layout.itemSize = CGSize(width: 20, height: 20)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
-        let collectionView = AttachmentsView(frame: .zero, collectionViewLayout: layout)
+        let collectionView = AttachmentCollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.intrinsicContentHeight = 20
         collectionView.dataSource = self
         collectionView.register(ImageCell.self, forCellWithReuseIdentifier: ImageCell.reuseIdentifier)

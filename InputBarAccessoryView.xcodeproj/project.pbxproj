@@ -36,6 +36,7 @@
 		38EA6D66202E58BF00E329BE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EA6D65202E58BF00E329BE /* String+Extensions.swift */; };
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
+		38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		38EA6D65202E58BF00E329BE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
 		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
+		38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InputBarAccessoryView+Availability.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				38C867771F50A6AD00811974 /* Info.plist */,
+				38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */,
 				38C867781F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h */,
 			);
 			path = "Supporting Files";
@@ -365,6 +368,7 @@
 				3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */,
 				381042271F87FDE500B1E61A /* AttachmentManagerDelegate.swift in Sources */,
 				3876DAAD1F84C42800C89326 /* AttachmentManager.swift in Sources */,
+				38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */,
 				381042251F87F34900B1E61A /* InputStackView.swift in Sources */,
 				38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */,
 				3877525D1F8834F0000E0AC5 /* ImageAttachmentCell.swift in Sources */,

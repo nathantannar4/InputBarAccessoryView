@@ -1,5 +1,5 @@
 //
-//  AutocompleteTableView.swift
+//  InputBarAccessoryView+Availability.swift
 //  InputBarAccessoryView
 //
 //  Copyright © 2017-2018 Nathan Tannar.
@@ -22,20 +22,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-//  Created by Nathan Tannar on 10/4/17.
+//  Created by Nathan Tannar on 2/12/17.
 //
 
-import UIKit
+import Foundation
 
-open class AutocompleteTableView: UITableView {
+@available(*, deprecated, message: "InputManager has been renamed to InputPlugin")
+public typealias InputManager = InputPlugin
+
+extension InputPlugin {
     
-    /// The max visible rows visible in the autocomplete table before the user has to scroll throught them
-    open var maxVisibleRows = 3 { didSet { invalidateIntrinsicContentSize() } }
-    
-    open override var intrinsicContentSize: CGSize {
-        
-        let rows = numberOfRows(inSection: 0) < maxVisibleRows ? numberOfRows(inSection: 0) : maxVisibleRows
-        return CGSize(width: super.intrinsicContentSize.width, height: (CGFloat(rows) * rowHeight))
+    @available(*, deprecated, message: "`handleInput(object:)` should return a `Bool` if handle was successful or now")
+    func handleInput(of object: AnyObject) {
+        _ = self.handleInput(of: object)
     }
-    
 }
+
+@available(*, deprecated, message: "AttachmentsView has been renamed to AttachmentCollectionView")
+public typealias AttachmentsView = AttachmentCollectionView

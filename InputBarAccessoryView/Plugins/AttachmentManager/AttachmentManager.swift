@@ -33,6 +33,9 @@ open class AttachmentManager: NSObject, InputPlugin {
         case image(UIImage)
         case url(URL)
         case data(Data)
+        
+        @available(*, deprecated, message: ".other(AnyObject) has been depricated as of 2.0.0")
+        case other(AnyObject)
     }
     
     // MARK: - Properties [Public]
@@ -43,8 +46,8 @@ open class AttachmentManager: NSObject, InputPlugin {
     /// A protocol to passes data to the `AttachmentManager`
     open weak var dataSource: AttachmentManagerDataSource?
     
-    open lazy var attachmentView: AttachmentsView = { [weak self] in
-        let attachmentView = AttachmentsView()
+    open lazy var attachmentView: AttachmentCollectionView = { [weak self] in
+        let attachmentView = AttachmentCollectionView()
         attachmentView.dataSource = self
         attachmentView.delegate = self
         return attachmentView
