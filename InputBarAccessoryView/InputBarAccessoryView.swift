@@ -512,7 +512,7 @@ open class InputBarAccessoryView: UIView {
         }
         
         // Calculate the required height
-        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom + separatorLine.height
+        let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + textViewPadding.top + textViewPadding.bottom
         let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
         let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight

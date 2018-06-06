@@ -137,6 +137,7 @@ open class AutocompleteManager: NSObject, InputPlugin {
     /// Passes an object into the InputPlugin's session to handle
     ///
     /// - Parameter object: A string to append
+    @discardableResult
     open func handleInput(of object: AnyObject) -> Bool {
         guard let newText = object as? String, let textView = inputTextView else { return false }
         let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)

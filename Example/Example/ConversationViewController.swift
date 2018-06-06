@@ -330,7 +330,7 @@ class ConversationViewController: UITableViewController {
     @objc
     func resetInputBar() {
         bar.inputTextView.resignFirstResponder()
-        bar.InputPlugins.removeAll()
+        bar.inputPlugins.removeAll()
         let newBar = InputBarAccessoryView()
         newBar.delegate = self
         autocompleteManager = AutocompleteManager(for: newBar.inputTextView)
@@ -338,7 +338,7 @@ class ConversationViewController: UITableViewController {
         autocompleteManager.dataSource = self
         autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
         autocompleteManager.register(prefix: "#")
-        newBar.InputPlugins = [autocompleteManager, attachmentManager]
+        newBar.inputPlugins = [autocompleteManager, attachmentManager]
         newBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
         bar = newBar
         reloadInputViews()
@@ -420,7 +420,10 @@ extension ConversationViewController: UIImagePickerControllerDelegate, UINavigat
         
         dismiss(animated: true, completion: {
             if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-                self.attachmentManager.handleInput(of: pickedImage)
+                let handled = self.attachmentManager.handleInput(of: pickedImage)
+                if !handled {
+                    // throw error
+                }
             }
         })
     }
@@ -443,15 +446,15 @@ extension ConversationViewController: AttachmentManagerDelegate {
         setAttachmentManager(active: shouldBecomeVisible)
     }
     
-    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AnyObject]) {
+    func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AttachmentManager.Attachment]) {
         bar.sendButton.isEnabled = manager.attachments.count > 0
     }
     
-    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AnyObject, at index: Int) {
+    func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AttachmentManager.Attachment, at index: Int) {
         bar.sendButton.isEnabled = manager.attachments.count > 0
     }
     
-    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AnyObject, at index: Int) {
+    func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AttachmentManager.Attachment, at index: Int) {
         bar.sendButton.isEnabled = manager.attachments.count > 0
     }
     

@@ -81,6 +81,7 @@ open class AttachmentManager: NSObject, InputPlugin {
     /// Appends the object to the attachments
     ///
     /// - Parameter object: The object to append
+    @discardableResult
     open func handleInput(of object: AnyObject) -> Bool {
         let attachment: Attachment
         if let image = object as? UIImage {
