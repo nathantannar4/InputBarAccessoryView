@@ -97,6 +97,9 @@ class ExampleViewController: UITableViewController {
         return array
     }()
     
+    // Completions loaded async that get appeneded to local cached completions
+    var asyncCompletions: [AutocompleteCompletion] = []
+    
     init(conversation: SampleData.Conversation) {
         self.conversation = conversation
         super.init(nibName: nil, bundle: nil)
@@ -221,6 +224,24 @@ extension ExampleViewController: InputBarAccessoryViewDelegate {
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
+        guard autocompleteManager.currentSession != nil else { return }
+        // Load some data asyncronously for the given session.prefix
+        DispatchQueue.global(qos: .default).async {
+            // fake background loading task
+            var array: [AutocompleteCompletion] = []
+            for _ in 1...10 {
+                array.append(AutocompleteCompletion(Lorem.word()))
+            }
+            sleep(1)
+            DispatchQueue.main.async { [weak self] in
+                self?.asyncCompletions = array
+                self?.autocompleteManager.reloadData()
+            }
+        }
+    }
+    
 }
 
 extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -298,9 +319,9 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
         if prefix == "@" {
             return conversation.users
                 .filter { $0.name != SampleData.shared.currentUser.name }
-                .map { AutocompleteCompletion($0.name) }
+                .map { AutocompleteCompletion($0.name) } + asyncCompletions
         } else if prefix == "#" {
-            return hastagAutocompletes
+            return hastagAutocompletes + asyncCompletions
         }
         return []
     }
@@ -308,13 +329,13 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
     func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
-            fatalError("AutocompleteCell is not registered")
+            fatalError("Oops, some unknown error occurred")
         }
         let users = SampleData.shared.users
         let name = session.completion?.text ?? ""
         let user = users.filter { return $0.name == name }.first
         cell.imageView?.image = user?.image
-        cell.textLabel?.attributedText = cell.attributedText(matching: session)
+        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 13)
         return cell
     }
     
@@ -322,6 +343,21 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
     
     func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
         setAutocompleteManager(active: shouldBecomeVisible)
+    }
+    
+    // Optional
+    func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: String, at range: NSRange) -> Bool {
+        return true
+    }
+    
+    // Optional
+    func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: String) -> Bool {
+        return true
+    }
+    
+    // Optional
+    func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: String, with text: String) -> Bool {
+        return true
     }
     
     // MARK: - AutocompleteManagerDelegate Helper

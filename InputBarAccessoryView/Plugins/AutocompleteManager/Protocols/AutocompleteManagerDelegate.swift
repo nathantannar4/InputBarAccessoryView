@@ -28,7 +28,7 @@
 import UIKit
 
 /// AutocompleteManagerDelegate is a protocol that more precisely define AutocompleteManager logic
-public protocol AutocompleteManagerDelegate: class {
+public protocol AutocompleteManagerDelegate: AnyObject {
     
     /// Can be used to determine if the AutocompleteManager should be inserted into an InputStackView
     ///

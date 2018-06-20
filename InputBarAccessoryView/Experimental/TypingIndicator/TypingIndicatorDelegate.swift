@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol TypingIndicatorDelegate: class {
+public protocol TypingIndicatorDelegate: AnyObject {
     
     /// Indicates if the current user should be broadcasting a 'typing' indicator to
     /// the server

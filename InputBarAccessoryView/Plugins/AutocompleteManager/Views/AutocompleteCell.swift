@@ -90,16 +90,8 @@ open class AutocompleteCell: UITableViewCell {
     
     // MARK: - API [Public]
     
+    @available(*, deprecated, message: "This function has been moved to the `AutocompleteManager`")
     open func attributedText(matching session: AutocompleteSession) -> NSMutableAttributedString {
-        
-        let completionText = (session.completion?.displayText ?? session.completion?.text) ?? ""
-        
-        // Bolds the text that currently matches the filter
-        let matchingRange = (completionText as NSString).range(of: session.filter, options: .caseInsensitive)
-        let attributedString = NSMutableAttributedString().normal(completionText)
-        attributedString.addAttributes([.font: UIFont.boldSystemFont(ofSize: UIFont.preferredFont(forTextStyle: .body).pointSize)], range: matchingRange)
-        let stringWithPrefix = NSMutableAttributedString().normal(String(session.prefix))
-        stringWithPrefix.append(attributedString)
-        return stringWithPrefix
+        fatalError("Please use `func attributedText(matching:, fontSize:)` implemented in the `AutocompleteManager`")
     }
 }

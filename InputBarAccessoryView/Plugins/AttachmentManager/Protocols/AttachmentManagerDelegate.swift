@@ -28,7 +28,7 @@
 import UIKit
 
 /// AttachmentManagerDelegate is a protocol that can recieve notifications from the AttachmentManager
-public protocol AttachmentManagerDelegate: class {
+public protocol AttachmentManagerDelegate: AnyObject {
     
     /// Can be used to determine if the AttachmentManager should be inserted into an InputStackView
     ///

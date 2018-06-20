@@ -27,6 +27,9 @@
 
 import UIKit
 
+@available(*, deprecated, message: "AttachmentsView has been renamed to AttachmentCollectionView")
+public typealias AttachmentsView = AttachmentCollectionView
+
 open class AttachmentCollectionView: UICollectionView {
     
     // MARK: - Properties

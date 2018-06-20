@@ -62,6 +62,9 @@ open class AttachmentManager: NSObject, InputPlugin {
     /// A flag to determine if the AddAttachmentCell is visible
     open var showAddAttachmentCell = true { didSet { attachmentView.reloadData() } }
     
+    /// The color applied to the backgroundColor of the deleteButton in each `AttachmentCell`
+    open var tintColor: UIColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+    
     // MARK: - Initialization
     
     public override init() {
@@ -160,7 +163,7 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
     final public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.row == attachments.count && showAddAttachmentCell {
-            return addAttachmentCell(in: collectionView, at: indexPath)
+            return createAttachmentCell(in: collectionView, at: indexPath)
         }
         
         let attachment = attachments[indexPath.row]
@@ -179,6 +182,8 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                 cell.indexPath = indexPath
                 cell.manager = self
                 cell.imageView.image = image
+                cell.imageView.tintColor = tintColor
+                cell.deleteButton.backgroundColor = tintColor
                 return cell
             default:
                 return collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as! AttachmentCell
@@ -198,7 +203,7 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
         return CGSize(width: height, height: height)
     }
     
-    private func addAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
+    open func createAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as? AttachmentCell else {
             fatalError()

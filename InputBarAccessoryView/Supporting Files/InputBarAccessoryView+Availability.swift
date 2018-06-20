@@ -37,6 +37,3 @@ extension InputPlugin {
         _ = self.handleInput(of: object)
     }
 }
-
-@available(*, deprecated, message: "AttachmentsView has been renamed to AttachmentCollectionView")
-public typealias AttachmentsView = AttachmentCollectionView

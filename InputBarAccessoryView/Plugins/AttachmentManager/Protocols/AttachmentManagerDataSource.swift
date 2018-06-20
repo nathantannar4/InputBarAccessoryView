@@ -28,7 +28,7 @@
 import Foundation
 
 /// AttachmentManagerDataSource is a protocol to passes data to the AttachmentManager
-public protocol AttachmentManagerDataSource: class {
+public protocol AttachmentManagerDataSource: AnyObject {
     
     /// The AttachmentCell for the attachment that is to be inserted into the AttachmentView
     ///
