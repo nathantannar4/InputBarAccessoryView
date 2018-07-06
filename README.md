@@ -102,6 +102,8 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 2.2.0
+        - Make `AutocompleteSession` a class so that its completion can be updated
 - 2.1.0
         - `AutocompleteManager` table view datasource methods are now marked as `open`
         - `AutocompleteManager` changed to manage `UITextView`s rather than only `InputTextView`s
