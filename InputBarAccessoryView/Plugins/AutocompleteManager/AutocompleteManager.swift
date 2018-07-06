@@ -341,7 +341,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard var session = currentSession else { return UITableViewCell() }
+        guard let session = currentSession else { fatalError("Attempted to render a cell for a nil `AutocompleteSession`") }
         session.completion = currentAutocompleteOptions[indexPath.row]
         guard let cell = dataSource?.autocompleteManager(self, tableView: tableView, cellForRowAt: indexPath, for: session) else {
             fatalError("Failed to return a cell from `dataSource: AutocompleteManagerDataSource`")
@@ -353,9 +353,8 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard var session = currentSession else { return }
+        guard let session = currentSession else { return }
         session.completion = currentAutocompleteOptions[indexPath.row]
-        currentSession = session
         autocomplete(with: session)
     }
     

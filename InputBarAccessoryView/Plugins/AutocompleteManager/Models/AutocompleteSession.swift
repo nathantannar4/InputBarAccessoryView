@@ -27,8 +27,8 @@
 
 import Foundation
 
-/// A structure containing data on the `AutocompleteManager`'s session
-public struct AutocompleteSession {
+/// A class containing data on the `AutocompleteManager`'s session
+public class AutocompleteSession {
     
     public let prefix: String
     public var range: NSRange

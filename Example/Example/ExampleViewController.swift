@@ -335,7 +335,7 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
         let name = session.completion?.text ?? ""
         let user = users.filter { return $0.name == name }.first
         cell.imageView?.image = user?.image
-        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 13)
+        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 15)
         return cell
     }
     
@@ -363,7 +363,6 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
     // MARK: - AutocompleteManagerDelegate Helper
     
     func setAutocompleteManager(active: Bool) {
-        
         let topStackView = inputBar.topStackView
         if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
             topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
@@ -372,5 +371,6 @@ extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManage
             topStackView.removeArrangedSubview(autocompleteManager.tableView)
             topStackView.layoutIfNeeded()
         }
+        inputBar.invalidateIntrinsicContentSize()
     }
 }
