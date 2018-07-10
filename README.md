@@ -103,7 +103,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
-- 2.3.0
+- 2.2.2
         - Removed experimental `TypingIndicator` see more refined version [here](https://github.com/nathantannar4/TypingIndicator)
         - Added a `KeyboardManager` to support adding an `InputBarAccessoryView` as a subview of a `UIViewController`. This better supports view controller containers such as the `UISplitViewController`
 - 2.2.1
