@@ -136,6 +136,11 @@ class ExampleViewController: UITableViewController {
         autocompleteManager.register(prefix: "#")
         inputBar.inputPlugins = [autocompleteManager, attachmentManager]
         inputBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
+        
+        // RTL Support
+//        autocompleteManager.paragraphStyle.baseWritingDirection = .rightToLeft
+//        inputBar.inputTextView.textAlignment = .right
+//        inputBar.inputTextView.placeholderLabel.textAlignment = .right
     }
     
     @objc
@@ -226,6 +231,9 @@ extension ExampleViewController: InputBarAccessoryViewDelegate {
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
+        
+//        inputBar.inputTextView.setBaseWritingDirection(.rightToLeft, for: inputBar.inputTextView.textRange(from: inputBar.inputTextView.beginningOfDocument, to: inputBar.inputTextView.endOfDocument)!)
+        
         guard autocompleteManager.currentSession != nil else { return }
         // Load some data asyncronously for the given session.prefix
         DispatchQueue.global(qos: .default).async {

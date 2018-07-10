@@ -18,6 +18,7 @@
 - [x] Drop in Slack style `TypingIndicator`
 - [x] Plugin support for your own `InputPlugin`s
 - [x] iPhone X Support
+- [x] RTL Support
 
 ### Installation via CocoaPods
 
@@ -102,6 +103,8 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 2.2.1
+        - RTL Support (Made `AutocompleteManager.paragraphStyle` `open`)
 - 2.2.0
         - Make `AutocompleteSession` a class so that its completion can be updated
 - 2.1.0

@@ -74,6 +74,14 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     open var defaultTextAttributes: [NSAttributedStringKey: Any] =
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
     
+    /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
+    open let paragraphStyle: NSMutableParagraphStyle = {
+        let style = NSMutableParagraphStyle()
+        style.paragraphSpacingBefore = 2
+        style.lineHeightMultiple = 1
+        return style
+    }()
+    
     // MARK: - Properties [Private]
     
     /// The prefices that the manager will recognize
@@ -84,14 +92,6 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     /// A key used for referencing which substrings were autocompletes
     private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.system.autocompletekey")
-    
-    /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
-    private let paragraphStyle: NSMutableParagraphStyle = {
-        let style = NSMutableParagraphStyle()
-        style.paragraphSpacingBefore = 2
-        style.lineHeightMultiple = 1
-        return style
-    }()
     
     /// A reference to `defaultTextAttributes` that adds the NSAttributedAutocompleteKey
     private var typingTextAttributes: [NSAttributedStringKey: Any] {
