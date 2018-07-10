@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UITextView {
+internal extension UITextView {
     
     func find(prefixes: Set<String>) -> (prefix: String, word: String, range: NSRange)? {
         guard prefixes.count > 0,

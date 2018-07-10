@@ -27,7 +27,7 @@
 
 import UIKit
 
-extension NSMutableAttributedString {
+internal extension NSMutableAttributedString {
  
     @discardableResult
     func bold(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
@@ -75,7 +75,7 @@ extension NSMutableAttributedString {
 
 }
 
-extension NSAttributedString {
+internal extension NSAttributedString {
 
     func replacingCharacters(in range: NSRange, with attributedString: NSAttributedString) -> NSMutableAttributedString {
         let ns = NSMutableAttributedString(attributedString: self)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension String {
+internal extension String {
     
     func wordParts(_ range: Range<String.Index>) -> (left: String.SubSequence, right: String.SubSequence)? {
         let whitespace = NSCharacterSet.whitespacesAndNewlines

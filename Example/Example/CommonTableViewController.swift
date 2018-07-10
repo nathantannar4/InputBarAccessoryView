@@ -1,82 +1,29 @@
 //
-//  ExampleViewController.swift
-//  InputBarAccessoryView Example
+//  CommonTableViewController.swift
+//  Example
 //
-//  Copyright © 2017-2018 Nathan Tannar.
-//
-//  Permission is hereby granted, free of charge, to any person obtaining a copy
-//  of this software and associated documentation files (the "Software"), to deal
-//  in the Software without restriction, including without limitation the rights
-//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-//  copies of the Software, and to permit persons to whom the Software is
-//  furnished to do so, subject to the following conditions:
-//
-//  The above copyright notice and this permission notice shall be included in all
-//  copies or substantial portions of the Software.
-//
-//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-//  SOFTWARE.
-//
-//  Created by Nathan Tannar on 10/4/17.
+//  Created by Nathan Tannar on 2018-07-10.
+//  Copyright © 2018 Nathan Tannar. All rights reserved.
 //
 
 import UIKit
 import InputBarAccessoryView
 
-enum KeyboardExamples: String {
-    case imessage = "iMessage"
-    case slack = "Slack"
-    case githawk = "GitHawk"
-    case facebook = "Facebook"
-    case `default` = "Default"
+class CommonTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    func createBar() -> InputBarAccessoryView {
-        switch self {
-            case .imessage: return iMessageInputBar()
-            case .slack: return SlackInputBar()
-            case .githawk: return GitHawkInputBar()
-            case .facebook: return FacebookInputBar()
-            case .default: return InputBarAccessoryView()
-        }
-    }
-}
-
-class ExampleViewController: UITableViewController {
+    let inputBar: InputBarAccessoryView
     
-    // Required to use an inputAccessoryView
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
+    let tableView = UITableView()
     
-    // Required to use an inputAccessoryView
-    override var inputAccessoryView: UIView? {
-        return inputBar
-    }
-    
-    lazy var inputBar: InputBarAccessoryView = { [weak self] in
-        let inputBar = InputBarAccessoryView()
-        inputBar.delegate = self
-        return inputBar
-    }()
-    
-    open lazy var typingIdicator: TypingIndicator = { [weak self] in
-        let view = TypingIndicator()
-        view.delegate = self
-        return view
-    }()
+    let conversation: SampleData.Conversation
     
     /// The object that manages attachments
-    open lazy var attachmentManager: AttachmentManager = { [weak self] in
+    open lazy var attachmentManager: AttachmentManager = { [unowned self] in
         let manager = AttachmentManager()
         manager.delegate = self
         return manager
     }()
-
+    
     /// The object that manages autocomplete
     open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
         let manager = AutocompleteManager(for: self.inputBar.inputTextView)
@@ -84,10 +31,6 @@ class ExampleViewController: UITableViewController {
         manager.dataSource = self
         return manager
     }()
-    
-    var usersTyping = 0
-    
-    var conversation: SampleData.Conversation
     
     var hastagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
@@ -100,8 +43,9 @@ class ExampleViewController: UITableViewController {
     // Completions loaded async that get appeneded to local cached completions
     var asyncCompletions: [AutocompleteCompletion] = []
     
-    init(conversation: SampleData.Conversation) {
+    init(style: InputBarStyle, conversation: SampleData.Conversation) {
         self.conversation = conversation
+        self.inputBar = style.generate()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -113,29 +57,21 @@ class ExampleViewController: UITableViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
         tableView.keyboardDismissMode = .interactive
         tableView.register(ConversationCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
         
-        navigationItem.rightBarButtonItems = [
-            UIBarButtonItem(image: UIImage(named: "ic_keyboard"),
-                            style: .plain,
-                            target: self,
-                            action: #selector(handleKeyboardButton)),
-            UIBarButtonItem(image: UIImage(named: "ic_typing"),
-                            style: .plain,
-                            target: self,
-                            action: #selector(handleTypingButton))
-        ]
-        
         inputBar.delegate = self
-        autocompleteManager = AutocompleteManager(for: inputBar.inputTextView)
-        autocompleteManager.delegate = self
-        autocompleteManager.dataSource = self
+ 
+        // Configure AutocompleteManager
         autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
         autocompleteManager.register(prefix: "#")
+        
+        // Set plugins
         inputBar.inputPlugins = [autocompleteManager, attachmentManager]
-        inputBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
         
         // RTL Support
 //        autocompleteManager.paragraphStyle.baseWritingDirection = .rightToLeft
@@ -143,64 +79,16 @@ class ExampleViewController: UITableViewController {
 //        inputBar.inputTextView.placeholderLabel.textAlignment = .right
     }
     
-    @objc
-    func handleTypingButton() {
-        
-        usersTyping += 1
-        switch usersTyping {
-        case 1:
-            typingIdicator.setUsersTyping(to: [conversation.users[0].name])
-        case 2:
-            typingIdicator.setUsersTyping(to: [conversation.users[0].name, conversation.users[1].name])
-        case 3:
-            typingIdicator.setUsersTyping(to: [conversation.users[0].name, conversation.users[1].name, conversation.users[2].name])
-        default:
-            typingIdicator.setUsersTyping(to: [])
-            usersTyping = 0
-        }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.frame = view.bounds
     }
     
-    @objc
-    func handleKeyboardButton() {
-        
-        let actionSheetController = UIAlertController(title: "Change Keyboard Style", message: nil, preferredStyle: .actionSheet)
-        let keyboards: [KeyboardExamples] = [.imessage, .slack, .facebook, .githawk, .default]
-        for keyboard in keyboards {
-            actionSheetController.addAction(UIAlertAction(title: keyboard.rawValue, style: .default, handler: { [weak self] (_) in
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1, execute: {
-                    self?.setKeyboardStyle(keyboard)
-                })
-            }))
-        }
-        present(actionSheetController, animated: true, completion: nil)
-    }
-    
-    func setKeyboardStyle(_ style: KeyboardExamples) {
-        
-        // Flush old
-        inputBar.inputTextView.resignFirstResponder()
-        inputBar.inputPlugins.removeAll()
-        resignFirstResponder()
-        
-        let newBar = style.createBar()
-        newBar.delegate = self
-        autocompleteManager = AutocompleteManager(for: newBar.inputTextView)
-        autocompleteManager.delegate = self
-        autocompleteManager.dataSource = self
-        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
-        autocompleteManager.register(prefix: "#")
-        newBar.inputPlugins = [autocompleteManager, attachmentManager]
-        newBar.setStackViewItems([typingIdicator], forStack: .top, animated: false)
-        inputBar = newBar
-        reloadInputViews()
-        becomeFirstResponder()
-    }
-    
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return conversation.messages.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.imageView?.image = conversation.messages[indexPath.row].user.image
         cell.imageView?.layer.cornerRadius = 5
@@ -217,24 +105,26 @@ class ExampleViewController: UITableViewController {
     }
 }
 
-extension ExampleViewController: InputBarAccessoryViewDelegate {
+extension CommonTableViewController: InputBarAccessoryViewDelegate {
     
     // MARK: - InputBarAccessoryViewDelegate
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
         conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
-        inputBar.inputTextView.text = String()
-        inputBar.invalidatePlugins()
         let indexPath = IndexPath(row: conversation.messages.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        inputBar.inputTextView.text = String()
+        inputBar.invalidatePlugins()
+    }
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
+        // Adjust content insets
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
         
-//        inputBar.inputTextView.setBaseWritingDirection(.rightToLeft, for: inputBar.inputTextView.textRange(from: inputBar.inputTextView.beginningOfDocument, to: inputBar.inputTextView.endOfDocument)!)
-        
-        guard autocompleteManager.currentSession != nil else { return }
+        guard autocompleteManager.currentSession != nil, autocompleteManager.currentSession?.prefix == "#" else { return }
         // Load some data asyncronously for the given session.prefix
         DispatchQueue.global(qos: .default).async {
             // fake background loading task
@@ -252,7 +142,7 @@ extension ExampleViewController: InputBarAccessoryViewDelegate {
     
 }
 
-extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CommonTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
@@ -267,15 +157,7 @@ extension ExampleViewController: UIImagePickerControllerDelegate, UINavigationCo
     }
 }
 
-extension ExampleViewController: TypingIndicatorDelegate {
-    
-    func typingIndicator(_ typingIndicator: TypingIndicator, currentUserIsTyping isTyping: Bool) {
-        print("Current User isTyping: \(isTyping)")
-    }
-    
-}
-
-extension ExampleViewController: AttachmentManagerDelegate {
+extension CommonTableViewController: AttachmentManagerDelegate {
     
     
     // MARK: - AttachmentManagerDelegate
@@ -318,7 +200,7 @@ extension ExampleViewController: AttachmentManagerDelegate {
     }
 }
 
-extension ExampleViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
+extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
     
     // MARK: - AutocompleteManagerDataSource
     

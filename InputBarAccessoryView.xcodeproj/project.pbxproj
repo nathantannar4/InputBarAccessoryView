@@ -10,11 +10,15 @@
 		381042231F85FD1300B1E61A /* SeparatorLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381042221F85FD1300B1E61A /* SeparatorLine.swift */; };
 		381042251F87F34900B1E61A /* InputStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381042241F87F34900B1E61A /* InputStackView.swift */; };
 		381042271F87FDE500B1E61A /* AttachmentManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381042261F87FDE500B1E61A /* AttachmentManagerDelegate.swift */; };
+		3821ADD920F5315400DE0D1D /* KeyboardNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADD720F5315400DE0D1D /* KeyboardNotification.swift */; };
+		3821ADDA20F5315400DE0D1D /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADD820F5315400DE0D1D /* KeyboardManager.swift */; };
+		3821ADDC20F531A600DE0D1D /* KeyboardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADDB20F531A600DE0D1D /* KeyboardEvent.swift */; };
+		3821ADE820F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADE720F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift */; };
+		3821ADEA20F54B4C00DE0D1D /* NSNotification+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADE920F54B4C00DE0D1D /* NSNotification+Extensions.swift */; };
 		3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */; };
 		3876DA901F83530900C89326 /* AutocompleteManagerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8E1F83530900C89326 /* AutocompleteManagerDataSource.swift */; };
 		3876DA911F83530900C89326 /* AutocompleteManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8F1F83530900C89326 /* AutocompleteManagerDelegate.swift */; };
 		3876DA921F83551400C89326 /* AutocompleteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8D1F83530200C89326 /* AutocompleteManager.swift */; };
-		3876DAA71F841ED900C89326 /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */; };
 		3876DAA91F84C0DB00C89326 /* AttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */; };
 		3876DAAB1F84C22100C89326 /* AttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAA1F84C22100C89326 /* AttachmentCell.swift */; };
 		3876DAAD1F84C42800C89326 /* AttachmentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DAAC1F84C42800C89326 /* AttachmentManager.swift */; };
@@ -23,8 +27,6 @@
 		387752601F884FF3000E0AC5 /* AttachmentManagerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3877525F1F884FF3000E0AC5 /* AttachmentManagerDataSource.swift */; };
 		3891276D1F980F0300702C05 /* InputItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3891276C1F980F0300702C05 /* InputItem.swift */; };
 		3892AEA4202E427F006AF939 /* UITextView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3892AEA3202E427F006AF939 /* UITextView+Extensions.swift */; };
-		38C6DF8F2030B92900B61E79 /* TypingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6DF8E2030B92900B61E79 /* TypingIndicator.swift */; };
-		38C6DF912030BAA000B61E79 /* TypingIndicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C6DF902030BAA000B61E79 /* TypingIndicatorDelegate.swift */; };
 		38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */; };
 		38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */; };
 		38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */; };
@@ -43,12 +45,16 @@
 		381042221F85FD1300B1E61A /* SeparatorLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorLine.swift; sourceTree = "<group>"; };
 		381042241F87F34900B1E61A /* InputStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputStackView.swift; sourceTree = "<group>"; };
 		381042261F87FDE500B1E61A /* AttachmentManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentManagerDelegate.swift; sourceTree = "<group>"; };
+		3821ADD720F5315400DE0D1D /* KeyboardNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardNotification.swift; sourceTree = "<group>"; };
+		3821ADD820F5315400DE0D1D /* KeyboardManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		3821ADDB20F531A600DE0D1D /* KeyboardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardEvent.swift; sourceTree = "<group>"; };
+		3821ADE720F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
+		3821ADE920F54B4C00DE0D1D /* NSNotification+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSNotification+Extensions.swift"; sourceTree = "<group>"; };
 		383B83831F4787E200027965 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCell.swift; sourceTree = "<group>"; };
 		3876DA8D1F83530200C89326 /* AutocompleteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteManager.swift; sourceTree = "<group>"; };
 		3876DA8E1F83530900C89326 /* AutocompleteManagerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteManagerDataSource.swift; sourceTree = "<group>"; };
 		3876DA8F1F83530900C89326 /* AutocompleteManagerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteManagerDelegate.swift; sourceTree = "<group>"; };
-		3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentsView.swift; sourceTree = "<group>"; };
 		3876DAAA1F84C22100C89326 /* AttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentCell.swift; sourceTree = "<group>"; };
 		3876DAAC1F84C42800C89326 /* AttachmentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentManager.swift; sourceTree = "<group>"; };
@@ -57,8 +63,6 @@
 		3877525F1F884FF3000E0AC5 /* AttachmentManagerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentManagerDataSource.swift; sourceTree = "<group>"; };
 		3891276C1F980F0300702C05 /* InputItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputItem.swift; sourceTree = "<group>"; };
 		3892AEA3202E427F006AF939 /* UITextView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextView+Extensions.swift"; sourceTree = "<group>"; };
-		38C6DF8E2030B92900B61E79 /* TypingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicator.swift; sourceTree = "<group>"; };
-		38C6DF902030BAA000B61E79 /* TypingIndicatorDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorDelegate.swift; sourceTree = "<group>"; };
 		38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSConstraintLayoutSet.swift; sourceTree = "<group>"; };
 		38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AutoLayout.swift"; sourceTree = "<group>"; };
 		38C867751F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarAccessoryViewDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +89,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3821ADD620F5314800DE0D1D /* KeyboardManager */ = {
+			isa = PBXGroup;
+			children = (
+				3821ADD820F5315400DE0D1D /* KeyboardManager.swift */,
+				3821ADDB20F531A600DE0D1D /* KeyboardEvent.swift */,
+				3821ADD720F5315400DE0D1D /* KeyboardNotification.swift */,
+				3821ADE920F54B4C00DE0D1D /* NSNotification+Extensions.swift */,
+			);
+			path = KeyboardManager;
+			sourceTree = "<group>";
+		};
 		383B83791F4787E200027965 = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
-				38F0C1F820C780F100FF8DD3 /* Experimental */,
+				3821ADD620F5314800DE0D1D /* KeyboardManager */,
 				3876DA8C1F8352F800C89326 /* Plugins */,
 				38C867791F50A6AD00811974 /* Views */,
 				38F0C1EC20C77FA000FF8DD3 /* Models */,
@@ -129,7 +144,7 @@
 		38C867711F50A6AD00811974 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3876DAA61F841ED900C89326 /* NSMutableAttributedString+Extensions.swift */,
+				3821ADE720F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift */,
 				3892AEA3202E427F006AF939 /* UITextView+Extensions.swift */,
 				38EA6D65202E58BF00E329BE /* String+Extensions.swift */,
 				38C867731F50A6AD00811974 /* UIView+AutoLayout.swift */,
@@ -250,23 +265,6 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		38F0C1F820C780F100FF8DD3 /* Experimental */ = {
-			isa = PBXGroup;
-			children = (
-				38F0C1F920C7810300FF8DD3 /* TypingIndicator */,
-			);
-			path = Experimental;
-			sourceTree = "<group>";
-		};
-		38F0C1F920C7810300FF8DD3 /* TypingIndicator */ = {
-			isa = PBXGroup;
-			children = (
-				38C6DF8E2030B92900B61E79 /* TypingIndicator.swift */,
-				38C6DF902030BAA000B61E79 /* TypingIndicatorDelegate.swift */,
-			);
-			path = TypingIndicator;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -349,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				387752601F884FF3000E0AC5 /* AttachmentManagerDataSource.swift in Sources */,
+				3821ADDC20F531A600DE0D1D /* KeyboardEvent.swift in Sources */,
 				3876DA921F83551400C89326 /* AutocompleteManager.swift in Sources */,
 				38C867841F50A6AD00811974 /* InputTextView.swift in Sources */,
 				3876DA901F83530900C89326 /* AutocompleteManagerDataSource.swift in Sources */,
@@ -361,9 +360,8 @@
 				38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */,
 				38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */,
 				3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */,
-				38C6DF8F2030B92900B61E79 /* TypingIndicator.swift in Sources */,
 				3876DAAB1F84C22100C89326 /* AttachmentCell.swift in Sources */,
-				3876DAA71F841ED900C89326 /* NSMutableAttributedString+Extensions.swift in Sources */,
+				3821ADE820F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift in Sources */,
 				38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */,
 				3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */,
 				381042271F87FDE500B1E61A /* AttachmentManagerDelegate.swift in Sources */,
@@ -372,11 +370,13 @@
 				381042251F87F34900B1E61A /* InputStackView.swift in Sources */,
 				38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */,
 				3877525D1F8834F0000E0AC5 /* ImageAttachmentCell.swift in Sources */,
-				38C6DF912030BAA000B61E79 /* TypingIndicatorDelegate.swift in Sources */,
 				381042231F85FD1300B1E61A /* SeparatorLine.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,
+				3821ADD920F5315400DE0D1D /* KeyboardNotification.swift in Sources */,
+				3821ADEA20F54B4C00DE0D1D /* NSNotification+Extensions.swift in Sources */,
 				3876DA911F83530900C89326 /* AutocompleteManagerDelegate.swift in Sources */,
 				38D29FE91F97CBA400E59362 /* InputPlugin.swift in Sources */,
+				3821ADDA20F5315400DE0D1D /* KeyboardManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
