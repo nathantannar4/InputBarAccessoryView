@@ -40,6 +40,7 @@ class SampleData {
     
     class User {
         
+        let id: String = UUID().uuidString
         let image: UIImage
         let name: String
         

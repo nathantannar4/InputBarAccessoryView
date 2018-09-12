@@ -103,6 +103,10 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 3.0.0
+        - Added a `context: [String: Any]?` property to `AutocompleteCompletion` for more advanced use
+        - Added `NSAttributedStringKey.autocompleted` to easily parse attributed strings for the substrings that were completed
+        - Added `NSAttributedStringKey.autocompletedContext` where the `context` of  `AutocompleteCompletion` is stored for post processing
 - 2.2.2
         - Removed experimental `TypingIndicator` see more refined version [here](https://github.com/nathantannar4/TypingIndicator)
         - Added a `KeyboardManager` to support adding an `InputBarAccessoryView` as a subview of a `UIViewController`. This better supports view controller containers such as the `UISplitViewController`

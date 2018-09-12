@@ -35,7 +35,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     var hastagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
         for _ in 1...100 {
-            array.append(AutocompleteCompletion(Lorem.word()))
+            array.append(AutocompleteCompletion(text: Lorem.word(), context: nil))
         }
         return array
     }()
@@ -110,6 +110,17 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     // MARK: - InputBarAccessoryViewDelegate
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        
+        // Here we can parse for which substrings were autocompleted
+        let attributedText = inputBar.inputTextView.attributedText!
+        let range = NSRange(location: 0, length: attributedText.length)
+        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (attributes, range, stop) in
+            
+            let substring = attributedText.attributedSubstring(from: range)
+            let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
+            print("Autocompleted: `", substring, "` with context: ", context ?? [])
+        }
+        
         conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
         let indexPath = IndexPath(row: conversation.messages.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
@@ -120,6 +131,7 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
+        tableView.contentInset.bottom = size.height + view.layoutMargins.bottom
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
@@ -209,7 +221,10 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
         if prefix == "@" {
             return conversation.users
                 .filter { $0.name != SampleData.shared.currentUser.name }
-                .map { AutocompleteCompletion($0.name) } + asyncCompletions
+                .map { user in
+                    return AutocompleteCompletion(text: user.name,
+                                                  context: ["id": user.id])
+            }
         } else if prefix == "#" {
             return hastagAutocompletes + asyncCompletions
         }

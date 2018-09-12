@@ -27,6 +27,17 @@
 
 import UIKit
 
+public extension NSAttributedStringKey {
+    
+    /// A key used for referencing which substrings were autocompleted
+    /// by InputBarAccessoryView.AutocompleteManager
+    static let autocompleted = NSAttributedStringKey("com.system.autocompletekey")
+    
+    /// A key used for referencing the context of autocompleted substrings
+    /// by InputBarAccessoryView.AutocompleteManager
+    static let autocompletedContext = NSAttributedStringKey("com.system.autocompletekey.context")
+}
+
 open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - Properties [Public]
@@ -90,13 +101,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// The text attributes applied to highlighted substrings for each prefix
     public private(set) var autocompleteTextAttributes = [String: [NSAttributedStringKey: Any]]()
     
-    /// A key used for referencing which substrings were autocompletes
-    private let NSAttributedAutocompleteKey = NSAttributedStringKey.init("com.system.autocompletekey")
-    
     /// A reference to `defaultTextAttributes` that adds the NSAttributedAutocompleteKey
     private var typingTextAttributes: [NSAttributedStringKey: Any] {
         var attributes = defaultTextAttributes
-        attributes[NSAttributedAutocompleteKey] = false
+        attributes[.autocompleted] = false
         attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
@@ -204,14 +212,19 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// - Parameter session: The `AutocompleteSession` to form an `NSMutableAttributedString` with
     /// - Returns: An `NSMutableAttributedString`
     open func attributedText(matching session: AutocompleteSession,
-                             fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize) -> NSMutableAttributedString {
+                             fontSize: CGFloat = 15,
+                             keepPrefix: Bool = true) -> NSMutableAttributedString {
         
-        let completionText = (session.completion?.displayText ?? session.completion?.text) ?? ""
+        guard let completion = session.completion else {
+            return NSMutableAttributedString()
+        }
         
         // Bolds the text that currently matches the filter
-        let matchingRange = (completionText as NSString).range(of: session.filter, options: .caseInsensitive)
-        let attributedString = NSMutableAttributedString().normal(completionText, fontSize: fontSize)
+        let matchingRange = (completion.text as NSString).range(of: session.filter, options: .caseInsensitive)
+        let attributedString = NSMutableAttributedString().normal(completion.text, fontSize: fontSize)
         attributedString.addAttributes([.font: UIFont.boldSystemFont(ofSize: fontSize)], range: matchingRange)
+        
+        guard keepPrefix else { return attributedString }
         let stringWithPrefix = NSMutableAttributedString().normal(String(session.prefix), fontSize: fontSize)
         stringWithPrefix.append(attributedString)
         return stringWithPrefix
@@ -240,7 +253,8 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         
         // Apply the autocomplete attributes
         var attrs = autocompleteTextAttributes[session.prefix] ?? defaultTextAttributes
-        attrs[NSAttributedAutocompleteKey] = true
+        attrs[.autocompleted] = true
+        attrs[.autocompletedContext] = session.completion?.context
         let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
         let newAttributedString = NSAttributedString(string: newString, attributes: attrs)
         
@@ -307,13 +321,13 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             // Backspace/removing text
             let attribute = textView.attributedText
                 .attributes(at: range.lowerBound, longestEffectiveRange: nil, in: range)
-                .filter { return $0.key == NSAttributedAutocompleteKey }
+                .filter { return $0.key == .autocompleted }
             
-            if (attribute[NSAttributedAutocompleteKey] as? Bool ?? false) == true {
+            if (attribute[.autocompleted] as? Bool ?? false) == true {
                 
                 // Remove the autocompleted substring
                 let lowerRange = NSRange(location: 0, length: range.location + 1)
-                textView.attributedText.enumerateAttribute(NSAttributedAutocompleteKey, in: lowerRange, options: .reverse, using: { (_, range, stop) in
+                textView.attributedText.enumerateAttribute(.autocompleted, in: lowerRange, options: .reverse, using: { (_, range, stop) in
                     
                     // Only delete the first found range
                     defer { stop.pointee = true }

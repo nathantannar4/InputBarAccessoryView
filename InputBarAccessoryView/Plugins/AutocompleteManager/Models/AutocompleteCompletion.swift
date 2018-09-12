@@ -32,15 +32,25 @@ public struct AutocompleteCompletion {
     // The string used for sorting and to autocomplete a prefix
     public var text: String
     
+    // The context of the completion that you may need later when completed
+    public var context: [String: Any]?
+    
     // An optional string to display instead of `text`, for example emojis
+    @available(*, deprecated, message: "`displayText` should no longer be used, use `context: [String: Any]` instead")
     public var displayText: String?
     
     public init(_ text: String) {
         self.text = text
     }
     
+    @available(*, deprecated, message: "`displayText` should no longer be used, use `context: [String: Any]` instead")
     public init(_ text: String, displayText: String) {
         self.text = text
         self.displayText = displayText
+    }
+    
+    public init(text: String, context: [String: Any]? = nil) {
+        self.text = text
+        self.context = context
     }
 }
