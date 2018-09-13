@@ -321,7 +321,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         // range.lowerBound < textView.selectedRange.lowerBound: Ignore trying to delete
         //      the substring if the user is already doing so
         // range == selectedRange: User selected a chunk to delete
-        if range.length > 0, (range.location < selectedRange.location || range == selectedRange) {
+        if range.length > 0, range.location < selectedRange.location {
             
             // Backspace/removing text
             let attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: range)
@@ -339,7 +339,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                     stop.pointee = true
                 }
                 unregisterCurrentSession()
-                return range == selectedRange
+                return false
             }
         } else if range.length >= 0, range.location < totalRange.length {
             
@@ -352,12 +352,15 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                     let intersection = NSIntersectionRange(compareRange, subrange)
                     guard intersection.length > 0 else { return }
                     
-                    let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
-                    textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: emptyString)
-                    textView.selectedRange = NSRange(location: subrange.location, length: 0)
+                    let mutable = NSMutableAttributedString(attributedString: textView.attributedText)
+                    mutable.setAttributes(typingTextAttributes, range: subrange)
+                    let replacementText = NSAttributedString(string: text, attributes: typingTextAttributes)
+                    textView.attributedText = mutable.replacingCharacters(in: range, with: replacementText)
+                    textView.selectedRange = NSRange(location: range.location + text.count, length: 0)
                     stop.pointee = true
                 }
                 unregisterCurrentSession()
+                return false
             }
         }
         return true
