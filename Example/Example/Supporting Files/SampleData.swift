@@ -52,7 +52,7 @@ class SampleData {
     
     static var shared = SampleData()
     
-    let users = [User(name: "Avatar", image: #imageLiteral(resourceName: "avatar")), User(name: "Ninja", image: #imageLiteral(resourceName: "ninja")), User(name: "Anonymous", image: #imageLiteral(resourceName: "anonymous")), User(name: "Rick", image: #imageLiteral(resourceName: "rick")), User(name: "Nathan", image: #imageLiteral(resourceName: "nathan"))]
+    let users = [User(name: "Avatar", image: #imageLiteral(resourceName: "avatar")), User(name: "Ninja", image: #imageLiteral(resourceName: "ninja")), User(name: "Anonymous", image: #imageLiteral(resourceName: "anonymous")), User(name: "Rick Sanchez", image: #imageLiteral(resourceName: "rick")), User(name: "Nathan Tannar", image: #imageLiteral(resourceName: "nathan"))]
     
     var currentUser: User { return users.last! }
     

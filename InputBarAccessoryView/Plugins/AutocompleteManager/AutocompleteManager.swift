@@ -105,6 +105,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     private var typingTextAttributes: [NSAttributedStringKey: Any] {
         var attributes = defaultTextAttributes
         attributes[.autocompleted] = false
+        attributes[.autocompletedContext] = nil
         attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
@@ -313,31 +314,50 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         // Ensure that the text to be inserted is not using previous attributes
         preserveTypingAttributes()
         
+        let totalRange = NSRange(location: 0, length: textView.attributedText.length)
+        let selectedRange = textView.selectedRange
+        
         // range.length > 0: Backspace/removing text
         // range.lowerBound < textView.selectedRange.lowerBound: Ignore trying to delete
         //      the substring if the user is already doing so
-        if range.length > 0, range.lowerBound < textView.selectedRange.lowerBound {
+        // range == selectedRange: User selected a chunk to delete
+        if range.length > 0, (range.location < selectedRange.location || range == selectedRange) {
             
             // Backspace/removing text
-            let attribute = textView.attributedText
-                .attributes(at: range.lowerBound, longestEffectiveRange: nil, in: range)
-                .filter { return $0.key == .autocompleted }
+            let attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: range)
+            let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             
-            if (attribute[.autocompleted] as? Bool ?? false) == true {
-                
-                // Remove the autocompleted substring
-                let lowerRange = NSRange(location: 0, length: range.location + 1)
-                textView.attributedText.enumerateAttribute(.autocompleted, in: lowerRange, options: .reverse, using: { (_, range, stop) in
+            if isAutocompleted {
+                textView.attributedText.enumerateAttribute(.autocompleted, in: totalRange, options: .reverse) { _, subrange, stop in
                     
-                    // Only delete the first found range
-                    defer { stop.pointee = true }
+                    let intersection = NSIntersectionRange(range, subrange)
+                    guard intersection.length > 0 else { return }
                     
                     let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
-                    textView.attributedText = textView.attributedText.replacingCharacters(in: range, with: emptyString)
-                    textView.selectedRange = NSRange(location: range.location, length: 0)
-                })
+                    textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: emptyString)
+                    textView.selectedRange = NSRange(location: subrange.location, length: 0)
+                    stop.pointee = true
+                }
                 unregisterCurrentSession()
-                return false
+                return range == selectedRange
+            }
+        } else if range.length >= 0, range.location < totalRange.length {
+            
+            let attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: range)
+            let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
+            if isAutocompleted {
+                textView.attributedText.enumerateAttribute(.autocompleted, in: totalRange, options: .reverse) { _, subrange, stop in
+                    
+                    let compareRange = range.length == 0 ? NSRange(location: range.location, length: 1) : range
+                    let intersection = NSIntersectionRange(compareRange, subrange)
+                    guard intersection.length > 0 else { return }
+                    
+                    let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
+                    textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: emptyString)
+                    textView.selectedRange = NSRange(location: subrange.location, length: 0)
+                    stop.pointee = true
+                }
+                unregisterCurrentSession()
             }
         }
         return true

@@ -103,6 +103,9 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 3.0.1
+        - Inserting text in the middle an autocompleted substring will now invalidate the autocomplete
+        - Deleting characters in the middle of an autocompleted substring will delete the entire autocompleted substring
 - 3.0.0
         - Added a `context: [String: Any]?` property to `AutocompleteCompletion` for more advanced use
         - Added `NSAttributedStringKey.autocompleted` to easily parse attributed strings for the substrings that were completed

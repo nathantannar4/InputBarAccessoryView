@@ -131,7 +131,7 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
-        tableView.contentInset.bottom = size.height + view.layoutMargins.bottom
+        tableView.contentInset.bottom = size.height
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
