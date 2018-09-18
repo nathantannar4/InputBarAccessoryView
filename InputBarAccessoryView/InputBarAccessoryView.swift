@@ -79,7 +79,7 @@ open class InputBarAccessoryView: UIView {
     }
 
     /// A SeparatorLine that is anchored at the top of the InputBarAccessoryView
-    open let separatorLine = SeparatorLine()
+    public let separatorLine = SeparatorLine()
     
     /**
      The InputStackView at the InputStackView.top position
@@ -88,7 +88,7 @@ open class InputBarAccessoryView: UIView {
      1. It's axis is initially set to .vertical
      2. It's alignment is initially set to .fill
      */
-    open let topStackView: InputStackView = {
+    public let topStackView: InputStackView = {
         let stackView = InputStackView(axis: .vertical, spacing: 0)
         stackView.alignment = .fill
         return stackView
@@ -100,7 +100,7 @@ open class InputBarAccessoryView: UIView {
      ## Important Notes ##
      1. It's axis is initially set to .horizontal
      */
-    open let leftStackView = InputStackView(axis: .horizontal, spacing: 0)
+    public let leftStackView = InputStackView(axis: .horizontal, spacing: 0)
     
     /**
      The InputStackView at the InputStackView.right position
@@ -108,7 +108,7 @@ open class InputBarAccessoryView: UIView {
      ## Important Notes ##
      1. It's axis is initially set to .horizontal
      */
-    open let rightStackView = InputStackView(axis: .horizontal, spacing: 0)
+    public let rightStackView = InputStackView(axis: .horizontal, spacing: 0)
     
     /**
      The InputStackView at the InputStackView.bottom position
@@ -117,7 +117,7 @@ open class InputBarAccessoryView: UIView {
      1. It's axis is initially set to .horizontal
      2. It's spacing is initially set to 15
      */
-    open let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
+    public let bottomStackView = InputStackView(axis: .horizontal, spacing: 15)
     
     /// The InputTextView a user can input a message in
     open lazy var inputTextView: InputTextView = { [weak self] in

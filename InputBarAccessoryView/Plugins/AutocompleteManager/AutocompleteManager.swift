@@ -81,12 +81,16 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// Default value is `TRUE`
     open var keepPrefixOnCompletion = true
     
+    // The maximum number of spaces that can be used during an `AutocompleteSession`
+    // Default value is `0`
+    open var maxAutocompleteWhitespace = 1
+    
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedStringKey: Any] =
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
     
     /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
-    open let paragraphStyle: NSMutableParagraphStyle = {
+    public let paragraphStyle: NSMutableParagraphStyle = {
         let style = NSMutableParagraphStyle()
         style.paragraphSpacingBefore = 2
         style.lineHeightMultiple = 1
@@ -97,6 +101,12 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     /// The prefices that the manager will recognize
     public private(set) var autocompletePrefixes = Set<String>()
+    
+    /// The delimiters that the manager will terminate a session with
+    /// NOTE: Whitespace delimiter count is controlled by `maxAutocompleteWhitespace`
+    ///
+    /// The default value is: [.whitespacesAndNewlines]
+    public private(set) var autocompleteDelimiters: Set<CharacterSet> = [.whitespacesAndNewlines]
     
     /// The text attributes applied to highlighted substrings for each prefix
     public private(set) var autocompleteTextAttributes = [String: [NSAttributedStringKey: Any]]()
@@ -132,7 +142,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// Reloads the InputPlugin's session
     open func reloadData() {
 
-        guard let result = textView?.find(prefixes: autocompletePrefixes) else {
+        let delimiterSet = autocompleteDelimiters.reduce(CharacterSet()) { result, set in
+            return result.union(set)
+        }
+        guard let result = textView?.find(prefixes: autocompletePrefixes, with: delimiterSet) else {
             unregisterCurrentSession()
             return
         }
@@ -162,15 +175,37 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     // MARK: - API [Public]
     
+    /// Registers a prefix and its the attributes to apply to its autocompleted strings
+    ///
+    /// - Parameters:
+    ///   - prefix: The prefix such as: @, # or !
+    ///   - attributedTextAttributes: The attributes to apply to the NSAttributedString
     open func register(prefix: String, with attributedTextAttributes: [NSAttributedStringKey:Any]? = nil) {
         autocompletePrefixes.insert(prefix)
         autocompleteTextAttributes[prefix] = attributedTextAttributes
         autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
     }
     
+    /// Unregisters a prefix and removes its associated cached attributes
+    ///
+    /// - Parameter prefix: The prefix such as: @, # or !
     open func unregister(prefix: String) {
         autocompletePrefixes.remove(prefix)
         autocompleteTextAttributes[prefix] = nil
+    }
+    
+    /// Registers a delimiter that when inputted terminates the `AutocompleteSession`
+    ///
+    /// - Parameter delimeter: The `CharacterSet` to recognize as a delimiter
+    open func register(delimiter: CharacterSet) {
+        autocompleteDelimiters.insert(delimiter)
+    }
+    
+    /// Unregisters a delimiter
+    ///
+    /// - Parameter delimeter: The `CharacterSet` to recognize as a delimiter
+    open func unregister(delimiter: CharacterSet) {
+        autocompleteDelimiters.remove(delimiter)
     }
     
     /// Replaces the current prefix and filter text with the supplied text
@@ -343,6 +378,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             }
         } else if range.length >= 0, range.location < totalRange.length {
             
+            // Inserting text in the middle of an autocompleted string
             let attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: range)
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             if isAutocompleted {

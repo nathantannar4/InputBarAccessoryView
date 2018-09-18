@@ -35,7 +35,7 @@ open class ImageAttachmentCell: AttachmentCell {
         return "ImageAttachmentCell"
     }
     
-    open let imageView: UIImageView = {
+    public let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView

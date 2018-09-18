@@ -337,7 +337,7 @@ open class InputBarButtonItem: UIButton, InputItem {
     // MARK: - Static Spacers
     
     /// An InputBarButtonItem that's spacing property is set to be .flexible
-    open static var flexibleSpace: InputBarButtonItem {
+    public static var flexibleSpace: InputBarButtonItem {
         let item = InputBarButtonItem()
         item.setSize(.zero, animated: false)
         item.spacing = .flexible
@@ -345,7 +345,7 @@ open class InputBarButtonItem: UIButton, InputItem {
     }
     
     /// An InputBarButtonItem that's spacing property is set to be .fixed with the width arguement
-    open static func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
+    public static func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
         let item = InputBarButtonItem()
         item.setSize(.zero, animated: false)
         item.spacing = .fixed(width)
