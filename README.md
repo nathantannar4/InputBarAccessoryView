@@ -103,6 +103,9 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 3.1.0
+        - Added functionality to `register(delimiterSet set: CharacterSet)` and `unregister(delimiterSet set: CharacterSet)`, these sets are used to terminate an `AutocompleteSession`
+        - Added `maxSpaceCountDuringCompletion` to allow for autocomplete strings that have spaces, such as `"@Nathan Tannar"`
 - 3.0.1
         - Inserting text in the middle an autocompleted substring will now invalidate the autocomplete
         - Deleting characters in the middle of an autocompleted substring will delete the entire autocompleted substring

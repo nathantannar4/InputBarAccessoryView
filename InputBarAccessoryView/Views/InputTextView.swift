@@ -44,14 +44,12 @@ open class InputTextView: UITextView {
     open override var text: String! {
         didSet {
             postTextViewDidChangeNotification()
-            placeholderLabel.isHidden = !text.isEmpty
         }
     }
     
     open override var attributedText: NSAttributedString! {
         didSet {
             postTextViewDidChangeNotification()
-            placeholderLabel.isHidden = !attributedText.string.isEmpty
         }
     }
     

@@ -132,7 +132,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         return completions.filter { $0.text.contains(session.filter) }
     }
     
-    /// The `previousSession` will be "restored" when possible for a more accurate space counter
+    /// The `previousSession` will be "restored" when possible
     private var previousSession: AutocompleteSession?
     
     // MARK: - Initialization
@@ -168,11 +168,15 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             return
         }
         let wordWithoutPrefix = (result.word as NSString).substring(from: result.prefix.utf16.count)
-        if currentSession == nil {
-            guard let session = AutocompleteSession(prefix: result.prefix, range: result.range, filter: wordWithoutPrefix) else { return }
+        guard let session = AutocompleteSession(prefix: result.prefix, range: result.range, filter: wordWithoutPrefix) else { return }
+        guard let currentSession = currentSession else {
             registerCurrentSession(to: session)
-        } else {
+            return
+        }
+        if currentSession == session {
             updateCurrentSession(to: wordWithoutPrefix)
+        } else {
+            registerCurrentSession(to: session)
         }
     }
     
