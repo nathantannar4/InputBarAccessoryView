@@ -44,3 +44,10 @@ internal extension String {
         return (joinedWord, parts.left.startIndex ..< parts.right.endIndex)
     }
 }
+
+extension Character {
+    
+    static var space: Character {
+        return " "
+    }
+}

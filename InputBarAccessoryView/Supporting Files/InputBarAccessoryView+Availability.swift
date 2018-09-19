@@ -37,3 +37,12 @@ extension InputPlugin {
         _ = self.handleInput(of: object)
     }
 }
+
+extension AutocompleteCompletion {
+    
+    // An optional string to display instead of `text`, for example emojis
+    @available(*, deprecated, message: "`displayText` should no longer be used, use `context: [String: Any]` instead")
+    public var displayText: String? {
+        return text
+    }
+}

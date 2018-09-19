@@ -142,7 +142,7 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
             // fake background loading task
             var array: [AutocompleteCompletion] = []
             for _ in 1...10 {
-                array.append(AutocompleteCompletion(Lorem.word()))
+                array.append(AutocompleteCompletion(text: Lorem.word()))
             }
             sleep(1)
             DispatchQueue.main.async { [weak self] in
