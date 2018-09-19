@@ -31,9 +31,9 @@ internal extension NSMutableAttributedString {
  
     @discardableResult
     func bold(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
-        let attrs: [NSAttributedStringKey:AnyObject] = [
-            NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: fontSize),
-            NSAttributedStringKey.foregroundColor : textColor
+        let attrs: [NSAttributedString.Key:AnyObject] = [
+            NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: fontSize),
+            NSAttributedString.Key.foregroundColor : textColor
         ]
         let boldString = NSMutableAttributedString(string: text, attributes: attrs)
         self.append(boldString)
@@ -42,9 +42,9 @@ internal extension NSMutableAttributedString {
     
     @discardableResult
     func medium(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
-        let attrs: [NSAttributedStringKey:AnyObject] = [
-            NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.medium),
-            NSAttributedStringKey.foregroundColor : textColor
+        let attrs: [NSAttributedString.Key:AnyObject] = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: fontSize, weight: UIFont.Weight.medium),
+            NSAttributedString.Key.foregroundColor : textColor
         ]
         let mediumString = NSMutableAttributedString(string: text, attributes: attrs)
         self.append(mediumString)
@@ -53,9 +53,9 @@ internal extension NSMutableAttributedString {
     
     @discardableResult
     func italic(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
-        let attrs: [NSAttributedStringKey:AnyObject] = [
-            NSAttributedStringKey.font : UIFont.italicSystemFont(ofSize: fontSize),
-            NSAttributedStringKey.foregroundColor : textColor
+        let attrs: [NSAttributedString.Key:AnyObject] = [
+            NSAttributedString.Key.font : UIFont.italicSystemFont(ofSize: fontSize),
+            NSAttributedString.Key.foregroundColor : textColor
         ]
         let italicString = NSMutableAttributedString(string: text, attributes: attrs)
         self.append(italicString)
@@ -64,9 +64,9 @@ internal extension NSMutableAttributedString {
     
     @discardableResult
     func normal(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize, textColor: UIColor = .black) -> NSMutableAttributedString {
-        let attrs:[NSAttributedStringKey:AnyObject] = [
-            NSAttributedStringKey.font : UIFont.systemFont(ofSize: fontSize),
-            NSAttributedStringKey.foregroundColor : textColor
+        let attrs:[NSAttributedString.Key:AnyObject] = [
+            NSAttributedString.Key.font : UIFont.systemFont(ofSize: fontSize),
+            NSAttributedString.Key.foregroundColor : textColor
         ]
         let normal =  NSMutableAttributedString(string: text, attributes: attrs)
         self.append(normal)

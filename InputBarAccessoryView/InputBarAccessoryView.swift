@@ -330,21 +330,21 @@ open class InputBarAccessoryView: UIView {
     private func setupObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.orientationDidChange),
-                                               name: .UIDeviceOrientationDidChange, object: nil)
+                                               name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.inputTextViewDidChange),
-                                               name: NSNotification.Name.UITextViewTextDidChange, object: inputTextView)
+                                               name: UITextView.textDidChangeNotification, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.inputTextViewDidBeginEditing),
-                                               name: NSNotification.Name.UITextViewTextDidBeginEditing, object: inputTextView)
+                                               name: UITextView.textDidBeginEditingNotification, object: inputTextView)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.inputTextViewDidEndEditing),
-                                               name: NSNotification.Name.UITextViewTextDidEndEditing, object: inputTextView)
+                                               name: UITextView.textDidEndEditingNotification, object: inputTextView)
     }
     
     /// Adds a UISwipeGestureRecognizer for each direction to the InputTextView
     private func setupGestureRecognizers() {
-        let directions: [UISwipeGestureRecognizerDirection] = [.left, .right]
+        let directions: [UISwipeGestureRecognizer.Direction] = [.left, .right]
         for direction in directions {
             let gesture = UISwipeGestureRecognizer(target: self,
                                                    action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
@@ -442,7 +442,7 @@ open class InputBarAccessoryView: UIView {
             guard UIScreen.main.nativeBounds.height == 2436 else { return }
             if let window = window {
                 windowAnchor?.isActive = false
-                windowAnchor = contentView.bottomAnchor.constraintLessThanOrEqualToSystemSpacingBelow(window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+                windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
                 windowAnchor?.constant = -padding.bottom
                 windowAnchor?.priority = UILayoutPriority(rawValue: 750)
                 windowAnchor?.isActive = true

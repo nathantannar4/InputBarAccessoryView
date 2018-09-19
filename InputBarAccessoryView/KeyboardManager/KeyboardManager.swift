@@ -92,27 +92,27 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     private func addObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillShow,
+                                               name: UIResponder.keyboardWillShowNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardDidShow(notification:)),
-                                               name: NSNotification.Name.UIKeyboardDidShow,
+                                               name: UIResponder.keyboardDidShowNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillHide(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillHide,
+                                               name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardDidHide(notification:)),
-                                               name: NSNotification.Name.UIKeyboardDidHide,
+                                               name: UIResponder.keyboardDidHideNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillChangeFrame(notification:)),
-                                               name: NSNotification.Name.UIKeyboardWillChangeFrame,
+                                               name: UIResponder.keyboardWillChangeFrameNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardDidChangeFrame(notification:)),
-                                               name: NSNotification.Name.UIKeyboardDidChangeFrame,
+                                               name: UIResponder.keyboardDidChangeFrameNotification,
                                                object: nil)
     }
     

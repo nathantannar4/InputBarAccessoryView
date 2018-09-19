@@ -27,15 +27,15 @@
 
 import UIKit
 
-public extension NSAttributedStringKey {
+public extension NSAttributedString.Key {
     
     /// A key used for referencing which substrings were autocompleted
     /// by InputBarAccessoryView.AutocompleteManager
-    static let autocompleted = NSAttributedStringKey("com.system.autocompletekey")
+    static let autocompleted = NSAttributedString.Key("com.system.autocompletekey")
     
     /// A key used for referencing the context of autocompleted substrings
     /// by InputBarAccessoryView.AutocompleteManager
-    static let autocompletedContext = NSAttributedStringKey("com.system.autocompletekey.context")
+    static let autocompletedContext = NSAttributedString.Key("com.system.autocompletekey.context")
 }
 
 open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -91,10 +91,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     open var maxSpaceCountDuringCompletion: Int = 0
     
     /// The default text attributes
-    open var defaultTextAttributes: [NSAttributedStringKey: Any] =
+    open var defaultTextAttributes: [NSAttributedString.Key: Any] =
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
     
-    /// The NSAttributedStringKey.paragraphStyle value applied to attributed strings
+    /// The NSAttributedString.Key.paragraphStyle value applied to attributed strings
     public let paragraphStyle: NSMutableParagraphStyle = {
         let style = NSMutableParagraphStyle()
         style.paragraphSpacingBefore = 2
@@ -112,10 +112,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     public private(set) var autocompleteDelimiterSets: Set<CharacterSet> = [.whitespaces, .newlines]
     
     /// The text attributes applied to highlighted substrings for each prefix
-    public private(set) var autocompleteTextAttributes = [String: [NSAttributedStringKey: Any]]()
+    public private(set) var autocompleteTextAttributes = [String: [NSAttributedString.Key: Any]]()
     
     /// A reference to `defaultTextAttributes` that adds the NSAttributedAutocompleteKey
-    private var typingTextAttributes: [NSAttributedStringKey: Any] {
+    private var typingTextAttributes: [NSAttributedString.Key: Any] {
         var attributes = defaultTextAttributes
         attributes[.autocompleted] = false
         attributes[.autocompletedContext] = nil
@@ -206,7 +206,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// - Parameters:
     ///   - prefix: The prefix such as: @, # or !
     ///   - attributedTextAttributes: The attributes to apply to the NSAttributedString
-    open func register(prefix: String, with attributedTextAttributes: [NSAttributedStringKey:Any]? = nil) {
+    open func register(prefix: String, with attributedTextAttributes: [NSAttributedString.Key:Any]? = nil) {
         autocompletePrefixes.insert(prefix)
         autocompleteTextAttributes[prefix] = attributedTextAttributes
         autocompleteTextAttributes[prefix]?[.paragraphStyle] = paragraphStyle
@@ -296,10 +296,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     /// Resets the `InputTextView`'s typingAttributes to `defaultTextAttributes`
     private func preserveTypingAttributes() {
-        
-        var typingAttributes = [String: Any]()
-        typingTextAttributes.forEach { typingAttributes[$0.key.rawValue] = $0.value }
-        textView?.typingAttributes = typingAttributes
+        textView?.typingAttributes = typingTextAttributes
     }
     
     

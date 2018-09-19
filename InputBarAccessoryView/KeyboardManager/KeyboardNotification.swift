@@ -39,7 +39,7 @@ public struct KeyboardNotification {
     public let timeInterval: TimeInterval
     
     /// The animation properties of the keyboards transition
-    public let animationOptions: UIViewAnimationOptions
+    public let animationOptions: UIView.AnimationOptions
     
     /// iPad supports split-screen apps, this indicates if the notification was for the current app
     public let isForCurrentApp: Bool

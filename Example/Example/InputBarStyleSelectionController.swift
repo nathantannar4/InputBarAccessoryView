@@ -21,7 +21,7 @@ class InputBarStyleSelectionController: UITableViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Styles", style: .plain, target: nil, action: nil)
         navigationController?.navigationBar.tintColor = .white
         navigationController?.navigationBar.barTintColor = UIColor(red: 0/255, green: 122/255, blue: 1, alpha: 1)
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

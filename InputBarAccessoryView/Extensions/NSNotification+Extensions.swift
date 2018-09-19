@@ -31,17 +31,17 @@ internal extension NSNotification {
     
     var event: KeyboardEvent {
         switch self.name {
-        case .UIKeyboardWillShow:
+        case UIResponder.keyboardWillShowNotification:
             return .willShow
-        case .UIKeyboardDidShow:
+        case UIResponder.keyboardDidShowNotification:
             return .didShow
-        case .UIKeyboardWillHide:
+        case UIResponder.keyboardWillHideNotification:
             return .willHide
-        case .UIKeyboardDidHide:
+        case UIResponder.keyboardDidHideNotification:
             return .didHide
-        case .UIKeyboardWillChangeFrame:
+        case UIResponder.keyboardWillChangeFrameNotification:
             return .willChangeFrame
-        case .UIKeyboardDidChangeFrame:
+        case UIResponder.keyboardDidChangeFrameNotification:
             return .didChangeFrame
         default:
             return .unknown
@@ -49,17 +49,17 @@ internal extension NSNotification {
     }
     
     var timeInterval: TimeInterval? {
-        guard let value = userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber else { return nil }
+        guard let value = userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber else { return nil }
         return TimeInterval(truncating: value)
     }
     
-    var animationCurve: UIViewAnimationCurve? {
-        guard let index = (userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue else { return nil }
+    var animationCurve: UIView.AnimationCurve? {
+        guard let index = (userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue else { return nil }
         guard index >= 0 && index <= 3 else { return .linear }
-        return UIViewAnimationCurve.init(rawValue: index)
+        return UIView.AnimationCurve.init(rawValue: index) ?? .linear
     }
     
-    var animationOptions: UIViewAnimationOptions {
+    var animationOptions: UIView.AnimationOptions {
         guard let curve = animationCurve else { return [] }
         switch curve {
         case .easeIn:
@@ -74,15 +74,15 @@ internal extension NSNotification {
     }
     
     var startFrame: CGRect? {
-        return (userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        return (userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
     }
     
     var endFrame: CGRect? {
-        return (userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+        return (userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
     }
     
     var isForCurrentApp: Bool? {
-        return (userInfo?[UIKeyboardIsLocalUserInfoKey] as? NSNumber)?.boolValue
+        return (userInfo?[UIResponder.keyboardIsLocalUserInfoKey] as? NSNumber)?.boolValue
     }
     
 }
