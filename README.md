@@ -103,7 +103,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
-- 3.1.1
+- 4.0.0
         - Update to Swift 4.2
 - 3.1.0
         - Added functionality to `register(delimiterSet set: CharacterSet)` and `unregister(delimiterSet set: CharacterSet)`, these sets are used to terminate an `AutocompleteSession`
