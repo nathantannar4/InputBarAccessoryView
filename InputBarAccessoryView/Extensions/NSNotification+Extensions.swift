@@ -54,8 +54,9 @@ internal extension NSNotification {
     }
     
     var animationCurve: UIViewAnimationCurve? {
-        guard let index = (userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue, let curve = UIViewAnimationCurve(rawValue:index) else { return nil }
-        return curve
+        guard let index = (userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber)?.intValue else { return nil }
+        guard index >= 0 && index <= 3 else { return .linear }
+        return UIViewAnimationCurve.init(rawValue: index)
     }
     
     var animationOptions: UIViewAnimationOptions {
