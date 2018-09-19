@@ -84,11 +84,11 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// Allows a single space character to be entered mid autocompletion.
     ///
     /// For example, your autocomplete is "Nathan Tannar", the .whitespace deliminater
-    /// set would terminate the session after "Nathan" unless `allowSingleSpaceMidCompletion`
-    /// is set to `TRUE`
+    /// set would terminate the session after "Nathan". By setting `maxSpaceCountDuringCompletion`
+    /// the session termination will disregard that number of spaces
     ///
-    /// Default value is `FALSE`
-    open var maxSpaceCountDuringCompletion: Int = 1
+    /// Default value is `0`
+    open var maxSpaceCountDuringCompletion: Int = 0
     
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedStringKey: Any] =
@@ -132,6 +132,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         return completions.filter { $0.text.contains(session.filter) }
     }
     
+    /// The `previousSession` will be "restored" when possible for a more accurate space counter
     private var previousSession: AutocompleteSession?
     
     // MARK: - Initialization
@@ -395,7 +396,6 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             let insertSpaceCount = text.filter { $0 == .space }.count
             let spaceCountDiff = insertSpaceCount - deleteSpaceCount
             session.spaceCounter += spaceCountDiff
-            print("SPACE: ", session.spaceCounter)
         }
         
         let totalRange = NSRange(location: 0, length: textView.attributedText.length)
