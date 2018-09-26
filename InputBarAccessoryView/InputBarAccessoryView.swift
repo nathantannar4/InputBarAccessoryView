@@ -433,20 +433,20 @@ open class InputBarAccessoryView: UIView {
         activateConstraints()
     }
     
-    /// Respect iPhone X safeAreaInsets
+    /// Respect window safeAreaInsets
     /// Adds a constraint to anchor the bottomAnchor of the contentView to the window's safeAreaLayoutGuide.bottomAnchor
     ///
     /// - Parameter window: The window to anchor to
     private func setupConstraints(to window: UIWindow?) {
         if #available(iOS 11.0, *) {
-            guard UIScreen.main.nativeBounds.height == 2436 else { return }
             if let window = window {
+                guard window.safeAreaInsets.bottom > 0 else { return }
                 windowAnchor?.isActive = false
                 windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
                 windowAnchor?.constant = -padding.bottom
                 windowAnchor?.priority = UILayoutPriority(rawValue: 750)
                 windowAnchor?.isActive = true
-                backgroundViewBottomAnchor?.constant = 34
+                backgroundViewBottomAnchor?.constant = window.safeAreaInsets.bottom
             }
         }
     }

@@ -103,6 +103,8 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 4.0.1
+        - Fix window constraint for iPhone Xs, Xs Max and XR
 - 4.0.0
         - Update to Swift 4.2
 - 3.1.0
