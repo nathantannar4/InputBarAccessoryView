@@ -3,7 +3,6 @@
 # InputBarAccessoryView
 
 [![CocoaPods](https://img.shields.io/cocoapods/dt/InputBarAccessoryView.svg)]()
-[![CocoaPods](https://img.shields.io/cocoapods/dw/InputBarAccessoryView.svg)]()
 [![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://paypal.me/nathantannar)
 
 ### Features
