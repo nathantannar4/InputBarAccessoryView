@@ -41,8 +41,6 @@ XCode 9.0+
 
 [Getting Started](./GETTING_STARTED.md)
 
-[Jazzy Generated Docs](https://nathantannar.me/InputBarAccessoryView/docs/)
-
 > See the Example project to see how you can make the iMessage, Slack, Facebook and GitHawk input bars!
 
 ### Demo
