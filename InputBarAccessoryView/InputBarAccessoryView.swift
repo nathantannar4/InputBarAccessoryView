@@ -500,6 +500,7 @@ open class InputBarAccessoryView: UIView {
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
+                inputTextView.layoutIfNeeded()
             }
             inputTextViewHeight = maxTextViewHeight
         } else {

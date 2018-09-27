@@ -14,10 +14,13 @@
 - [x] Drop in autocomplete for any given prefix
 - [x] Autocomplete attributed text highlighting
 - [x] Drop in attachment view for file/photo management
-- [x] Drop in Slack style `TypingIndicator`
 - [x] Plugin support for your own `InputPlugin`s
-- [x] iPhone X Support
+- [x] iPhone X/Xs/Xs Max/Xr Support
 - [x] RTL Support
+
+### See Also
+
+iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ### Installation via CocoaPods
 
@@ -34,8 +37,10 @@ github "nathantannar4/InputBarAccessoryView"
 ### Requirements
 
 iOS 9.0+
-Swift 4
+Swift 4+
 XCode 9.0+
+
+> Only use release 4.0.0+ for Swift 4.2 and above
 
 ### Documentation
 
@@ -100,6 +105,8 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 4.0.2
+        - Fix layout issue effecting older devices when pasting large amounts of text
 - 4.0.1
         - Fix window constraint for iPhone Xs, Xs Max and XR
 - 4.0.0
