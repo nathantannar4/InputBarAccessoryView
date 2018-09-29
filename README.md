@@ -105,6 +105,8 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 4.0.3
+        - Fix issue where native autocomplete in interfears with `AutocompleteManager`
 - 4.0.2
         - Fix layout issue effecting older devices when pasting large amounts of text
 - 4.0.1
