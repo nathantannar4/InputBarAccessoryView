@@ -89,6 +89,13 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     ///
     /// Default value is `0`
     open var maxSpaceCountDuringCompletion: Int = 0
+
+    /// When enabled, autocomplete completions that contain whitespace will be deleted in parts.
+    /// This meands backspacing on "@Nathan Tannar" will result in " Tannar" being removed first
+    /// with a second backspace action required to delete "@Nathan"
+    ///
+    /// Default value is `TRUE`
+    open var deleteCompletionByParts = true
     
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedString.Key: Any] =
@@ -421,11 +428,23 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                     
                     let intersection = NSIntersectionRange(range, subrange)
                     guard intersection.length > 0 else { return }
-                    
-                    let emptyString = NSAttributedString(string: "", attributes: typingTextAttributes)
-                    textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: emptyString)
-                    textView.selectedRange = NSRange(location: subrange.location, length: 0)
-                    stop.pointee = true
+                    defer { stop.pointee = true }
+
+                    let nothing = NSAttributedString(string: "", attributes: typingTextAttributes)
+
+                    let textToReplace = textView.attributedText.attributedSubstring(from: subrange).string
+                    guard deleteCompletionByParts, let delimiterRange = textToReplace.rangeOfCharacter(from: .whitespacesAndNewlines, options: .backwards, range: Range(subrange, in: textToReplace)) else {
+                        // Replace entire autocomplete
+                        textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: nothing)
+                        textView.selectedRange = NSRange(location: subrange.location, length: 0)
+                        return
+                    }
+                    // Delete up to delimiter
+                    let delimiterLocation = delimiterRange.lowerBound.encodedOffset
+                    let length = subrange.length - delimiterLocation
+                    let rangeFromDelimiter = NSRange(location: delimiterLocation + subrange.location, length: length)
+                    textView.attributedText = textView.attributedText.replacingCharacters(in: rangeFromDelimiter, with: nothing)
+                    textView.selectedRange = NSRange(location: subrange.location + delimiterLocation, length: 0)
                 }
                 unregisterCurrentSession()
                 return false
