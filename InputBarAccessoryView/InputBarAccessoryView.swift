@@ -226,7 +226,6 @@ open class InputBarAccessoryView: UIView {
     open var maxTextViewHeight: CGFloat = 0 {
         didSet {
             textViewHeightAnchor?.constant = maxTextViewHeight
-            invalidateIntrinsicContentSize()
         }
     }
     
@@ -307,7 +306,16 @@ open class InputBarAccessoryView: UIView {
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-    
+
+    open override func willMove(toSuperview newSuperview: UIView?) {
+        super.willMove(toSuperview: newSuperview)
+        guard newSuperview != nil else {
+            deactivateConstraints()
+            return
+        }
+        activateConstraints()
+    }
+
     open override func didMoveToWindow() {
         super.didMoveToWindow()
         setupConstraints(to: window)
@@ -430,7 +438,6 @@ open class InputBarAccessoryView: UIView {
             left:   bottomStackView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 0),
             right:  bottomStackView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: 0)
         )
-        activateConstraints()
     }
     
     /// Respect window safeAreaInsets
@@ -500,7 +507,6 @@ open class InputBarAccessoryView: UIView {
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
                 isOverMaxTextViewHeight = true
-                inputTextView.layoutIfNeeded()
             }
             inputTextViewHeight = maxTextViewHeight
         } else {
@@ -519,6 +525,11 @@ open class InputBarAccessoryView: UIView {
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
         let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: bounds.width, height: requiredHeight)
+    }
+
+    open override func layoutIfNeeded() {
+        super.layoutIfNeeded()
+        inputTextView.layoutIfNeeded()
     }
     
     
