@@ -70,6 +70,13 @@ Add your app to the list of apps using this library and make a pull request.
   <img src="https://avatars3.githubusercontent.com/u/32285710?s=200&v=4" title="GitHawk Logo" height="50">
 </p>
 
+## Latest Release
+
+- 4.1.0
+        - Fix issue where setting long strings in `viewDidLoad` broke inital layout, Issue #41
+        - Add `deleteCompletionByParts: Bool` flag to `AutocompleteManager` to allow for partial deletions of autocompletes rather than just the entire substring. 
+        - Add `InputBarSendButton` to use as the `sendButton` in `InputBarAccessoryView`. This subclass of `InputBarButtonItem` has a `UIActivityIndicatorView` to show a spinner when making HTTP requests
+
 ## Layout
 
 The layout of the `InputBarAccessoryView` is made of of 4  `InputStackView`'s and an `InputTextView`. The padding of the subviews can be easily adjusted by changing the `padding` and `textViewPadding` properties. The constraints will automatically be updated.
@@ -105,10 +112,14 @@ private var onDisabledAction: InputBarButtonItemAction?
 ```
 
 ## Changelog
+- 4.1.0
+        - Fix issue where setting long strings in `viewDidLoad` broke inital layout, Issue #41
+        - Add `deleteCompletionByParts: Bool` flag to `AutocompleteManager` to allow for partial deletions of autocompletes rather than just the entire substring. 
+        - Add `InputBarSendButton` to use as the `sendButton` in `InputBarAccessoryView`. This subclass of `InputBarButtonItem` has a `UIActivityIndicatorView` to show a spinner when making HTTP requests
 - 4.0.3
         - Fix issue where native autocomplete in interfears with `AutocompleteManager`
 - 4.0.2
-        - Fix layout issue effecting older devices when pasting large amounts of text
+- Fix layout issue effecting older devices when pasting large amounts of text, Issue #36
 - 4.0.1
         - Fix window constraint for iPhone Xs, Xs Max and XR
 - 4.0.0
