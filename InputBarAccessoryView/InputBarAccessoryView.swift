@@ -128,8 +128,8 @@ open class InputBarAccessoryView: UIView {
     }()
     
     /// A InputBarButtonItem used as the send button and initially placed in the rightStackView
-    open var sendButton: InputBarButtonItem = {
-        return InputBarButtonItem()
+    open var sendButton: InputBarSendButton = {
+        return InputBarSendButton()
             .configure {
                 $0.setSize(CGSize(width: 52, height: 36), animated: false)
                 $0.isEnabled = false

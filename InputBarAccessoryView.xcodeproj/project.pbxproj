@@ -14,6 +14,7 @@
 		3821ADDA20F5315400DE0D1D /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADD820F5315400DE0D1D /* KeyboardManager.swift */; };
 		3821ADDC20F531A600DE0D1D /* KeyboardEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADDB20F531A600DE0D1D /* KeyboardEvent.swift */; };
 		3821ADE820F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADE720F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift */; };
+		38570138218651C400589A30 /* InputBarSendButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38570137218651C400589A30 /* InputBarSendButton.swift */; };
 		3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */; };
 		3876DA901F83530900C89326 /* AutocompleteManagerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8E1F83530900C89326 /* AutocompleteManagerDataSource.swift */; };
 		3876DA911F83530900C89326 /* AutocompleteManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3876DA8F1F83530900C89326 /* AutocompleteManagerDelegate.swift */; };
@@ -50,6 +51,7 @@
 		3821ADDB20F531A600DE0D1D /* KeyboardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardEvent.swift; sourceTree = "<group>"; };
 		3821ADE720F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		383B83831F4787E200027965 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38570137218651C400589A30 /* InputBarSendButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarSendButton.swift; sourceTree = "<group>"; };
 		3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCell.swift; sourceTree = "<group>"; };
 		3876DA8D1F83530200C89326 /* AutocompleteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteManager.swift; sourceTree = "<group>"; };
 		3876DA8E1F83530900C89326 /* AutocompleteManagerDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteManagerDataSource.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */,
+				38570137218651C400589A30 /* InputBarSendButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				3876DAAB1F84C22100C89326 /* AttachmentCell.swift in Sources */,
 				3821ADE820F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift in Sources */,
 				38C867821F50A6AD00811974 /* InputBarAccessoryView.swift in Sources */,
+				38570138218651C400589A30 /* InputBarSendButton.swift in Sources */,
 				3876DAB11F84D9DB00C89326 /* AutocompleteTableView.swift in Sources */,
 				381042271F87FDE500B1E61A /* AttachmentManagerDelegate.swift in Sources */,
 				3876DAAD1F84C42800C89326 /* AttachmentManager.swift in Sources */,

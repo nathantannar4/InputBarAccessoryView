@@ -122,13 +122,27 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
             let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
             print("Autocompleted: `", substring, "` with context: ", context ?? [])
         }
-        
-        conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
-        let indexPath = IndexPath(row: conversation.messages.count - 1, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
+
+        // Send button activity animation
+        inputBar.sendButton.startAnimating()
+        inputBar.inputTextView.placeholder = "Sending..."
+        inputBar.inputTextView.isUserInteractionEnabled = false
+        DispatchQueue.global(qos: .default).async {
+            // fake send request task
+            sleep(1)
+            DispatchQueue.main.async { [weak self] in
+                inputBar.sendButton.stopAnimating()
+                inputBar.inputTextView.placeholder = "Aa"
+                inputBar.inputTextView.isUserInteractionEnabled = true
+                self?.conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
+                let indexPath = IndexPath(row: (self?.conversation.messages.count ?? 1) - 1, section: 0)
+                self?.tableView.insertRows(at: [indexPath], with: .automatic)
+                self?.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
+        }
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
