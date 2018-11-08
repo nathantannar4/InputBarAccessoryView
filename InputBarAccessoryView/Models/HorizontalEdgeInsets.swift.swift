@@ -11,4 +11,6 @@ import CoreGraphics
 public struct HorizontalEdgeInsets {
     public let left: CGFloat
     public let right: CGFloat
+
+    static let zero = HorizontalEdgeInsets(left: 0, right: 0)
 }
