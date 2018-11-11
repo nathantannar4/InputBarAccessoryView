@@ -1,5 +1,5 @@
 //
-//  HorizontalEdgeInsets.swift.swift
+//  HorizontalEdgePadding.swift
 //  InputBarAccessoryView
 //
 //  Created by Nathan Tannar on 2018-11-07.
@@ -8,9 +8,9 @@
 
 import CoreGraphics
 
-public struct HorizontalEdgeInsets {
+public struct HorizontalEdgePadding {
     public let left: CGFloat
     public let right: CGFloat
 
-    static let zero = HorizontalEdgeInsets(left: 0, right: 0)
+    static let zero = HorizontalEdgePadding(left: 0, right: 0)
 }
