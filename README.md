@@ -1,4 +1,4 @@
-<img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Preview.gif">
+[![Image](./Screenshots/Preview.gif)]()
 
 # InputBarAccessoryView
 
