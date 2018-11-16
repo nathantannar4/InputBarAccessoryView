@@ -27,10 +27,19 @@
 
 import UIKit
 
-open class InputBarViewController: UIViewController {
+/// An simple `UIViewController` subclass that is ready to work
+/// with an `inputAccessoryView`
+open class InputBarViewController: UIViewController, InputBarAccessoryViewDelegate {
 
+    /// A powerful InputAccessoryView ideal for messaging applications
     public let inputBar = InputBarAccessoryView()
 
+    /// A boolean value that when changed will update the `inputAccessoryView`
+    /// of the `InputBarViewController`. When set to `TRUE`, the
+    /// `inputAccessoryView` is set to `nil` and the `inputBar` slides off
+    /// the screen.
+    ///
+    /// The default value is FALSE
     open var isInputBarHidden: Bool = false {
         didSet {
             isInputBarHiddenDidChange()
@@ -45,10 +54,17 @@ open class InputBarViewController: UIViewController {
         return !isInputBarHidden
     }
 
+    open override func viewDidLoad() {
+        super.viewDidLoad()
+        inputBar.delegate = self
+    }
+
+    /// Invoked when `isInputBarHidden` changes to become or
+    /// resign first responder
     open func isInputBarHiddenDidChange() {
-        if isInputBarHidden {
+        if isInputBarHidden, isFirstResponder {
             resignFirstResponder()
-        } else {
+        } else if !isFirstResponder {
             becomeFirstResponder()
         }
     }
@@ -58,5 +74,15 @@ open class InputBarViewController: UIViewController {
         inputBar.inputTextView.resignFirstResponder()
         return super.resignFirstResponder()
     }
+
+    // MARK: - InputBarAccessoryViewDelegate
+
+    open func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) { }
+
+    open func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) { }
+
+    open func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) { }
+
+    open func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) { }
 }
 

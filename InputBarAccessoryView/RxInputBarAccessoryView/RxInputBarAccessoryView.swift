@@ -174,4 +174,12 @@ extension Reactive where Base: InputBarSendButton {
     }
 }
 
+extension Reactive where Base: InputBarViewController {
+    public var isInputBarHidden: Binder<Bool> {
+        return Binder(base) { viewController, newValue in
+            viewController.isInputBarHidden = newValue
+        }
+    }
+}
+
 #endif

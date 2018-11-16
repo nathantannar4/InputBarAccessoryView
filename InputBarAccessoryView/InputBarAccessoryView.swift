@@ -347,6 +347,7 @@ open class InputBarAccessoryView: UIView {
     /// Sets up the default properties
     open func setup() {
 
+        backgroundColor = .white
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()

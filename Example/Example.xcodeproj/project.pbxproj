@@ -27,6 +27,7 @@
 		38F0C20420C89CB400FF8DD3 /* FacebookInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20320C89CB400FF8DD3 /* FacebookInputBar.swift */; };
 		38F0C20620C89CDD00FF8DD3 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20520C89CDD00FF8DD3 /* ConversationCell.swift */; };
 		38F0C20820C89D1600FF8DD3 /* InboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20720C89D1600FF8DD3 /* InboxCell.swift */; };
+		38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -65,6 +66,7 @@
 		38F0C20320C89CB400FF8DD3 /* FacebookInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacebookInputBar.swift; sourceTree = "<group>"; };
 		38F0C20520C89CDD00FF8DD3 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		38F0C20720C89D1600FF8DD3 /* InboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCell.swift; sourceTree = "<group>"; };
+		38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = READMEPreviewViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				383B839C1F47897800027965 /* AppDelegate.swift */,
+				38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */,
 				388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */,
 				3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */,
 				3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */,
@@ -233,6 +236,7 @@
 				3821ADE420F5359800DE0D1D /* CommonTableViewController.swift in Sources */,
 				38F0C20820C89D1600FF8DD3 /* InboxCell.swift in Sources */,
 				383B839D1F47897800027965 /* AppDelegate.swift in Sources */,
+				38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */,
 				38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */,
 				3821ADE220F534DA00DE0D1D /* InputAccessoryExampleViewController.swift in Sources */,
 				3821ADE620F5360B00DE0D1D /* InputBarStyle.swift in Sources */,
