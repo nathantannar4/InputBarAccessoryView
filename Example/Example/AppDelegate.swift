@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import InputBarAccessoryView
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: InputBarStyleSelectionController())
+        window?.rootViewController = UINavigationController(rootViewController: VC())
         window?.makeKeyAndVisible()
                 
         return true
@@ -24,3 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
 }
 
+class VC: InputBarViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(toggle))
+    }
+
+    @objc func toggle() {
+        isInputBarHidden.toggle()
+    }
+}

@@ -38,6 +38,8 @@
 		38D29FE91F97CBA400E59362 /* InputPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D29FE81F97CBA400E59362 /* InputPlugin.swift */; };
 		38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */; };
 		38EA6D66202E58BF00E329BE /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EA6D65202E58BF00E329BE /* String+Extensions.swift */; };
+		38ECDBBD219B46D50076E154 /* InputBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECDBBC219B46D50076E154 /* InputBarViewController.swift */; };
+		38ECDBBF219B46E80076E154 /* RxInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */; };
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
 		38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */; };
@@ -77,6 +79,8 @@
 		38D29FE81F97CBA400E59362 /* InputPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputPlugin.swift; path = InputBarAccessoryView/Protocols/InputPlugin.swift; sourceTree = SOURCE_ROOT; };
 		38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift.swift; sourceTree = "<group>"; };
 		38EA6D65202E58BF00E329BE /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
+		38ECDBBC219B46D50076E154 /* InputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarViewController.swift; sourceTree = "<group>"; };
+		38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
 		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
 		38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InputBarAccessoryView+Availability.swift"; sourceTree = "<group>"; };
@@ -132,14 +136,16 @@
 			isa = PBXGroup;
 			children = (
 				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
-				3821ADD620F5314800DE0D1D /* KeyboardManager */,
-				3876DA8C1F8352F800C89326 /* Plugins */,
-				38C867791F50A6AD00811974 /* Views */,
-				38F0C1EC20C77FA000FF8DD3 /* Models */,
+				38ECDBBA219B46AB0076E154 /* RxInputBarAccessoryView */,
 				38F0C1EB20C77F9900FF8DD3 /* Controls */,
-				38C867741F50A6AD00811974 /* Protocols */,
 				38C867711F50A6AD00811974 /* Extensions */,
+				3821ADD620F5314800DE0D1D /* KeyboardManager */,
+				38F0C1EC20C77FA000FF8DD3 /* Models */,
+				3876DA8C1F8352F800C89326 /* Plugins */,
+				38C867741F50A6AD00811974 /* Protocols */,
 				38C867761F50A6AD00811974 /* Supporting Files */,
+				38ECDBBB219B46B90076E154 /* ViewControllers */,
+				38C867791F50A6AD00811974 /* Views */,
 			);
 			path = InputBarAccessoryView;
 			sourceTree = "<group>";
@@ -184,6 +190,22 @@
 				381042221F85FD1300B1E61A /* SeparatorLine.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		38ECDBBA219B46AB0076E154 /* RxInputBarAccessoryView */ = {
+			isa = PBXGroup;
+			children = (
+				38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */,
+			);
+			path = RxInputBarAccessoryView;
+			sourceTree = "<group>";
+		};
+		38ECDBBB219B46B90076E154 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				38ECDBBC219B46D50076E154 /* InputBarViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		38F0C1EB20C77F9900FF8DD3 /* Controls */ = {
@@ -355,6 +377,7 @@
 				387752601F884FF3000E0AC5 /* AttachmentManagerDataSource.swift in Sources */,
 				3821ADDC20F531A600DE0D1D /* KeyboardEvent.swift in Sources */,
 				3876DA921F83551400C89326 /* AutocompleteManager.swift in Sources */,
+				38ECDBBD219B46D50076E154 /* InputBarViewController.swift in Sources */,
 				38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift in Sources */,
 				38C867841F50A6AD00811974 /* InputTextView.swift in Sources */,
 				3876DA901F83530900C89326 /* AutocompleteManagerDataSource.swift in Sources */,
@@ -377,6 +400,7 @@
 				38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */,
 				381042251F87F34900B1E61A /* InputStackView.swift in Sources */,
 				38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */,
+				38ECDBBF219B46E80076E154 /* RxInputBarAccessoryView.swift in Sources */,
 				3877525D1F8834F0000E0AC5 /* ImageAttachmentCell.swift in Sources */,
 				381042231F85FD1300B1E61A /* SeparatorLine.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,
