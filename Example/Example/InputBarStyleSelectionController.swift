@@ -25,37 +25,50 @@ class InputBarStyleSelectionController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return section == 0 ? "InputAccessoryView" : "Subview"
+        if section == 0 {
+            return "InputBarViewController"
+        }
+        return section == 1 ? "InputAccessoryView" : "Subview"
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
         return styles.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = styles[indexPath.row].rawValue
+        if indexPath.section == 0 {
+            cell.textLabel?.text = "README Preview"
+        } else {
+            cell.textLabel?.text = styles[indexPath.row].rawValue
+        }
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let convo = SampleData.shared.getConversations(count: 1)[0]
         if indexPath.section == 0 {
-            navigationController?.pushViewController(
-                InputAccessoryExampleViewController(style: styles[indexPath.row],
-                                                    conversation: convo),
-                animated: true)
-        } else if indexPath.section == 1 {
-            navigationController?.pushViewController(
-                SubviewExampleViewController(style: styles[indexPath.row],
-                                             conversation: convo),
-                animated: true)
+            navigationController?.pushViewController(READMEPreviewViewController(), animated: true)
+        } else {
+            let convo = SampleData.shared.getConversations(count: 1)[0]
+            if indexPath.section == 0 {
+                navigationController?.pushViewController(
+                    InputAccessoryExampleViewController(style: styles[indexPath.row],
+                                                        conversation: convo),
+                    animated: true)
+            } else if indexPath.section == 1 {
+                navigationController?.pushViewController(
+                    SubviewExampleViewController(style: styles[indexPath.row],
+                                                 conversation: convo),
+                    animated: true)
+            }
         }
-        //        splitViewController?.showDetailViewController(ExampleViewController(), sender: self)
     }
 }
