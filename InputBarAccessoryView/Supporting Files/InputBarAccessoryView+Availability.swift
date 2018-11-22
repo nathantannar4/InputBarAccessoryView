@@ -25,7 +25,7 @@
 //  Created by Nathan Tannar on 2/12/17.
 //
 
-import Foundation
+import UIKit
 
 @available(*, deprecated, message: "InputManager has been renamed to InputPlugin")
 public typealias InputManager = InputPlugin
@@ -44,5 +44,28 @@ extension AutocompleteCompletion {
     @available(*, deprecated, message: "`displayText` should no longer be used, use `context: [String: Any]` instead")
     public var displayText: String? {
         return text
+    }
+}
+
+extension InputBarAccessoryView {
+
+    /**
+     The anchor constants used by the InputStackView
+
+     ````
+     V:|...-(padding.top)-(textViewPadding.top)-[InputTextView]-(textViewPadding.bottom)-[InputStackView.bottom]-...|
+
+     H:|...-[InputStackView.left]-(textViewPadding.left)-[InputTextView]-(textViewPadding.right)-[InputStackView.right]-...|
+     ````
+
+     */
+    @available(*, deprecated, message: "The `InputTextView` now resides in the `middleContentView` and thus this property has been renamed to `middleContentViewPadding`")
+    public var textViewPadding: UIEdgeInsets {
+        get {
+            return middleContentViewPadding
+        }
+        set {
+            middleContentViewPadding = newValue
+        }
     }
 }

@@ -21,6 +21,7 @@
 		388714E9202AC9620064C8BB /* InputBarStyleSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */; };
 		388714EB202AC9A50064C8BB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388714EA202AC9A50064C8BB /* SampleData.swift */; };
 		38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C888C5202051B3000F2E2F /* ImageCell.swift */; };
+		38DAD87D21A685C6001762CD /* NoTextViewInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DAD87C21A685C6001762CD /* NoTextViewInputBar.swift */; };
 		38F0C1FE20C89C9B00FF8DD3 /* iMessageInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FD20C89C9B00FF8DD3 /* iMessageInputBar.swift */; };
 		38F0C20020C89CA200FF8DD3 /* SlackInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FF20C89CA200FF8DD3 /* SlackInputBar.swift */; };
 		38F0C20220C89CAB00FF8DD3 /* GitHawkInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20120C89CAB00FF8DD3 /* GitHawkInputBar.swift */; };
@@ -60,6 +61,7 @@
 		388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarStyleSelectionController.swift; sourceTree = "<group>"; };
 		388714EA202AC9A50064C8BB /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		38C888C5202051B3000F2E2F /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
+		38DAD87C21A685C6001762CD /* NoTextViewInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTextViewInputBar.swift; sourceTree = "<group>"; };
 		38F0C1FD20C89C9B00FF8DD3 /* iMessageInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iMessageInputBar.swift; sourceTree = "<group>"; };
 		38F0C1FF20C89CA200FF8DD3 /* SlackInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlackInputBar.swift; sourceTree = "<group>"; };
 		38F0C20120C89CAB00FF8DD3 /* GitHawkInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHawkInputBar.swift; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 				38F0C1FF20C89CA200FF8DD3 /* SlackInputBar.swift */,
 				38F0C20120C89CAB00FF8DD3 /* GitHawkInputBar.swift */,
 				38F0C20320C89CB400FF8DD3 /* FacebookInputBar.swift */,
+				38DAD87C21A685C6001762CD /* NoTextViewInputBar.swift */,
 			);
 			path = InputBarExamples;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				383B839D1F47897800027965 /* AppDelegate.swift in Sources */,
 				38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */,
 				38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */,
+				38DAD87D21A685C6001762CD /* NoTextViewInputBar.swift in Sources */,
 				3821ADE220F534DA00DE0D1D /* InputAccessoryExampleViewController.swift in Sources */,
 				3821ADE620F5360B00DE0D1D /* InputBarStyle.swift in Sources */,
 			);

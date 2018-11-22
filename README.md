@@ -5,7 +5,7 @@
 ### Features
 
 - [x] Autocomplete text with @mention, #hashtag or any other prefix 
-- [x] A self-sizing `UITextView` with an optional fixed height
+- [x] A self-sizing `UITextView` with an optional fixed height (can be replaced with any other view)
 - [x] Image paste support   
 - [x] Autocomplete attributed text highlighting
 - [x] Reactive components that respond to given events
@@ -64,6 +64,9 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
 
 ## Latest Releases
 
+
+- 4.2.0
+    - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
 - 4.1.2
         - Add RxSwift/RxCocoa support through extensions and delegate proxies in `RxInputBarAccessoryView`, requires `RxSwift` and `RxCocoa`
         - Add `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 

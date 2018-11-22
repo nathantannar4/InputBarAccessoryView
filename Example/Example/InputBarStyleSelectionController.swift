@@ -10,7 +10,7 @@ import UIKit
 
 class InputBarStyleSelectionController: UITableViewController {
     
-    let styles: [InputBarStyle] = [.default, .imessage, .slack, .facebook, .githawk]
+    let styles = InputBarStyle.allCases
     
     override func viewDidLoad() {
         super.viewDidLoad()
