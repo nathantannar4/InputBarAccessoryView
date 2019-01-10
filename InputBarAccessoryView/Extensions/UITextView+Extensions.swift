@@ -12,16 +12,30 @@ import UIKit
 internal extension UITextView {
     
     func find(prefixes: Set<String>, with delimiterSet: CharacterSet) -> (prefix: String, word: String, range: NSRange)? {
-        guard prefixes.count > 0,
-            let result = wordAtCaret(with: delimiterSet),
-            !result.word.isEmpty
+        guard prefixes.count > 0
             else { return nil }
-        for prefix in prefixes {
-            if result.word.hasPrefix(prefix) {
-                return (prefix, result.word, result.range)
-            }
-        }
-        return nil
+        
+        return prefixes.compactMap({
+            guard let prefix = $0.first else { return nil }
+            return find(prefix: prefix, with: delimiterSet)
+        }).last
+    }
+    
+    func find(prefix: Character, with delimiterSet: CharacterSet) -> (prefix: String, word: String, range: NSRange)? {
+        guard let caretRange = self.caretRange,
+            let cursorRange = Range(caretRange, in: text) else { return nil }
+        
+        var substring = text[..<cursorRange.upperBound]
+        guard let prefixIndex = substring.lastIndex(of: prefix) else { return nil }
+        
+        let wordRange: Range = prefixIndex..<cursorRange.upperBound
+        substring = substring[wordRange]
+        
+        let location = wordRange.lowerBound.encodedOffset
+        let length = wordRange.upperBound.encodedOffset - location
+        let range = NSRange(location: location, length: length)
+        
+        return (String(prefix), String(substring), range)
     }
     
     func wordAtCaret(with delimiterSet: CharacterSet) -> (word: String, range: NSRange)? {
