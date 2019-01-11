@@ -250,7 +250,11 @@ open class InputBarAccessoryView: UIView {
     
     /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
     /// improves the performance
-    public private(set) var isOverMaxTextViewHeight = false
+    public private(set) var isOverMaxTextViewHeight = false {
+        didSet {
+            delegate?.inputBar(self, didReachMaxTextViewHeight: isOverMaxTextViewHeight)
+        }
+    }
     
     /// A boolean that when set as `TRUE` will always enable the `InputTextView` to be anchored to the
     /// height of `maxTextViewHeight`

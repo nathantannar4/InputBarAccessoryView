@@ -60,6 +60,13 @@ public protocol InputBarAccessoryViewDelegate: AnyObject {
     ///   - inputBar: The InputBarAccessoryView
     ///   - gesture: The gesture that was recognized
     func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer)
+
+    /// Called when isOverMaxTextViewHeight is changed
+    ///
+    /// - Parameters:
+    ///   - inputBar: The InputBarAccessoryView
+    ///   - isOverMaxTextViewHeight: The current isOverMaxTextViewHeight value
+    func inputBar(_ inputBar: InputBarAccessoryView, didReachMaxTextViewHeight isOverMaxTextViewHeight: Bool)
 }
 
 public extension InputBarAccessoryViewDelegate {
@@ -71,4 +78,6 @@ public extension InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {}
     
     func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {}
+    
+    func inputBar(_ inputBar: InputBarAccessoryView, didReachMaxTextViewHeight isOverMaxTextViewHeight: Bool) {}
 }
