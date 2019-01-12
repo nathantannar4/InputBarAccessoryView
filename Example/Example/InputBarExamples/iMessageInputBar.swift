@@ -39,7 +39,7 @@ class iMessageInputBar: InputBarAccessoryView {
         sendButton.title = nil
         sendButton.imageView?.layer.cornerRadius = 16
         sendButton.backgroundColor = .clear
-        textViewPadding.right = -38
+        middleContentViewPadding.right = -38
         separatorLine.isHidden = true
         isTranslucent = true
     }

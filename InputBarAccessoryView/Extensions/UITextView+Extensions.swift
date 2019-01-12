@@ -10,45 +10,48 @@
 import UIKit
 
 internal extension UITextView {
+
+    typealias Match = (prefix: String, word: String, range: NSRange)
     
-    func find(prefixes: Set<String>, with delimiterSet: CharacterSet) -> (prefix: String, word: String, range: NSRange)? {
-        guard prefixes.count > 0
-            else { return nil }
-        
-        return prefixes.compactMap({
-            guard let prefix = $0.first else { return nil }
-            return find(prefix: prefix, with: delimiterSet)
-        }).last
+    func find(prefixes: Set<String>, with delimiterSet: CharacterSet) -> Match? {
+        guard prefixes.count > 0 else { return nil }
+
+        for prefix in prefixes {
+            if let match = find(prefix: prefix, with: delimiterSet) {
+                return match
+            }
+        }
+        return nil
     }
     
-    func find(prefix: Character, with delimiterSet: CharacterSet) -> (prefix: String, word: String, range: NSRange)? {
-        guard let caretRange = self.caretRange,
-            let cursorRange = Range(caretRange, in: text) else { return nil }
+    func find(prefix: String, with delimiterSet: CharacterSet) -> Match? {
+        guard !prefix.isEmpty else { return nil }
+        guard let caretRange = self.caretRange else { return nil }
+        guard let cursorRange = Range(caretRange, in: text) else { return nil }
         
-        var substring = text[..<cursorRange.upperBound]
-        guard let prefixIndex = substring.lastIndex(of: prefix) else { return nil }
-        
-        let wordRange: Range = prefixIndex..<cursorRange.upperBound
-        substring = substring[wordRange]
+        let leadingText = text[..<cursorRange.upperBound]
+        var prefixStartIndex: String.Index!
+        for (i, char) in prefix.enumerated() {
+            guard let index = leadingText.lastIndex(of: char) else { return nil }
+            if i == 0 {
+                prefixStartIndex = index
+            } else if index.encodedOffset == prefixStartIndex.encodedOffset + 1 {
+                prefixStartIndex = index
+            } else {
+                return nil
+            }
+        }
+
+        let wordRange = prefixStartIndex..<cursorRange.upperBound
+        let word = leadingText[wordRange]
         
         let location = wordRange.lowerBound.encodedOffset
         let length = wordRange.upperBound.encodedOffset - location
         let range = NSRange(location: location, length: length)
         
-        return (String(prefix), String(substring), range)
+        return (String(prefix), String(word), range)
     }
-    
-    func wordAtCaret(with delimiterSet: CharacterSet) -> (word: String, range: NSRange)? {
-        guard let caretRange = self.caretRange,
-            let result = text.word(at: caretRange, with: delimiterSet)
-            else { return nil }
-        
-        let location = result.range.lowerBound.encodedOffset
-        let range = NSRange(location: location, length: result.range.upperBound.encodedOffset - location)
-        
-        return (result.word, range)
-    }
-    
+
     var caretRange: NSRange? {
         guard let selectedRange = self.selectedTextRange else { return nil }
         return NSRange(
