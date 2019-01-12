@@ -407,7 +407,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             let deleteSpaceCount = textToReplace.filter { $0 == .space }.count
             let insertSpaceCount = text.filter { $0 == .space }.count
             let spaceCountDiff = insertSpaceCount - deleteSpaceCount
-            session.spaceCounter += spaceCountDiff
+            session.spaceCounter = spaceCountDiff
         }
         
         let totalRange = NSRange(location: 0, length: textView.attributedText.length)
