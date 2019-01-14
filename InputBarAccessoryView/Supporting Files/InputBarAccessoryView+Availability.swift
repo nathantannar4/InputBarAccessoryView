@@ -47,6 +47,26 @@ extension AutocompleteCompletion {
     }
 }
 
+extension AutocompleteManager {
+    /// If the autocomplete matches should be made by casting the strings to lowercase.
+    /// Default value is `FALSE`
+    /// DEPRICATED; will always return `FALSE`
+    @available(*, deprecated, message: "`isCaseSensitive` was replaced in favour of a more customizable `filterBlock: (String) -> (Bool)`")
+    public var isCaseSensitive: Bool {
+        get { return false }
+        set {
+            if isCaseSensitive {
+                filterBlock = { session, completion in
+                    completion.text.contains(session.filter)
+                }
+            } else {
+                filterBlock = { session, completion in completion.text.lowercased().contains(session.filter.lowercased())
+                }
+            }
+        }
+    }
+}
+
 extension InputBarAccessoryView {
 
     /**

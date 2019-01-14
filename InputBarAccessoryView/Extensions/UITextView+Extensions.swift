@@ -2,9 +2,8 @@
 //  UITextView+Extensions.swift
 //  InputBarAccessoryView
 //
-//  Created by Ryan Nystrom on 12/22/17.
-//  Modified by Nathan Tannar on 09/18/18
-//  Copyright © 2017 Ryan Nystrom. All rights reserved.
+//  Created by Nathan Tannar on 09/18/18.
+//  Copyright © 2018 Nathan Tannar. All rights reserved.
 //
 
 import UIKit

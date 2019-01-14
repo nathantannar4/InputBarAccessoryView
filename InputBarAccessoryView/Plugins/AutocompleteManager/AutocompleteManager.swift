@@ -69,10 +69,6 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         return tableView
     }()
     
-    /// If the autocomplete matches should be made by casting the strings to lowercase.
-    /// Default value is `FALSE`
-    open var isCaseSensitive = false
-    
     /// Adds an additional space after the autocompleted text when true.
     /// Default value is `TRUE`
     open var appendSpaceOnCompletion = true
@@ -108,6 +104,14 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         style.lineHeightMultiple = 1
         return style
     }()
+
+    /// A block that filters the `AutocompleteCompletion`'s sourced
+    /// from the `dataSource`, based on the `AutocompleteSession`.
+    /// The default function requires the `AutocompleteCompletion.text`
+    /// string contains the `AutocompleteSession.filter`
+    /// string ignoring case
+    open var filterBlock: (AutocompleteSession, AutocompleteCompletion) -> (Bool) = { session, completion in completion.text.lowercased().contains(session.filter.lowercased())
+    }
     
     // MARK: - Properties [Private]
     
@@ -135,12 +139,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         
         guard let session = currentSession, let completions = dataSource?.autocompleteManager(self, autocompleteSourceFor: session.prefix) else { return [] }
         guard !session.filter.isEmpty else { return completions }
-        guard isCaseSensitive else { return completions.filter { $0.text.lowercased().contains(session.filter.lowercased()) } }
-        return completions.filter { $0.text.contains(session.filter) }
+        return completions.filter { completion in
+            return filterBlock(session, completion)
+        }
     }
-    
-    /// The `previousSession` will be "restored" when possible
-    private var previousSession: AutocompleteSession?
     
     // MARK: - Initialization
     
