@@ -349,14 +349,9 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     private func registerCurrentSession(to session: AutocompleteSession) {
         
         guard delegate?.autocompleteManager(self, shouldRegister: session.prefix, at: session.range) != false else { return }
-        if let previousSession = previousSession, session == previousSession {
-            currentSession = previousSession
-            updateCurrentSession(to: session.filter)
-        } else {
-            currentSession = session
-            layoutIfNeeded()
-            delegate?.autocompleteManager(self, shouldBecomeVisible: true)
-        }
+        currentSession = session
+        layoutIfNeeded()
+        delegate?.autocompleteManager(self, shouldBecomeVisible: true)
     }
     
     /// Updates the session to a new String to filter results with
@@ -375,7 +370,6 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         
         guard let session = currentSession else { return }
         guard delegate?.autocompleteManager(self, shouldUnregister: session.prefix) != false else { return }
-        previousSession = currentSession
         currentSession = nil
         layoutIfNeeded()
         delegate?.autocompleteManager(self, shouldBecomeVisible: false)
