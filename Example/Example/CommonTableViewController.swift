@@ -123,6 +123,8 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
             print("Autocompleted: `", substring, "` with context: ", context ?? [])
         }
 
+        let com = inputBar.inputTextView.components
+
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
 
@@ -147,7 +149,7 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
-        tableView.contentInset.bottom = size.height
+        tableView.contentInset.bottom = size.height - view.layoutMargins.bottom // account for safe area
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
