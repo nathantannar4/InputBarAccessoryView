@@ -64,7 +64,9 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
 
 ## Latest Releases
 
-
+- 4.2.1
+    - Fixed autocompletes of completions that contain spaces
+    - Depricated `isCaseSensitive` in favor of a function asignment to pre-process autocompletions
 - 4.2.0
     - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
 - 4.1.2
