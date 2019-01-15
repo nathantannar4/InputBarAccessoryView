@@ -63,6 +63,13 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.keyboardDismissMode = .interactive
         tableView.register(ConversationCell.self, forCellReuseIdentifier: "cell")
         tableView.tableFooterView = UIView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+        ])
         
         inputBar.delegate = self
         inputBar.inputTextView.keyboardType = .twitter
@@ -80,12 +87,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
 //        inputBar.inputTextView.textAlignment = .right
 //        inputBar.inputTextView.placeholderLabel.textAlignment = .right
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableView.frame = view.bounds
-    }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return conversation.messages.count
     }
@@ -123,22 +125,18 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
             print("Autocompleted: `", substring, "` with context: ", context ?? [])
         }
 
-        let com = inputBar.inputTextView.components
-
         inputBar.inputTextView.text = String()
         inputBar.invalidatePlugins()
 
         // Send button activity animation
         inputBar.sendButton.startAnimating()
         inputBar.inputTextView.placeholder = "Sending..."
-        inputBar.inputTextView.isUserInteractionEnabled = false
         DispatchQueue.global(qos: .default).async {
             // fake send request task
             sleep(1)
             DispatchQueue.main.async { [weak self] in
                 inputBar.sendButton.stopAnimating()
                 inputBar.inputTextView.placeholder = "Aa"
-                inputBar.inputTextView.isUserInteractionEnabled = true
                 self?.conversation.messages.append(SampleData.Message(user: SampleData.shared.currentUser, text: text))
                 let indexPath = IndexPath(row: (self?.conversation.messages.count ?? 1) - 1, section: 0)
                 self?.tableView.insertRows(at: [indexPath], with: .automatic)
@@ -149,7 +147,8 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
-        tableView.contentInset.bottom = size.height - view.layoutMargins.bottom // account for safe area
+        print(size)
+        tableView.contentInset.bottom = size.height
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
