@@ -2,7 +2,7 @@
 //  InputTextView.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2018 Nathan Tannar.
+//  Copyright © 2017-2019 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -299,7 +299,7 @@ open class InputTextView: UITextView {
         guard let cgImage = image.cgImage else { return NSTextAttachment() }
         let scale = image.size.width / (frame.width - 2 * (textContainerInset.left + textContainerInset.right))
         let textAttachment = NSTextAttachment()
-        textAttachment.image = UIImage(cgImage: cgImage, scale: scale, orientation: .up)
+        textAttachment.image = UIImage(cgImage: cgImage, scale: scale, orientation: image.imageOrientation)
         return textAttachment
     }
     

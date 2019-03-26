@@ -1,5 +1,10 @@
 #  Changelog
 
+- 4.2.2
+    - Fix image paste orientation in `InputTextView`
+- 4.2.1 
+    - Fix crash when pasting multiple images
+    - Removed `AutocompleteManager.isCaseSensitive: Bool` in favor of a `filterBlock`
 - 4.2.0
     - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
 - 4.1.2

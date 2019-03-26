@@ -3,7 +3,7 @@
 //  Example
 //
 //  Created by Nathan Tannar on 8/18/17.
-//  Copyright © 2017-2018 Nathan Tannar. All rights reserved.
+//  Copyright © 2017-2019 Nathan Tannar. All rights reserved.
 //
 
 import UIKit

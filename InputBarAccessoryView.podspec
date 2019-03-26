@@ -9,9 +9,10 @@ Pod::Spec.new do |s|
     s.description  = "Featuring reactive changes, autocomplete, image paste support and so much more."
     s.requires_arc = true
     s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
+    s.swift_version = '4.2'
 
     # 2 - Version
-    s.version = "4.2.1"
+    s.version = "4.2.2"
 
     # 3 - License
     s.license = { :type => "MIT", :file => "LICENSE" }
