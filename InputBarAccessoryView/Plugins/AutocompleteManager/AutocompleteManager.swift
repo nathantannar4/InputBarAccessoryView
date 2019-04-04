@@ -436,7 +436,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                         return
                     }
                     // Delete up to delimiter
-                    let delimiterLocation = delimiterRange.lowerBound.encodedOffset
+                    let delimiterLocation = delimiterRange.lowerBound.utf16Offset(in: textToReplace)
                     let length = subrange.length - delimiterLocation
                     let rangeFromDelimiter = NSRange(location: delimiterLocation + subrange.location, length: length)
                     textView.attributedText = textView.attributedText.replacingCharacters(in: rangeFromDelimiter, with: nothing)
