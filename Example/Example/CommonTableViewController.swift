@@ -148,7 +148,7 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
         print(size)
-        tableView.contentInset.bottom = size.height
+        tableView.contentInset.bottom = size.height + 300 // keyboard size estimate
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
@@ -174,8 +174,8 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
 extension CommonTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
         
         dismiss(animated: true, completion: {
