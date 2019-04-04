@@ -34,7 +34,7 @@ internal extension UITextView {
             guard let index = leadingText.lastIndex(of: char) else { return nil }
             if i == 0 {
                 prefixStartIndex = index
-            } else if index.encodedOffset == prefixStartIndex.encodedOffset + 1 {
+            } else if index.utf16Offset(in: leadingText) == prefixStartIndex.utf16Offset(in: leadingText) + 1 {
                 prefixStartIndex = index
             } else {
                 return nil
@@ -44,8 +44,8 @@ internal extension UITextView {
         let wordRange = prefixStartIndex..<cursorRange.upperBound
         let word = leadingText[wordRange]
         
-        let location = wordRange.lowerBound.encodedOffset
-        let length = wordRange.upperBound.encodedOffset - location
+        let location = wordRange.lowerBound.utf16Offset(in: leadingText)
+        let length = wordRange.upperBound.utf16Offset(in: word) - location
         let range = NSRange(location: location, length: length)
         
         return (String(prefix), String(word), range)

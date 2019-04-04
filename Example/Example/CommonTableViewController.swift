@@ -148,7 +148,7 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
         print(size)
-        tableView.contentInset.bottom = size.height
+        tableView.contentInset.bottom = size.height + 300 // keyboard size estimate
     }
     
     func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
@@ -173,10 +173,13 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
 
 extension CommonTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        // Local variable inserted by Swift 4.2 migrator.
+        let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
+
         
         dismiss(animated: true, completion: {
-            if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            if let pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
                 let handled = self.attachmentManager.handleInput(of: pickedImage)
                 if !handled {
                     // throw error
@@ -295,4 +298,14 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
         }
         inputBar.invalidateIntrinsicContentSize()
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

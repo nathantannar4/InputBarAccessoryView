@@ -70,6 +70,8 @@ internal extension NSNotification {
             return .curveEaseInOut
         case .linear:
             return .curveLinear
+        @unknown default:
+            return .curveLinear
         }
     }
     

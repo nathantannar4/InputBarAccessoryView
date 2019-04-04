@@ -1,5 +1,7 @@
 #  Changelog
 
+- 5.0.0
+    - Swift 5 support
 - 4.2.2
     - Fix image paste orientation in `InputTextView`
 - 4.2.1 

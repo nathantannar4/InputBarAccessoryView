@@ -58,12 +58,12 @@ class InputBarStyleSelectionController: UITableViewController {
             navigationController?.pushViewController(READMEPreviewViewController(), animated: true)
         } else {
             let convo = SampleData.shared.getConversations(count: 1)[0]
-            if indexPath.section == 0 {
+            if indexPath.section == 1 {
                 navigationController?.pushViewController(
                     InputAccessoryExampleViewController(style: styles[indexPath.row],
                                                         conversation: convo),
                     animated: true)
-            } else if indexPath.section == 1 {
+            } else if indexPath.section == 2 {
                 navigationController?.pushViewController(
                     SubviewExampleViewController(style: styles[indexPath.row],
                                                  conversation: convo),

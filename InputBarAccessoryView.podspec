@@ -8,10 +8,10 @@ Pod::Spec.new do |s|
     s.summary = "Make powerful and flexible InputAccessoryView's with ease"
     s.description  = "Featuring reactive changes, autocomplete, image paste support and so much more."
     s.requires_arc = true
-    s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
+    s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
 
     # 2 - Version
-    s.version = "4.2.2"
+    s.version = "5.0.0"
 
     # 3 - License
     s.license = { :type => "MIT", :file => "LICENSE" }

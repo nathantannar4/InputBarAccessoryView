@@ -19,20 +19,27 @@
 ### Installation via CocoaPods
 
 ```ruby
+# Swift 5.0
 pod 'InputBarAccessoryView'
+# Swift 4.2
+pod 'InputBarAccessoryView', '4.2.2'
 ```
 
 ### Installation via Carthage
 
 ```ruby
+# Swift 5.0
 github "nathantannar4/InputBarAccessoryView"
+# Swift 4.2
+github "nathantannar4/InputBarAccessoryView" "4.2.2"
 ```
 
 ### Requirements
 
 iOS 9.0+
-Swift 4.2+
-XCode 9.0+
+Swift 5.0
+
+> The latest Swift 4.2 release is v4.2.2 
 
 ### Documentation
 
@@ -63,7 +70,10 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
-
+- 5.0.0
+    - Swift 5 support
+- 4.2.2
+    - Fixed image paste orientation issue in `InputTextView`
 - 4.2.1
     - Fixed autocompletes of completions that contain spaces
     - Depricated `isCaseSensitive` in favor of a function asignment to pre-process autocompletions
