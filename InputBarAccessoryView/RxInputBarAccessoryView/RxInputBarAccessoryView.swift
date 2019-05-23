@@ -30,33 +30,49 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class RxInputBarAccessoryViewDelegate:
+public final class RxInputBarAccessoryViewDelegate:
     DelegateProxy<InputBarAccessoryView, InputBarAccessoryViewDelegate>,
     DelegateProxyType,
 InputBarAccessoryViewDelegate {
 
-    let sendText = PublishSubject<String>()
-    let currentText = PublishSubject<String>()
-    let intrinsicContentSize = PublishSubject<CGSize>()
-    let swipeGesture = PublishSubject<UISwipeGestureRecognizer>()
-
-    func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        sendText.onNext(text)
+    public var sendText: Observable<String> {
+        return _sendText.asObservable()
     }
 
-    func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
-        currentText.onNext(text)
+    public var currentText: Observable<String> {
+        return _currentText.asObservable()
     }
 
-    func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
-        intrinsicContentSize.onNext(size)
+    public var intrinsicContentSize: Observable<CGSize> {
+        return _intrinsicContentSize.asObservable()
     }
 
-    func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
-        swipeGesture.onNext(gesture)
+    public var swipeGesture: Observable<UISwipeGestureRecognizer> {
+        return _swipeGesture.asObservable()
     }
 
-    static func registerKnownImplementations() {
+    private let _sendText = PublishSubject<String>()
+    private let _currentText = PublishSubject<String>()
+    private let _intrinsicContentSize = PublishSubject<CGSize>()
+    private let _swipeGesture = PublishSubject<UISwipeGestureRecognizer>()
+
+    public func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
+        _sendText.onNext(text)
+    }
+
+    public func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
+        _currentText.onNext(text)
+    }
+
+    public func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
+        _intrinsicContentSize.onNext(size)
+    }
+
+    public func inputBar(_ inputBar: InputBarAccessoryView, didSwipeTextViewWith gesture: UISwipeGestureRecognizer) {
+        _swipeGesture.onNext(gesture)
+    }
+
+    public static func registerKnownImplementations() {
         register {
             RxInputBarAccessoryViewDelegate(
                 parentObject: $0,
@@ -65,17 +81,17 @@ InputBarAccessoryViewDelegate {
         }
     }
 
-    static func currentDelegate(for object: InputBarAccessoryView) -> InputBarAccessoryViewDelegate? {
+    public static func currentDelegate(for object: InputBarAccessoryView) -> InputBarAccessoryViewDelegate? {
         return object.delegate
     }
 
-    static func setCurrentDelegate(_ delegate: InputBarAccessoryViewDelegate?, to object: InputBarAccessoryView) {
+    public static func setCurrentDelegate(_ delegate: InputBarAccessoryViewDelegate?, to object: InputBarAccessoryView) {
         object.delegate = delegate
     }
 }
 
 extension InputBarAccessoryView {
-    var rx_delegate: RxInputBarAccessoryViewDelegate {
+    public var rx_delegate: RxInputBarAccessoryViewDelegate {
         return RxInputBarAccessoryViewDelegate.proxy(for: self)
     }
 }
@@ -181,5 +197,4 @@ extension Reactive where Base: InputBarViewController {
         }
     }
 }
-
 #endif
