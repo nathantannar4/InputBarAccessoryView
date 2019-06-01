@@ -10,7 +10,7 @@
 - [x] Autocomplete attributed text highlighting
 - [x] Reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `InputStackView`s that act as toolbars to place buttons
-- [x] `RxSwift`/`RxCocoa` Support
+- [x] `RxSwift`/`RxCocoa` Support with `RxExtensions` Cocoapod subspec
 - [x] Drop in attachment view for file/photo management
 - [x] Plugin support for your own `InputPlugin`s
 - [x] Compatible with all iPhones and iPads
@@ -70,7 +70,9 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
-- 5.0.0
+- 4.3.1
+    - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
+- 4.3.0
     - Swift 5 support
 - 4.2.2
     - Fixed image paste orientation issue in `InputTextView`
@@ -80,7 +82,6 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
 - 4.2.0
     - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
 - 4.1.2
-        - Add RxSwift/RxCocoa support through extensions and delegate proxies in `RxInputBarAccessoryView`, requires `RxSwift` and `RxCocoa`
         - Add `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 
 - 4.1.1
         - Add `frameInsets: HorizontalEdgePadding` property to `InputBarAccessoryView` to inset the view to be compatible with `UISplitViewController` or other custom containers where the view should not be the full width
