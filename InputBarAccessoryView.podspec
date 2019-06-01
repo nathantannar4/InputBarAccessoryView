@@ -8,6 +8,7 @@ Pod::Spec.new do |s|
     s.summary = "Make powerful and flexible InputAccessoryView's with ease"
     s.description  = "Featuring reactive changes, autocomplete, image paste support and so much more."
     s.requires_arc = true
+    s.swift_versions = '5.0'
 
     # 2 - Version
     s.version = "4.3.0"
@@ -27,9 +28,18 @@ Pod::Spec.new do |s|
     # 7 - Dependencies
     s.framework = "UIKit"
 
-    # 8 - Source Files
-    s.source_files = "InputBarAccessoryView/**/*.{swift}"
+    # 8 - Sources
+    s.default_subspec = 'Core'
 
-    # 9 - Resources
+    s.subspec 'Core' do |ss|
+      ss.source_files = "Sources/**/*.{swift}"
+    end
+
+    s.subspec 'RxExtensions' do |ss|
+      ss.source_files = "RxInputBarAccessoryView/*.{swift}"
+      ss.dependency 'InputBarAccessoryView/Core'
+      ss.dependency 'RxSwift'
+      ss.dependency 'RxCocoa'
+    end
 
 end

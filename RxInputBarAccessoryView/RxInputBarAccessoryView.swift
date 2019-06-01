@@ -26,7 +26,6 @@
 //
 
 import UIKit
-#if canImport(RxSwift) && canImport(RxCocoa)
 import RxSwift
 import RxCocoa
 
@@ -197,4 +196,3 @@ extension Reactive where Base: InputBarViewController {
         }
     }
 }
-#endif

@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>KeyboardManager Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/KeyboardManager" class="dashAnchor"></a>
+    <a title="KeyboardManager Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">InputBarAccessoryView Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        KeyboardManager Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentCell.html">AttachmentCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentCollectionView.html">AttachmentCollectionView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentManager.html">AttachmentManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentManager/Attachment.html">– Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteCell.html">AutocompleteCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteManager.html">AutocompleteManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteSession.html">AutocompleteSession</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteTableView.html">AutocompleteTableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ImageAttachmentCell.html">ImageAttachmentCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarButtonItem.html">InputBarButtonItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarButtonItem/Spacing.html">– Spacing</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarSendButton.html">InputBarSendButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarViewController.html">InputBarViewController</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputStackView/Position.html">– Position</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputTextView.html">InputTextView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/KeyboardManager.html">KeyboardManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/KeyboardEvent.html">KeyboardEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/NSAttributedString/Key.html">– Key</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentManagerDataSource.html">AttachmentManagerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentManagerDelegate.html">AttachmentManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AutocompleteManagerDataSource.html">AutocompleteManagerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AutocompleteManagerDelegate.html">AutocompleteManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputItem.html">InputItem</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/HorizontalEdgePadding.html">HorizontalEdgePadding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/KeyboardNotification.html">KeyboardNotification</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:21InputBarAccessoryView011AttachmentsD0a">AttachmentsView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:21InputBarAccessoryView0A7Managera">InputManager</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>KeyboardManager</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">KeyboardManager</span> <span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">UIGestureRecognizerDelegate</span></code></pre>
+
+                </div>
+              </div>
+            <p>An object that observes keyboard notifications such that event callbacks can be set for each notification</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC13EventCallbacka"></a>
+                    <a name="//apple_ref/swift/Alias/EventCallback" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC13EventCallbacka">EventCallback</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A callback that passes a <code><a href="../Structs/KeyboardNotification.html">KeyboardNotification</a></code> as an input</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">typealias</span> <span class="kt">EventCallback</span> <span class="o">=</span> <span class="p">(</span><span class="kt"><a href="../Structs/KeyboardNotification.html">KeyboardNotification</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties%20[Public]"></a>
+                <a name="//apple_ref/swift/Section/Properties [Public]" class="dashAnchor"></a>
+                <a href="#/Properties%20[Public]">
+                  <h3 class="section-name">Properties [Public]</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC05inputcD0So6UIViewCSgvp"></a>
+                    <a name="//apple_ref/swift/Property/inputAccessoryView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC05inputcD0So6UIViewCSgvp">inputAccessoryView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A weak reference to a view bounded to the top of the keyboard to act as an <code>InputAccessoryView</code>
+but kept within the bounds of the <code>UIViewController</code>s view</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">inputAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC02isE6HiddenSbvp"></a>
+                    <a name="//apple_ref/swift/Property/isKeyboardHidden" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC02isE6HiddenSbvp">isKeyboardHidden</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A flag that indicates if a portion of the keyboard is visible on the screen</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">private(set)</span> <span class="kd">public</span> <span class="k">var</span> <span class="nv">isKeyboardHidden</span><span class="p">:</span> <span class="kt">Bool</span> <span class="p">{</span>
+  <span class="k">get</span>
+  <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                <a href="#/Initialization">
+                  <h3 class="section-name">Initialization</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC05inputcD0ACSo6UIViewC_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(inputAccessoryView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC05inputcD0ACSo6UIViewC_tcfc">init(inputAccessoryView:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code>KeyboardManager</code> object an binds the view as fake <code>InputAccessoryView</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">inputAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inputAccessoryView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view to bind to the top of the keyboard but within its superview</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)init"></a>
+                    <a name="//apple_ref/swift/Method/init()" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)init">init()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Creates a <code>KeyboardManager</code> object that observes the state of the keyboard</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC5coderACSgSo7NSCoderC_tcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC5coderACSgSo7NSCoderC_tcfc">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">required</span> <span class="kd">public</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/De-Initialization"></a>
+                <a name="//apple_ref/swift/Section/De-Initialization" class="dashAnchor"></a>
+                <a href="#/De-Initialization">
+                  <h3 class="section-name">De-Initialization</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)dealloc"></a>
+                    <a name="//apple_ref/swift/Method/deinit" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)dealloc">deinit</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">deinit</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Mutate%20Callback%20Dictionary"></a>
+                <a name="//apple_ref/swift/Section/Mutate Callback Dictionary" class="dashAnchor"></a>
+                <a href="#/Mutate%20Callback%20Dictionary">
+                  <h3 class="section-name">Mutate Callback Dictionary</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC2on5event2doACXDAA0E5EventO_yAA0E12NotificationVcSgtF"></a>
+                    <a name="//apple_ref/swift/Method/on(event:do:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC2on5event2doACXDAA0E5EventO_yAA0E12NotificationVcSgtF">on(event:do:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets the <code><a href="../Classes/KeyboardManager.html#/s:21InputBarAccessoryView15KeyboardManagerC13EventCallbacka">EventCallback</a></code> for a <code><a href="../Enums/KeyboardEvent.html">KeyboardEvent</a></code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">on</span><span class="p">(</span><span class="nv">event</span><span class="p">:</span> <span class="kt"><a href="../Enums/KeyboardEvent.html">KeyboardEvent</a></span><span class="p">,</span> <span class="k">do</span> <span class="nv">callback</span><span class="p">:</span> <span class="kt"><a href="../Classes/KeyboardManager.html#/s:21InputBarAccessoryView15KeyboardManagerC13EventCallbacka">EventCallback</a></span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>event</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>KeyboardEvent</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>EventCallback</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC4bind05inputcD0ACXDSo6UIViewC_tF"></a>
+                    <a name="//apple_ref/swift/Method/bind(inputAccessoryView:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC4bind05inputcD0ACXDSo6UIViewC_tF">bind(inputAccessoryView:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Constrains the <code><a href="../Classes/KeyboardManager.html#/s:21InputBarAccessoryView15KeyboardManagerC05inputcD0So6UIViewCSgvp">inputAccessoryView</a></code> to the bottom of its superview and sets the
+<code>.willChangeFrame</code> and <code>.willHide</code> event callbacks such that it mimics an <code>InputAccessoryView</code>
+that is bound to the top of the keyboard</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">bind</span><span class="p">(</span><span class="nv">inputAccessoryView</span><span class="p">:</span> <span class="kt">UIView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>inputAccessoryView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The view to bind to the top of the keyboard but within its superview</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15KeyboardManagerC4bind2toACXDSo08UIScrollD0C_tF"></a>
+                    <a name="//apple_ref/swift/Method/bind(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15KeyboardManagerC4bind2toACXDSo08UIScrollD0C_tF">bind(to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Adds a <code>UIPanGestureRecognizer</code> to the <code>scrollView</code> to enable interactive dismissal`</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@discardableResult</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">bind</span><span class="p">(</span><span class="n">to</span> <span class="nv">scrollView</span><span class="p">:</span> <span class="kt">UIScrollView</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">Self</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>scrollView</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>UIScrollView</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Self</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Keyboard%20Notifications"></a>
+                <a name="//apple_ref/swift/Section/Keyboard Notifications" class="dashAnchor"></a>
+                <a href="#/Keyboard%20Notifications">
+                  <h3 class="section-name">Keyboard Notifications</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardDidShowWithNotification:"></a>
+                    <a name="//apple_ref/swift/Method/keyboardDidShow(notification:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardDidShowWithNotification:">keyboardDidShow(notification:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An observer method called last in the lifecycle of a keyboard becoming visible</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardDidShow</span><span class="p">(</span><span class="nv">notification</span><span class="p">:</span> <span class="kt">NSNotification</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>notification</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSNotification</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardDidHideWithNotification:"></a>
+                    <a name="//apple_ref/swift/Method/keyboardDidHide(notification:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardDidHideWithNotification:">keyboardDidHide(notification:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An observer method called last in the lifecycle of a keyboard becoming hidden</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardDidHide</span><span class="p">(</span><span class="nv">notification</span><span class="p">:</span> <span class="kt">NSNotification</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>notification</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSNotification</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardDidChangeFrameWithNotification:"></a>
+                    <a name="//apple_ref/swift/Method/keyboardDidChangeFrame(notification:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardDidChangeFrameWithNotification:">keyboardDidChangeFrame(notification:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An observer method called third in the lifecycle of a keyboard becoming visible/hidden</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardDidChangeFrame</span><span class="p">(</span><span class="nv">notification</span><span class="p">:</span> <span class="kt">NSNotification</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>notification</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSNotification</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardWillChangeFrameWithNotification:"></a>
+                    <a name="//apple_ref/swift/Method/keyboardWillChangeFrame(notification:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardWillChangeFrameWithNotification:">keyboardWillChangeFrame(notification:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An observer method called first in the lifecycle of a keyboard becoming visible/hidden</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardWillChangeFrame</span><span class="p">(</span><span class="nv">notification</span><span class="p">:</span> <span class="kt">NSNotification</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>notification</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSNotification</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardWillShowWithNotification:"></a>
+                    <a name="//apple_ref/swift/Method/keyboardWillShow(notification:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardWillShowWithNotification:">keyboardWillShow(notification:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An observer method called second in the lifecycle of a keyboard becoming visible</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardWillShow</span><span class="p">(</span><span class="nv">notification</span><span class="p">:</span> <span class="kt">NSNotification</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>notification</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSNotification</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardWillHideWithNotification:"></a>
+                    <a name="//apple_ref/swift/Method/keyboardWillHide(notification:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)keyboardWillHideWithNotification:">keyboardWillHide(notification:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An observer method called second in the lifecycle of a keyboard becoming hidden</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardWillHide</span><span class="p">(</span><span class="nv">notification</span><span class="p">:</span> <span class="kt">NSNotification</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>notification</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>NSNotification</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/UIGestureRecognizerDelegate"></a>
+                <a name="//apple_ref/swift/Section/UIGestureRecognizerDelegate" class="dashAnchor"></a>
+                <a href="#/UIGestureRecognizerDelegate">
+                  <h3 class="section-name">UIGestureRecognizerDelegate</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)handlePanGestureRecognizerWithRecognizer:"></a>
+                    <a name="//apple_ref/swift/Method/handlePanGestureRecognizer(recognizer:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)handlePanGestureRecognizerWithRecognizer:">handlePanGestureRecognizer(recognizer:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Starts with the cached <code><a href="../Structs/KeyboardNotification.html">KeyboardNotification</a></code> and calculates a new <code>endFrame</code> based
+on the <code>UIPanGestureRecognizer</code> then calls the <code>.willChangeFrame</code> <code><a href="../Classes/KeyboardManager.html#/s:21InputBarAccessoryView15KeyboardManagerC13EventCallbacka">EventCallback</a></code> action</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">@objc</span>
+<span class="kd">open</span> <span class="kd">func</span> <span class="nf">handlePanGestureRecognizer</span><span class="p">(</span><span class="nv">recognizer</span><span class="p">:</span> <span class="kt">UIPanGestureRecognizer</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>recognizer</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>UIPanGestureRecognizer</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)gestureRecognizer:shouldReceiveTouch:"></a>
+                    <a name="//apple_ref/swift/Method/gestureRecognizer(_:shouldReceive:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)gestureRecognizer:shouldReceiveTouch:">gestureRecognizer(_:shouldReceive:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Only receive a <code>UITouch</code> event when the <code>scrollView</code>&lsquo;s keyboard dismiss mode is interactive</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">gestureRecognizer</span><span class="p">(</span><span class="n">_</span> <span class="nv">gestureRecognizer</span><span class="p">:</span> <span class="kt">UIGestureRecognizer</span><span class="p">,</span> <span class="n">shouldReceive</span> <span class="nv">touch</span><span class="p">:</span> <span class="kt">UITouch</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:"></a>
+                    <a name="//apple_ref/swift/Method/gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)KeyboardManager(im)gestureRecognizer:shouldRecognizeSimultaneouslyWithGestureRecognizer:">gestureRecognizer(_:shouldRecognizeSimultaneouslyWith:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Only recognice simultaneous gestures when its the <code>panGesture</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">gestureRecognizer</span><span class="p">(</span><span class="n">_</span> <span class="nv">gestureRecognizer</span><span class="p">:</span> <span class="kt">UIGestureRecognizer</span><span class="p">,</span> <span class="n">shouldRecognizeSimultaneouslyWith</span> <span class="nv">otherGestureRecognizer</span><span class="p">:</span> <span class="kt">UIGestureRecognizer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2019 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2019-06-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

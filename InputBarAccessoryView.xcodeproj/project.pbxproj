@@ -39,7 +39,6 @@
 		38D29FE91F97CBA400E59362 /* InputPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D29FE81F97CBA400E59362 /* InputPlugin.swift */; };
 		38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */; };
 		38ECDBBD219B46D50076E154 /* InputBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECDBBC219B46D50076E154 /* InputBarViewController.swift */; };
-		38ECDBBF219B46E80076E154 /* RxInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */; };
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
 		38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */; };
@@ -54,6 +53,7 @@
 		3821ADDB20F531A600DE0D1D /* KeyboardEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardEvent.swift; sourceTree = "<group>"; };
 		3821ADE720F54B3700DE0D1D /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
 		383B83831F4787E200027965 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		38447E1D22A31BE70002649D /* RxInputBarAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		38570137218651C400589A30 /* InputBarSendButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarSendButton.swift; sourceTree = "<group>"; };
 		3876DA8A1F8352F200C89326 /* AutocompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCell.swift; sourceTree = "<group>"; };
 		3876DA8D1F83530200C89326 /* AutocompleteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteManager.swift; sourceTree = "<group>"; };
@@ -80,7 +80,6 @@
 		38D29FE81F97CBA400E59362 /* InputPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputPlugin.swift; path = InputBarAccessoryView/Protocols/InputPlugin.swift; sourceTree = SOURCE_ROOT; };
 		38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift.swift; sourceTree = "<group>"; };
 		38ECDBBC219B46D50076E154 /* InputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarViewController.swift; sourceTree = "<group>"; };
-		38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
 		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
 		38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InputBarAccessoryView+Availability.swift"; sourceTree = "<group>"; };
@@ -110,7 +109,8 @@
 		383B83791F4787E200027965 = {
 			isa = PBXGroup;
 			children = (
-				38C867701F50A6AD00811974 /* InputBarAccessoryView */,
+				38447E1C22A31BE70002649D /* RxInputBarAccessoryView */,
+				38C867701F50A6AD00811974 /* Sources */,
 				383B83841F4787E200027965 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -123,6 +123,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		38447E1C22A31BE70002649D /* RxInputBarAccessoryView */ = {
+			isa = PBXGroup;
+			children = (
+				38447E1D22A31BE70002649D /* RxInputBarAccessoryView.swift */,
+			);
+			path = RxInputBarAccessoryView;
+			sourceTree = "<group>";
+		};
 		3876DA8C1F8352F800C89326 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
@@ -132,11 +140,10 @@
 			path = Plugins;
 			sourceTree = "<group>";
 		};
-		38C867701F50A6AD00811974 /* InputBarAccessoryView */ = {
+		38C867701F50A6AD00811974 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				38C8677A1F50A6AD00811974 /* InputBarAccessoryView.swift */,
-				38ECDBBA219B46AB0076E154 /* RxInputBarAccessoryView */,
 				38F0C1EB20C77F9900FF8DD3 /* Controls */,
 				38C867711F50A6AD00811974 /* Extensions */,
 				3821ADD620F5314800DE0D1D /* KeyboardManager */,
@@ -147,7 +154,7 @@
 				38ECDBBB219B46B90076E154 /* ViewControllers */,
 				38C867791F50A6AD00811974 /* Views */,
 			);
-			path = InputBarAccessoryView;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		38C867711F50A6AD00811974 /* Extensions */ = {
@@ -190,14 +197,6 @@
 				381042221F85FD1300B1E61A /* SeparatorLine.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		38ECDBBA219B46AB0076E154 /* RxInputBarAccessoryView */ = {
-			isa = PBXGroup;
-			children = (
-				38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */,
-			);
-			path = RxInputBarAccessoryView;
 			sourceTree = "<group>";
 		};
 		38ECDBBB219B46B90076E154 /* ViewControllers */ = {
@@ -401,7 +400,6 @@
 				38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */,
 				381042251F87F34900B1E61A /* InputStackView.swift in Sources */,
 				38C8677E1F50A6AD00811974 /* UIView+AutoLayout.swift in Sources */,
-				38ECDBBF219B46E80076E154 /* RxInputBarAccessoryView.swift in Sources */,
 				3877525D1F8834F0000E0AC5 /* ImageAttachmentCell.swift in Sources */,
 				381042231F85FD1300B1E61A /* SeparatorLine.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,

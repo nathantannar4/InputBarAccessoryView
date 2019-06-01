@@ -13,7 +13,7 @@
     <a title="InputBarAccessoryView  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
+        <p><a href="index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
       </div>
     </header>
     <div class="content-wrapper">
@@ -33,19 +33,22 @@
                 <a href="Classes/AttachmentCell.html">AttachmentCell</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/AttachmentCollectionView.html">AttachmentCollectionView</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/AttachmentManager.html">AttachmentManager</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/AttachmentManager/Attachment.html">– Attachment</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/AttachmentsView.html">AttachmentsView</a>
-              </li>
-              <li class="nav-group-task">
                 <a href="Classes/AutocompleteCell.html">AutocompleteCell</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/AutocompleteManager.html">AutocompleteManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/AutocompleteSession.html">AutocompleteSession</a>
               </li>
               <li class="nav-group-task">
                 <a href="Classes/AutocompleteTableView.html">AutocompleteTableView</a>
@@ -63,6 +66,12 @@
                 <a href="Classes/InputBarButtonItem/Spacing.html">– Spacing</a>
               </li>
               <li class="nav-group-task">
+                <a href="Classes/InputBarSendButton.html">InputBarSendButton</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/InputBarViewController.html">InputBarViewController</a>
+              </li>
+              <li class="nav-group-task">
                 <a href="Classes/InputStackView.html">InputStackView</a>
               </li>
               <li class="nav-group-task">
@@ -72,10 +81,29 @@
                 <a href="Classes/InputTextView.html">InputTextView</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/SeparatorLine.html">SeparatorLine</a>
+                <a href="Classes/KeyboardManager.html">KeyboardManager</a>
               </li>
               <li class="nav-group-task">
-                <a href="Classes/TypingIndicator.html">TypingIndicator</a>
+                <a href="Classes/SeparatorLine.html">SeparatorLine</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/KeyboardEvent.html">KeyboardEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/NSAttributedString.html">NSAttributedString</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Extensions/NSAttributedString/Key.html">– Key</a>
               </li>
             </ul>
           </li>
@@ -100,12 +128,6 @@
               <li class="nav-group-task">
                 <a href="Protocols/InputItem.html">InputItem</a>
               </li>
-              <li class="nav-group-task">
-                <a href="Protocols/InputPlugin.html">InputPlugin</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
-              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -115,7 +137,21 @@
                 <a href="Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
               </li>
               <li class="nav-group-task">
-                <a href="Structs/AutocompleteSession.html">AutocompleteSession</a>
+                <a href="Structs/HorizontalEdgePadding.html">HorizontalEdgePadding</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Structs/KeyboardNotification.html">KeyboardNotification</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:21InputBarAccessoryView011AttachmentsD0a">AttachmentsView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Typealiases.html#/s:21InputBarAccessoryView0A7Managera">InputManager</a>
               </li>
             </ul>
           </li>
@@ -125,50 +161,51 @@
         <section>
           <section class="section">
             
-            <p><img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Banner.png"></p>
+            <p><a href=""><img src="./Screenshots/Preview.gif" alt="Image"></a></p>
 <h1 id='inputbaraccessoryview' class='heading'>InputBarAccessoryView</h1>
-
-<p><a href=""><img src="https://img.shields.io/cocoapods/dt/InputBarAccessoryView.svg" alt="CocoaPods"></a>
-<a href=""><img src="https://img.shields.io/cocoapods/dw/InputBarAccessoryView.svg" alt="CocoaPods"></a>
-<a href="https://paypal.me/nathantannar"><img src="https://img.shields.io/badge/Donate-PayPal-blue.svg" alt="Donate"></a></p>
 <h3 id='features' class='heading'>Features</h3>
 
 <ul>
-<li>[x] A growing <code>UITextView</code> with optional fixed height</li>
+<li>[x] Autocomplete text with @mention, #hashtag or any other prefix</li>
+<li>[x] A self-sizing <code>UITextView</code> with an optional fixed height (can be replaced with any other view)</li>
 <li>[x] Image paste support<br></li>
-<li>[x] RxSwift inspired reactive components that respond to given events</li>
-<li>[x] Top/Bottom/Left/Right <code>UIStackView</code>s that act as toolbars to place buttons</li>
-<li>[x] Drop in autocomplete for any given prefix</li>
 <li>[x] Autocomplete attributed text highlighting</li>
+<li>[x] Reactive components that respond to given events</li>
+<li>[x] Top/Bottom/Left/Right <code><a href="Classes/InputStackView.html">InputStackView</a></code>s that act as toolbars to place buttons</li>
+<li>[x] <code>RxSwift</code>/<code>RxCocoa</code> Support</li>
 <li>[x] Drop in attachment view for file/photo management</li>
-<li>[x] Drop in Slack style <code><a href="Classes/TypingIndicator.html">TypingIndicator</a></code></li>
-<li>[x] Plugin support for your own <code><a href="Protocols/InputPlugin.html">InputPlugin</a></code>s</li>
-<li>[x] iPhone X Support</li>
+<li>[x] Plugin support for your own <code>InputPlugin</code>s</li>
+<li>[x] Compatible with all iPhones and iPads</li>
+<li>[x] RTL Support</li>
 </ul>
 <h3 id='installation-via-cocoapods' class='heading'>Installation via CocoaPods</h3>
-<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span>
+<pre class="highlight ruby"><code><span class="c1"># Swift 5.0</span>
+<span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span>
+<span class="c1"># Swift 4.2</span>
+<span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span><span class="p">,</span> <span class="s1">'4.2.2'</span>
 </code></pre>
 <h3 id='installation-via-carthage' class='heading'>Installation via Carthage</h3>
-<pre class="highlight ruby"><code><span class="n">github</span> <span class="s2">"nathantannar4/InputBarAccessoryView"</span>
+<pre class="highlight ruby"><code><span class="c1"># Swift 5.0</span>
+<span class="n">github</span> <span class="s2">"nathantannar4/InputBarAccessoryView"</span>
+<span class="c1"># Swift 4.2</span>
+<span class="n">github</span> <span class="s2">"nathantannar4/InputBarAccessoryView"</span> <span class="s2">"4.2.2"</span>
 </code></pre>
 <h3 id='requirements' class='heading'>Requirements</h3>
 
 <p>iOS 9.0+
-Swift 4
-XCode 9.0+</p>
+Swift 5.0</p>
+
+<blockquote>
+<p>The latest Swift 4.2 release is v4.2.2 </p>
+</blockquote>
 <h3 id='documentation' class='heading'>Documentation</h3>
 
 <p><a href="./GETTING_STARTED.md">Getting Started</a></p>
 
-<p><a href="https://nathantannar.me/InputBarAccessoryView/docs/">Jazzy Generated Docs</a></p>
-
 <blockquote>
 <p>See the Example project to see how you can make the iMessage, Slack, Facebook and GitHawk input bars!</p>
 </blockquote>
-<h3 id='demo' class='heading'>Demo</h3>
-
-<p><img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/Demo.gif" width="275" height="600"></p>
-<h3 id='screenshots' class='heading'>Screenshots</h3>
+<h3 id='example-usage' class='heading'>Example Usage</h3>
 
 <p><img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotA.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotB.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotC.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotD.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotE.png" width="242" height="432"> <img src="https://raw.githubusercontent.com/nathantannar4/InputBarAccessoryView/master/Screenshots/ScreenshotF.png" width="242" height="432"></p>
 <h3 id='featured-in' class='heading'>Featured In</h3>
@@ -187,6 +224,46 @@ XCode 9.0+</p>
 <img src="https://avatars3.githubusercontent.com/u/32285710?s=200&v=4" title="GitHawk Logo" height="50">
 </p></li>
 </ul>
+<h3 id='see-also' class='heading'>See Also</h3>
+
+<p>iMessage style <a href="https://github.com/nathantannar4/TypingIndicator">TypingIndicator</a> for chat apps</p>
+<h2 id='latest-releases' class='heading'>Latest Releases</h2>
+
+<ul>
+<li>5.0.0
+
+<ul>
+<li>Swift 5 support</li>
+</ul></li>
+<li>4.2.2
+
+<ul>
+<li>Fixed image paste orientation issue in <code><a href="Classes/InputTextView.html">InputTextView</a></code></li>
+</ul></li>
+<li>4.2.1
+
+<ul>
+<li>Fixed autocompletes of completions that contain spaces</li>
+<li>Depricated <code>isCaseSensitive</code> in favor of a function asignment to pre-process autocompletions</li>
+</ul></li>
+<li>4.2.0
+
+<ul>
+<li>Added new API for overriding the main middle view, normally the <code><a href="Classes/InputTextView.html">InputTextView</a></code> so it can be replaced with views such as a <q>Join</q> button&quot;, <code>setMiddleContentView(_ view: UIView?, animated: Bool)</code></li>
+</ul></li>
+<li>4.1.2
+    - Add RxSwift/RxCocoa support through extensions and delegate proxies in <code>RxInputBarAccessoryView</code>, requires <code>RxSwift</code> and <code>RxCocoa</code>
+    - Add <code><a href="Classes/InputBarViewController.html">InputBarViewController</a></code> which contains an <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code> as the <code>inputAccessoryView</code> by default with a convenient <code>isInputBarHidden: Bool</code> property to show/hide it</li>
+<li>4.1.1
+    - Add <code>frameInsets: HorizontalEdgePadding</code> property to <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code> to inset the view to be compatible with <code>UISplitViewController</code> or other custom containers where the view should not be the full width</li>
+<li>4.1.0
+    - Fix issue where setting long strings in <code>viewDidLoad</code> broke inital layout, Issue #41
+    - Add <code>deleteCompletionByParts: Bool</code> flag to <code><a href="Classes/AutocompleteManager.html">AutocompleteManager</a></code> to allow for partial deletions of autocompletes rather than just the entire substring. 
+    - Add <code><a href="Classes/InputBarSendButton.html">InputBarSendButton</a></code> to use as the <code>sendButton</code> in <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>. This subclass of <code><a href="Classes/InputBarButtonItem.html">InputBarButtonItem</a></code> has a <code>UIActivityIndicatorView</code> to show a spinner when making HTTP requests</li>
+</ul>
+<h3 id='a-href-changelog-md-changelog-a' class='heading'><a href="./CHANGELOG.md">CHANGELOG</a></h3>
+
+<p><strong>Find a bug? Open an issue!</strong></p>
 <h2 id='layout' class='heading'>Layout</h2>
 
 <p>The layout of the <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code> is made of of 4  <code><a href="Classes/InputStackView.html">InputStackView</a></code>&lsquo;s and an <code><a href="Classes/InputTextView.html">InputTextView</a></code>. The padding of the subviews can be easily adjusted by changing the <code>padding</code> and <code>textViewPadding</code> properties. The constraints will automatically be updated.</p>
@@ -215,49 +292,6 @@ XCode 9.0+</p>
 <span class="kd">private</span> <span class="k">var</span> <span class="nv">onEnabledAction</span><span class="p">:</span> <span class="kt">InputBarButtonItemAction</span><span class="p">?</span>
 <span class="kd">private</span> <span class="k">var</span> <span class="nv">onDisabledAction</span><span class="p">:</span> <span class="kt">InputBarButtonItemAction</span><span class="p">?</span>
 </code></pre>
-<h2 id='changelog' class='heading'>Changelog</h2>
-
-<ul>
-<li>1.5.4
-    - Bug Fixes</li>
-<li>1.5.3
-    - [WIP] <code><a href="Classes/TypingIndicator.html">TypingIndicator</a></code> InputItem view added, see example
-    - <code>shouldForceTextViewMaxHeight</code> property added</li>
-<li>1.5.2
-    - Better autocomplete detection</li>
-<li>1.5.1
-    - Optimize AutocompleteManager &amp; AttachmentManager</li>
-<li>1.5.0
-    - Stability and bug fixes</li>
-<li>1.4.0
-    - iPhone X Fixes
-    - IntrinsicContentSize caching to increase performance
-    - Auto Manage maxTextViewHeight</li>
-<li>1.3.0
-    - iPhone X Fixes</li>
-<li>1.2.0
-    - Better XCode docs
-    - <code><a href="Protocols/InputItem.html">InputItem</a></code> is now a protocol that you can give to the <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>
-    - <code><a href="Protocols/InputPlugin.html">InputPlugin</a></code> is now a protocol that you can conform to make a plugin
-    - <code><a href="Classes/AutocompleteManager.html">AutocompleteManager</a></code> and <code>AttactchmentManager</code> are no longer members of  <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code> by default. You will need to create them and assign them to the <code><a href="Protocols/InputPlugin.html">InputPlugin</a></code> property of the <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code></li>
-<li>1.1.2
-    - Fixed issue where adjusting the <code><a href="Classes/InputTextView.html">InputTextView</a></code>&rsquo;s placeholder text alignment didn&rsquo;t work
-    - Fixed iPhone X support where the home indicator overlapped the <code><a href="Classes/InputTextView.html">InputTextView</a></code></li>
-<li>1.1.1
-    - AutocompleteManager bug fixes and customization improvements</li>
-<li>1.1.0
-    - AttactchmentManager (Beta)</li>
-<li>1.0.0
-
-<ul>
-<li>A more refined AutocompleteManager</li>
-<li>Auto-layout bug fixes</li>
-</ul></li>
-</ul>
-
-<p><em>pre-release versions not documented</em></p>
-
-<p><strong>Find a bug? Open an issue!</strong></p>
 <h2 id='author' class='heading'>Author</h2>
 
 <p>
@@ -272,7 +306,7 @@ XCode 9.0+</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>&copy; 2019 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2019-06-01)</p>
           <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
         </section>
       </article>

@@ -185,7 +185,7 @@
 				TargetAttributes = {
 					383B83981F47897800027965 = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = 9EUCWD26TP;
+						DevelopmentTeam = JH5XJ55XGZ;
 						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
 					};
@@ -380,11 +380,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9EUCWD26TP;
+				DEVELOPMENT_TEAM = JH5XJ55XGZ;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "me.nathantannar.InputBarAccessoryView-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.InputBarAccessoryViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -394,11 +394,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 9EUCWD26TP;
+				DEVELOPMENT_TEAM = JH5XJ55XGZ;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "me.nathantannar.InputBarAccessoryView-Example";
+				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.InputBarAccessoryViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
