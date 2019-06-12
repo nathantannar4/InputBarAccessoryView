@@ -2,6 +2,7 @@
 
 - 5.0.0
     - Swift 5 support
+    - Breaking change: Support for vertical spacing in InputBarButtonItem
 - 4.2.2
     - Fix image paste orientation in `InputTextView`
 - 4.2.1 
