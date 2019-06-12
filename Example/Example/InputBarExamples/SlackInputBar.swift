@@ -94,7 +94,7 @@ class SlackInputBar: InputBarAccessoryView {
     private func makeButton(named: String) -> InputBarButtonItem {
         return InputBarButtonItem()
             .configure {
-                $0.spacing = .fixed(10)
+                $0.spacing = .fixed(CGSize(width: 10, height: 0))
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 30, height: 30), animated: false)
             }.onSelected {
