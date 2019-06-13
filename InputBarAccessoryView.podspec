@@ -23,7 +23,7 @@ Pod::Spec.new do |s|
     s.homepage = "https://github.com/nathantannar4/InputBarAccessoryView"
 
     # 6 - Source
-    s.source = { :git => "https://github.com/marcetcheverry/InputBarAccessoryView.git", :branch => "swift5-size-padding" }
+    s.source = { :git => "https://github.com/nathantannar4/InputBarAccessoryView.git", :tag => "#{s.version}"}
 
     # 7 - Dependencies
     s.framework = "UIKit"
