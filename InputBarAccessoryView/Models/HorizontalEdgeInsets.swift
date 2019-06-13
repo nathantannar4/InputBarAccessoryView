@@ -12,5 +12,10 @@ public struct HorizontalEdgePadding {
     public let left: CGFloat
     public let right: CGFloat
 
-    static let zero = HorizontalEdgePadding(left: 0, right: 0)
+    public static let zero = HorizontalEdgePadding(left: 0, right: 0)
+
+    public init(left: CGFloat, right: CGFloat) {
+        self.left = left
+        self.right = right
+    }
 }

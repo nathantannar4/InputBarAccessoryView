@@ -37,7 +37,7 @@
 		38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */; };
 		38C867841F50A6AD00811974 /* InputTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C8677C1F50A6AD00811974 /* InputTextView.swift */; };
 		38D29FE91F97CBA400E59362 /* InputPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D29FE81F97CBA400E59362 /* InputPlugin.swift */; };
-		38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */; };
+		38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift */; };
 		38ECDBBD219B46D50076E154 /* InputBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECDBBC219B46D50076E154 /* InputBarViewController.swift */; };
 		38ECDBBF219B46E80076E154 /* RxInputBarAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */; };
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
@@ -78,7 +78,7 @@
 		38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputBarButtonItem.swift; sourceTree = "<group>"; };
 		38C8677C1F50A6AD00811974 /* InputTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputTextView.swift; sourceTree = "<group>"; };
 		38D29FE81F97CBA400E59362 /* InputPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = InputPlugin.swift; path = InputBarAccessoryView/Protocols/InputPlugin.swift; sourceTree = SOURCE_ROOT; };
-		38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift.swift; sourceTree = "<group>"; };
+		38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalEdgeInsets.swift; sourceTree = "<group>"; };
 		38ECDBBC219B46D50076E154 /* InputBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarViewController.swift; sourceTree = "<group>"; };
 		38ECDBBE219B46E80076E154 /* RxInputBarAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxInputBarAccessoryView.swift; sourceTree = "<group>"; };
 		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 			isa = PBXGroup;
 			children = (
 				38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */,
-				38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift */,
+				38E0565C2193A5A400EC04FA /* HorizontalEdgeInsets.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -379,7 +379,7 @@
 				3821ADDC20F531A600DE0D1D /* KeyboardEvent.swift in Sources */,
 				3876DA921F83551400C89326 /* AutocompleteManager.swift in Sources */,
 				38ECDBBD219B46D50076E154 /* InputBarViewController.swift in Sources */,
-				38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift.swift in Sources */,
+				38E0565D2193A5A400EC04FA /* HorizontalEdgeInsets.swift in Sources */,
 				38C867841F50A6AD00811974 /* InputTextView.swift in Sources */,
 				3876DA901F83530900C89326 /* AutocompleteManagerDataSource.swift in Sources */,
 				3876DAA91F84C0DB00C89326 /* AttachmentsView.swift in Sources */,
