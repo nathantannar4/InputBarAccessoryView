@@ -62,6 +62,7 @@ open class InputBarButtonItem: UIButton, InputItem {
                 setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
             case .fixed:
                 setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .vertical)
             case .none:
                 setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
             }
