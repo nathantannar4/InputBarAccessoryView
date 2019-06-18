@@ -136,6 +136,36 @@ open class AttachmentManager: NSObject, InputPlugin {
             self.delegate?.attachmentManager(self, shouldBecomeVisible: self.attachments.count > 0 || self.isPersistent)
         })
     }
+
+    open func createAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as? AttachmentCell else {
+            fatalError()
+        }
+        cell.deleteButton.isHidden = true
+        // Draw a plus
+        let frame = CGRect(origin: CGPoint(x: cell.bounds.origin.x,
+                                           y: cell.bounds.origin.y),
+                           size: CGSize(width: cell.bounds.width - cell.padding.left - cell.padding.right,
+                                        height: cell.bounds.height - cell.padding.top - cell.padding.bottom))
+        let strokeWidth: CGFloat = 3
+        let length: CGFloat = frame.width / 2
+        let vLayer = CAShapeLayer()
+        vLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (strokeWidth / 2),
+                                                       y: frame.midY - (length / 2),
+                                                       width: strokeWidth,
+                                                       height: length), cornerRadius: 5).cgPath
+        vLayer.fillColor = UIColor.lightGray.cgColor
+        let hLayer = CAShapeLayer()
+        hLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (length / 2),
+                                                       y: frame.midY - (strokeWidth / 2),
+                                                       width: length,
+                                                       height: strokeWidth), cornerRadius: 5).cgPath
+        hLayer.fillColor = UIColor.lightGray.cgColor
+        cell.containerView.layer.addSublayer(vLayer)
+        cell.containerView.layer.addSublayer(hLayer)
+        return cell
+    }
     
 }
 
@@ -201,35 +231,5 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
             height -= (layout.sectionInset.bottom + layout.sectionInset.top + collectionView.contentInset.top + collectionView.contentInset.bottom)
         }
         return CGSize(width: height, height: height)
-    }
-    
-    open func createAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
-        
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as? AttachmentCell else {
-            fatalError()
-        }
-        cell.deleteButton.isHidden = true
-        // Draw a plus
-        let frame = CGRect(origin: CGPoint(x: cell.bounds.origin.x,
-                                           y: cell.bounds.origin.y),
-                           size: CGSize(width: cell.bounds.width - cell.padding.left - cell.padding.right,
-                                        height: cell.bounds.height - cell.padding.top - cell.padding.bottom))
-        let strokeWidth: CGFloat = 3
-        let length: CGFloat = frame.width / 2
-        let vLayer = CAShapeLayer()
-        vLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (strokeWidth / 2),
-                                                       y: frame.midY - (length / 2),
-                                                       width: strokeWidth,
-                                                       height: length), cornerRadius: 5).cgPath
-        vLayer.fillColor = UIColor.lightGray.cgColor
-        let hLayer = CAShapeLayer()
-        hLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (length / 2),
-                                                       y: frame.midY - (strokeWidth / 2),
-                                                       width: length,
-                                                       height: strokeWidth), cornerRadius: 5).cgPath
-        hLayer.fillColor = UIColor.lightGray.cgColor
-        cell.containerView.layer.addSublayer(vLayer)
-        cell.containerView.layer.addSublayer(hLayer)
-        return cell
     }
 }
