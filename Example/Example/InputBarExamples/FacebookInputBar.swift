@@ -44,6 +44,8 @@ class FacebookInputBar: InputBarAccessoryView {
         inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         setLeftStackViewWidthConstant(to: 36, animated: false)
         setStackViewItems([button], forStack: .left, animated: false)
+
+        shouldAnimateTextDidChangeLayout = true
     }
     
 }

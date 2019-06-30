@@ -1,8 +1,12 @@
 #  Changelog
 
+- 4.3.2
+- Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
+    - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
+- 4.3.1
+    - Added RxSwift/RxCocoa support through extensions and delegate proxies in `RxInputBarAccessoryView`, requires `RxSwift` and `RxCocoa`
 - 4.3.0
     - Swift 5 support
-    - Fixes accessibility of HorizontalEdgePadding initializers and a typo in its filename
 - 4.2.2
     - Fix image paste orientation in `InputTextView`
 - 4.2.1 
@@ -11,7 +15,6 @@
 - 4.2.0
     - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
 - 4.1.2
-    - Added RxSwift/RxCocoa support through extensions and delegate proxies in `RxInputBarAccessoryView`, requires `RxSwift` and `RxCocoa`
     - Added `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 
 - 4.1.1
     - Added `frameInsets: HorizontalEdgePadding` property to `InputBarAccessoryView` to inset the view to be compatible with `UISplitViewController` or other custom containers where the view should not be the full width

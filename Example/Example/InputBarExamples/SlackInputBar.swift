@@ -87,6 +87,8 @@ class SlackInputBar: InputBarAccessoryView {
         
         // Finally set the items
         setStackViewItems(items, forStack: .bottom, animated: false)
+
+        shouldAnimateTextDidChangeLayout = true
     }
     
 
