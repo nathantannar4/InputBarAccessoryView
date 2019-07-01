@@ -3,6 +3,7 @@
 - 4.3.0
     - Swift 5 support
     - Fixes accessibility of HorizontalEdgePadding initializers and a typo in its filename
+    - Breaking change: Support for vertical spacing in InputBarButtonItem
 - 4.2.2
     - Fix image paste orientation in `InputTextView`
 - 4.2.1 

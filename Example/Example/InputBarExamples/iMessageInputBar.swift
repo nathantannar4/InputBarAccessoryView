@@ -31,7 +31,7 @@ class iMessageInputBar: InputBarAccessoryView {
         inputTextView.layer.masksToBounds = true
         inputTextView.scrollIndicatorInsets = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         setRightStackViewWidthConstant(to: 38, animated: false)
-        setStackViewItems([sendButton, InputBarButtonItem.fixedSpace(2)], forStack: .right, animated: false)
+        setStackViewItems([sendButton, InputBarButtonItem.fixedSpace(CGSize(width: 2, height: 0))], forStack: .right, animated: false)
         sendButton.imageView?.backgroundColor = tintColor
         sendButton.contentEdgeInsets = UIEdgeInsets(top: 2, left: 2, bottom: 2, right: 2)
         sendButton.setSize(CGSize(width: 36, height: 36), animated: false)

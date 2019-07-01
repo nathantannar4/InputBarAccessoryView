@@ -41,7 +41,7 @@ open class InputBarButtonItem: UIButton, InputItem {
     /// - flexible: The spacing is flexible
     /// - none: There is no spacing
     public enum Spacing {
-        case fixed(CGFloat)
+        case fixed(CGSize)
         case flexible
         case none
     }
@@ -62,6 +62,7 @@ open class InputBarButtonItem: UIButton, InputItem {
                 setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
             case .fixed:
                 setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                setContentHuggingPriority(UILayoutPriority(rawValue: 1000), for: .vertical)
             case .none:
                 setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
             }
@@ -78,8 +79,9 @@ open class InputBarButtonItem: UIButton, InputItem {
     open override var intrinsicContentSize: CGSize {
         var contentSize = size ?? super.intrinsicContentSize
         switch spacing {
-        case .fixed(let width):
-            contentSize.width += width
+        case .fixed(let size):
+            contentSize.width += size.width
+            contentSize.height += size.height
         case .flexible, .none:
             break
         }
@@ -345,10 +347,10 @@ open class InputBarButtonItem: UIButton, InputItem {
     }
     
     /// An InputBarButtonItem that's spacing property is set to be .fixed with the width arguement
-    public static func fixedSpace(_ width: CGFloat) -> InputBarButtonItem {
+    public static func fixedSpace(_ size: CGSize) -> InputBarButtonItem {
         let item = InputBarButtonItem()
         item.setSize(.zero, animated: false)
-        item.spacing = .fixed(width)
+        item.spacing = .fixed(size)
         return item
     }
 }
