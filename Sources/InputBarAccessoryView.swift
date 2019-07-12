@@ -140,7 +140,7 @@ open class InputBarAccessoryView: UIView {
     }()
     
     /// The InputTextView a user can input a message in
-    open lazy var inputTextView: InputTextView = { [weak self] in
+    open lazy var inputTextView: InputTextView = {
         let inputTextView = InputTextView()
         inputTextView.translatesAutoresizingMaskIntoConstraints = false
         inputTextView.inputBarAccessoryView = self
