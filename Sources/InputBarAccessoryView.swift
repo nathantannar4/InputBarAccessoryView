@@ -130,7 +130,12 @@ open class InputBarAccessoryView: UIView {
         intrinsicContentSize to auto-size the InputBarAccessoryView
      2. Override with `setMiddleContentView(view: UIView?, animated: Bool)`
      */
-    public private(set) weak var middleContentView: UIView?
+    public private(set) lazy var middleContentView: InputBarMiddleContentView = {
+        let view = InputBarDefaultMiddleContentView()
+        view.inputTextView.inputBarAccessoryView = self
+        view.delegate = self
+        return view
+    }()
 
     /// A view to wrap the `middleContentView` inside
     private let middleContentViewWrapper: UIView = {
@@ -140,13 +145,15 @@ open class InputBarAccessoryView: UIView {
     }()
     
     /// The InputTextView a user can input a message in
-    open lazy var inputTextView: InputTextView = { [weak self] in
-        let inputTextView = InputTextView()
-        inputTextView.translatesAutoresizingMaskIntoConstraints = false
-        inputTextView.inputBarAccessoryView = self
-        return inputTextView
-    }()
-    
+    open var inputTextView: InputTextView {
+        get {
+            return middleContentView.inputTextView
+        }
+        set {
+            middleContentView.inputTextView = newValue
+        }
+    }
+
     /// A InputBarButtonItem used as the send button and initially placed in the rightStackView
     open var sendButton: InputBarSendButton = {
         return InputBarSendButton()
@@ -248,25 +255,25 @@ open class InputBarAccessoryView: UIView {
     /// The most recent calculation of the intrinsicContentSize
     private lazy var cachedIntrinsicContentSize: CGSize = calculateIntrinsicContentSize()
     
-    /// A boolean that indicates if the maxTextViewHeight has been met. Keeping track of this
+    /// A boolean that indicates if the maxMiddleContentViewHeight has been met. Keeping track of this
     /// improves the performance
-    public private(set) var isOverMaxTextViewHeight = false
+    public private(set) var isOverMaxMiddleContentViewHeight = false
     
-    /// A boolean that when set as `TRUE` will always enable the `InputTextView` to be anchored to the
-    /// height of `maxTextViewHeight`
-    /// The default value is `FALSE`
-    public private(set) var shouldForceTextViewMaxHeight = false
+    /// A boolean that when set as `true` will always enable the `middleContentView` to be anchored to the
+    /// height of `maxMiddleContentViewHeight`
+    /// The default value is false
+    public private(set) var shouldForceMiddleContentViewMaxHeight = false
     
-    /// A boolean that determines if the `maxTextViewHeight` should be maintained automatically.
+    /// A boolean that determines if the `maxMiddleContentViewHeight` should be maintained automatically.
     /// To control the maximum height of the view yourself, set this to `false`.
-    open var shouldAutoUpdateMaxTextViewHeight = true
+    open var shouldAutoUpdateMaxMiddleContentViewHeight = true
 
-    /// The maximum height that the InputTextView can reach.
-    /// This is set automatically when `shouldAutoUpdateMaxTextViewHeight` is true.
-    /// To control the height yourself, make sure to set `shouldAutoUpdateMaxTextViewHeight` to false.
-    open var maxTextViewHeight: CGFloat = 0 {
+    /// The maximum height that the `middleContentView` can reach.
+    /// This is set automatically when `shouldAutoUpdateMaxMiddleContentViewHeight` is true.
+    /// To control the height yourself, make sure to set `shouldAutoUpdateMaxMiddleContentViewHeight` to false.
+    open var maxMiddleContentViewHeight: CGFloat = 0 {
         didSet {
-            textViewHeightAnchor?.constant = maxTextViewHeight
+            middleContentViewHeightAnchor?.constant = maxMiddleContentViewHeight
         }
     }
     
@@ -274,12 +281,8 @@ open class InputBarAccessoryView: UIView {
     open var shouldManageSendButtonEnabledState = true
     
     /// The height that will fit the current text in the InputTextView based on its current bounds
-    public var requiredInputTextViewHeight: CGFloat {
-        guard middleContentView == inputTextView else {
-            return middleContentView?.intrinsicContentSize.height ?? 0
-        }
-        let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
-        return inputTextView.sizeThatFits(maxTextViewSize).height.rounded(.down)
+    public var requiredMiddleContentViewHeight: CGFloat {
+        return middleContentView.intrinsicContentSize.height
     }
     
     /// The fixed widthAnchor constant of the leftStackView
@@ -322,7 +325,7 @@ open class InputBarAccessoryView: UIView {
     // MARK: - Auto-Layout Constraint Sets
     
     private var middleContentViewLayoutSet: NSLayoutConstraintSet?
-    private var textViewHeightAnchor: NSLayoutConstraint?
+    private var middleContentViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
@@ -375,7 +378,6 @@ open class InputBarAccessoryView: UIView {
         setupSubviews()
         setupConstraints()
         setupObservers()
-        setupGestureRecognizers()
     }
     
     /// Adds the required notification observers
@@ -383,26 +385,6 @@ open class InputBarAccessoryView: UIView {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(InputBarAccessoryView.orientationDidChange),
                                                name: UIDevice.orientationDidChangeNotification, object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputBarAccessoryView.inputTextViewDidChange),
-                                               name: UITextView.textDidChangeNotification, object: inputTextView)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputBarAccessoryView.inputTextViewDidBeginEditing),
-                                               name: UITextView.textDidBeginEditingNotification, object: inputTextView)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(InputBarAccessoryView.inputTextViewDidEndEditing),
-                                               name: UITextView.textDidEndEditingNotification, object: inputTextView)
-    }
-    
-    /// Adds a UISwipeGestureRecognizer for each direction to the InputTextView
-    private func setupGestureRecognizers() {
-        let directions: [UISwipeGestureRecognizer.Direction] = [.left, .right]
-        for direction in directions {
-            let gesture = UISwipeGestureRecognizer(target: self,
-                                                   action: #selector(InputBarAccessoryView.didSwipeTextView(_:)))
-            gesture.direction = direction
-            inputTextView.addGestureRecognizer(gesture)
-        }
     }
     
     /// Adds all of the subviews
@@ -416,8 +398,8 @@ open class InputBarAccessoryView: UIView {
         contentView.addSubview(leftStackView)
         contentView.addSubview(rightStackView)
         contentView.addSubview(bottomStackView)
-        middleContentViewWrapper.addSubview(inputTextView)
-        middleContentView = inputTextView
+        middleContentViewWrapper.addSubview(middleContentView)
+
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
@@ -466,10 +448,10 @@ open class InputBarAccessoryView: UIView {
             right:  middleContentViewWrapper.rightAnchor.constraint(equalTo: rightStackView.leftAnchor, constant: -middleContentViewPadding.right)
         )
 
-        inputTextView.fillSuperview()
-        maxTextViewHeight = calculateMaxTextViewHeight()
-        textViewHeightAnchor = inputTextView.heightAnchor.constraint(equalToConstant: maxTextViewHeight)
-        
+        middleContentView.fillSuperview()
+        maxMiddleContentViewHeight = calculateMaxMiddleContentViewHeight()
+        middleContentViewHeightAnchor = middleContentView.heightAnchor.constraint(equalToConstant: maxMiddleContentViewHeight)
+
         leftStackViewLayoutSet = NSLayoutConstraintSet(
             top:    leftStackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
             bottom: leftStackView.bottomAnchor.constraint(equalTo: middleContentViewWrapper.bottomAnchor, constant: 0),
@@ -560,20 +542,20 @@ open class InputBarAccessoryView: UIView {
     /// - Returns: The required intrinsicContentSize
     open func calculateIntrinsicContentSize() -> CGSize {
         
-        var inputTextViewHeight = requiredInputTextViewHeight
-        if inputTextViewHeight >= maxTextViewHeight {
-            if !isOverMaxTextViewHeight {
-                textViewHeightAnchor?.isActive = true
-                inputTextView.isScrollEnabled = true
-                isOverMaxTextViewHeight = true
+        var middleContentViewHeight = requiredMiddleContentViewHeight
+        if middleContentViewHeight >= maxMiddleContentViewHeight {
+            if !isOverMaxMiddleContentViewHeight {
+                middleContentViewHeightAnchor?.isActive = true
+                isOverMaxMiddleContentViewHeight = true
+                middleContentView.isScrollEnabled = true
             }
-            inputTextViewHeight = maxTextViewHeight
+            middleContentViewHeight = maxMiddleContentViewHeight
         } else {
-            if isOverMaxTextViewHeight {
-                textViewHeightAnchor?.isActive = false || shouldForceTextViewMaxHeight
-                inputTextView.isScrollEnabled = false
-                isOverMaxTextViewHeight = false
-                inputTextView.invalidateIntrinsicContentSize()
+            if isOverMaxMiddleContentViewHeight {
+                middleContentViewHeightAnchor?.isActive = false || shouldForceMiddleContentViewMaxHeight
+                isOverMaxMiddleContentViewHeight = false
+                middleContentView.isScrollEnabled = false
+                middleContentView.invalidateIntrinsicContentSize()
             }
         }
         
@@ -582,7 +564,7 @@ open class InputBarAccessoryView: UIView {
         let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
         let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
-        let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
+        let requiredHeight = middleContentViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: UIView.noIntrinsicMetric, height: requiredHeight)
     }
 
@@ -601,10 +583,10 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Returns the max height the InputTextView can grow to based on the UIScreen
+    /// Returns the max height the `middleContentView` can grow to based on the UIScreen
     ///
     /// - Returns: Max Height
-    open func calculateMaxTextViewHeight() -> CGFloat {
+    open func calculateMaxMiddleContentViewHeight() -> CGFloat {
         if traitCollection.verticalSizeClass == .regular {
             return (UIScreen.main.bounds.height / 3).rounded(.down)
         }
@@ -678,17 +660,19 @@ open class InputBarAccessoryView: UIView {
 
     /// Removes the current `middleContentView` and assigns a new one.
     ///
-    /// WARNING: This will remove the `InputTextView`
+    /// WARNING: This will remove the `InputBarDefaultMiddleContentView.InputTextView` from the view hierarchy
     ///
     /// - Parameters:
     ///   - view: New view
     ///   - animated: If the layout should be animated
-    open func setMiddleContentView(_ view: UIView?, animated: Bool) {
-        middleContentView?.removeFromSuperview()
-        middleContentView = view
+    open func setMiddleContentView(_ view: InputBarMiddleContentView?, animated: Bool) {
+        middleContentView.removeFromSuperview()
         guard let view = view else { return }
+        middleContentView = view
         middleContentViewWrapper.addSubview(view)
         view.fillSuperview()
+        maxMiddleContentViewHeight = calculateMaxMiddleContentViewHeight()
+        middleContentViewHeightAnchor = middleContentView.heightAnchor.constraint(equalToConstant: maxMiddleContentViewHeight)
 
         performLayout(animated) { [weak self] in
             guard self?.superview != nil else { return }
@@ -793,15 +777,15 @@ open class InputBarAccessoryView: UIView {
         }
     }
     
-    /// Sets the `shouldForceTextViewMaxHeight` property
+    /// Sets the `shouldForceMiddleContentViewMaxHeight` property
     ///
     /// - Parameters:
     ///   - newValue: New boolean value
     ///   - animated: If the layout should be animated
-    open func setShouldForceMaxTextViewHeight(to newValue: Bool, animated: Bool) {
+    open func setShouldForceMiddleContentViewHeight(to newValue: Bool, animated: Bool) {
         performLayout(animated) {
-            self.shouldForceTextViewMaxHeight = newValue
-            self.textViewHeightAnchor?.isActive = newValue
+            self.shouldForceMiddleContentViewMaxHeight = newValue
+            self.middleContentViewHeightAnchor?.isActive = newValue
             guard self.superview?.superview != nil else { return }
             self.superview?.superview?.layoutIfNeeded()
         }
@@ -813,8 +797,8 @@ open class InputBarAccessoryView: UIView {
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         if traitCollection.verticalSizeClass != previousTraitCollection?.verticalSizeClass || traitCollection.horizontalSizeClass != previousTraitCollection?.horizontalSizeClass {
-            if shouldAutoUpdateMaxTextViewHeight {
-                maxTextViewHeight = calculateMaxTextViewHeight()
+            if shouldAutoUpdateMaxMiddleContentViewHeight {
+                maxMiddleContentViewHeight = calculateMaxMiddleContentViewHeight()
             } else {
                 invalidateIntrinsicContentSize()
             }
@@ -824,54 +808,12 @@ open class InputBarAccessoryView: UIView {
     /// Invalidates the intrinsicContentSize
     @objc
     open func orientationDidChange() {
-        if shouldAutoUpdateMaxTextViewHeight {
-            maxTextViewHeight = calculateMaxTextViewHeight()
+        if shouldAutoUpdateMaxMiddleContentViewHeight {
+            maxMiddleContentViewHeight = calculateMaxMiddleContentViewHeight()
         }
         invalidateIntrinsicContentSize()
     }
 
-    /// Enables/Disables the sendButton based on the InputTextView's text being empty
-    /// Calls each items `textViewDidChangeAction` method
-    /// Calls the delegates `textViewTextDidChangeTo` method
-    /// Invalidates the intrinsicContentSize
-    @objc
-    open func inputTextViewDidChange() {
-        
-        let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        if shouldManageSendButtonEnabledState {
-            var isEnabled = !trimmedText.isEmpty
-            if !isEnabled {
-                // The images property is more resource intensive so only use it if needed
-                isEnabled = inputTextView.images.count > 0
-            }
-            sendButton.isEnabled = isEnabled
-        }
-        
-        // Capture change before iterating over the InputItem's
-        let shouldInvalidateIntrinsicContentSize = requiredInputTextViewHeight != inputTextView.bounds.height
-        
-        items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
-        delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
-        
-        if shouldInvalidateIntrinsicContentSize {
-            // Prevent un-needed content size invalidation
-            invalidateIntrinsicContentSize()
-        }
-    }
-    
-    /// Calls each items `keyboardEditingBeginsAction` method
-    @objc
-    open func inputTextViewDidBeginEditing() {
-        items.forEach { $0.keyboardEditingBeginsAction() }
-    }
-    
-    /// Calls each items `keyboardEditingEndsAction` method
-    @objc
-    open func inputTextViewDidEndEditing() {
-        items.forEach { $0.keyboardEditingEndsAction() }
-    }
-    
     // MARK: - Plugins
     
     /// Reloads each of the plugins
@@ -885,19 +827,51 @@ open class InputBarAccessoryView: UIView {
     }
     
     // MARK: - User Actions
-    
-    /// Calls each items `keyboardSwipeGestureAction` method
-    /// Calls the delegates `didSwipeTextViewWith` method
-    @objc
-    open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
-        items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
-        delegate?.inputBar(self, didSwipeTextViewWith: gesture)
-    }
-    
+
     /// Calls the delegates `didPressSendButtonWith` method
     /// Assumes that the InputTextView's text has been set to empty and calls `inputTextViewDidChange()`
     /// Invalidates each of the InputPlugins
     open func didSelectSendButton() {
         delegate?.inputBar(self, didPressSendButtonWith: inputTextView.text)
+    }
+}
+
+// MARK: - InputBarMiddleContentViewDelegate
+
+extension InputBarAccessoryView: InputBarMiddleContentViewDelegate {
+    /// Enables/Disables the sendButton based on the InputTextView's text being empty
+    /// Calls each items `textViewDidChangeAction` method
+    /// Calls the delegates `textViewTextDidChangeTo` method
+    /// Invalidates the intrinsicContentSize
+    open func inputTextViewDidChange() {
+        if shouldManageSendButtonEnabledState {
+            sendButton.isEnabled = middleContentView.canSend
+        }
+        
+        // Capture change before iterating over the InputItem's
+        let shouldInvalidateIntrinsicContentSize = requiredMiddleContentViewHeight != middleContentView.bounds.height
+
+        items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
+        delegate?.inputBar(self, textViewTextDidChangeTo: inputTextView.text)
+
+        if shouldInvalidateIntrinsicContentSize {
+            // Prevent un-needed content size invalidation
+            invalidateIntrinsicContentSize()
+        }
+    }
+    
+    /// Calls each items `keyboardEditingBeginsAction` method
+    open func inputTextViewDidBeginEditing() {
+        items.forEach { $0.keyboardEditingBeginsAction() }
+    }
+    
+    /// Calls each items `keyboardEditingEndsAction` method
+    open func inputTextViewDidEndEditing() {
+        items.forEach { $0.keyboardEditingEndsAction() }
+    }
+
+    open func didSwipeTextView(_ gesture: UISwipeGestureRecognizer) {
+        items.forEach { $0.keyboardSwipeGestureAction(with: gesture) }
+        delegate?.inputBar(self, didSwipeTextViewWith: gesture)
     }
 }

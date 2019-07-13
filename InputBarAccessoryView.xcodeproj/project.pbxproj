@@ -42,6 +42,7 @@
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
 		38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */; };
+		8883235322D965A9008861FE /* InputBarMiddleContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8883235222D965A9008861FE /* InputBarMiddleContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -83,6 +84,7 @@
 		38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteSession.swift; sourceTree = "<group>"; };
 		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
 		38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InputBarAccessoryView+Availability.swift"; sourceTree = "<group>"; };
+		8883235222D965A9008861FE /* InputBarMiddleContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarMiddleContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				38C8677B1F50A6AD00811974 /* InputBarButtonItem.swift */,
+				8883235222D965A9008861FE /* InputBarMiddleContentView.swift */,
 				38570137218651C400589A30 /* InputBarSendButton.swift */,
 			);
 			path = Controls;
@@ -405,6 +408,7 @@
 				381042231F85FD1300B1E61A /* SeparatorLine.swift in Sources */,
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,
 				3821ADD920F5315400DE0D1D /* KeyboardNotification.swift in Sources */,
+				8883235322D965A9008861FE /* InputBarMiddleContentView.swift in Sources */,
 				38C501242148C76900246686 /* NSNotification+Extensions.swift in Sources */,
 				3876DA911F83530900C89326 /* AutocompleteManagerDelegate.swift in Sources */,
 				3821ADDA20F5315400DE0D1D /* KeyboardManager.swift in Sources */,
