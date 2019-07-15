@@ -124,13 +124,15 @@ open class InputBarAccessoryView: UIView {
      The main view component of the InputBarAccessoryView
 
      The default value is the `InputTextView`.
+     You should subclasss to override this if you are going to use a custom one,
+     this will avoid the unecessary creation of the default one.
 
      ## Important Notes ##
      1. This view should self-size with constraints or an
         intrinsicContentSize to auto-size the InputBarAccessoryView
      2. Override with `setMiddleContentView(view: UIView?, animated: Bool)`
      */
-    public private(set) lazy var middleContentView: InputBarMiddleContentView = {
+    open private(set) lazy var middleContentView: InputBarMiddleContentView = {
         let view = InputBarDefaultMiddleContentView()
         view.inputTextView.inputBarAccessoryView = self
         view.delegate = self
@@ -669,6 +671,7 @@ open class InputBarAccessoryView: UIView {
         middleContentView.removeFromSuperview()
         guard let view = view else { return }
         middleContentView = view
+        middleContentView.delegate = self
         middleContentViewWrapper.addSubview(view)
         view.fillSuperview()
         maxMiddleContentViewHeight = calculateMaxMiddleContentViewHeight()
