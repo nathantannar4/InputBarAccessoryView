@@ -93,6 +93,13 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// Default value is `TRUE`
     open var deleteCompletionByParts = true
     
+    /// When enabled, text input immediately before a tag will not break the link
+    /// This means a space before "@Nathan Tannar" will result in " @Nathan Tanner" without breaking the link
+    /// When disabled a space before "@Nathan Tanner" will result in " @Nathan Tanner" but it loses the link
+    ///
+    /// Default value is `FALSE`
+    open var allowEditsBeforeTag = false
+
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedString.Key: Any] =
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
@@ -447,8 +454,17 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             }
         } else if range.length >= 0, range.location < totalRange.length {
             
+            // Inserting text before a tag when the tag is at the start of the string
+            guard !(allowEditsBeforeTag && range.location == 0) else { return true }
+
             // Inserting text in the middle of an autocompleted string
-            let attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: range)
+            let attributes: [NSAttributedString.Key : Any]
+            if allowEditsBeforeTag && range.location > 0 {
+                attributes = textView.attributedText.attributes(at: range.location-1, longestEffectiveRange: nil, in: NSMakeRange(range.location-1, range.length))
+            } else {
+                attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: NSMakeRange(range.location, range.length))
+            }
+
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             if isAutocompleted {
                 textView.attributedText.enumerateAttribute(.autocompleted, in: totalRange, options: .reverse) { _, subrange, stop in
