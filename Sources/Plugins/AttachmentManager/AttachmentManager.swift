@@ -121,6 +121,12 @@ open class AttachmentManager: NSObject, InputPlugin {
         })
     }
     
+    /// Performs an animated removal of all attachments
+    open func removeAllAttachments() {
+        self.attachments.removeAll()
+        self.reloadData()
+    }
+    
     /// Performs an animated removal of an attachment at an index
     ///
     /// - Parameter index: The index to remove the attachment at
