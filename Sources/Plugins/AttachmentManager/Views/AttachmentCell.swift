@@ -31,7 +31,7 @@ open class AttachmentCell: UICollectionViewCell {
     
     // MARK: - Properties
     
-    class var reuseIdentifier: String {
+    public class var reuseIdentifier: String {
         return "AttachmentCell"
     }
     
