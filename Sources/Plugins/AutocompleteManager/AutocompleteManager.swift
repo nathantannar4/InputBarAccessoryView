@@ -92,7 +92,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     ///
     /// Default value is `TRUE`
     open var deleteCompletionByParts = true
-
+    
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedString.Key: Any] =
         [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
