@@ -451,12 +451,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             guard range.location != 0 else { return true }
 
             // Inserting text in the middle of an autocompleted string
-            let attributes: [NSAttributedString.Key : Any]
-            if range.location > 0 {
-                attributes = textView.attributedText.attributes(at: range.location-1, longestEffectiveRange: nil, in: NSMakeRange(range.location-1, range.length))
-            } else {
-                attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: NSMakeRange(range.location, range.length))
-            }
+            let attributes = textView.attributedText.attributes(at: range.location-1, longestEffectiveRange: nil, in: NSMakeRange(range.location-1, range.length))
 
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             if isAutocompleted {
