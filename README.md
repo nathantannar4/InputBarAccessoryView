@@ -70,6 +70,8 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+- 4.3.2
+    - Fixed a bug where editing immediately before a tag prefix would break the tag
 - 4.3.1
     - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
 - 4.3.0
