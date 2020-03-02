@@ -35,7 +35,7 @@ import UIKit
  1. Changing the font, textAlignment or textContainerInset automatically performs the same modifications to the placeholderLabel
  2. Intended to be used in an `InputBarAccessoryView`
  3. Default placeholder text is "Aa"
- 4. Will pass a pasted image it's `InputBarAccessoryView`'s `InputPlugin`s
+ 4. Can store pasted images as NSTextAttachment or invoke each `InputBarAccessoryView`'s `InputPlugin`s to handle
  */
 open class InputTextView: UITextView {
     
@@ -62,6 +62,7 @@ open class InputTextView: UITextView {
         return parseForComponents()
     }
     
+    // store pasted images as NSTextAttachments (otherwise, each InputPlugin has a chance to handleInput(:))
     open var isImagePasteEnabled: Bool = true
 
     /// A UILabel that holds the InputTextView's placeholder text
@@ -232,25 +233,28 @@ open class InputTextView: UITextView {
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
         
         if action == NSSelectorFromString("paste:") && UIPasteboard.general.image != nil {
-            return isImagePasteEnabled
+            if isImagePasteEnabled || (inputBarAccessoryView?.inputPlugins.count ?? 0) > 0 {
+                return true
+            }
         }
         return super.canPerformAction(action, withSender: sender)
     }
     
     open override func paste(_ sender: Any?) {
         
-        guard let image = UIPasteboard.general.image else {
-            return super.paste(sender)
-        }
-        if isImagePasteEnabled {
-            pasteImageInTextContainer(with: image)
-        } else {
-            for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
-                if plugin.handleInput(of: image) {
-                    return
+        if let image = UIPasteboard.general.image {
+            if isImagePasteEnabled {
+                pasteImageInTextContainer(with: image)
+                return
+            } else {
+                for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
+                    if plugin.handleInput(of: image) {
+                        return
+                    }
                 }
             }
         }
+        return super.paste(sender)
     }
     
     /// Addes a new UIImage to the NSTextContainer as an NSTextAttachment
