@@ -62,7 +62,11 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         let tableView = AutocompleteTableView()
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+        if #available(iOS 13, *) {
+            tableView.backgroundColor = .systemBackground
+        } else {
+            tableView.backgroundColor = .white
+        }
         tableView.rowHeight = 44
         tableView.delegate = self
         tableView.dataSource = self
@@ -94,8 +98,15 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     open var deleteCompletionByParts = true
     
     /// The default text attributes
-    open var defaultTextAttributes: [NSAttributedString.Key: Any] =
-        [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
+    open var defaultTextAttributes: [NSAttributedString.Key: Any] = {
+        var foregroundColor: UIColor
+        if #available(iOS 13, *) {
+            foregroundColor = .label
+        } else {
+            foregroundColor = .black
+        }
+        return [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: foregroundColor]
+    }()
     
     /// The NSAttributedString.Key.paragraphStyle value applied to attributed strings
     public let paragraphStyle: NSMutableParagraphStyle = {

@@ -72,7 +72,11 @@ open class AttachmentCollectionView: UICollectionView {
     
     private func setup() {
         
-        backgroundColor = .white
+        if #available(iOS 13, *) {
+            backgroundColor = .systemBackground
+        } else {
+            backgroundColor = .white
+        }
         alwaysBounceHorizontal = true
         showsHorizontalScrollIndicator = true
         setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)

@@ -40,11 +40,7 @@ open class InputBarAccessoryView: UIView {
     open var backgroundView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        if #available(iOS 13, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        view.backgroundColor = InputBarAccessoryView.defaultBackgroundColor
         return view
     }()
     
@@ -81,7 +77,7 @@ open class InputBarAccessoryView: UIView {
                 blurView.fillSuperview()
             }
             blurView.isHidden = !isTranslucent
-            let color: UIColor = backgroundView.backgroundColor ?? .white
+            let color: UIColor = backgroundView.backgroundColor ?? InputBarAccessoryView.defaultBackgroundColor
             backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color
         }
     }
@@ -144,6 +140,14 @@ open class InputBarAccessoryView: UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+
+    private static let defaultBackgroundColor: UIColor = {
+        if #available(iOS 13, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
     }()
     
     /// The InputTextView a user can input a message in
@@ -377,7 +381,7 @@ open class InputBarAccessoryView: UIView {
     /// Sets up the default properties
     open func setup() {
 
-        backgroundColor = .white
+        backgroundColor = InputBarAccessoryView.defaultBackgroundColor
         autoresizingMask = [.flexibleHeight]
         setupSubviews()
         setupConstraints()
