@@ -444,26 +444,16 @@ open class InputBarAccessoryView: UIView {
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -padding.top),
-            left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left + frameInsets.left),
-            right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -(topStackViewPadding.right + frameInsets.right))
+            left:   topStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: topStackViewPadding.left + frameInsets.left),
+            right:  topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(topStackViewPadding.right + frameInsets.right))
         )
         
         contentViewLayoutSet = NSLayoutConstraintSet(
             top:    contentView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-            left:   contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left + frameInsets.left),
-            right:  contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -(padding.right + frameInsets.right))
+            bottom: contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom),
+            left:   contentView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left + frameInsets.left),
+            right:  contentView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(padding.right + frameInsets.right))
         )
-        
-        if #available(iOS 11.0, *) {
-            // Switch to safeAreaLayoutGuide
-            contentViewLayoutSet?.bottom = contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
-            contentViewLayoutSet?.left = contentView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left + frameInsets.left)
-            contentViewLayoutSet?.right = contentView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(padding.right + frameInsets.right))
-            
-            topStackViewLayoutSet?.left = topStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: topStackViewPadding.left + frameInsets.left)
-            topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(topStackViewPadding.right + frameInsets.right))
-        }
 
         // Constraints Within the contentView
         middleContentViewLayoutSet = NSLayoutConstraintSet(
@@ -504,16 +494,14 @@ open class InputBarAccessoryView: UIView {
     ///
     /// - Parameter window: The window to anchor to
     private func setupConstraints(to window: UIWindow?) {
-        if #available(iOS 11.0, *) {
-            if let window = window {
-                guard window.safeAreaInsets.bottom > 0 else { return }
-                windowAnchor?.isActive = false
-                windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-                windowAnchor?.constant = -padding.bottom
-                windowAnchor?.priority = UILayoutPriority(rawValue: 750)
-                windowAnchor?.isActive = true
-                backgroundViewLayoutSet?.bottom?.constant = window.safeAreaInsets.bottom
-            }
+        if let window = window {
+            guard window.safeAreaInsets.bottom > 0 else { return }
+            windowAnchor?.isActive = false
+            windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+            windowAnchor?.constant = -padding.bottom
+            windowAnchor?.priority = UILayoutPriority(rawValue: 750)
+            windowAnchor?.isActive = true
+            backgroundViewLayoutSet?.bottom?.constant = window.safeAreaInsets.bottom
         }
     }
     

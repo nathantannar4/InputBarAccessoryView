@@ -55,12 +55,13 @@ extension AutocompleteManager {
     public var isCaseSensitive: Bool {
         get { return false }
         set {
-            if isCaseSensitive {
+            if newValue {
                 filterBlock = { session, completion in
                     completion.text.contains(session.filter)
                 }
             } else {
-                filterBlock = { session, completion in completion.text.lowercased().contains(session.filter.lowercased())
+                filterBlock = { session, completion in
+                    completion.text.lowercased().contains(session.filter.lowercased())
                 }
             }
         }
