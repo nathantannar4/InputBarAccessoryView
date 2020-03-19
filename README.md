@@ -72,6 +72,8 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+- 4.4.0
+    - Drop iOS 9 and iOS 10
 - 4.3.2
     - Fixed a bug where editing immediately before a tag prefix would break the tag
 - 4.3.1
