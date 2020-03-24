@@ -55,7 +55,7 @@ extension AutocompleteManager {
     public var isCaseSensitive: Bool {
         get { return false }
         set {
-            if isCaseSensitive {
+            if newValue {
                 filterBlock = { session, completion in
                     completion.text.contains(session.filter)
                 }
