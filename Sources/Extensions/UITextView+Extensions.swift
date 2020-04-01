@@ -43,6 +43,8 @@ internal extension UITextView {
         let wordRange = prefixStartIndex..<cursorRange.upperBound
         let word = leadingText[wordRange]
         
+        guard word.rangeOfCharacter(from: delimiterSet) == nil else { return nil }
+        
         let location = wordRange.lowerBound.utf16Offset(in: leadingText)
         let length = wordRange.upperBound.utf16Offset(in: word) - location
         let range = NSRange(location: location, length: length)
