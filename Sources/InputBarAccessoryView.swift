@@ -494,15 +494,13 @@ open class InputBarAccessoryView: UIView {
     ///
     /// - Parameter window: The window to anchor to
     private func setupConstraints(to window: UIWindow?) {
-        if let window = window {
-            guard window.safeAreaInsets.bottom > 0 else { return }
-            windowAnchor?.isActive = false
-            windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-            windowAnchor?.constant = -padding.bottom
-            windowAnchor?.priority = UILayoutPriority(rawValue: 750)
-            windowAnchor?.isActive = true
-            backgroundViewLayoutSet?.bottom?.constant = window.safeAreaInsets.bottom
-        }
+        guard let window = window, window.safeAreaInsets.bottom > 0 else { return }
+        windowAnchor?.isActive = false
+        windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+        windowAnchor?.constant = -padding.bottom
+        windowAnchor?.priority = UILayoutPriority(rawValue: 750)
+        windowAnchor?.isActive = true
+        backgroundViewLayoutSet?.bottom?.constant = window.safeAreaInsets.bottom
     }
     
     // MARK: - Constraint Layout Updates

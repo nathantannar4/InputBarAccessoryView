@@ -41,6 +41,8 @@ github "nathantannar4/InputBarAccessoryView" "4.2.2"
 iOS 11.0+
 Swift 5.0
 
+> The latest iOS 9 + iOS 10 release is v4.3.2 
+
 > The latest Swift 4.2 release is v4.2.2 
 
 ### Documentation
