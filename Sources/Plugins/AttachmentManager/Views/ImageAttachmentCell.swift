@@ -31,7 +31,7 @@ open class ImageAttachmentCell: AttachmentCell {
     
     // MARK: - Properties
     
-    override class var reuseIdentifier: String {
+    override public class var reuseIdentifier: String {
         return "ImageAttachmentCell"
     }
     
