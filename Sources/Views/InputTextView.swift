@@ -243,7 +243,6 @@ open class InputTextView: UITextView {
             return super.paste(sender)
         }
         for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
-            
             if plugin.handleInput(of: image) {
                 return
             }
