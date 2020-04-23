@@ -28,17 +28,11 @@ public extension UITextView {
         guard let cursorRange = Range(caretRange, in: text) else { return nil }
         
         let leadingText = text[..<cursorRange.upperBound]
-        var prefixStartIndex: String.Index!
-        for (i, char) in prefix.enumerated() {
-            guard let index = leadingText.lastIndex(of: char) else { return nil }
-            if i == 0 {
-                prefixStartIndex = index
-            } else if index.utf16Offset(in: leadingText) == prefixStartIndex.utf16Offset(in: leadingText) + 1 {
-                prefixStartIndex = index
-            } else {
-                return nil
-            }
-        }
+        guard let prefixStartIndex = text.range(
+          of: prefix,
+          options: [.backwards],
+          range: text.startIndex..<cursorRange.upperBound
+        )?.lowerBound else { return nil}
 
         let wordRange = prefixStartIndex..<cursorRange.upperBound
         let word = leadingText[wordRange]
