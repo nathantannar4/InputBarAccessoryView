@@ -16,6 +16,10 @@
 - [x] Compatible with all iPhones and iPads
 - [x] RTL Support
 
+### Installation via Swift Package Manager (SPM)
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+
 ### Installation via CocoaPods
 
 ```ruby
