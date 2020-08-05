@@ -693,6 +693,13 @@ open class InputBarAccessoryView: UIView {
     /// Removes all of the arranged subviews from the InputStackView and adds the given items.
     /// Sets the inputBarAccessoryView property of the InputBarButtonItem
     ///
+    /// Note: If you call `animated = true`, the `items` property of the stack view items will not be updated until the 
+    /// views are done being animated. If you perform a check for the items after they're set, setting animated to `false`
+    /// will apply the body of the closure immediately.
+    ///
+    /// The send button is attached to `rightStackView` so remember to remove it if you're setting it to a different
+    /// stack.
+    ///
     /// - Parameters:
     ///   - items: New InputStackView arranged views
     ///   - position: The targeted InputStackView
