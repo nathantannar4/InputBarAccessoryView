@@ -239,18 +239,15 @@ open class InputTextView: UITextView {
     
     open override func paste(_ sender: Any?) {
         
-        guard let image = UIPasteboard.general.image else {
+        guard isImagePasteEnabled, let image = UIPasteboard.general.image else {
             return super.paste(sender)
         }
-        if isImagePasteEnabled {
-            pasteImageInTextContainer(with: image)
-        } else {
-            for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
-                if plugin.handleInput(of: image) {
-                    return
-                }
+        for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
+            if plugin.handleInput(of: image) {
+                return
             }
         }
+        pasteImageInTextContainer(with: image)
     }
     
     /// Addes a new UIImage to the NSTextContainer as an NSTextAttachment
