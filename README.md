@@ -23,6 +23,14 @@
 ### Installation via Swift Package Manager (SPM)
 
 The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+Once you have your Swift package set up, adding InputBarAccessoryView as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
+```
+dependencies: [
+    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "4.5.0"))
+]
+```
+You can also add it via XCode SPM editor with URL `https://github.com/nathantannar4/InputBarAccessoryView.git`
 
 ### Installation via CocoaPods
 
@@ -49,7 +57,7 @@ github "nathantannar4/InputBarAccessoryView" "4.2.2"
 iOS 11.0+
 Swift 5.0
 
-> The latest iOS 9 + iOS 10 release is v4.3.2 
+> The latest iOS 9 + iOS 10 release is v4.3.3
 
 > The latest Swift 4.2 release is v4.2.2 
 
@@ -82,7 +90,7 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
-- 4.4.0
+- master
     - Drop iOS 9 and iOS 10
 - 4.3.3
     - Added support for Swift Package Manager (SPM)
