@@ -30,7 +30,11 @@ dependencies: [
     .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "4.5.0"))
 ]
 ```
-You can also add it via XCode SPM editor with URL `https://github.com/nathantannar4/InputBarAccessoryView.git`
+You can also add it via XCode SPM editor with URL:
+```
+https://github.com/nathantannar4/InputBarAccessoryView.git
+```
+To make `RxSwift`/`RxCocoa` extensions work you need to explicitly import `Rx` dependencies.
 
 ### Installation via CocoaPods
 
@@ -90,8 +94,12 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
-- master
-    - Drop iOS 9 and iOS 10
+- 5.0.0
+    - Drop support for iOS 9 and iOS 10 #117
+    - Remove `RxSwift`/`RxCocoa`  from SPM #128
+    - Fix image paste logic #126
+    - Fixed Getting started preview and hashtag typo #93
+    - Update documentation for setStackViewItems #82
 - 4.3.3
     - Added support for Swift Package Manager (SPM)
     - Made `reuseIdentifier` public accessible
@@ -102,23 +110,8 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
     - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
 - 4.3.0
     - Swift 5 support
-- 4.2.2
-    - Fixed image paste orientation issue in `InputTextView`
-- 4.2.1
-    - Fixed autocompletes of completions that contain spaces
-    - Depricated `isCaseSensitive` in favor of a function asignment to pre-process autocompletions
-- 4.2.0
-    - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
-- 4.1.2
-        - Add `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 
-- 4.1.1
-        - Add `frameInsets: HorizontalEdgePadding` property to `InputBarAccessoryView` to inset the view to be compatible with `UISplitViewController` or other custom containers where the view should not be the full width
-- 4.1.0
-        - Fix issue where setting long strings in `viewDidLoad` broke inital layout, Issue #41
-        - Add `deleteCompletionByParts: Bool` flag to `AutocompleteManager` to allow for partial deletions of autocompletes rather than just the entire substring. 
-        - Add `InputBarSendButton` to use as the `sendButton` in `InputBarAccessoryView`. This subclass of `InputBarButtonItem` has a `UIActivityIndicatorView` to show a spinner when making HTTP requests
-
-### [CHANGELOG](./CHANGELOG.md)
+    
+See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
 **Find a bug? Open an issue!**
 
