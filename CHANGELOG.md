@@ -1,5 +1,10 @@
 #  Changelog
-
+- 5.0.0
+    - Drop support for iOS 9 and iOS 10
+    - Remove `RxSwift`/`RxCocoa`  from SPM
+    - Fix image paste logic
+    - Fixed Getting started preview and hashtag typo
+    - Update documentation for setStackViewItems
 - 4.3.3
     - Add support for Swift Package Manager (SPM)
     - Make `reuseIdentifier` public accessible
