@@ -20,6 +20,10 @@
 
 <a href="https://tracking.gitads.io/?repo=InputBarAccessoryView"><img src="https://images.gitads.io/InputBarAccessoryView" alt="GitAds"/></a>
 
+### Installation via Swift Package Manager (SPM)
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+
 ### Installation via CocoaPods
 
 ```ruby
