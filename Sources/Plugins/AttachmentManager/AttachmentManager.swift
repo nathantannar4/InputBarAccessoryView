@@ -123,8 +123,13 @@ open class AttachmentManager: NSObject, InputPlugin {
     
     /// Performs an animated removal of all attachments
     open func removeAllAttachments() {
+        let attachments = self.attachments
         self.attachments.removeAll()
         self.reloadData()
+        for i in 0..<attachments.count {
+            self.delegate?.attachmentManager(self, didRemove: attachments[i], at: i)
+        }
+        self.delegate?.attachmentManager(self, shouldBecomeVisible: self.isPersistent)
     }
     
     /// Performs an animated removal of an attachment at an index
