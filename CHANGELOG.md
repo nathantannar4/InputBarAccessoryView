@@ -1,5 +1,18 @@
 #  Changelog
-
+- 5.0.0
+    - Drop support for iOS 9 and iOS 10
+    - Remove `RxSwift`/`RxCocoa`  from SPM
+    - Fix image paste logic
+    - Fixed Getting started preview and hashtag typo
+    - Update documentation for setStackViewItems
+- 4.3.3
+    - Add support for Swift Package Manager (SPM)
+    - Make `reuseIdentifier` public accessible
+    - Fix warnings
+- 4.3.2
+    - Fixed a bug where editing immediately before a tag prefix would break the tag
+- 4.3.1
+    - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
 - 4.3.0
     - Swift 5 support
     - Fixes accessibility of HorizontalEdgePadding initializers and a typo in its filename

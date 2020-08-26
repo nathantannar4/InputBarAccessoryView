@@ -2,7 +2,7 @@
 //  InputBarAccessoryView.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -448,26 +448,16 @@ open class InputBarAccessoryView: UIView {
         topStackViewLayoutSet = NSLayoutConstraintSet(
             top:    topStackView.topAnchor.constraint(equalTo: topAnchor, constant: topStackViewPadding.top),
             bottom: topStackView.bottomAnchor.constraint(equalTo: contentView.topAnchor, constant: -padding.top),
-            left:   topStackView.leftAnchor.constraint(equalTo: leftAnchor, constant: topStackViewPadding.left + frameInsets.left),
-            right:  topStackView.rightAnchor.constraint(equalTo: rightAnchor, constant: -(topStackViewPadding.right + frameInsets.right))
+            left:   topStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: topStackViewPadding.left + frameInsets.left),
+            right:  topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(topStackViewPadding.right + frameInsets.right))
         )
         
         contentViewLayoutSet = NSLayoutConstraintSet(
             top:    contentView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: padding.top),
-            bottom: contentView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom),
-            left:   contentView.leftAnchor.constraint(equalTo: leftAnchor, constant: padding.left + frameInsets.left),
-            right:  contentView.rightAnchor.constraint(equalTo: rightAnchor, constant: -(padding.right + frameInsets.right))
+            bottom: contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom),
+            left:   contentView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left + frameInsets.left),
+            right:  contentView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(padding.right + frameInsets.right))
         )
-        
-        if #available(iOS 11.0, *) {
-            // Switch to safeAreaLayoutGuide
-            contentViewLayoutSet?.bottom = contentView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -padding.bottom)
-            contentViewLayoutSet?.left = contentView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: padding.left + frameInsets.left)
-            contentViewLayoutSet?.right = contentView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(padding.right + frameInsets.right))
-            
-            topStackViewLayoutSet?.left = topStackView.leftAnchor.constraint(equalTo: safeAreaLayoutGuide.leftAnchor, constant: topStackViewPadding.left + frameInsets.left)
-            topStackViewLayoutSet?.right = topStackView.rightAnchor.constraint(equalTo: safeAreaLayoutGuide.rightAnchor, constant: -(topStackViewPadding.right + frameInsets.right))
-        }
 
         // Constraints Within the contentView
         middleContentViewLayoutSet = NSLayoutConstraintSet(
@@ -508,17 +498,13 @@ open class InputBarAccessoryView: UIView {
     ///
     /// - Parameter window: The window to anchor to
     private func setupConstraints(to window: UIWindow?) {
-        if #available(iOS 11.0, *) {
-            if let window = window {
-                guard window.safeAreaInsets.bottom > 0 else { return }
-                windowAnchor?.isActive = false
-                windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
-                windowAnchor?.constant = -padding.bottom
-                windowAnchor?.priority = UILayoutPriority(rawValue: 750)
-                windowAnchor?.isActive = true
-                backgroundViewLayoutSet?.bottom?.constant = window.safeAreaInsets.bottom
-            }
-        }
+        guard let window = window, window.safeAreaInsets.bottom > 0 else { return }
+        windowAnchor?.isActive = false
+        windowAnchor = contentView.bottomAnchor.constraint(lessThanOrEqualToSystemSpacingBelow: window.safeAreaLayoutGuide.bottomAnchor, multiplier: 1)
+        windowAnchor?.constant = -padding.bottom
+        windowAnchor?.priority = UILayoutPriority(rawValue: 750)
+        windowAnchor?.isActive = true
+        backgroundViewLayoutSet?.bottom?.constant = window.safeAreaInsets.bottom
     }
     
     // MARK: - Constraint Layout Updates
@@ -710,6 +696,13 @@ open class InputBarAccessoryView: UIView {
     
     /// Removes all of the arranged subviews from the InputStackView and adds the given items.
     /// Sets the inputBarAccessoryView property of the InputBarButtonItem
+    ///
+    /// Note: If you call `animated = true`, the `items` property of the stack view items will not be updated until the 
+    /// views are done being animated. If you perform a check for the items after they're set, setting animated to `false`
+    /// will apply the body of the closure immediately.
+    ///
+    /// The send button is attached to `rightStackView` so remember to remove it if you're setting it to a different
+    /// stack.
     ///
     /// - Parameters:
     ///   - items: New InputStackView arranged views

@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
 
     # 1 - Specs
     s.platform = :ios
-    s.ios.deployment_target = '9.0'
+    s.ios.deployment_target = '11.0'
     s.name = 'InputBarAccessoryView'
     s.summary = "Make powerful and flexible InputAccessoryView's with ease"
     s.description  = "Featuring reactive changes, autocomplete, image paste support and so much more."
@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
     s.swift_versions = '5.0'
 
     # 2 - Version
-    s.version = "4.3.2"
+    s.version = "5.0.0"
 
     # 3 - License
     s.license = { :type => "MIT", :file => "LICENSE" }
