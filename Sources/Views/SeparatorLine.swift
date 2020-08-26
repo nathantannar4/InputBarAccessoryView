@@ -66,7 +66,7 @@ open class SeparatorLine: UIView {
     /// Sets up the default properties
     open func setup() {
         if #available(iOS 13, *) {
-            backgroundColor = .systemGray
+            backgroundColor = .systemGray2
         } else {
             backgroundColor = .lightGray
         }

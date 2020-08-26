@@ -68,7 +68,11 @@ open class InputTextView: UITextView {
     public let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = .lightGray
+        if #available(iOS 13, *) {
+            label.textColor = .systemGray2
+        } else {
+            label.textColor = .lightGray
+        }
         label.text = "Aa"
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -268,9 +272,15 @@ open class InputTextView: UITextView {
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
         // The attributes that should be applied to the new NSAttributedString to match the current attributes
+        let defaultTextColor: UIColor
+        if #available(iOS 13, *) {
+            defaultTextColor = .label
+        } else {
+            defaultTextColor = .black
+        }
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font: font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedString.Key.foregroundColor: textColor ?? .black
+            NSAttributedString.Key.foregroundColor: textColor ?? defaultTextColor
         ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         
