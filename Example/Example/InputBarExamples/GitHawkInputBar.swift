@@ -9,7 +9,7 @@
 import UIKit
 import InputBarAccessoryView
 
-class GitHawkInputBar: InputBarAccessoryView {
+final class GitHawkInputBar: InputBarAccessoryView {
     
     private let githawkImages: [UIImage] = [#imageLiteral(resourceName: "ic_eye"), #imageLiteral(resourceName: "ic_bold"), #imageLiteral(resourceName: "ic_italic"), #imageLiteral(resourceName: "ic_at"), #imageLiteral(resourceName: "ic_list"), #imageLiteral(resourceName: "ic_code"), #imageLiteral(resourceName: "ic_link"), #imageLiteral(resourceName: "ic_hashtag"), #imageLiteral(resourceName: "ic_upload")]
     
