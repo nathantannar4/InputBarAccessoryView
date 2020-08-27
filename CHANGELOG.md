@@ -1,7 +1,8 @@
 #  Changelog
-- 5.x.x
+- 5.1.0
     - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
     - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
+    - Added support for Dark Mode on iOS 13+
 - 5.0.0
     - Drop support for iOS 9 and iOS 10
     - Remove `RxSwift`/`RxCocoa`  from SPM

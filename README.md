@@ -94,22 +94,20 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+- 5.1.0
+    - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
+    - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
+    - Added support for Dark Mode on iOS 13+
 - 5.0.0
-    - Drop support for iOS 9 and iOS 10 #117
-    - Remove `RxSwift`/`RxCocoa`  from SPM #128
-    - Fix image paste logic #126
-    - Fixed Getting started preview and hashtag typo #93
-    - Update documentation for setStackViewItems #82
+    - Drop support for iOS 9 and iOS 10
+    - Remove `RxSwift`/`RxCocoa`  from SPM
+    - Fix image paste logic
+    - Fixed Getting started preview and hashtag typo
+    - Update documentation for setStackViewItems
 - 4.3.3
     - Added support for Swift Package Manager (SPM)
     - Made `reuseIdentifier` public accessible
     - Fixed warnings
-- 4.3.2
-    - Fixed a bug where editing immediately before a tag prefix would break the tag
-- 4.3.1
-    - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
-- 4.3.0
-    - Swift 5 support
     
 See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
