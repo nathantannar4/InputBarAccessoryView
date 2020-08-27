@@ -2,7 +2,7 @@
 //  InputTextView.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -68,7 +68,11 @@ open class InputTextView: UITextView {
     public let placeholderLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
-        label.textColor = .lightGray
+        if #available(iOS 13, *) {
+            label.textColor = .systemGray2
+        } else {
+            label.textColor = .lightGray
+        }
         label.text = "Aa"
         label.backgroundColor = .clear
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -239,18 +243,15 @@ open class InputTextView: UITextView {
     
     open override func paste(_ sender: Any?) {
         
-        guard let image = UIPasteboard.general.image else {
+        guard isImagePasteEnabled, let image = UIPasteboard.general.image else {
             return super.paste(sender)
         }
-        if isImagePasteEnabled {
-            pasteImageInTextContainer(with: image)
-        } else {
-            for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
-                if plugin.handleInput(of: image) {
-                    return
-                }
+        for plugin in inputBarAccessoryView?.inputPlugins ?? [] {
+            if plugin.handleInput(of: image) {
+                return
             }
         }
+        pasteImageInTextContainer(with: image)
     }
     
     /// Addes a new UIImage to the NSTextContainer as an NSTextAttachment
@@ -271,9 +272,15 @@ open class InputTextView: UITextView {
         newAttributedStingComponent.append(NSAttributedString(string: "\n"))
         
         // The attributes that should be applied to the new NSAttributedString to match the current attributes
+        let defaultTextColor: UIColor
+        if #available(iOS 13, *) {
+            defaultTextColor = .label
+        } else {
+            defaultTextColor = .black
+        }
         let attributes: [NSAttributedString.Key: Any] = [
             NSAttributedString.Key.font: font ?? UIFont.preferredFont(forTextStyle: .body),
-            NSAttributedString.Key.foregroundColor: textColor ?? .black
+            NSAttributedString.Key.foregroundColor: textColor ?? defaultTextColor
         ]
         newAttributedStingComponent.addAttributes(attributes, range: NSRange(location: 0, length: newAttributedStingComponent.length))
         

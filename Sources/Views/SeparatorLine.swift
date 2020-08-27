@@ -2,7 +2,7 @@
 //  SeparatorLine.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ import UIKit
  A UIView thats intrinsicContentSize is overrided so an exact height can be specified
  
  ## Important Notes ##
- 1. Default height is 1.0
+ 1. Default height is 1 pixel
  2. Default backgroundColor is UIColor.lightGray
  3. Intended to be used in an `InputStackView`
  */
@@ -40,7 +40,7 @@ open class SeparatorLine: UIView {
     // MARK: - Properties
     
     /// The height of the line
-    open var height: CGFloat = 1.0 {
+  open var height: CGFloat = 1.0 / UIScreen.main.scale {
         didSet {
             constraints.filter { $0.identifier == "height" }.forEach { $0.constant = height } // Assumes constraint was given an identifier
             invalidateIntrinsicContentSize()
@@ -65,7 +65,11 @@ open class SeparatorLine: UIView {
     
     /// Sets up the default properties
     open func setup() {
-        backgroundColor = .lightGray
+        if #available(iOS 13, *) {
+            backgroundColor = .systemGray2
+        } else {
+            backgroundColor = .lightGray
+        }
         translatesAutoresizingMaskIntoConstraints = false
         setContentHuggingPriority(.defaultHigh, for: .vertical)
     }

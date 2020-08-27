@@ -32,7 +32,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         return manager
     }()
     
-    var hastagAutocompletes: [AutocompleteCompletion] = {
+    var hashtagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
         for _ in 1...100 {
             array.append(AutocompleteCompletion(text: Lorem.word(), context: nil))
@@ -246,7 +246,7 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
                                                   context: ["id": user.id])
             }
         } else if prefix == "#" {
-            return hastagAutocompletes + asyncCompletions
+            return hashtagAutocompletes + asyncCompletions
         }
         return []
     }

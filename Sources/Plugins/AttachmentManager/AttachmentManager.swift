@@ -2,7 +2,7 @@
 //  AttachmentManager.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -63,7 +63,13 @@ open class AttachmentManager: NSObject, InputPlugin {
     open var showAddAttachmentCell = true { didSet { attachmentView.reloadData() } }
     
     /// The color applied to the backgroundColor of the deleteButton in each `AttachmentCell`
-    open var tintColor: UIColor = UIColor(red: 0, green: 0.5, blue: 1, alpha: 1)
+    open var tintColor: UIColor {
+        if #available(iOS 13, *) {
+            return .link
+        } else {
+            return .systemBlue
+        }
+    }
     
     // MARK: - Initialization
     
@@ -216,18 +222,24 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                                         height: cell.bounds.height - cell.padding.top - cell.padding.bottom))
         let strokeWidth: CGFloat = 3
         let length: CGFloat = frame.width / 2
+        let grayColor: UIColor
+        if #available(iOS 13, *) {
+            grayColor = .systemGray2
+        } else {
+            grayColor = .lightGray
+        }
         let vLayer = CAShapeLayer()
         vLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (strokeWidth / 2),
                                                        y: frame.midY - (length / 2),
                                                        width: strokeWidth,
                                                        height: length), cornerRadius: 5).cgPath
-        vLayer.fillColor = UIColor.lightGray.cgColor
+        vLayer.fillColor = grayColor.cgColor
         let hLayer = CAShapeLayer()
         hLayer.path = UIBezierPath(roundedRect: CGRect(x: frame.midX - (length / 2),
                                                        y: frame.midY - (strokeWidth / 2),
                                                        width: length,
                                                        height: strokeWidth), cornerRadius: 5).cgPath
-        hLayer.fillColor = UIColor.lightGray.cgColor
+        hLayer.fillColor = grayColor.cgColor
         cell.containerView.layer.addSublayer(vLayer)
         cell.containerView.layer.addSublayer(hLayer)
         return cell
