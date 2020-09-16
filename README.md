@@ -35,29 +35,33 @@ To make `RxSwift`/`RxCocoa` extensions work you need to explicitly import `Rx` d
 ### Installation via CocoaPods
 
 ```ruby
-# Swift 5.0
+# Swift 5.3
 pod 'InputBarAccessoryView'
 
-# Swift 4.2
-pod 'InputBarAccessoryView', '4.2.2'
+# Swift 5.0
+pod 'InputBarAccessoryView', '5.1.0'
 ```
 
 ### Installation via Carthage
 
 ```ruby
-# Swift 5.0
+# Swift 5.3
 github "nathantannar4/InputBarAccessoryView"
 
-# Swift 4.2
-github "nathantannar4/InputBarAccessoryView" "4.2.2"
+# Swift 5.0
+github "nathantannar4/InputBarAccessoryView" "5.1.0"
 ```
 
 ### Requirements
 
-iOS 11.0+
-Swift 5.0
+iOS 12.0+
+Swift 5.3
+
+> The latest iOS 11 release is v5.1.0
 
 > The latest iOS 9 + iOS 10 release is v4.3.3
+
+> The latest Swift 5.0 release is v5.1.0 
 
 > The latest Swift 4.2 release is v4.2.2 
 
@@ -90,6 +94,9 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+5.2.0
+   - Drop support for iOS 11 and bump minimum version to iOS 12+
+   - Support Swift 5.3 and higher for XCode 12
 - 5.1.0
     - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
     - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
@@ -100,10 +107,6 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
     - Fix image paste logic
     - Fixed Getting started preview and hashtag typo
     - Update documentation for setStackViewItems
-- 4.3.3
-    - Added support for Swift Package Manager (SPM)
-    - Made `reuseIdentifier` public accessible
-    - Fixed warnings
     
 See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
