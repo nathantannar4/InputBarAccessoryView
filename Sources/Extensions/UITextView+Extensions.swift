@@ -8,7 +8,7 @@
 
 import UIKit
 
-internal extension UITextView {
+public extension UITextView {
 
     typealias Match = (prefix: String, word: String, range: NSRange)
     
