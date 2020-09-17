@@ -52,6 +52,9 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     
     /// The `EventCallback` actions for each `KeyboardEvent`. Default value is EMPTY
     private var callbacks: [KeyboardEvent: EventCallback] = [:]
+
+    /// The `EventCallback` actions for each `KeyboardEvent` from a `bind()` call. Makes it possible for consumers of `KeyboardManager` to set their own callbacks without overriding the binded callbacks
+    private var callbacksFromBinding: [KeyboardEvent: EventCallback] = [:]
     
     /// The pan gesture that handles dragging on the `scrollView`
     private var panGesture: UIPanGestureRecognizer?
@@ -149,8 +152,8 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
             left: inputAccessoryView.leftAnchor.constraint(equalTo: superview.leftAnchor),
             right: inputAccessoryView.rightAnchor.constraint(equalTo: superview.rightAnchor)
         ).activate()
-        
-        callbacks[.willShow] = { [weak self] (notification) in
+
+        callbacksFromBinding[.willShow] = { [weak self] (notification) in
             let keyboardHeight = notification.endFrame.height
             guard
                 self?.isKeyboardHidden == false,
@@ -161,7 +164,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
-        callbacks[.willChangeFrame] = { [weak self] (notification) in
+        callbacksFromBinding[.willChangeFrame] = { [weak self] (notification) in
             let keyboardHeight = notification.endFrame.height
             guard
                 self?.isKeyboardHidden == false,
@@ -171,7 +174,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
-        callbacks[.willHide] = { [weak self] (notification) in
+        callbacksFromBinding[.willHide] = { [weak self] (notification) in
             guard notification.isForCurrentApp else { return }
             self?.animateAlongside(notification) { [weak self] in
                 self?.constraints?.bottom?.constant = 0
@@ -205,6 +208,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     open func keyboardDidShow(notification: NSNotification) {
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.didShow]?(keyboardNotification)
+        callbacksFromBinding[.didShow]?(keyboardNotification)
     }
     
     /// An observer method called last in the lifecycle of a keyboard becoming hidden
@@ -215,6 +219,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
         isKeyboardHidden = true
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.didHide]?(keyboardNotification)
+        callbacksFromBinding[.didHide]?(keyboardNotification)
     }
     
     /// An observer method called third in the lifecycle of a keyboard becoming visible/hidden
@@ -224,6 +229,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     open func keyboardDidChangeFrame(notification: NSNotification) {
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.didChangeFrame]?(keyboardNotification)
+        callbacksFromBinding[.didChangeFrame]?(keyboardNotification)
         cachedNotification = keyboardNotification
     }
     
@@ -234,6 +240,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     open func keyboardWillChangeFrame(notification: NSNotification) {
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.willChangeFrame]?(keyboardNotification)
+        callbacksFromBinding[.willChangeFrame]?(keyboardNotification)
         cachedNotification = keyboardNotification
     }
     
@@ -245,6 +252,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
         isKeyboardHidden = false
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.willShow]?(keyboardNotification)
+        callbacksFromBinding[.willShow]?(keyboardNotification)
     }
     
     /// An observer method called second in the lifecycle of a keyboard becoming hidden
@@ -254,6 +262,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     open func keyboardWillHide(notification: NSNotification) {
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.willHide]?(keyboardNotification)
+        callbacksFromBinding[.willHide]?(keyboardNotification)
     }
     
     // MARK: - Helper Methods
