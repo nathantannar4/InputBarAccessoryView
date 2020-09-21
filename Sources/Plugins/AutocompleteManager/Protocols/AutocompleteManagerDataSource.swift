@@ -2,7 +2,7 @@
 //  AutocompleteManagerDataSource.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,11 @@ public extension AutocompleteManagerDataSource {
         }
         
         cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 13)
-        cell.backgroundColor = .white
+        if #available(iOS 13, *) {
+            cell.backgroundColor = .systemBackground
+        } else {
+            cell.backgroundColor = .white
+        }
         cell.separatorLine.isHidden = tableView.numberOfRows(inSection: indexPath.section) - 1 == indexPath.row
         return cell
         

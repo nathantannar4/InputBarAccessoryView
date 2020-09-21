@@ -16,7 +16,13 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     let tableView = UITableView()
     
     let conversation: SampleData.Conversation
-    
+
+    private let mentionTextAttributes: [NSAttributedString.Key : Any] = [
+        .font: UIFont.preferredFont(forTextStyle: .body),
+        .foregroundColor: UIColor.systemBlue,
+        .backgroundColor: UIColor.systemBlue.withAlphaComponent(0.1)
+    ]
+
     /// The object that manages attachments
     open lazy var attachmentManager: AttachmentManager = { [unowned self] in
         let manager = AttachmentManager()
@@ -32,7 +38,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         return manager
     }()
     
-    var hastagAutocompletes: [AutocompleteCompletion] = {
+    var hashtagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
         for _ in 1...100 {
             array.append(AutocompleteCompletion(text: Lorem.word(), context: nil))
@@ -56,12 +62,16 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        if #available(iOS 13, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.keyboardDismissMode = .interactive
-        tableView.register(ConversationCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(ConversationCell.self, forCellReuseIdentifier: "\(ConversationCell.self)")
         tableView.tableFooterView = UIView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -75,7 +85,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         inputBar.inputTextView.keyboardType = .twitter
  
         // Configure AutocompleteManager
-        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
+        autocompleteManager.register(prefix: "@", with: mentionTextAttributes)
         autocompleteManager.register(prefix: "#")
         autocompleteManager.maxSpaceCountDuringCompletion = 1 // Allow for autocompletes with a space
         
@@ -93,14 +103,18 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "\(ConversationCell.self)", for: indexPath)
         cell.imageView?.image = conversation.messages[indexPath.row].user.image
         cell.imageView?.layer.cornerRadius = 5
         cell.imageView?.clipsToBounds = true
         cell.textLabel?.text = conversation.messages[indexPath.row].user.name
         cell.textLabel?.font = .boldSystemFont(ofSize: 15)
         cell.textLabel?.numberOfLines = 0
-        cell.detailTextLabel?.textColor = .darkGray
+        if #available(iOS 13, *) {
+            cell.detailTextLabel?.textColor = .secondaryLabel
+        } else {
+            cell.detailTextLabel?.textColor = .darkGray
+        }
         cell.detailTextLabel?.font = .systemFont(ofSize: 14)
         cell.detailTextLabel?.text = conversation.messages[indexPath.row].text
         cell.detailTextLabel?.numberOfLines = 0
@@ -246,7 +260,7 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
                                                   context: ["id": user.id])
             }
         } else if prefix == "#" {
-            return hastagAutocompletes + asyncCompletions
+            return hashtagAutocompletes + asyncCompletions
         }
         return []
     }

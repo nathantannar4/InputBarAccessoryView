@@ -9,14 +9,14 @@
 import UIKit
 import InputBarAccessoryView
 
-class NoTextViewInputBar: InputBarAccessoryView {
+final class NoTextViewInputBar: InputBarAccessoryView {
 
     let joinButton: UIButton = {
         let button = UIButton()
         button.setTitle("Join Chat", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 10
-        button.backgroundColor = UIColor(red: 0/255, green: 122/255, blue: 1, alpha: 1)
+        button.backgroundColor = .systemBlue
         return button
     }()
 

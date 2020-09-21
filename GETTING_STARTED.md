@@ -1,5 +1,5 @@
 
-<img src="./Screenshots/Banner.png">
+<img src="./Screenshots/Preview.gif">
 
 # Getting Started
 
