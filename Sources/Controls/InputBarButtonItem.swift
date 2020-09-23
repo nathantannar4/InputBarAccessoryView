@@ -2,7 +2,7 @@
 //  InputBarButtonItem.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -174,9 +174,13 @@ open class InputBarButtonItem: UIButton, InputItem {
         imageView?.contentMode = .scaleAspectFit
         setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
         setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
-        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1), for: .normal)
-        setTitleColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.3), for: .highlighted)
-        setTitleColor(.lightGray, for: .disabled)
+        setTitleColor(.systemBlue, for: .normal)
+        setTitleColor(UIColor.systemBlue.withAlphaComponent(0.3), for: .highlighted)
+        if #available(iOS 13, *) {
+            setTitleColor(.systemGray2, for: .disabled)
+        } else {
+            setTitleColor(.lightGray, for: .disabled)
+        }
         adjustsImageWhenHighlighted = false
         addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
     }

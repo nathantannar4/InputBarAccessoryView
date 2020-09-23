@@ -9,7 +9,7 @@
 import UIKit
 import InputBarAccessoryView
 
-class SlackInputBar: InputBarAccessoryView {
+final class SlackInputBar: InputBarAccessoryView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,20 +25,20 @@ class SlackInputBar: InputBarAccessoryView {
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
                 button.isEnabled = textView.text.isEmpty
                 }.onSelected {
-                    $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.tintColor = .systemBlue
             },
             makeButton(named: "ic_at").onSelected {
                 self.inputPlugins.forEach { _ = $0.handleInput(of: "@" as AnyObject) }
-                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                $0.tintColor = .systemBlue
             },
             makeButton(named: "ic_hashtag").onSelected {
                 self.inputPlugins.forEach { _ = $0.handleInput(of: "#" as AnyObject) }
-                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                $0.tintColor = .systemBlue
             },
             .flexibleSpace,
             makeButton(named: "ic_library")
                 .onSelected {
-                    $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.tintColor = .systemBlue
                     let imagePicker = UIImagePickerController()
                     imagePicker.delegate = self
                     imagePicker.sourceType = .photoLibrary
@@ -54,9 +54,9 @@ class SlackInputBar: InputBarAccessoryView {
                     $0.setSize(CGSize(width: 52, height: 30), animated: false)
                 }.onDisabled {
                     $0.layer.borderColor = $0.titleColor(for: .disabled)?.cgColor
-                    $0.backgroundColor = .white
+                    $0.backgroundColor = .clear
                 }.onEnabled {
-                    $0.backgroundColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                    $0.backgroundColor = .systemBlue
                     $0.layer.borderColor = UIColor.clear.cgColor
                 }.onSelected {
                     // We use a transform becuase changing the size would cause the other views to relayout
@@ -87,6 +87,8 @@ class SlackInputBar: InputBarAccessoryView {
         
         // Finally set the items
         setStackViewItems(items, forStack: .bottom, animated: false)
+
+        shouldAnimateTextDidChangeLayout = true
     }
     
 
@@ -98,7 +100,7 @@ class SlackInputBar: InputBarAccessoryView {
                 $0.image = UIImage(named: named)?.withRenderingMode(.alwaysTemplate)
                 $0.setSize(CGSize(width: 30, height: 30), animated: false)
             }.onSelected {
-                $0.tintColor = UIColor(red: 15/255, green: 135/255, blue: 255/255, alpha: 1.0)
+                $0.tintColor = .systemBlue
             }.onDeselected {
                 $0.tintColor = UIColor.lightGray
             }.onTouchUpInside { _ in

@@ -21,12 +21,12 @@ final class READMEPreviewViewController: InputBarViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1)
+        view.backgroundColor = .systemBlue
         inputBar.inputTextView.autocorrectionType = .no
         inputBar.inputTextView.autocapitalizationType = .none
         inputBar.inputTextView.keyboardType = .twitter
         let size = UIFont.preferredFont(forTextStyle: .body).pointSize
-        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 1),.backgroundColor: UIColor(red: 0, green: 122/255, blue: 1, alpha: 0.1)])
+        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor.systemBlue,.backgroundColor: UIColor.systemBlue.withAlphaComponent(0.1)])
         autocompleteManager.register(prefix: "#", with: [.font: UIFont.boldSystemFont(ofSize: size)])
         inputBar.inputPlugins = [autocompleteManager]
     }
@@ -83,7 +83,7 @@ extension READMEPreviewViewController: AutocompleteManagerDelegate, Autocomplete
             cell.imageViewEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
             cell.imageView?.layer.cornerRadius = 8
             cell.imageView?.layer.borderWidth = 1
-            cell.imageView?.layer.borderColor = UIColor(red: 0, green: 122/255, blue: 1, alpha: 1).cgColor
+            cell.imageView?.layer.borderColor = UIColor.systemBlue.cgColor
             cell.imageView?.layer.masksToBounds = true
         }
         cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 15, keepPrefix: session.prefix == "#" )

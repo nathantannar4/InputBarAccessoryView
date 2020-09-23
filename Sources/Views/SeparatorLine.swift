@@ -2,7 +2,7 @@
 //  SeparatorLine.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -66,7 +66,7 @@ open class SeparatorLine: UIView {
     /// Sets up the default properties
     open func setup() {
         if #available(iOS 13, *) {
-            backgroundColor = .systemGray
+            backgroundColor = .systemGray2
         } else {
             backgroundColor = .lightGray
         }

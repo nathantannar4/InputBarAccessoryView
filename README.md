@@ -16,28 +16,52 @@
 - [x] Compatible with all iPhones and iPads
 - [x] RTL Support
 
+### Installation via Swift Package Manager (SPM)
+
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+Once you have your Swift package set up, adding InputBarAccessoryView as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
+```
+dependencies: [
+    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "4.5.0"))
+]
+```
+You can also add it via XCode SPM editor with URL:
+```
+https://github.com/nathantannar4/InputBarAccessoryView.git
+```
+To make `RxSwift`/`RxCocoa` extensions work you need to explicitly import `Rx` dependencies.
+
 ### Installation via CocoaPods
 
 ```ruby
-# Swift 5.0
+# Swift 5.3
 pod 'InputBarAccessoryView'
-# Swift 4.2
-pod 'InputBarAccessoryView', '4.2.2'
+
+# Swift 5.0
+pod 'InputBarAccessoryView', '5.1.0'
 ```
 
 ### Installation via Carthage
 
 ```ruby
-# Swift 5.0
+# Swift 5.3
 github "nathantannar4/InputBarAccessoryView"
-# Swift 4.2
-github "nathantannar4/InputBarAccessoryView" "4.2.2"
+
+# Swift 5.0
+github "nathantannar4/InputBarAccessoryView" "5.1.0"
 ```
 
 ### Requirements
 
-iOS 9.0+
-Swift 5.0
+iOS 12.0+
+Swift 5.3
+
+> The latest iOS 11 release is v5.1.0
+
+> The latest iOS 9 + iOS 10 release is v4.3.3
+
+> The latest Swift 5.0 release is v5.1.0 
 
 > The latest Swift 4.2 release is v4.2.2 
 
@@ -70,29 +94,21 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
-- 4.3.2
-    - Fixed a bug where editing immediately before a tag prefix would break the tag
-- 4.3.1
-    - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
-- 4.3.0
-    - Swift 5 support
-- 4.2.2
-    - Fixed image paste orientation issue in `InputTextView`
-- 4.2.1
-    - Fixed autocompletes of completions that contain spaces
-    - Depricated `isCaseSensitive` in favor of a function asignment to pre-process autocompletions
-- 4.2.0
-    - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
-- 4.1.2
-        - Add `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 
-- 4.1.1
-        - Add `frameInsets: HorizontalEdgePadding` property to `InputBarAccessoryView` to inset the view to be compatible with `UISplitViewController` or other custom containers where the view should not be the full width
-- 4.1.0
-        - Fix issue where setting long strings in `viewDidLoad` broke inital layout, Issue #41
-        - Add `deleteCompletionByParts: Bool` flag to `AutocompleteManager` to allow for partial deletions of autocompletes rather than just the entire substring. 
-        - Add `InputBarSendButton` to use as the `sendButton` in `InputBarAccessoryView`. This subclass of `InputBarButtonItem` has a `UIActivityIndicatorView` to show a spinner when making HTTP requests
-
-### [CHANGELOG](./CHANGELOG.md)
+5.2.0
+   - Drop support for iOS 11 and bump minimum version to iOS 12+
+   - Support Swift 5.3 and higher for XCode 12
+- 5.1.0
+    - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
+    - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
+    - Added support for Dark Mode on iOS 13+
+- 5.0.0
+    - Drop support for iOS 9 and iOS 10
+    - Remove `RxSwift`/`RxCocoa`  from SPM
+    - Fix image paste logic
+    - Fixed Getting started preview and hashtag typo
+    - Update documentation for setStackViewItems
+    
+See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
 **Find a bug? Open an issue!**
 
