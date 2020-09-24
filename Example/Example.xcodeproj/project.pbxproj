@@ -29,6 +29,7 @@
 		38F0C20620C89CDD00FF8DD3 /* ConversationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20520C89CDD00FF8DD3 /* ConversationCell.swift */; };
 		38F0C20820C89D1600FF8DD3 /* InboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20720C89D1600FF8DD3 /* InboxCell.swift */; };
 		38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */; };
+		468A8728251C8AC20018D007 /* ButtonAnimationExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -69,6 +70,7 @@
 		38F0C20520C89CDD00FF8DD3 /* ConversationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationCell.swift; sourceTree = "<group>"; };
 		38F0C20720C89D1600FF8DD3 /* InboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCell.swift; sourceTree = "<group>"; };
 		38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = READMEPreviewViewController.swift; sourceTree = "<group>"; };
+		468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAnimationExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */,
 				3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */,
 				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
+				468A8726251C8AAB0018D007 /* Community Examples */,
 				38F0C1FC20C89C8700FF8DD3 /* InputBarExamples */,
 				38F0C20920C89D2D00FF8DD3 /* Cells */,
 				38F0C20A20C89D4100FF8DD3 /* Supporting Files */,
@@ -150,6 +153,14 @@
 				383989BC1F564F5C003D30DD /* Random.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		468A8726251C8AAB0018D007 /* Community Examples */ = {
+			isa = PBXGroup;
+			children = (
+				468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */,
+			);
+			path = "Community Examples";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38F0C20420C89CB400FF8DD3 /* FacebookInputBar.swift in Sources */,
+				468A8728251C8AC20018D007 /* ButtonAnimationExample.swift in Sources */,
 				38F0C20220C89CAB00FF8DD3 /* GitHawkInputBar.swift in Sources */,
 				383989BD1F564F5C003D30DD /* Random.swift in Sources */,
 				388714EB202AC9A50064C8BB /* SampleData.swift in Sources */,

@@ -48,7 +48,7 @@ class InputBarStyleSelectionController: UITableViewController {
         switch section {
         case 0:     return 1
         case 1...2: return styles.count
-        case 3:     return 1
+        case 3:     return 2
         default:    fatalError("unknown section \(section)")
         }
     }
@@ -59,6 +59,7 @@ class InputBarStyleSelectionController: UITableViewController {
         case (0, _):        cell.textLabel?.text = "README Preview"
         case (1...2, _):    cell.textLabel?.text = styles[indexPath.row].rawValue
         case (3, 0):        cell.textLabel?.text = "Tab bar example (Slack style)"
+        case (3, 1):        cell.textLabel?.text = "Send button animations"
         default:            assertionFailure("unrecognized \(indexPath). Are you trying to add an additional example?")
         }
 
@@ -83,10 +84,18 @@ class InputBarStyleSelectionController: UITableViewController {
                                                  conversation: convo),
                     animated: true)
             } else if indexPath.section == 3 {
-                let tabBarController = UITabBarController()
-                let contained = SubviewExampleViewController(style: InputBarStyle.slack, conversation: convo)
-                tabBarController.viewControllers = [contained]
-                navigationController?.pushViewController(tabBarController, animated: true)
+                switch indexPath.row {
+                case 0:
+                    let tabBarController = UITabBarController()
+                    let contained = SubviewExampleViewController(style: InputBarStyle.slack, conversation: convo)
+                    tabBarController.viewControllers = [contained]
+                    navigationController?.pushViewController(tabBarController, animated: true)
+                case 1:
+                    let example = ButtonAnimationExample(style: .imessage, conversation: convo)
+                    navigationController?.pushViewController(example, animated: true)
+                default:
+                    fatalError("Unknown row \(indexPath.row) in Community Examples section. Are you trying to add a new example?")
+                }
             }
         }
     }
