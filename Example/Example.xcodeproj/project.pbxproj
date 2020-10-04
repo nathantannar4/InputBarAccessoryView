@@ -30,6 +30,7 @@
 		38F0C20820C89D1600FF8DD3 /* InboxCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C20720C89D1600FF8DD3 /* InboxCell.swift */; };
 		38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */; };
 		468A8728251C8AC20018D007 /* ButtonAnimationExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */; };
+		46E4094E252996D900D238A8 /* SwiftUIExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E4094D252996D900D238A8 /* SwiftUIExample.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +72,7 @@
 		38F0C20720C89D1600FF8DD3 /* InboxCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InboxCell.swift; sourceTree = "<group>"; };
 		38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = READMEPreviewViewController.swift; sourceTree = "<group>"; };
 		468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAnimationExample.swift; sourceTree = "<group>"; };
+		46E4094D252996D900D238A8 /* SwiftUIExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExample.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */,
 				3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */,
 				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
+				46E4094D252996D900D238A8 /* SwiftUIExample.swift */,
 				468A8726251C8AAB0018D007 /* Community Examples */,
 				38F0C1FC20C89C8700FF8DD3 /* InputBarExamples */,
 				38F0C20920C89D2D00FF8DD3 /* Cells */,
@@ -255,6 +258,7 @@
 				38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */,
 				38DAD87D21A685C6001762CD /* NoTextViewInputBar.swift in Sources */,
 				3821ADE220F534DA00DE0D1D /* InputAccessoryExampleViewController.swift in Sources */,
+				46E4094E252996D900D238A8 /* SwiftUIExample.swift in Sources */,
 				3821ADE620F5360B00DE0D1D /* InputBarStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -324,7 +328,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -380,7 +384,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
