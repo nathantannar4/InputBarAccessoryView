@@ -162,7 +162,7 @@
 				38F0C1EC20C77FA000FF8DD3 /* Models */,
 				3876DA8C1F8352F800C89326 /* Plugins */,
 				38C867741F50A6AD00811974 /* Protocols */,
-				38C867761F50A6AD00811974 /* Supporting Files */,
+				38C867761F50A6AD00811974 /* Supporting */,
 				38ECDBBB219B46B90076E154 /* ViewControllers */,
 				38C867791F50A6AD00811974 /* Views */,
 			);
@@ -191,14 +191,14 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
-		38C867761F50A6AD00811974 /* Supporting Files */ = {
+		38C867761F50A6AD00811974 /* Supporting */ = {
 			isa = PBXGroup;
 			children = (
 				38C867771F50A6AD00811974 /* Info.plist */,
 				38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */,
 				38C867781F50A6AD00811974 /* InputBarAccessoryView-Bridging-Header.h */,
 			);
-			path = "Supporting Files";
+			path = Supporting;
 			sourceTree = "<group>";
 		};
 		38C867791F50A6AD00811974 /* Views */ = {
@@ -583,10 +583,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.InputBarAccessoryView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -606,10 +606,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Supporting/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 5.2.0;
+				MARKETING_VERSION = 5.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.InputBarAccessoryView;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

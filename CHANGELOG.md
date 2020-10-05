@@ -1,4 +1,6 @@
 #  Changelog
+- 5.2.1
+   - Fix SPM warnings about Info.plist file
 - 5.2.0
     - Drop support for iOS 11 and bump minimum version to iOS 12+
     - Support Swift 5.3 and higher for XCode 12
