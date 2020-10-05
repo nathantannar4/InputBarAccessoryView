@@ -4,18 +4,19 @@
 import PackageDescription
 
 let package = Package(
-   name: "InputBarAccessoryView",
-   platforms: [.iOS(.v11)],
-   products: [
-       .library(
+    name: "InputBarAccessoryView",
+    platforms: [.iOS(.v11)],
+    products: [
+        .library(
             name: "InputBarAccessoryView",
             targets: ["InputBarAccessoryView"])
-   ],
-   targets: [
-       .target(
-           name: "InputBarAccessoryView",
-           path: "Sources"
-       )
-   ],
-   swiftLanguageVersions: [.v5]
+    ],
+    targets: [
+        .target(
+            name: "InputBarAccessoryView",
+            path: "Sources",
+            exclude: ["Supporting/Info.plist"]
+        )
+    ],
+    swiftLanguageVersions: [.v5]
 )
