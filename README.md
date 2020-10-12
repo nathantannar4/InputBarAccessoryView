@@ -150,7 +150,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 
 ## Author
 <p>
-	<img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="100" height="100">
+<img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="100" height="100">
 </p>
 
 **Nathan Tannar** - [https://nathantannar.me](https://nathantannar.me)
