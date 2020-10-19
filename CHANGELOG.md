@@ -1,4 +1,6 @@
 #  Changelog
+- Master:
+   - Change reuseIdentifier from `public` to `open` to allow inheritance #167
 - 5.2.1
    - Fix SPM warnings about Info.plist file
 - 5.2.0
