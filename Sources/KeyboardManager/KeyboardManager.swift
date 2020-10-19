@@ -137,7 +137,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     /// - Parameter inputAccessoryView: The view to bind to the top of the keyboard but within its superview
     /// - Returns: Self
     @discardableResult
-    open func bind(inputAccessoryView: UIView) -> Self {
+    open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none) -> Self {
         
         guard let superview = inputAccessoryView.superview else {
             fatalError("`inputAccessoryView` must have a superview")
@@ -149,7 +149,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
             left: inputAccessoryView.leftAnchor.constraint(equalTo: superview.leftAnchor),
             right: inputAccessoryView.rightAnchor.constraint(equalTo: superview.rightAnchor)
         ).activate()
-        
+
         callbacks[.willShow] = { [weak self] (notification) in
             let keyboardHeight = notification.endFrame.height
             guard
@@ -157,7 +157,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 self?.constraints?.bottom?.constant == 0,
                 notification.isForCurrentApp else { return }
             self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = -keyboardHeight
+                self?.constraints?.bottom?.constant = -keyboardHeight - (additionalBottomSpace?() ?? 0)
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
@@ -167,7 +167,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
                 self?.isKeyboardHidden == false,
                 notification.isForCurrentApp else { return }
             self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = -keyboardHeight
+                self?.constraints?.bottom?.constant = -keyboardHeight - (additionalBottomSpace?() ?? 0)
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }

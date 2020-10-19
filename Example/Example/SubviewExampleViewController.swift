@@ -12,8 +12,8 @@ import InputBarAccessoryView
 final class SubviewExampleViewController: CommonTableViewController {
     
     // MARK: - Properties
-    
-    private var keyboardManager = KeyboardManager()
+
+    private let keyboardManager = KeyboardManager()
     
     // MARK: - View Life Cycle
     
@@ -27,17 +27,6 @@ final class SubviewExampleViewController: CommonTableViewController {
         
         // Binding to the tableView will enabled interactive dismissal
         keyboardManager.bind(to: tableView)
-        
-        // Add some extra handling to manage content inset
-        keyboardManager.on(event: .didChangeFrame) { [weak self] (notification) in
-            let barHeight = self?.inputBar.bounds.height ?? 0
-            self?.tableView.contentInset.bottom = barHeight + notification.endFrame.height
-            self?.tableView.scrollIndicatorInsets.bottom = barHeight + notification.endFrame.height
-            }.on(event: .didHide) { [weak self] _ in
-                let barHeight = self?.inputBar.bounds.height ?? 0
-                self?.tableView.contentInset.bottom = barHeight
-                self?.tableView.scrollIndicatorInsets.bottom = barHeight
-        }
     }
     
 }
