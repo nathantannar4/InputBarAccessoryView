@@ -97,16 +97,18 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
 5.2.0
    - Drop support for iOS 11 and bump minimum version to iOS 12+
    - Support Swift 5.3 and higher for XCode 12
-- 5.1.0
-    - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
-    - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
-    - Added support for Dark Mode on iOS 13+
-- 5.0.0
-    - Drop support for iOS 9 and iOS 10
-    - Remove `RxSwift`/`RxCocoa`  from SPM
-    - Fix image paste logic
-    - Fixed Getting started preview and hashtag typo
-    - Update documentation for setStackViewItems
+
+5.1.0
+   - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
+   - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
+   - Added support for Dark Mode on iOS 13+
+
+5.0.0
+   - Drop support for iOS 9 and iOS 10
+   - Remove `RxSwift`/`RxCocoa`  from SPM
+   - Fix image paste logic
+   - Fixed Getting started preview and hashtag typo
+   - Update documentation for setStackViewItems
     
 See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
