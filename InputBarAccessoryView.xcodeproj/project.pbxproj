@@ -42,6 +42,7 @@
 		38F0C1F220C7807D00FF8DD3 /* AutocompleteSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F120C7807D00FF8DD3 /* AutocompleteSession.swift */; };
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
 		38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */; };
+		5445563E25450C17009E405C /* VideoAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5445563D25450C17009E405C /* VideoAttachmentCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +95,7 @@
 		38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutocompleteCompletion.swift; sourceTree = "<group>"; };
 		38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InputBarAccessoryView+Availability.swift"; sourceTree = "<group>"; };
 		51E04F3E24F7DCD0004D7452 /* Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Example.xcodeproj; path = Example/Example.xcodeproj; sourceTree = "<group>"; };
+		5445563D25450C17009E405C /* VideoAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAttachmentCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -273,6 +275,7 @@
 				3876DAA81F84C0DB00C89326 /* AttachmentsView.swift */,
 				3876DAAA1F84C22100C89326 /* AttachmentCell.swift */,
 				3877525C1F8834F0000E0AC5 /* ImageAttachmentCell.swift */,
+				5445563D25450C17009E405C /* VideoAttachmentCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				38C867831F50A6AD00811974 /* InputBarButtonItem.swift in Sources */,
 				3821ADD920F5315400DE0D1D /* KeyboardNotification.swift in Sources */,
 				38C501242148C76900246686 /* NSNotification+Extensions.swift in Sources */,
+				5445563E25450C17009E405C /* VideoAttachmentCell.swift in Sources */,
 				3876DA911F83530900C89326 /* AutocompleteManagerDelegate.swift in Sources */,
 				3821ADDA20F5315400DE0D1D /* KeyboardManager.swift in Sources */,
 			);

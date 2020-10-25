@@ -27,12 +27,24 @@
 
 import UIKit
 
+//public struct ImageMediaItem {
+//    /// The url where the media is located.
+//    var url: URL?
+//    /// The image.
+//    var image: UIImage?
+//    /// A placeholder image for when the image is obtained asychronously.
+//    var placeholderImage: UIImage?
+//    /// The size of the media item.
+//    var size: CGSize?
+//}
+
 open class AttachmentManager: NSObject, InputPlugin {
     
     public enum Attachment {
         case image(UIImage)
         case url(URL)
         case data(Data)
+        case videoDictionary([URL: UIImage])
         
         @available(*, deprecated, message: ".other(AnyObject) has been depricated as of 2.0.0")
         case other(AnyObject)
@@ -102,6 +114,8 @@ open class AttachmentManager: NSObject, InputPlugin {
             attachment = .url(url)
         } else if let data = object as? Data {
             attachment = .data(data)
+        } else if let videoDictionary = object as? [URL: UIImage] {
+            attachment = .videoDictionary(videoDictionary)
         } else {
             return false
         }
@@ -191,8 +205,23 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                 cell.imageView.tintColor = tintColor
                 cell.deleteButton.backgroundColor = tintColor
                 return cell
+                
+            case .videoDictionary(let videoDictionary): //if it's a video
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoAttachmentCell.reuseIdentifier, for: indexPath) as? VideoAttachmentCell else {
+                    fatalError()
+                }
+                cell.attachment = attachment
+                cell.indexPath = indexPath
+                cell.manager = self
+//                let videoImage = addPlayButtonImage(on: videoDictionary.values.first!)
+//                cell.imageView.image = videoImage
+                cell.imageView.image = videoDictionary.values.first!
+//                addPlayButton(on: cell.imageView)
+                cell.imageView.tintColor = tintColor
+                cell.deleteButton.backgroundColor = tintColor
+                return cell
             default:
-                return collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as! AttachmentCell
+                return collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as! ImageAttachmentCell
             }
             
         }
@@ -243,5 +272,46 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
         cell.containerView.layer.addSublayer(vLayer)
         cell.containerView.layer.addSublayer(hLayer)
         return cell
+    }
+}
+
+extension AttachmentManager {
+    ///returns an image with play button on top of it
+    private func addPlayButtonImage(on image: UIImage) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: image.size)
+        let playButtonImage = UIImage(named: "play-button")!
+        let imageWidth: CGFloat = 30
+        let imageHeight: CGFloat = 30
+        let imageX: CGFloat = image.size.width / 2
+        let imageY: CGFloat = image.size.height / 2
+        return renderer.image { context in
+            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
+            playButtonImage.draw(in: CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight))
+        }
+    }
+    
+    private func addPlayButton(on imageView: UIImageView) {
+//        let renderer = UIGraphicsImageRenderer(size: image.size)
+        let bolarBlue = UIColor(red: 77/255, green: 176/255, blue: 209/255, alpha: 1)
+        let playImage: UIImage
+        if #available(iOS 13.0, *) {
+            playImage = UIImage(named: "play-button")!.withTintColor(bolarBlue)
+        } else {
+            // Fallback on earlier versions
+            playImage = UIImage(named: "play-button")!
+        }
+        let playImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        playImageView.image = playImage
+        playImageView.backgroundColor = .clear
+        playImageView.center = imageView.center
+        imageView.addSubview(playImageView)
+//        let imageWidth: CGFloat = 30
+//        let imageHeight: CGFloat = 30
+//        let imageX: CGFloat = image.size.width / 2
+//        let imageY: CGFloat = image.size.height / 2
+//        return renderer.image { context in
+//            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
+//            playButtonImage.draw(in: CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight))
+//        }
     }
 }
