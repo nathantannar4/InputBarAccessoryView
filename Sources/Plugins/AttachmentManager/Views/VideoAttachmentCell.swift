@@ -24,8 +24,9 @@ open class VideoAttachmentCell: ImageAttachmentCell {
     
     public let playButton: UIButton = {
         let button = UIButton()
-        let buttonImage = UIImage(named: "play-button.png")!.withTintColor(.white)
+        let buttonImage = UIImage(named: "play-button.png")!.withRenderingMode(.alwaysTemplate)
         button.setImage(buttonImage, for: .normal)
+        button.tintColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
