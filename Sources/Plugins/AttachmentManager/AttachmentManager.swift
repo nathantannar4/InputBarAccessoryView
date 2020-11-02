@@ -44,7 +44,7 @@ open class AttachmentManager: NSObject, InputPlugin {
         case image(UIImage)
         case url(URL)
         case data(Data)
-        case videoDictionary([URL: UIImage])
+        case videoDictionary([String: Any])
         
         @available(*, deprecated, message: ".other(AnyObject) has been depricated as of 2.0.0")
         case other(AnyObject)
@@ -114,7 +114,7 @@ open class AttachmentManager: NSObject, InputPlugin {
             attachment = .url(url)
         } else if let data = object as? Data {
             attachment = .data(data)
-        } else if let videoDictionary = object as? [URL: UIImage] {
+        } else if let videoDictionary = object as? [String: Any] {
             attachment = .videoDictionary(videoDictionary)
         } else {
             return false
@@ -210,15 +210,20 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoAttachmentCell.reuseIdentifier, for: indexPath) as? VideoAttachmentCell else {
                     fatalError()
                 }
-                cell.attachment = attachment
-                cell.indexPath = indexPath
-                cell.manager = self
-//                let videoImage = addPlayButtonImage(on: videoDictionary.values.first!)
-//                cell.imageView.image = videoImage
-                cell.imageView.image = videoDictionary.values.first!
-//                addPlayButton(on: cell.imageView)
-                cell.imageView.tintColor = tintColor
-                cell.deleteButton.backgroundColor = tintColor
+                DispatchQueue.main.async {
+                    cell.attachment = attachment
+                    cell.indexPath = indexPath
+                    cell.manager = self
+                    cell.imageView.image = videoDictionary["image"] as? UIImage ?? UIImage()
+                    if let duration = videoDictionary["duration"] as? Double {
+                        let durationString = self.videoDurationToString(seconds: Int(duration))
+                        cell.durationLabel.text = durationString
+                    } else {
+                        cell.durationLabel.isHidden = true
+                    }
+                    cell.imageView.tintColor = self.tintColor
+                    cell.deleteButton.backgroundColor = self.tintColor
+                }
                 return cell
             default:
                 return collectionView.dequeueReusableCell(withReuseIdentifier: ImageAttachmentCell.reuseIdentifier, for: indexPath) as! ImageAttachmentCell
@@ -276,42 +281,27 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
 }
 
 extension AttachmentManager {
-    ///returns an image with play button on top of it
-    private func addPlayButtonImage(on image: UIImage) -> UIImage {
-        let renderer = UIGraphicsImageRenderer(size: image.size)
-        let playButtonImage = UIImage(named: "play-button")!
-        let imageWidth: CGFloat = 30
-        let imageHeight: CGFloat = 30
-        let imageX: CGFloat = image.size.width / 2
-        let imageY: CGFloat = image.size.height / 2
-        return renderer.image { context in
-            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
-            playButtonImage.draw(in: CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight))
+    //MARK: Helper Methods
+    func videoDurationToString(seconds: Int) -> String {
+        var duration = ""
+        let (h,m,s) = secondsToHoursMinutesSeconds(seconds: seconds)
+        if h != 0 {
+            duration += "\(h):"
         }
+        if m > 0 && m < 10 { //if minutes is between 1 and 9
+            duration += "0\(m):"
+        } else {
+            duration += "\(m):"
+        }
+        if s < 10 {
+            duration += "0\(s)"
+        } else {
+            duration += "\(s)"
+        }
+        return duration
     }
     
-    private func addPlayButton(on imageView: UIImageView) {
-//        let renderer = UIGraphicsImageRenderer(size: image.size)
-        let bolarBlue = UIColor(red: 77/255, green: 176/255, blue: 209/255, alpha: 1)
-        let playImage: UIImage
-        if #available(iOS 13.0, *) {
-            playImage = UIImage(named: "play-button")!.withTintColor(bolarBlue)
-        } else {
-            // Fallback on earlier versions
-            playImage = UIImage(named: "play-button")!
-        }
-        let playImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        playImageView.image = playImage
-        playImageView.backgroundColor = .clear
-        playImageView.center = imageView.center
-        imageView.addSubview(playImageView)
-//        let imageWidth: CGFloat = 30
-//        let imageHeight: CGFloat = 30
-//        let imageX: CGFloat = image.size.width / 2
-//        let imageY: CGFloat = image.size.height / 2
-//        return renderer.image { context in
-//            image.draw(in: CGRect(origin: CGPoint.zero, size: image.size))
-//            playButtonImage.draw(in: CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight))
-//        }
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
 }
