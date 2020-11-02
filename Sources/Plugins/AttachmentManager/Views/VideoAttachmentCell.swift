@@ -24,7 +24,9 @@ open class VideoAttachmentCell: ImageAttachmentCell {
     
     public let playButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "play-button.png"), for: .normal)
+        let buttonImage = UIImage(named: "play-button.png")!.withTintColor(.white)
+        button.setImage(buttonImage, for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
@@ -51,8 +53,11 @@ open class VideoAttachmentCell: ImageAttachmentCell {
         containerView.addSubview(imageView)
         imageView.fillSuperview()
         containerView.addSubview(playButton)
-        let w = self.frame.width
-        let h = self.frame.height
-        playButton.frame = CGRect(x: 0, y: 0, width: w / 3, height: h / 3)
+        NSLayoutConstraint.activate([
+            playButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            playButton.heightAnchor.constraint(equalTo: self.heightAnchor),
+            playButton.widthAnchor.constraint(equalTo: self.widthAnchor),
+        ])
     }
 }
