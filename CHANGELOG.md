@@ -2,6 +2,8 @@
 - Master:
    - Added an optional offset in KeyboardManager.bind(tableView:)
    - Change reuseIdentifier from `public` to `open` to allow inheritance
+   - Fix send button loading indicator for dark mode
+   - Fix iOS 14 UIPasteboard system notification with images
 - 5.2.1
    - Fix SPM warnings about Info.plist file
 - 5.2.0
