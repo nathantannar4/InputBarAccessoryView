@@ -1,5 +1,7 @@
 #  Changelog
 - Master:
+   - Nothing yet
+- 5.2.2
    - Added an optional offset in KeyboardManager.bind(tableView:)
    - Change reuseIdentifier from `public` to `open` to allow inheritance
    - Fix send button loading indicator for dark mode
