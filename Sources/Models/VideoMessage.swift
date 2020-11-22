@@ -9,10 +9,11 @@
 import UIKit
 
 public class VideoMessage {
+    public var localUrl: URL?
+    public var name: String
+    public var url: URL?
     public var thumbnailImage: UIImage?
     public var duration: Double?
-    public var localUrl: URL?
-    public var firebasePath: String?
     public var asDictionary: NSDictionary {
         get {
             let videoDictionary: NSDictionary = [
@@ -27,6 +28,7 @@ public class VideoMessage {
     //MARK: Initializers
     public init(localUrl: URL, duration: Double, thumbnailImage: UIImage) {
         self.localUrl = localUrl
+        self.name = localUrl.lastPathComponent
         self.duration = duration
         self.thumbnailImage = thumbnailImage
     }
