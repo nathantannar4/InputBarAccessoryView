@@ -8,7 +8,7 @@
 
 import UIKit
 
-public struct VideoMessage {
+public class VideoMessage {
     public var thumbnailImage: UIImage?
     public var duration: Double?
     public var localUrl: URL?
