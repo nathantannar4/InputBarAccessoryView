@@ -27,10 +27,24 @@ public class VideoMessage {
     }
     
     //MARK: Initializers
+    
+    ///initializer for sending a message
     public init(localUrl: URL, duration: Double, thumbnailImage: UIImage) {
         self.localUrl = localUrl
         self.name = localUrl.lastPathComponent
         self.duration = duration
         self.thumbnailImage = thumbnailImage
+    }
+    
+    ///initializer for loading a message received
+    public init(videoUrl: URL, thumbnailUrl: URL) {
+        self.url = videoUrl
+        self.name = videoUrl.lastPathComponent
+        self.thumbNailUrl = thumbnailUrl
+    }
+    
+    ///custom initializer
+    public init() {
+        self.name = ""
     }
 }
