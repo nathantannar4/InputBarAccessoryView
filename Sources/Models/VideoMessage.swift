@@ -12,8 +12,9 @@ public class VideoMessage {
     public var localUrl: URL?
     public var name: String
     public var url: URL?
-    public var thumbnailImage: UIImage?
     public var duration: Double?
+    public var thumbnailImage: UIImage?
+    public var thumbNailUrl: URL?
     public var asDictionary: NSDictionary {
         get {
             let videoDictionary: NSDictionary = [
