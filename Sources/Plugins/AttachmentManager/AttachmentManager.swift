@@ -44,7 +44,8 @@ open class AttachmentManager: NSObject, InputPlugin {
         case image(UIImage)
         case url(URL)
         case data(Data)
-        case videoDictionary([String: Any])
+//        case videoDictionary([String: Any])
+        case video(VideoMessage)
         
         @available(*, deprecated, message: ".other(AnyObject) has been depricated as of 2.0.0")
         case other(AnyObject)
@@ -114,8 +115,8 @@ open class AttachmentManager: NSObject, InputPlugin {
             attachment = .url(url)
         } else if let data = object as? Data {
             attachment = .data(data)
-        } else if let videoDictionary = object as? [String: Any] {
-            attachment = .videoDictionary(videoDictionary)
+        } else if let videoMessage = object as? VideoMessage {
+            attachment = .video(videoMessage)
         } else {
             return false
         }
@@ -206,7 +207,7 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                 cell.deleteButton.backgroundColor = tintColor
                 return cell
                 
-            case .videoDictionary(let videoDictionary): //if it's a video
+            case .video(let videoMessage): //if it's a video
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoAttachmentCell.reuseIdentifier, for: indexPath) as? VideoAttachmentCell else {
                     fatalError()
                 }
@@ -214,8 +215,8 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                     cell.attachment = attachment
                     cell.indexPath = indexPath
                     cell.manager = self
-                    cell.imageView.image = videoDictionary["image"] as? UIImage ?? UIImage()
-                    if let duration = videoDictionary["duration"] as? Double {
+                    cell.imageView.image = videoMessage.thumbnailImage ?? UIImage()
+                    if let duration = videoMessage.duration {
                         let durationString = self.videoDurationToString(seconds: Int(duration))
                         cell.durationLabel.text = durationString
                     } else {

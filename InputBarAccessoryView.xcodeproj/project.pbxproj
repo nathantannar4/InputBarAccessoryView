@@ -43,6 +43,7 @@
 		38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1F320C7808F00FF8DD3 /* AutocompleteCompletion.swift */; };
 		38F0C1FB20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */; };
 		5445563E25450C17009E405C /* VideoAttachmentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5445563D25450C17009E405C /* VideoAttachmentCell.swift */; };
+		5493A348256A3F15008A50B0 /* VideoMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5493A347256A3F15008A50B0 /* VideoMessage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -96,6 +97,7 @@
 		38F0C1FA20C8971500FF8DD3 /* InputBarAccessoryView+Availability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "InputBarAccessoryView+Availability.swift"; sourceTree = "<group>"; };
 		51E04F3E24F7DCD0004D7452 /* Example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Example.xcodeproj; path = Example/Example.xcodeproj; sourceTree = "<group>"; };
 		5445563D25450C17009E405C /* VideoAttachmentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoAttachmentCell.swift; sourceTree = "<group>"; };
+		5493A347256A3F15008A50B0 /* VideoMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoMessage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,6 +237,7 @@
 			children = (
 				38C867721F50A6AD00811974 /* NSConstraintLayoutSet.swift */,
 				389C571522C8557D00D78F87 /* HorizontalEdgePadding.swift */,
+				5493A347256A3F15008A50B0 /* VideoMessage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 				3891276D1F980F0300702C05 /* InputItem.swift in Sources */,
 				38C8677D1F50A6AD00811974 /* NSConstraintLayoutSet.swift in Sources */,
 				38C8677F1F50A6AD00811974 /* InputBarAccessoryViewDelegate.swift in Sources */,
+				5493A348256A3F15008A50B0 /* VideoMessage.swift in Sources */,
 				38F0C1F420C7808F00FF8DD3 /* AutocompleteCompletion.swift in Sources */,
 				3876DA8B1F8352F200C89326 /* AutocompleteCell.swift in Sources */,
 				389C571622C8557D00D78F87 /* HorizontalEdgePadding.swift in Sources */,
