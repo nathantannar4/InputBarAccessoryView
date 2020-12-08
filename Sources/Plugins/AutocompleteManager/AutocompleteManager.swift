@@ -335,7 +335,12 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         attrs[.autocompleted] = true
         attrs[.autocompletedContext] = session.completion?.context
         let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
-        let newAttributedString = NSAttributedString(string: newString, attributes: attrs)
+        let newAttributedString = NSMutableAttributedString(string: newString, attributes: attrs)
+        
+        // Append extra space if needed
+        if appendSpaceOnCompletion {
+          newAttributedString.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
+        }
         
         // Modify the NSRange to include the prefix length
         let rangeModifier = keepPrefixOnCompletion ? session.prefix.count : 0
@@ -343,9 +348,6 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         
         // Replace the attributedText with a modified version including the autocompete
         let newAttributedText = textView.attributedText.replacingCharacters(in: highlightedRange, with: newAttributedString)
-        if appendSpaceOnCompletion {
-            newAttributedText.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
-        }
         
         // Set to a blank attributed string to prevent keyboard autocorrect from cloberring the insert
         textView.attributedText = NSAttributedString()
