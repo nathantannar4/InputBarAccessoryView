@@ -111,27 +111,47 @@ open class AttachmentManager: NSObject, InputPlugin {
     }
     
     // MARK: - API [Public]
-    
+
     /// Performs an animated insertion of an attachment at an index
     ///
     /// - Parameter index: The index to insert the attachment at
     open func insertAttachment(_ attachment: Attachment, at index: Int) {
-        
-        attachmentView.performBatchUpdates({
-            self.attachments.insert(attachment, at: index)
-            self.attachmentView.insertItems(at: [IndexPath(row: index, section: 0)])
-        }, completion: { success in
-            self.attachmentView.reloadData()
-            self.delegate?.attachmentManager(self, didInsert: attachment, at: index)
-            self.delegate?.attachmentManager(self, shouldBecomeVisible: self.attachments.count > 0 || self.isPersistent)
-        })
+      self.insertAttachments([attachment], at: index)
     }
-    
+
+    /// Performs an animated insertion of a number of attachments starting at an index
+    /// - Parameters:
+    ///   - attachments: The attachments
+    ///   - index: The first index to insert the attachments at
+    open func insertAttachments(_ attachments: [Attachment], at index: Int) {
+      var allAttachments = self.attachments
+
+      for (offset, attachment) in attachments.enumerated() {
+        allAttachments.insert(attachment, at: index + offset)
+      }
+
+      attachmentView.reloadData()
+
+      attachmentView.performBatchUpdates({
+        let indexPaths = attachments.enumerated().map { IndexPath(row: index + $0.offset, section: 0) }
+
+        self.attachments = allAttachments
+        self.attachmentView.insertItems(at: indexPaths)
+      }, completion: { success in
+        self.attachmentView.reloadData()
+
+        for (offset, attachment) in attachments.enumerated() {
+          self.delegate?.attachmentManager(self, didInsert: attachment, at: index + offset)
+        }
+
+        self.delegate?.attachmentManager(self, shouldBecomeVisible: self.attachments.count > 0 || self.isPersistent)
+      })
+    }
+
     /// Performs an animated removal of an attachment at an index
     ///
     /// - Parameter index: The index to remove the attachment at
     open func removeAttachment(at index: Int) {
-        
         let attachment = attachments[index]
         attachmentView.performBatchUpdates({
             self.attachments.remove(at: index)
@@ -201,7 +221,7 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
     // MARK: - UICollectionViewDelegateFlowLayout
     
     final public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+
         var height = attachmentView.intrinsicContentHeight
         if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             height -= (layout.sectionInset.bottom + layout.sectionInset.top + collectionView.contentInset.top + collectionView.contentInset.bottom)
