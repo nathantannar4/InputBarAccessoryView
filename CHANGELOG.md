@@ -1,6 +1,8 @@
 #  Changelog
 - Master:
    - Nothing yet
+- 5.2.3
+   - Fixed appendSpaceOnCompletion inserting space at wrong location
 - 5.2.2
    - Added an optional offset in KeyboardManager.bind(tableView:)
    - Change reuseIdentifier from `public` to `open` to allow inheritance
