@@ -9,18 +9,23 @@
 import UIKit
 
 public class VideoMessage {
-    public var localUrl: URL?
+    
     public var name: String
-    public var url: URL?
-    public var duration: Double?
-    public var thumbnailImage: UIImage?
+    public var videoUrl: URL? //video's Firebase URL
+    public var videoLocalUrl: URL? //video's local url
     public var thumbNailUrl: URL?
+    public var thumbnailImage: UIImage?
+    public var duration: Double?
+    
     public var asDictionary: NSDictionary {
         get {
             let videoDictionary: NSDictionary = [
-                "urlString": localUrl?.absoluteString ?? "",
-                "image": thumbnailImage ?? UIImage(),
+                "name": name,
+                "videoUrl": videoUrl?.absoluteString ?? "",
+                "videoLocalUrl": videoLocalUrl?.absoluteString ?? "",
+                "thumbNailUrl": thumbNailUrl?.absoluteString ?? "",
                 "duration": duration ?? 0.0,
+                
             ]
             return videoDictionary
         }
@@ -29,17 +34,17 @@ public class VideoMessage {
     //MARK: Initializers
     
     ///initializer for sending a message
-    public init(localUrl: URL, duration: Double, thumbnailImage: UIImage) {
-        self.localUrl = localUrl
-        self.name = localUrl.lastPathComponent
+    public init(videoLocalUrl: URL, duration: Double, thumbnailImage: UIImage) {
+        self.videoLocalUrl = videoLocalUrl
+        self.name = videoLocalUrl.lastPathComponent
         self.duration = duration
         self.thumbnailImage = thumbnailImage
     }
     
     ///initializer for loading a message received
-    public init(videoUrl: URL, thumbnailUrl: URL) {
-        self.url = videoUrl
-        self.name = videoUrl.lastPathComponent
+    public init(videoLocalUrl: URL, thumbnailUrl: URL) {
+        self.videoLocalUrl = videoLocalUrl
+        self.name = videoLocalUrl.lastPathComponent
         self.thumbNailUrl = thumbnailUrl
     }
     
