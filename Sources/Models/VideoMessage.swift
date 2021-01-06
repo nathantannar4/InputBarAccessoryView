@@ -13,7 +13,7 @@ public class VideoMessage {
     public var name: String
     public var videoUrl: URL? //video's Firebase URL
     public var videoLocalUrl: URL? //video's local url
-    public var thumbNailUrl: URL?
+    public var thumbnailUrl: URL?
     public var thumbnailImage: UIImage?
     public var duration: Double?
     
@@ -23,7 +23,7 @@ public class VideoMessage {
                 "name": name,
                 "videoUrl": videoUrl?.absoluteString ?? "",
                 "videoLocalUrl": videoLocalUrl?.absoluteString ?? "",
-                "thumbNailUrl": thumbNailUrl?.absoluteString ?? "",
+                "thumbnailUrl": thumbnailUrl?.absoluteString ?? "",
                 "duration": duration ?? 0.0,
                 
             ]
@@ -42,10 +42,10 @@ public class VideoMessage {
     }
     
     ///initializer for loading a message received
-    public init(videoLocalUrl: URL, thumbnailUrl: URL) {
-        self.videoLocalUrl = videoLocalUrl
-        self.name = videoLocalUrl.lastPathComponent
-        self.thumbNailUrl = thumbnailUrl
+    public init(videoUrl: URL, thumbnailUrl: URL) {
+        self.videoUrl = videoUrl
+        self.name = videoUrl.lastPathComponent
+        self.thumbnailUrl = thumbnailUrl
     }
     
     ///custom initializer
