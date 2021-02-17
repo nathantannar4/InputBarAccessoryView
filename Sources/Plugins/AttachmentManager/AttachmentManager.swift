@@ -115,8 +115,8 @@ open class AttachmentManager: NSObject, InputPlugin {
             attachment = .url(url)
         } else if let data = object as? Data {
             attachment = .data(data)
-        } else if let videoMessage = object as? VideoMessage {
-            attachment = .video(videoMessage)
+        } else if let video = object as? VideoMessage {
+            attachment = .video(video)
         } else {
             return false
         }
@@ -207,7 +207,7 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                 cell.deleteButton.backgroundColor = tintColor
                 return cell
                 
-            case .video(let videoMessage): //if it's a video
+            case .video(let video):
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: VideoAttachmentCell.reuseIdentifier, for: indexPath) as? VideoAttachmentCell else {
                     fatalError()
                 }
@@ -215,8 +215,8 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                     cell.attachment = attachment
                     cell.indexPath = indexPath
                     cell.manager = self
-                    cell.imageView.image = videoMessage.thumbnailImage ?? UIImage()
-                    if let duration = videoMessage.duration {
+                    cell.imageView.image = video.thumbnailImage ?? UIImage()
+                    if let duration = video.duration {
                         let durationString = self.videoDurationToString(seconds: Int(duration))
                         cell.durationLabel.text = durationString
                     } else {
