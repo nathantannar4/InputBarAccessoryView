@@ -21,8 +21,8 @@ public class VideoMessage {
         get {
             let videoDictionary: NSDictionary = [
                 "name": name,
-                "videoUrl": downloadUrl?.absoluteString ?? "",
-                "videoLocalUrl": localUrl?.absoluteString ?? "",
+                "downloadUrl": downloadUrl?.absoluteString ?? "",
+                "thumbnailUrl": localUrl?.absoluteString ?? "",
                 "thumbnailUrl": thumbnailUrl?.absoluteString ?? "",
                 "duration": duration ?? 0.0,
                 
