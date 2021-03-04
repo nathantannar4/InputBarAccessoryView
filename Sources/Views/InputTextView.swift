@@ -64,6 +64,12 @@ open class InputTextView: UITextView {
     
     open var isImagePasteEnabled: Bool = true
 
+    private var canBecomeFirstResponderStorage: Bool = true
+    open override var canBecomeFirstResponder: Bool {
+        get { canBecomeFirstResponderStorage }
+        set(newValue) { canBecomeFirstResponderStorage = newValue }
+    }
+
     /// A UILabel that holds the InputTextView's placeholder text
     public let placeholderLabel: UILabel = {
         let label = UILabel()
