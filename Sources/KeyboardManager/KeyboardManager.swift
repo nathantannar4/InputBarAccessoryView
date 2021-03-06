@@ -46,9 +46,6 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     
     /// The `NSLayoutConstraintSet` that holds the `inputAccessoryView` to the bottom if its superview
     private var constraints: NSLayoutConstraintSet?
-
-    /// The height of the tab bar passed into `.bind(inputAccessoryView:usingTabBar)` that's used when deciding the y position of the accessory view
-    private var tabBarHeight: CGFloat?
     
     /// A weak reference to a `UIScrollView` that has been attached for interactive keyboard dismissal
     private weak var scrollView: UIScrollView?
@@ -290,7 +287,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
         frame.size.height = window.bounds.height - frame.origin.y
         keyboardNotification.endFrame = frame
 
-        let yCoordinateDirectlyAboveKeyboard = -frame.height + (self.tabBarHeight ?? 0)
+        let yCoordinateDirectlyAboveKeyboard = -frame.height
         /// If a tab bar is shown, letting this number becoming > 0 makes it so the accessoryview disappears below the tab bar. setting the max value to 0 prevents that
         let aboveKeyboardAndAboveTabBar = min(0, yCoordinateDirectlyAboveKeyboard)
         self.constraints?.bottom?.constant = aboveKeyboardAndAboveTabBar
