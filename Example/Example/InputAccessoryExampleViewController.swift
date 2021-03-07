@@ -9,7 +9,7 @@
 import UIKit
 import InputBarAccessoryView
 
-final class InputAccessoryExampleViewController: CommonTableViewController {
+class InputAccessoryExampleViewController: CommonTableViewController {
     
     // MARK: - Properties
     
