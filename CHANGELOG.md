@@ -1,6 +1,10 @@
 #  Changelog
 - Master:
    - Nothing yet
+- 5.3.0
+   - Allow setting `canBecomeFirstResponder`
+   - Fix interactive keyboard dismissal lag
+   - Add example implemntation of `sendButton` animation
 - 5.2.3
    - Fixed appendSpaceOnCompletion inserting space at wrong location
 - 5.2.2
