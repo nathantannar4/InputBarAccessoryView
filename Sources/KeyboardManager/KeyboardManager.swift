@@ -298,8 +298,9 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
 
         var yCoordinateDirectlyAboveKeyboard = -frame.height
 
-        if shouldApplyAdditionBottomSpaceToInteractiveDismissal {
-            yCoordinateDirectlyAboveKeyboard -= additionalBottomSpace?() ?? 0
+        if shouldApplyAdditionBottomSpaceToInteractiveDismissal,
+           let additionalBottomSpace = additionalBottomSpace {
+            yCoordinateDirectlyAboveKeyboard -= additionalBottomSpace()
         }
 
         /// If a tab bar is shown, letting this number becoming > 0 makes it so the accessoryview disappears below the tab bar. setting the max value to 0 prevents that
