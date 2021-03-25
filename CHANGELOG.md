@@ -1,6 +1,6 @@
 #  Changelog
 - Master:
-   - Nothing yet
+   - Applied `additionalBottomSpace` to interactive dismissal
 - 5.3.0
    - Allow setting `canBecomeFirstResponder`
    - Fix interactive keyboard dismissal lag
