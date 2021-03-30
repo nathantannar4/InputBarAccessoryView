@@ -1,5 +1,7 @@
 #  Changelog
 - Master:
+   - Nothing yet
+- 5.3.1
    - Applied `additionalBottomSpace` to interactive dismissal
 - 5.3.0
    - Allow setting `canBecomeFirstResponder`
