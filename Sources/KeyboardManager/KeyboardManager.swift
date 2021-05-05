@@ -224,6 +224,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
         isKeyboardHidden = true
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.didHide]?(keyboardNotification)
+        cachedNotification = nil
     }
     
     /// An observer method called third in the lifecycle of a keyboard becoming visible/hidden
@@ -263,6 +264,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     open func keyboardWillHide(notification: NSNotification) {
         guard let keyboardNotification = KeyboardNotification(from: notification) else { return }
         callbacks[.willHide]?(keyboardNotification)
+        cachedNotification = nil
     }
     
     // MARK: - Helper Methods
