@@ -349,6 +349,11 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         // Replace the attributedText with a modified version including the autocompete
         let newAttributedText = textView.attributedText.replacingCharacters(in: highlightedRange, with: newAttributedString)
         
+        // make background clear for dark mode support
+        newAttributedText.addAttribute(NSAttributedString.Key.backgroundColor,
+                                       value: UIColor.clear,
+                                       range: NSMakeRange(0, newAttributedText.length))
+        
         // Set to a blank attributed string to prevent keyboard autocorrect from cloberring the insert
         textView.attributedText = NSAttributedString()
 
