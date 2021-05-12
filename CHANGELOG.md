@@ -1,6 +1,6 @@
 #  Changelog
 - Master:
-   - Nothing yet
+   - Reset cachedNotification when keyboard is programmatically dismissed
 - 5.3.1
    - Applied `additionalBottomSpace` to interactive dismissal
 - 5.3.0
