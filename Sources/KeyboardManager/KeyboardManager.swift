@@ -28,6 +28,7 @@
 import UIKit
 
 /// An object that observes keyboard notifications such that event callbacks can be set for each notification
+@available(iOSApplicationExtension, unavailable)
 open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     
     /// A callback that passes a `KeyboardNotification` as an input

@@ -14,7 +14,8 @@ let package = Package(
    targets: [
        .target(
            name: "InputBarAccessoryView",
-           path: "Sources"
+           path: "Sources",
+           exclude: ["Supporting Files/Info.plist"]
        )
    ],
    swiftLanguageVersions: [.v5]
