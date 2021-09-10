@@ -1,5 +1,9 @@
 #  Changelog
 - Master:
+- 5.4.0
+   - Make sure framework is ready for XCode 13
+   - Fix availability in AppExtensions
+   - Fix Package.swift to support iOS 12+ only
    - Reset cachedNotification when keyboard is programmatically dismissed
 - 5.3.1
    - Applied `additionalBottomSpace` to interactive dismissal

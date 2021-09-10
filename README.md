@@ -94,6 +94,11 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+5.4.0
+   - Make sure framework is ready for XCode 13
+   - Fix availability in AppExtensions
+   - Fix Package.swift to support iOS 12+ only
+
 5.3.0
    - Allow setting `canBecomeFirstResponder`
    - Fix interactive keyboard dismissal lag
@@ -156,6 +161,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 </p>
 
 **Nathan Tannar** - [https://nathantannar.me](https://nathantannar.me)
+**Jakub Kaspar** - [https://jakubkaspar.dev](https://jakubkaspar.dev)
 
 ## License
 
