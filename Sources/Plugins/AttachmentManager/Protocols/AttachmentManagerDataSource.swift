@@ -49,3 +49,11 @@ public protocol AttachmentManagerDataSource: AnyObject {
     /// - Returns: The size of the given attachment
     func attachmentManager(_ manager: AttachmentManager, sizeFor attachment: AttachmentManager.Attachment, at index: Int) -> CGSize?
 }
+
+public extension AttachmentManagerDataSource{
+    
+    // Default implementation, if data source method is not given, use autocalculated default.
+    func attachmentManager(_ manager: AttachmentManager, sizeFor attachment: AttachmentManager.Attachment, at index: Int) -> CGSize? {
+        return nil
+    }
+}
