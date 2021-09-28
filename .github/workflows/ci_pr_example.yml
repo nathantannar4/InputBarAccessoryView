@@ -1,0 +1,13 @@
+name: Build Example app
+
+on: pull_request
+
+jobs:
+  tests:
+    name: Build Example app
+    runs-on: macOS-latest
+    steps:
+    - name: Checkout the Git repository
+      uses: actions/checkout@v2
+    - name: Build and run example project
+      run: ./GitHubActions/build.sh example

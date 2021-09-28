@@ -12,8 +12,8 @@ import InputBarAccessoryView
 final class SubviewExampleViewController: CommonTableViewController {
     
     // MARK: - Properties
-    
-    private var keyboardManager = KeyboardManager()
+
+    private let keyboardManager = KeyboardManager()
     
     // MARK: - View Life Cycle
     
@@ -27,17 +27,23 @@ final class SubviewExampleViewController: CommonTableViewController {
         
         // Binding to the tableView will enabled interactive dismissal
         keyboardManager.bind(to: tableView)
-        
-        // Add some extra handling to manage content inset
-        keyboardManager.on(event: .didChangeFrame) { [weak self] (notification) in
-            let barHeight = self?.inputBar.bounds.height ?? 0
-            self?.tableView.contentInset.bottom = barHeight + notification.endFrame.height
-            self?.tableView.scrollIndicatorInsets.bottom = barHeight + notification.endFrame.height
-            }.on(event: .didHide) { [weak self] _ in
-                let barHeight = self?.inputBar.bounds.height ?? 0
-                self?.tableView.contentInset.bottom = barHeight
-                self?.tableView.scrollIndicatorInsets.bottom = barHeight
-        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        /// This replicates instagram's behavior when commenting in a post. As of 2020-09, it appears like they have one of the best product experiences of this handling the keyboard when dismissing the UIViewController
+        self.inputBar.inputTextView.resignFirstResponder()
+        /// This is set because otherwise, if only partially dragging the left edge of the screen, and then cancelling the dismissal, on viewDidAppear UIKit appears to set the first responder back to the inputTextView (https://stackoverflow.com/a/41847448)
+        self.inputBar.inputTextView.canBecomeFirstResponder = false
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        /// The opposite of `viewWillDisappear(_:)`
+        self.inputBar.inputTextView.canBecomeFirstResponder = true
+        self.inputBar.inputTextView.becomeFirstResponder()
     }
     
 }
