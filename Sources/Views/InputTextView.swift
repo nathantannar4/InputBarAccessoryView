@@ -64,6 +64,12 @@ open class InputTextView: UITextView {
     
     open var isImagePasteEnabled: Bool = true
 
+    private var canBecomeFirstResponderStorage: Bool = true
+    open override var canBecomeFirstResponder: Bool {
+        get { canBecomeFirstResponderStorage }
+        set(newValue) { canBecomeFirstResponderStorage = newValue }
+    }
+
     /// A UILabel that holds the InputTextView's placeholder text
     public let placeholderLabel: UILabel = {
         let label = UILabel()
@@ -234,8 +240,8 @@ open class InputTextView: UITextView {
     // MARK: - Image Paste Support
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-        
-        if action == NSSelectorFromString("paste:") && UIPasteboard.general.image != nil {
+
+        if action == NSSelectorFromString("paste:") && UIPasteboard.general.hasImages {
             return isImagePasteEnabled
         }
         return super.canPerformAction(action, withSender: sender)
