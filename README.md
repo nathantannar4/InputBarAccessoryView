@@ -35,7 +35,7 @@ To make `RxSwift`/`RxCocoa` extensions work you need to explicitly import `Rx` d
 ### Installation via CocoaPods
 
 ```ruby
-# Swift 5.3
+# Swift 5.5
 pod 'InputBarAccessoryView'
 
 # Swift 5.0
@@ -45,7 +45,7 @@ pod 'InputBarAccessoryView', '5.1.0'
 ### Installation via Carthage
 
 ```ruby
-# Swift 5.3
+# Swift 5.5
 github "nathantannar4/InputBarAccessoryView"
 
 # Swift 5.0
@@ -55,7 +55,7 @@ github "nathantannar4/InputBarAccessoryView" "5.1.0"
 ### Requirements
 
 iOS 12.0+
-Swift 5.3
+Swift 5.5
 
 > The latest iOS 11 release is v5.1.0
 
@@ -94,6 +94,11 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+5.5.0
+   - Update SPM tools to Swift 5.5
+   - Added new optional delegate method for custom attachments size
+   - Added new animations for left/right stack view constraints
+
 5.4.0
    - Make sure framework is ready for XCode 13
    - Fix availability in AppExtensions
