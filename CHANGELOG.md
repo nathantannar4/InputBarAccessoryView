@@ -1,5 +1,10 @@
 #  Changelog
 - Master:
+   - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+- 5.5.0
+   - Update SPM tools to Swift 5.5
+   - Added new optional delegate method for custom attachments size
+   - Added new animations for left/right stack view constraints
 - 5.4.0
    - Make sure framework is ready for XCode 13
    - Fix availability in AppExtensions

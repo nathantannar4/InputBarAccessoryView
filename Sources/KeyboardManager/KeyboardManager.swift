@@ -289,9 +289,16 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
             let window = UIApplication.shared.windows.first
             else { return }
 
-        // if there's no difference in frames for the `cachedNotification`, no adjustment is necessary. This is true when the keyboard is completely dismissed, or our pan doesn't intersect below the keyboard
-        guard cachedNotification?.startFrame != cachedNotification?.endFrame else { return }
-        
+        guard
+            // if there's no difference in frames for the `cachedNotification`, no adjustment is necessary. This is true when the keyboard is completely dismissed, or our pan doesn't intersect below the keyboard
+            keyboardNotification.startFrame != keyboardNotification.endFrame,
+            // when the width of the keyboard from endFrame is smaller than the width of scrollView manager is tracking
+            // with panGesture, we can assume the keyboard is floatig ahd updating inputAccessoryView is not necessary
+                keyboardNotification.endFrame.width >= view.frame.width
+        else {
+            return
+        }
+
         let location = recognizer.location(in: view)
         let absoluteLocation = view.convert(location, to: window)
         var frame = keyboardNotification.endFrame
