@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>TypingIndicator Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/TypingIndicator" class="dashAnchor"></a>
+    <a title="TypingIndicator Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">InputBarAccessoryView Docs</a> (63% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">InputBarAccessoryView Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        TypingIndicator Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentCell.html">AttachmentCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentManager.html">AttachmentManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentManager/Attachment.html">– Attachment</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AttachmentsView.html">AttachmentsView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteCell.html">AutocompleteCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteManager.html">AutocompleteManager</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AutocompleteTableView.html">AutocompleteTableView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/ImageAttachmentCell.html">ImageAttachmentCell</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarButtonItem.html">InputBarButtonItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputBarButtonItem/Spacing.html">– Spacing</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputStackView.html">InputStackView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputStackView/Position.html">– Position</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/InputTextView.html">InputTextView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SeparatorLine.html">SeparatorLine</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/TypingIndicator.html">TypingIndicator</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentManagerDataSource.html">AttachmentManagerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AttachmentManagerDelegate.html">AttachmentManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AutocompleteManagerDataSource.html">AutocompleteManagerDataSource</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/AutocompleteManagerDelegate.html">AutocompleteManagerDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputBarAccessoryViewDelegate.html">InputBarAccessoryViewDelegate</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InputPlugin.html">InputPlugin</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/AutocompleteCompletion.html">AutocompleteCompletion</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/AutocompleteSession.html">AutocompleteSession</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>TypingIndicator</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">TypingIndicator</span> <span class="p">:</span> <span class="kt">UIView</span><span class="p">,</span> <span class="kt"><a href="../Protocols/InputItem.html">InputItem</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>A view designed to be placed in an <code><a href="../Classes/InputStackView.html">InputStackView</a></code> as a Slack style typing indicator</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Properties%20[Public]"></a>
+                <a name="//apple_ref/swift/Section/Properties [Public]" class="dashAnchor"></a>
+                <a href="#/Properties%20[Public]">
+                  <h3 class="section-name">Properties [Public]</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC8delegateAA0eF8Delegate_pSgXwvp"></a>
+                    <a name="//apple_ref/swift/Property/delegate" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC8delegateAA0eF8Delegate_pSgXwvp">delegate</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A delegate to broadcast notifications from the <code>TypingIndicator</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">weak</span> <span class="k">var</span> <span class="nv">delegate</span><span class="p">:</span> <span class="kt"><a href="../Protocols/TypingIndicatorDelegate.html">TypingIndicatorDelegate</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)TypingIndicator(py)intrinsicContentSize"></a>
+                    <a name="//apple_ref/swift/Property/intrinsicContentSize" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)TypingIndicator(py)intrinsicContentSize">intrinsicContentSize</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">override</span> <span class="k">var</span> <span class="nv">intrinsicContentSize</span><span class="p">:</span> <span class="kt">CGSize</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC05usersE0SaySSGvp"></a>
+                    <a name="//apple_ref/swift/Property/usersTyping" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC05usersE0SaySSGvp">usersTyping</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An array of names/ids that will be parsed and displayed as the typing users</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">usersTyping</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC5labelSo7UILabelCvp"></a>
+                    <a name="//apple_ref/swift/Property/label" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC5labelSo7UILabelCvp">label</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">label</span><span class="p">:</span> <span class="kt">UILabel</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC13separatorLineAA09SeparatorH0Cvp"></a>
+                    <a name="//apple_ref/swift/Property/separatorLine" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC13separatorLineAA09SeparatorH0Cvp">separatorLine</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A boarder line anchored to the bottom of the view</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">let</span> <span class="nv">separatorLine</span><span class="p">:</span> <span class="kt"><a href="../Classes/SeparatorLine.html">SeparatorLine</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC15labelEdgeInsetsSC06UIEdgeI0Vvp"></a>
+                    <a name="//apple_ref/swift/Property/labelEdgeInsets" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC15labelEdgeInsetsSC06UIEdgeI0Vvp">labelEdgeInsets</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">labelEdgeInsets</span><span class="p">:</span> <span class="kt">UIEdgeInsets</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/InputItem%20Properties"></a>
+                <a name="//apple_ref/swift/Section/InputItem Properties" class="dashAnchor"></a>
+                <a href="#/InputItem%20Properties">
+                  <h3 class="section-name">InputItem Properties</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0A4ItemP05inputbcD0A2ACSgvp"></a>
+                    <a name="//apple_ref/swift/Property/inputBarAccessoryView" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0A4ItemP05inputbcD0A2ACSgvp">inputBarAccessoryView</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">inputBarAccessoryView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView0A4ItemP011parentStackD8PositionAA0agD0C0H0OSgvp"></a>
+                    <a name="//apple_ref/swift/Property/parentStackViewPosition" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView0A4ItemP011parentStackD8PositionAA0agD0C0H0OSgvp">parentStackViewPosition</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="k">var</span> <span class="nv">parentStackViewPosition</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputStackView.html">InputStackView</a></span><span class="o">.</span><span class="kt">Position</span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Initialization"></a>
+                <a name="//apple_ref/swift/Section/Initialization" class="dashAnchor"></a>
+                <a href="#/Initialization">
+                  <h3 class="section-name">Initialization</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)TypingIndicator(im)initWithFrame:"></a>
+                    <a name="//apple_ref/swift/Method/init(frame:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)TypingIndicator(im)initWithFrame:">init(frame:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">override</span> <span class="nf">init</span><span class="p">(</span><span class="nv">frame</span><span class="p">:</span> <span class="kt">CGRect</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/c:@M@InputBarAccessoryView@objc(cs)TypingIndicator(im)initWithCoder:"></a>
+                    <a name="//apple_ref/swift/Method/init(coder:)" class="dashAnchor"></a>
+                    <a class="token" href="#/c:@M@InputBarAccessoryView@objc(cs)TypingIndicator(im)initWithCoder:">init(coder:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">required</span> <span class="nf">init</span><span class="p">?(</span><span class="n">coder</span> <span class="nv">aDecoder</span><span class="p">:</span> <span class="kt">NSCoder</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/API%20[Public]"></a>
+                <a name="//apple_ref/swift/Section/API [Public]" class="dashAnchor"></a>
+                <a href="#/API%20[Public]">
+                  <h3 class="section-name">API [Public]</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC08setUsersE0ySaySSG2to_tF"></a>
+                    <a name="//apple_ref/swift/Method/setUsersTyping(to:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC08setUsersE0ySaySSG2to_tF">setUsersTyping(to:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Sets a new list of users who are typing and updates the label/UI</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">setUsersTyping</span><span class="p">(</span><span class="n">to</span> <span class="nv">users</span><span class="p">:</span> <span class="p">[</span><span class="kt">String</span><span class="p">])</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>users</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The new group of names/ids to display as typing</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/InputItem%20Methods"></a>
+                <a name="//apple_ref/swift/Section/InputItem Methods" class="dashAnchor"></a>
+                <a href="#/InputItem%20Methods">
+                  <h3 class="section-name">InputItem Methods</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC04textD15DidChangeActionyAA0a4TextD0C4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/textViewDidChangeAction(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC04textD15DidChangeActionyAA0a4TextD0C4with_tF">textViewDidChangeAction(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates when the current user is typing</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">textViewDidChangeAction</span><span class="p">(</span><span class="n">with</span> <span class="nv">textView</span><span class="p">:</span> <span class="kt"><a href="../Classes/InputTextView.html">InputTextView</a></span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC26keyboardSwipeGestureActionySo07UISwipeI10RecognizerC4with_tF"></a>
+                    <a name="//apple_ref/swift/Method/keyboardSwipeGestureAction(with:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC26keyboardSwipeGestureActionySo07UISwipeI10RecognizerC4with_tF">keyboardSwipeGestureAction(with:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Does nothing</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardSwipeGestureAction</span><span class="p">(</span><span class="n">with</span> <span class="nv">gesture</span><span class="p">:</span> <span class="kt">UISwipeGestureRecognizer</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC25keyboardEditingEndsActionyyF"></a>
+                    <a name="//apple_ref/swift/Method/keyboardEditingEndsAction()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC25keyboardEditingEndsActionyyF">keyboardEditingEndsAction()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Indicates that the current user has completed typing</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardEditingEndsAction</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:21InputBarAccessoryView15TypingIndicatorC27keyboardEditingBeginsActionyyF"></a>
+                    <a name="//apple_ref/swift/Method/keyboardEditingBeginsAction()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:21InputBarAccessoryView15TypingIndicatorC27keyboardEditingBeginsActionyyF">keyboardEditingBeginsAction()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Does nothing</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">keyboardEditingBeginsAction</span><span class="p">()</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2018-06-06)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
