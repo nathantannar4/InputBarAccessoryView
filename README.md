@@ -79,6 +79,7 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
    - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
    - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
    - Update docs
+
 5.5.0
    - Update SPM tools to Swift 5.5
    - Added new optional delegate method for custom attachments size
