@@ -74,8 +74,8 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
 
 ## Latest Releases
 6.0.0
-   - *Breaking change*: Drop iOS 12 support
-   - *Breaking change*: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
+   - **Breaking change**: Drop iOS 12 support
+   - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
    - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
    - Update docs
 5.5.0
