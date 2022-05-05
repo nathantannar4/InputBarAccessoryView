@@ -10,7 +10,6 @@
 - [x] Autocomplete attributed text highlighting
 - [x] Reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `InputStackView`s that act as toolbars to place buttons
-- [x] `RxSwift`/`RxCocoa` Support with `RxExtensions` Cocoapod subspec
 - [x] Drop in attachment view for file/photo management
 - [x] Plugin support for your own `InputPlugin`s
 - [x] Compatible with all iPhones and iPads
@@ -23,43 +22,23 @@ Once you have your Swift package set up, adding InputBarAccessoryView as a depen
 
 ```
 dependencies: [
-    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "5.2.0"))
+    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "6.0.0"))
 ]
 ```
 You can also add it via XCode SPM editor with URL:
 ```
 https://github.com/nathantannar4/InputBarAccessoryView.git
 ```
-To make `RxSwift`/`RxCocoa` extensions work you need to explicitly import `Rx` dependencies.
-
-### Installation via CocoaPods
-
-```ruby
-# Swift 5.5
-pod 'InputBarAccessoryView'
-
-# Swift 5.0
-pod 'InputBarAccessoryView', '5.1.0'
-```
-
-### Installation via Carthage
-
-```ruby
-# Swift 5.5
-github "nathantannar4/InputBarAccessoryView"
-
-# Swift 5.0
-github "nathantannar4/InputBarAccessoryView" "5.1.0"
-```
 
 ### Requirements
 
-iOS 12.0+
+iOS 13.0+
 Swift 5.5
 
-> The latest iOS 11 release is v5.1.0
+> The latest iOS 12 release is v5.5.0
+> CocoaPods and RxExtensions were removed in 6.0.0
 
-> The latest iOS 9 + iOS 10 release is v4.3.3
+> The latest iOS 11 release is v5.1.0
 
 > The latest Swift 5.0 release is v5.1.0 
 
@@ -94,6 +73,11 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+6.0.0
+   - *Breaking change*: Drop iOS 12 support
+   - *Breaking change*: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
+   - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+   - Update docs
 5.5.0
    - Update SPM tools to Swift 5.5
    - Added new optional delegate method for custom attachments size
