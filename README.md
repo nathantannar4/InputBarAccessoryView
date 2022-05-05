@@ -36,6 +36,7 @@ iOS 13.0+
 Swift 5.5
 
 > The latest iOS 12 release is v5.5.0
+
 > CocoaPods and RxExtensions were removed in 6.0.0
 
 > The latest iOS 11 release is v5.1.0
