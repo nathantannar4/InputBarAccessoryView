@@ -14,12 +14,6 @@ let package = Package(
             name: "InputBarAccessoryView",
             path: "Sources",
             exclude: ["Supporting/Info.plist"]
-        ),
-        .target(
-            name: "Example",
-            dependencies: ["InputBarAccessoryView"],
-            path: "Example/Example",
-            exclude: ["Info.plist", "Example.entitlements"]
         )
     ],
     swiftLanguageVersions: [.v5]

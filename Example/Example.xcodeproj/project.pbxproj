@@ -86,10 +86,11 @@
 		383B83901F47897800027965 = {
 			isa = PBXGroup;
 			children = (
-				51D057FE28234307008AAC04 /* Packages */,
-				383B839B1F47897800027965 /* Example */,
-				383B839A1F47897800027965 /* Products */,
 				51D058002823432C008AAC04 /* Frameworks */,
+				51D057FE28234307008AAC04 /* Packages */,
+				383B839A1F47897800027965 /* Products */,
+				51ED37852823B83B00E96FED /* Resources */,
+				383B839B1F47897800027965 /* Sources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,7 +102,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		383B839B1F47897800027965 /* Example */ = {
+		383B839B1F47897800027965 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				383B839C1F47897800027965 /* AppDelegate.swift */,
@@ -112,16 +113,14 @@
 				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
 				46E4094D252996D900D238A8 /* SwiftUIExample.swift */,
 				468A8726251C8AAB0018D007 /* Community Examples */,
-				38F0C1FC20C89C8700FF8DD3 /* InputBarExamples */,
+				38F0C1FC20C89C8700FF8DD3 /* InputBar Examples */,
 				38F0C20920C89D2D00FF8DD3 /* Cells */,
-				38F0C20A20C89D4100FF8DD3 /* Supporting Files */,
-				383B83A01F47897800027965 /* Assets.xcassets */,
-				383B83A51F47897800027965 /* Info.plist */,
+				38F0C20A20C89D4100FF8DD3 /* Sample Data */,
 			);
-			path = Example;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		38F0C1FC20C89C8700FF8DD3 /* InputBarExamples */ = {
+		38F0C1FC20C89C8700FF8DD3 /* InputBar Examples */ = {
 			isa = PBXGroup;
 			children = (
 				3821ADE520F5360B00DE0D1D /* InputBarStyle.swift */,
@@ -131,7 +130,7 @@
 				38F0C20320C89CB400FF8DD3 /* FacebookInputBar.swift */,
 				38DAD87C21A685C6001762CD /* NoTextViewInputBar.swift */,
 			);
-			path = InputBarExamples;
+			path = "InputBar Examples";
 			sourceTree = "<group>";
 		};
 		38F0C20920C89D2D00FF8DD3 /* Cells */ = {
@@ -144,14 +143,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		38F0C20A20C89D4100FF8DD3 /* Supporting Files */ = {
+		38F0C20A20C89D4100FF8DD3 /* Sample Data */ = {
 			isa = PBXGroup;
 			children = (
 				388714EA202AC9A50064C8BB /* SampleData.swift */,
 				383989B91F55C600003D30DD /* Lorem.swift */,
 				383989BC1F564F5C003D30DD /* Random.swift */,
 			);
-			path = "Supporting Files";
+			path = "Sample Data";
 			sourceTree = "<group>";
 		};
 		468A8726251C8AAB0018D007 /* Community Examples */ = {
@@ -175,6 +174,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		51ED37852823B83B00E96FED /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				383B83A51F47897800027965 /* Info.plist */,
+				383B83A01F47897800027965 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,7 +409,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = JH5XJ55XGZ;
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -417,7 +425,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = JH5XJ55XGZ;
-				INFOPLIST_FILE = Example/Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
