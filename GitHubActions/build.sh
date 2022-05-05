@@ -12,13 +12,13 @@ MODE="$1"
 
 if [ "$MODE" = "framework" -o "$MODE" = "all" ]; then
   echo "Building InputBarAccessoryView Framework."
-  set -o pipefail && xcodebuild build -project InputBarAccessoryView.xcodeproj -scheme InputBarAccessoryView -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+  set -o pipefail && xcodebuild build -scheme InputBarAccessoryView -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 11" | xcpretty -c
   success="1"
 fi
 
 if [ "$MODE" = "example" -o "$MODE" = "all" ]; then
   echo "Building InputBarAccessoryView Example app."
-  set -o pipefail && xcodebuild build analyze -workspace InputBarAccessoryView.xcworkspace -scheme Example -destination "platform=iOS Simulator,name=iPhone 11 Pro" CODE_SIGNING_REQUIRED=NO | xcpretty -c
+  set -o pipefail && xcodebuild build -project Example/Example.xcodeproj -scheme Example -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 11 Pro" | xcpretty -c
   success="1"
 fi
 

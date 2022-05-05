@@ -1,6 +1,11 @@
 #  Changelog
 - Master:
+   -
+- 6.0.0
+   - *Breaking change*: Drop iOS 12 support
+   - *Breaking change*: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
    - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+   - Update docs
 - 5.5.0
    - Update SPM tools to Swift 5.5
    - Added new optional delegate method for custom attachments size

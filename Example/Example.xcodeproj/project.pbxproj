@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,9 +15,6 @@
 		383989BD1F564F5C003D30DD /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383989BC1F564F5C003D30DD /* Random.swift */; };
 		383B839D1F47897800027965 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B839C1F47897800027965 /* AppDelegate.swift */; };
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
-		383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A21F47897800027965 /* LaunchScreen.storyboard */; };
-		3876DAA41F841AE900C89326 /* InputBarAccessoryView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */; };
-		3876DAA51F841AE900C89326 /* InputBarAccessoryView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		388714E9202AC9620064C8BB /* InputBarStyleSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */; };
 		388714EB202AC9A50064C8BB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388714EA202AC9A50064C8BB /* SampleData.swift */; };
 		38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C888C5202051B3000F2E2F /* ImageCell.swift */; };
@@ -31,6 +28,7 @@
 		38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */; };
 		468A8728251C8AC20018D007 /* ButtonAnimationExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */; };
 		46E4094E252996D900D238A8 /* SwiftUIExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E4094D252996D900D238A8 /* SwiftUIExample.swift */; };
+		51D058022823432C008AAC04 /* InputBarAccessoryView in Frameworks */ = {isa = PBXBuildFile; productRef = 51D058012823432C008AAC04 /* InputBarAccessoryView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,7 +38,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3876DAA51F841AE900C89326 /* InputBarAccessoryView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -57,9 +54,7 @@
 		383B83991F47897800027965 /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		383B839C1F47897800027965 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		383B83A01F47897800027965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		383B83A31F47897800027965 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = InputBarAccessoryView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarStyleSelectionController.swift; sourceTree = "<group>"; };
 		388714EA202AC9A50064C8BB /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		38C888C5202051B3000F2E2F /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -73,6 +68,7 @@
 		38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = READMEPreviewViewController.swift; sourceTree = "<group>"; };
 		468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAnimationExample.swift; sourceTree = "<group>"; };
 		46E4094D252996D900D238A8 /* SwiftUIExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExample.swift; sourceTree = "<group>"; };
+		51D057FF28234307008AAC04 /* InputBarAccessoryView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = InputBarAccessoryView; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3876DAA41F841AE900C89326 /* InputBarAccessoryView.framework in Frameworks */,
+				51D058022823432C008AAC04 /* InputBarAccessoryView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,9 +86,11 @@
 		383B83901F47897800027965 = {
 			isa = PBXGroup;
 			children = (
-				3876DAA31F841AE900C89326 /* InputBarAccessoryView.framework */,
-				383B839B1F47897800027965 /* Example */,
+				51D058002823432C008AAC04 /* Frameworks */,
+				51D057FE28234307008AAC04 /* Packages */,
 				383B839A1F47897800027965 /* Products */,
+				51ED37852823B83B00E96FED /* Resources */,
+				383B839B1F47897800027965 /* Sources */,
 			);
 			sourceTree = "<group>";
 		};
@@ -104,7 +102,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		383B839B1F47897800027965 /* Example */ = {
+		383B839B1F47897800027965 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				383B839C1F47897800027965 /* AppDelegate.swift */,
@@ -115,17 +113,14 @@
 				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
 				46E4094D252996D900D238A8 /* SwiftUIExample.swift */,
 				468A8726251C8AAB0018D007 /* Community Examples */,
-				38F0C1FC20C89C8700FF8DD3 /* InputBarExamples */,
+				38F0C1FC20C89C8700FF8DD3 /* InputBar Examples */,
 				38F0C20920C89D2D00FF8DD3 /* Cells */,
-				38F0C20A20C89D4100FF8DD3 /* Supporting Files */,
-				383B83A01F47897800027965 /* Assets.xcassets */,
-				383B83A21F47897800027965 /* LaunchScreen.storyboard */,
-				383B83A51F47897800027965 /* Info.plist */,
+				38F0C20A20C89D4100FF8DD3 /* Sample Data */,
 			);
-			path = Example;
+			path = Sources;
 			sourceTree = "<group>";
 		};
-		38F0C1FC20C89C8700FF8DD3 /* InputBarExamples */ = {
+		38F0C1FC20C89C8700FF8DD3 /* InputBar Examples */ = {
 			isa = PBXGroup;
 			children = (
 				3821ADE520F5360B00DE0D1D /* InputBarStyle.swift */,
@@ -135,7 +130,7 @@
 				38F0C20320C89CB400FF8DD3 /* FacebookInputBar.swift */,
 				38DAD87C21A685C6001762CD /* NoTextViewInputBar.swift */,
 			);
-			path = InputBarExamples;
+			path = "InputBar Examples";
 			sourceTree = "<group>";
 		};
 		38F0C20920C89D2D00FF8DD3 /* Cells */ = {
@@ -148,14 +143,14 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
-		38F0C20A20C89D4100FF8DD3 /* Supporting Files */ = {
+		38F0C20A20C89D4100FF8DD3 /* Sample Data */ = {
 			isa = PBXGroup;
 			children = (
 				388714EA202AC9A50064C8BB /* SampleData.swift */,
 				383989B91F55C600003D30DD /* Lorem.swift */,
 				383989BC1F564F5C003D30DD /* Random.swift */,
 			);
-			path = "Supporting Files";
+			path = "Sample Data";
 			sourceTree = "<group>";
 		};
 		468A8726251C8AAB0018D007 /* Community Examples */ = {
@@ -164,6 +159,30 @@
 				468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */,
 			);
 			path = "Community Examples";
+			sourceTree = "<group>";
+		};
+		51D057FE28234307008AAC04 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				51D057FF28234307008AAC04 /* InputBarAccessoryView */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		51D058002823432C008AAC04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		51ED37852823B83B00E96FED /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				383B83A51F47897800027965 /* Info.plist */,
+				383B83A01F47897800027965 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +202,9 @@
 			dependencies = (
 			);
 			name = Example;
+			packageProductDependencies = (
+				51D058012823432C008AAC04 /* InputBarAccessoryView */,
+			);
 			productName = Example;
 			productReference = 383B83991F47897800027965 /* Example.app */;
 			productType = "com.apple.product-type.application";
@@ -211,7 +233,6 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 			);
 			mainGroup = 383B83901F47897800027965;
 			productRefGroup = 383B839A1F47897800027965 /* Products */;
@@ -229,7 +250,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				383B83A11F47897800027965 /* Assets.xcassets in Resources */,
-				383B83A41F47897800027965 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,17 +284,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		383B83A21F47897800027965 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				383B83A31F47897800027965 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		383B83A61F47897800027965 /* Debug */ = {
@@ -387,7 +396,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -399,8 +409,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = JH5XJ55XGZ;
-				INFOPLIST_FILE = Example/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.InputBarAccessoryViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -412,8 +425,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = JH5XJ55XGZ;
-				INFOPLIST_FILE = Example/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = me.nathantannar.InputBarAccessoryViewExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -442,6 +458,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		51D058012823432C008AAC04 /* InputBarAccessoryView */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = InputBarAccessoryView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 383B83911F47897800027965 /* Project object */;
 }

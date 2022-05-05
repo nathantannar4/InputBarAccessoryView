@@ -5,11 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "InputBarAccessoryView",
-    platforms: [.iOS(.v12)],
+    platforms: [.iOS(.v13)],
     products: [
-        .library(
-            name: "InputBarAccessoryView",
-            targets: ["InputBarAccessoryView"])
+        .library(name: "InputBarAccessoryView", targets: ["InputBarAccessoryView"]),
     ],
     targets: [
         .target(
