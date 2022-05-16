@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		131A72ED28325D2E001F73BE /* AdditionalBottomSpaceExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 131A72EC28325D2E001F73BE /* AdditionalBottomSpaceExampleViewController.swift */; };
 		3821ADE120F534DA00DE0D1D /* SubviewExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */; };
 		3821ADE220F534DA00DE0D1D /* InputAccessoryExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */; };
 		3821ADE420F5359800DE0D1D /* CommonTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		131A72EC28325D2E001F73BE /* AdditionalBottomSpaceExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdditionalBottomSpaceExampleViewController.swift; sourceTree = "<group>"; };
 		3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubviewExampleViewController.swift; sourceTree = "<group>"; };
 		3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputAccessoryExampleViewController.swift; sourceTree = "<group>"; };
 		3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonTableViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		131A72EB28325A05001F73BE /* Example ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */,
+				38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */,
+				3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */,
+				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
+				131A72EC28325D2E001F73BE /* AdditionalBottomSpaceExampleViewController.swift */,
+				46E4094D252996D900D238A8 /* SwiftUIExample.swift */,
+			);
+			path = "Example ViewControllers";
+			sourceTree = "<group>";
+		};
 		383B83901F47897800027965 = {
 			isa = PBXGroup;
 			children = (
@@ -106,14 +121,10 @@
 			isa = PBXGroup;
 			children = (
 				383B839C1F47897800027965 /* AppDelegate.swift */,
-				38FCF9D5219F797600A47350 /* READMEPreviewViewController.swift */,
 				388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */,
-				3821ADE320F5359800DE0D1D /* CommonTableViewController.swift */,
-				3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */,
-				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
-				46E4094D252996D900D238A8 /* SwiftUIExample.swift */,
-				468A8726251C8AAB0018D007 /* Community Examples */,
+				131A72EB28325A05001F73BE /* Example ViewControllers */,
 				38F0C1FC20C89C8700FF8DD3 /* InputBar Examples */,
+				468A8726251C8AAB0018D007 /* Community Examples */,
 				38F0C20920C89D2D00FF8DD3 /* Cells */,
 				38F0C20A20C89D4100FF8DD3 /* Sample Data */,
 			);
@@ -266,6 +277,7 @@
 				383989BD1F564F5C003D30DD /* Random.swift in Sources */,
 				388714EB202AC9A50064C8BB /* SampleData.swift in Sources */,
 				38F0C20020C89CA200FF8DD3 /* SlackInputBar.swift in Sources */,
+				131A72ED28325D2E001F73BE /* AdditionalBottomSpaceExampleViewController.swift in Sources */,
 				388714E9202AC9620064C8BB /* InputBarStyleSelectionController.swift in Sources */,
 				383989BA1F55C600003D30DD /* Lorem.swift in Sources */,
 				3821ADE120F534DA00DE0D1D /* SubviewExampleViewController.swift in Sources */,
