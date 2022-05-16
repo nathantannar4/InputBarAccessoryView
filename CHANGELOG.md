@@ -1,6 +1,6 @@
 #  Changelog
 - Master:
-   -
+   - [#230](https://github.com/nathantannar4/InputBarAccessoryView/pull/230) Added `additionalInputViewBottomConstraintConstant` to `KeyboardManager` as a way for providing additional bottom constraint constant offset for `inputAccessoryView`. Example implementation can be found in `AdditionalBottomSpaceExampleViewController`
 - 6.0.0
    - **Breaking change**: Drop iOS 12 support
    - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
