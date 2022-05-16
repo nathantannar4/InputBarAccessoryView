@@ -25,7 +25,7 @@ dependencies: [
     .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "6.0.0"))
 ]
 ```
-You can also add it via XCode SPM editor with URL:
+You can also add it via Xcode SPM editor with URL:
 ```
 https://github.com/nathantannar4/InputBarAccessoryView.git
 ```
@@ -86,7 +86,7 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
    - Added new animations for left/right stack view constraints
 
 5.4.0
-   - Make sure framework is ready for XCode 13
+   - Make sure framework is ready for Xcode 13
    - Fix availability in AppExtensions
    - Fix Package.swift to support iOS 12+ only
 
@@ -106,7 +106,7 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
 
 5.2.0
    - Drop support for iOS 11 and bump minimum version to iOS 12+
-   - Support Swift 5.3 and higher for XCode 12
+   - Support Swift 5.3 and higher for Xcode 12
     
 See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
