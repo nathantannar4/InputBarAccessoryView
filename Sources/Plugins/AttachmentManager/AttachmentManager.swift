@@ -33,6 +33,7 @@ open class AttachmentManager: NSObject, InputPlugin {
         case image(UIImage)
         case url(URL)
         case data(Data)
+        case attachment(AttachmentPicked)
         
         @available(*, deprecated, message: ".other(AnyObject) has been depricated as of 2.0.0")
         case other(AnyObject)
