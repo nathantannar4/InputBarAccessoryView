@@ -192,6 +192,17 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
                 cell.imageView.tintColor = tintColor
                 cell.deleteButton.backgroundColor = tintColor
                 return cell
+            case .attachment(let attach):
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomAttachmentCell.reuseIdentifier, for: indexPath) as? CustomAttachmentCell else {
+                    fatalError()
+                }
+                cell.attachment = attachment
+                cell.indexPath = indexPath
+                cell.manager = self
+                cell.attachmentLabel.text = attach.fileName
+                cell.deleteButton.backgroundColor = tintColor
+                return cell
+                
             default:
                 return collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as! AttachmentCell
             }

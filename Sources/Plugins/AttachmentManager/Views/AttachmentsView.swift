@@ -82,5 +82,6 @@ open class AttachmentCollectionView: UICollectionView {
         setContentHuggingPriority(UILayoutPriority.defaultHigh, for: .vertical)
         register(AttachmentCell.self, forCellWithReuseIdentifier: AttachmentCell.reuseIdentifier)
         register(ImageAttachmentCell.self, forCellWithReuseIdentifier: ImageAttachmentCell.reuseIdentifier)
+        register(CustomAttachmentCell.self, forCellWithReuseIdentifier: CustomAttachmentCell.reuseIdentifier)
     }
 }
