@@ -7,14 +7,12 @@
 
 import Foundation
 
-public class AttachmentPicked {
+open class AttachmentPicked {
     
-    var fileType: String!
-    var fileName: String!
-    var fileSize: Int!
-    var mimeType: String!
-    var blob: String!
-    
-    //For internal use
-    var uncompressedFile: Data!
+    open var fileType: String!
+    open var fileName: String!
+    open var fileSize: Int!
+    open var mimeType: String!
+    open var blob: String!
+    open var uncompressedFile: Data!
 }
