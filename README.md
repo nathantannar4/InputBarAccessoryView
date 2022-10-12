@@ -74,6 +74,9 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+6.1.1
+   - Fixed warning for Xcode 14
+
 6.1.0
    - #230 Added additionalInputViewBottomConstraintConstant to KeyboardManager as a way for providing additional bottom constraint constant offset for inputAccessoryView. Example implementation can be found in AdditionalBottomSpaceExampleViewController
 
