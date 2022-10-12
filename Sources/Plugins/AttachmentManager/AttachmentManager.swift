@@ -213,7 +213,7 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
         return CGSize(width: height, height: height)
     }
     
-    open func createAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
+    @objc open func createAttachmentCell(in collectionView: UICollectionView, at indexPath: IndexPath) -> AttachmentCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AttachmentCell.reuseIdentifier, for: indexPath) as? AttachmentCell else {
             fatalError()
