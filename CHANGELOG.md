@@ -1,6 +1,8 @@
 #  Changelog
 - Master:
    - Nothing yet
+- 6.2.0
+   - Remove `canBecomeFirstResponder` on `InputTextView` to fix `UITextViewDelegate` methods not being called
 - 6.1.1
    - Fixed warning for Xcode 14
 - 6.1.0
