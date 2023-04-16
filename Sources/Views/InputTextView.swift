@@ -133,6 +133,9 @@ open class InputTextView: UITextView {
         }
     }
     
+    open var registeredCommands: [UIKeyCommand] = []
+    open var registeredKeyCallbacks: [String: () -> Void] = [:]
+    
     /// A weak reference to the InputBarAccessoryView that the InputTextView is contained within
     open weak var inputBarAccessoryView: InputBarAccessoryView?
     
@@ -229,6 +232,34 @@ open class InputTextView: UITextView {
         } else {
             placeholderLabelConstraintSet?.activate()
         }
+    }
+    
+    // MARK: - Key Command
+    
+    open override var keyCommands: [UIKeyCommand]? {
+        return registeredCommands
+    }
+    
+    open func observeKeyInput(_ input: String, modifiers: UIKeyModifierFlags, discoverabilityTitle: String?, callback: @escaping (() -> Void)) {
+        if input == "" {
+            return
+        }
+        let keyCommand = UIKeyCommand(input: input, modifierFlags: modifiers, action: #selector(didDetectKeyCommand(_:)))
+        keyCommand.discoverabilityTitle = discoverabilityTitle
+        if #available(iOS 15.0, *) {
+            keyCommand.wantsPriorityOverSystemBehavior = true
+        }
+
+        let key = "\(input)_\(modifiers)"
+        registeredCommands.append(keyCommand)
+        registeredKeyCallbacks[key] = callback
+    }
+    
+    @objc private func didDetectKeyCommand(_ keyCommand: UIKeyCommand) {
+        if keyCommand.input == nil { return }
+        let key = "\(String(describing: keyCommand.input!))_\(keyCommand.modifierFlags)"
+        let callback = registeredKeyCallbacks[key]
+        callback?()
     }
     
     // MARK: - Image Paste Support
