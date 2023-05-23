@@ -181,19 +181,19 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else { return }
 
         let keyboardHeight = notification.endFrame.height
-        self?.animateAlongside(notification) {
-            self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
-            self?.inputAccessoryView?.superview?.layoutIfNeeded()
+        let animateAlongside = {
+            self?.animateAlongside(notification) {
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
+                self?.inputAccessoryView?.superview?.layoutIfNeeded()
+            }
         }
+        animateAlongside()
         
-        // Doing it a second time delayed is required for accurate placement
+        // Doing it a second time delayed is required for accurate placement when using pagesheet on portrait iPad
         DispatchQueue.main.async {
             let bottomGap = self?.bottomGap ?? 0
             if bottomGap != 0 {
-                self?.animateAlongside(notification) {
-                    self?.constraints?.bottom?.constant = min(0, -keyboardHeight + bottomGap) - (additionalBottomSpace?() ?? 0)
-                    self?.inputAccessoryView?.superview?.layoutIfNeeded()
-                }
+                animateAlongside()
             }
         }
     }
@@ -205,37 +205,37 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else {
             return
         }
-        self?.animateAlongside(notification) {
-            self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
-            self?.inputAccessoryView?.superview?.layoutIfNeeded()
+        let animateAlongside = {
+            self?.animateAlongside(notification) {
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
+                self?.inputAccessoryView?.superview?.layoutIfNeeded()
+            }
         }
+        animateAlongside()
         
-        // Doing it a second time delayed is required for accurate placement
+        // Doing it a second time delayed is required for accurate placement when using pagesheet on portrait iPad
         DispatchQueue.main.async {
             let bottomGap = self?.bottomGap ?? 0
             if bottomGap != 0 && !(self?.justDidWillHide ?? false) {
-                self?.animateAlongside(notification) {
-                    self?.constraints?.bottom?.constant = min(0, -keyboardHeight + bottomGap) - (additionalBottomSpace?() ?? 0)
-                    self?.inputAccessoryView?.superview?.layoutIfNeeded()
-                }
+                animateAlongside()
             }
         }
     }
     callbacks[.willHide] = { [weak self] (notification) in
         guard notification.isForCurrentApp else { return }
         self?.justDidWillHide = true
-        self?.animateAlongside(notification) { [weak self] in
-            self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
-            self?.inputAccessoryView?.superview?.layoutIfNeeded()
-        }
-        
-        // Doing it a second time delayed is required for accurate placement
-        DispatchQueue.main.async {
-            self?.justDidWillHide = false
+        let animateAlongside = {
             self?.animateAlongside(notification) { [weak self] in
                 self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
+        }
+        animateAlongside()
+        
+        // Doing it a second time delayed is required for accurate placement when using pagesheet on portrait iPad
+        DispatchQueue.main.async {
+            self?.justDidWillHide = false
+            animateAlongside()
         }
     }
     return self
