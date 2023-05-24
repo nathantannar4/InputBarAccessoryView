@@ -71,6 +71,9 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     /// A cached notification used as a starting point when a user dragging the `scrollView` down
     /// to interactively dismiss the keyboard
     private var cachedNotification: KeyboardNotification?
+    
+    /// Used to fix a glitch that would otherwise occur when using pagesheets on iPad in iOS 14
+    private var justDidWillHide = false
 
     // MARK: - Initialization
 
@@ -139,6 +142,15 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
         callbacks[event] = callback
         return self
     }
+    
+    /// When e.g. using pagesheets on iPad the inputAccessoryView is not stuck to the bottom of the screen.
+    /// This value represents the size of the gap between the bottom of the screen and the bottom of the inputAccessoryView.
+    private var bottomGap: CGFloat {
+        if let inputAccessoryView = inputAccessoryView, let window = inputAccessoryView.window, let superView = inputAccessoryView.superview {
+            return window.frame.height - superView.convert(superView.frame, to: window).maxY
+        }
+        return 0
+    }
 
     /// Constrains the `inputAccessoryView` to the bottom of its superview and sets the
     /// `.willChangeFrame` and `.willHide` event callbacks such that it mimics an `InputAccessoryView`
@@ -146,55 +158,84 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     ///
     /// - Parameter inputAccessoryView: The view to bind to the top of the keyboard but within its superview
     /// - Returns: Self
-    @discardableResult
-    open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none) -> Self {
+@discardableResult
+open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none) -> Self {
 
-        guard let superview = inputAccessoryView.superview else {
-            fatalError("`inputAccessoryView` must have a superview")
-        }
-        self.inputAccessoryView = inputAccessoryView
-        self.additionalBottomSpace = additionalBottomSpace
-        inputAccessoryView.translatesAutoresizingMaskIntoConstraints = false
-        constraints = NSLayoutConstraintSet(
-            bottom: inputAccessoryView.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: additionalInputViewBottomConstraintConstant()),
-            left: inputAccessoryView.leftAnchor.constraint(equalTo: superview.leftAnchor),
-            right: inputAccessoryView.rightAnchor.constraint(equalTo: superview.rightAnchor)
-        ).activate()
-
-        callbacks[.willShow] = { [weak self] (notification) in
-            guard
-                self?.isKeyboardHidden == false,
-                self?.constraints?.bottom?.constant == self?.additionalInputViewBottomConstraintConstant(),
-                notification.isForCurrentApp
-            else { return }
-
-            let keyboardHeight = notification.endFrame.height
-            self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = -keyboardHeight - (additionalBottomSpace?() ?? 0)
-                self?.inputAccessoryView?.superview?.layoutIfNeeded()
-            }
-        }
-        callbacks[.willChangeFrame] = { [weak self] (notification) in
-            let keyboardHeight = notification.endFrame.height
-            guard
-                self?.isKeyboardHidden == false,
-                notification.isForCurrentApp
-            else { return }
-
-            self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = -keyboardHeight - (additionalBottomSpace?() ?? 0)
-                self?.inputAccessoryView?.superview?.layoutIfNeeded()
-            }
-        }
-        callbacks[.willHide] = { [weak self] (notification) in
-            guard notification.isForCurrentApp else { return }
-            self?.animateAlongside(notification) { [weak self] in
-                self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
-                self?.inputAccessoryView?.superview?.layoutIfNeeded()
-            }
-        }
-        return self
+    guard let superview = inputAccessoryView.superview else {
+        fatalError("`inputAccessoryView` must have a superview")
     }
+    self.inputAccessoryView = inputAccessoryView
+    self.additionalBottomSpace = additionalBottomSpace
+    inputAccessoryView.translatesAutoresizingMaskIntoConstraints = false
+    constraints = NSLayoutConstraintSet(
+        bottom: inputAccessoryView.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: additionalInputViewBottomConstraintConstant()),
+        left: inputAccessoryView.leftAnchor.constraint(equalTo: superview.leftAnchor),
+        right: inputAccessoryView.rightAnchor.constraint(equalTo: superview.rightAnchor)
+    ).activate()
+
+    callbacks[.willShow] = { [weak self] (notification) in
+        guard
+            self?.isKeyboardHidden == false,
+            self?.constraints?.bottom?.constant == self?.additionalInputViewBottomConstraintConstant(),
+            notification.isForCurrentApp
+        else { return }
+
+        let keyboardHeight = notification.endFrame.height
+        let animateAlongside = {
+            self?.animateAlongside(notification) {
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
+                self?.inputAccessoryView?.superview?.layoutIfNeeded()
+            }
+        }
+        animateAlongside()
+
+        // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
+        let initialBottomGap = self?.bottomGap ?? 0
+        DispatchQueue.main.async {
+            let newBottomGap = self?.bottomGap ?? 0
+            if newBottomGap != 0 && newBottomGap != initialBottomGap {
+                animateAlongside()
+            }
+        }
+    }
+    callbacks[.willChangeFrame] = { [weak self] (notification) in
+        let keyboardHeight = notification.endFrame.height
+        guard
+            self?.isKeyboardHidden == false,
+            notification.isForCurrentApp
+        else {
+            return
+        }
+        let animateAlongside = {
+            self?.animateAlongside(notification) {
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
+                self?.inputAccessoryView?.superview?.layoutIfNeeded()
+            }
+        }
+        animateAlongside()
+        
+        // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
+        let initialBottomGap = self?.bottomGap ?? 0
+        DispatchQueue.main.async {
+            let newBottomGap = self?.bottomGap ?? 0
+            if newBottomGap != 0 && newBottomGap != initialBottomGap && !(self?.justDidWillHide ?? false) {
+                animateAlongside()
+            }
+        }
+    }
+    callbacks[.willHide] = { [weak self] (notification) in
+        guard notification.isForCurrentApp else { return }
+        self?.justDidWillHide = true
+        self?.animateAlongside(notification) { [weak self] in
+            self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
+            self?.inputAccessoryView?.superview?.layoutIfNeeded()
+        }
+        DispatchQueue.main.async {
+            self?.justDidWillHide = false
+        }
+    }
+    return self
+}
 
     /// Adds a `UIPanGestureRecognizer` to the `scrollView` to enable interactive dismissal`
     ///
@@ -312,7 +353,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
         frame.size.height = window.bounds.height - frame.origin.y
         keyboardNotification.endFrame = frame
 
-        var yCoordinateDirectlyAboveKeyboard = -frame.height
+        var yCoordinateDirectlyAboveKeyboard = -frame.height + bottomGap
         if shouldApplyAdditionBottomSpaceToInteractiveDismissal, let additionalBottomSpace = additionalBottomSpace {
             yCoordinateDirectlyAboveKeyboard -= additionalBottomSpace()
         }
