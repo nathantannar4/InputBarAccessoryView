@@ -181,18 +181,19 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else { return }
 
         let keyboardHeight = notification.endFrame.height
+        let initialBottomGap = self?.bottomGap ?? 0
         let animateAlongside = {
             self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + initialBottomGap) - (additionalBottomSpace?() ?? 0)
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
         animateAlongside()
-        
-        // Doing it a second time delayed is required for accurate placement when using pagesheet on portrait iPad
+
+        // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
         DispatchQueue.main.async {
-            let bottomGap = self?.bottomGap ?? 0
-            if bottomGap != 0 {
+            let newBottomGap = self?.bottomGap ?? 0
+            if newBottomGap != 0 && newBottomGap != initialBottomGap {
                 animateAlongside()
             }
         }
@@ -205,18 +206,19 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else {
             return
         }
+        let initialBottomGap = self?.bottomGap ?? 0
         let animateAlongside = {
             self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + initialBottomGap) - (additionalBottomSpace?() ?? 0)
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
         animateAlongside()
         
-        // Doing it a second time delayed is required for accurate placement when using pagesheet on portrait iPad
+        // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
         DispatchQueue.main.async {
-            let bottomGap = self?.bottomGap ?? 0
-            if bottomGap != 0 && !(self?.justDidWillHide ?? false) {
+            let newBottomGap = self?.bottomGap ?? 0
+            if newBottomGap != 0 && newBottomGap != initialBottomGap && !(self?.justDidWillHide ?? false) {
                 animateAlongside()
             }
         }
@@ -224,18 +226,12 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
     callbacks[.willHide] = { [weak self] (notification) in
         guard notification.isForCurrentApp else { return }
         self?.justDidWillHide = true
-        let animateAlongside = {
-            self?.animateAlongside(notification) { [weak self] in
-                self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
-                self?.inputAccessoryView?.superview?.layoutIfNeeded()
-            }
+        self?.animateAlongside(notification) { [weak self] in
+            self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
+            self?.inputAccessoryView?.superview?.layoutIfNeeded()
         }
-        animateAlongside()
-        
-        // Doing it a second time delayed is required for accurate placement when using pagesheet on portrait iPad
         DispatchQueue.main.async {
             self?.justDidWillHide = false
-            animateAlongside()
         }
     }
     return self

@@ -1,6 +1,6 @@
 #  Changelog
 - Master:
-   - Nothing yet
+   - Fixed the gap between keyboard and input bar when used on pagesheet/formsheet on iPad
 - 6.2.0
    - Remove `canBecomeFirstResponder` on `InputTextView` to fix `UITextViewDelegate` methods not being called
 - 6.1.1
