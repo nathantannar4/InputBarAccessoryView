@@ -181,16 +181,16 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else { return }
 
         let keyboardHeight = notification.endFrame.height
-        let initialBottomGap = self?.bottomGap ?? 0
         let animateAlongside = {
             self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + initialBottomGap) - (additionalBottomSpace?() ?? 0)
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
         animateAlongside()
 
         // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
+        let initialBottomGap = self?.bottomGap ?? 0
         DispatchQueue.main.async {
             let newBottomGap = self?.bottomGap ?? 0
             if newBottomGap != 0 && newBottomGap != initialBottomGap {
@@ -206,16 +206,16 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else {
             return
         }
-        let initialBottomGap = self?.bottomGap ?? 0
         let animateAlongside = {
             self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + initialBottomGap) - (additionalBottomSpace?() ?? 0)
+                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
         animateAlongside()
         
         // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
+        let initialBottomGap = self?.bottomGap ?? 0
         DispatchQueue.main.async {
             let newBottomGap = self?.bottomGap ?? 0
             if newBottomGap != 0 && newBottomGap != initialBottomGap && !(self?.justDidWillHide ?? false) {
