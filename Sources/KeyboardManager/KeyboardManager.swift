@@ -187,7 +187,6 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
             }
         }
         callbacks[.willHide] = { [weak self] (notification) in
-            guard notification.isForCurrentApp else { return }
             self?.animateAlongside(notification) { [weak self] in
                 self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
                 self?.inputAccessoryView?.superview?.layoutIfNeeded()
