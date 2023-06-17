@@ -344,7 +344,7 @@ open class InputBarAccessoryView: UIView {
     // MARK: - Auto-Layout Constraint Sets
     
     private var middleContentViewLayoutSet: NSLayoutConstraintSet?
-    private var textViewHeightAnchor: NSLayoutConstraint?
+    open var textViewHeightAnchor: NSLayoutConstraint?
     private var topStackViewLayoutSet: NSLayoutConstraintSet?
     private var leftStackViewLayoutSet: NSLayoutConstraintSet?
     private var rightStackViewLayoutSet: NSLayoutConstraintSet?
