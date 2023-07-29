@@ -202,7 +202,13 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
     
     final public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        if let customSize = self.dataSource?.attachmentManager(self, sizeFor: self.attachments[indexPath.row], at: indexPath.row){
+		// Prevent out of range error when the attachments cell has not been added the attachment array
+		if indexPath.row == attachments.count && showAddAttachmentCell {
+			return .zero
+		}
+		
+		let attachment = self.attachments[indexPath.row]
+        if let customSize = self.dataSource?.attachmentManager(self, sizeFor: attachment, at: indexPath.row){
             return customSize
         }
         
