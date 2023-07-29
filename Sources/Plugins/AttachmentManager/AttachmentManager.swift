@@ -202,9 +202,14 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
     
     final public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-		// Prevent out of range error when the attachments cell has not been added the attachment array
+		var height = attachmentView.intrinsicContentHeight
+		if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+			height -= (layout.sectionInset.bottom + layout.sectionInset.top + collectionView.contentInset.top + collectionView.contentInset.bottom)
+		}
+		
+		// Prevent out of range error when the AttachmentCell has not been added the attachment array
 		if indexPath.row == attachments.count && showAddAttachmentCell {
-			return .zero
+			return CGSize(width: height, height: height)
 		}
 		
 		let attachment = self.attachments[indexPath.row]
@@ -212,10 +217,6 @@ extension AttachmentManager: UICollectionViewDataSource, UICollectionViewDelegat
             return customSize
         }
         
-        var height = attachmentView.intrinsicContentHeight
-        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
-            height -= (layout.sectionInset.bottom + layout.sectionInset.top + collectionView.contentInset.top + collectionView.contentInset.bottom)
-        }
         return CGSize(width: height, height: height)
     }
     
