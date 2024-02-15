@@ -46,10 +46,6 @@ open class InputBarViewController: UIViewController, InputBarAccessoryViewDelega
         }
     }
 
-    open override var inputAccessoryView: UIView? {
-        return isInputBarHidden ? nil : inputBar
-    }
-
     open override var canBecomeFirstResponder: Bool {
         return !isInputBarHidden
     }
