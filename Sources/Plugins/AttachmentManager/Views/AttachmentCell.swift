@@ -67,7 +67,7 @@ open class AttachmentCell: UICollectionViewCell {
         button.layer.cornerRadius = 10
         button.clipsToBounds = true
         button.backgroundColor = .systemBlue
-        button.addTarget(self, action: #selector(deleteAttachment), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self?.deleteAttachment), for: .touchUpInside)
         return button
     }()
     
