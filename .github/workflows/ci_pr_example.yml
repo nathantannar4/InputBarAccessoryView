@@ -8,6 +8,6 @@ jobs:
     runs-on: macOS-latest
     steps:
     - name: Checkout the Git repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
     - name: Build and run example project
       run: ./GitHubActions/build.sh example
