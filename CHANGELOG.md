@@ -1,6 +1,9 @@
 #  Changelog
 - Master:
    - Nothing yet
+- 6.3.0
+   - [#244](https://github.com/nathantannar4/InputBarAccessoryView/pull/244) Fixed the gap between keyboard and input bar when used on pagesheet/formsheet on iPad
+   - [#250](https://github.com/nathantannar4/InputBarAccessoryView/pull/250) Fixed crash after adding image attachment
 - 6.2.0
    - Remove `canBecomeFirstResponder` on `InputTextView` to fix `UITextViewDelegate` methods not being called
 - 6.1.1
