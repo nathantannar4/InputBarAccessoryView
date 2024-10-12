@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>InputBarAccessoryView  Reference</title>
+    <title>  Reference</title>
     <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="css/highlight.css" />
     <meta charset='utf-8'>
     <script src="js/jquery.min.js" defer></script>
     <script src="js/jazzy.js" defer></script>
     
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
   </head>
   <body>
-    <a title="InputBarAccessoryView  Reference"></a>
+    <a title="  Reference"></a>
     <header>
       <div class="content-wrapper">
-        <p><a href="index.html">InputBarAccessoryView Docs</a> (65% documented)</p>
+        <p><a href="index.html"> Docs</a> (100% documented)</p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
       </div>
     </header>
     <div class="content-wrapper">
       <p id="breadcrumbs">
-        <a href="index.html">InputBarAccessoryView Reference</a>
-        <img id="carat" src="img/carat.png" />
-        InputBarAccessoryView  Reference
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" alt=""/>
+          Reference
       </p>
     </div>
     <div class="content-wrapper">
@@ -105,6 +113,9 @@
               <li class="nav-group-task">
                 <a href="Extensions/NSAttributedString/Key.html">– Key</a>
               </li>
+              <li class="nav-group-task">
+                <a href="Extensions/UITextView.html">UITextView</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
@@ -127,6 +138,9 @@
               </li>
               <li class="nav-group-task">
                 <a href="Protocols/InputItem.html">InputItem</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/InputPlugin.html">InputPlugin</a>
               </li>
             </ul>
           </li>
@@ -172,30 +186,52 @@
 <li>[x] Autocomplete attributed text highlighting</li>
 <li>[x] Reactive components that respond to given events</li>
 <li>[x] Top/Bottom/Left/Right <code><a href="Classes/InputStackView.html">InputStackView</a></code>s that act as toolbars to place buttons</li>
-<li>[x] <code>RxSwift</code>/<code>RxCocoa</code> Support</li>
+<li>[x] <code>RxSwift</code>/<code>RxCocoa</code> Support with <code>RxExtensions</code> Cocoapod subspec</li>
 <li>[x] Drop in attachment view for file/photo management</li>
-<li>[x] Plugin support for your own <code>InputPlugin</code>s</li>
+<li>[x] Plugin support for your own <code><a href="Protocols/InputPlugin.html">InputPlugin</a></code>s</li>
 <li>[x] Compatible with all iPhones and iPads</li>
 <li>[x] RTL Support</li>
 </ul>
+<h3 id='installation-via-swift-package-manager-spm' class='heading'>Installation via Swift Package Manager (SPM)</h3>
+
+<p>The <a href="https://swift.org/package-manager/">Swift Package Manager</a> is a tool for automating the distribution of Swift code and is integrated into the <code>swift</code> compiler.
+Once you have your Swift package set up, adding InputBarAccessoryView as a dependency is as easy as adding it to the dependencies value of your Package.swift.</p>
+<pre class="highlight plaintext"><code>dependencies: [
+    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "5.2.0"))
+]
+</code></pre>
+
+<p>You can also add it via Xcode SPM editor with URL:</p>
+<pre class="highlight plaintext"><code>https://github.com/nathantannar4/InputBarAccessoryView.git
+</code></pre>
+
+<p>To make <code>RxSwift</code>/<code>RxCocoa</code> extensions work you need to explicitly import <code>Rx</code> dependencies.</p>
 <h3 id='installation-via-cocoapods' class='heading'>Installation via CocoaPods</h3>
-<pre class="highlight ruby"><code><span class="c1"># Swift 5.0</span>
+<pre class="highlight ruby"><code><span class="c1"># Swift 5.5</span>
 <span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span>
-<span class="c1"># Swift 4.2</span>
-<span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span><span class="p">,</span> <span class="s1">'4.2.2'</span>
+
+<span class="c1"># Swift 5.0</span>
+<span class="n">pod</span> <span class="s1">'InputBarAccessoryView'</span><span class="p">,</span> <span class="s1">'5.1.0'</span>
 </code></pre>
 <h3 id='installation-via-carthage' class='heading'>Installation via Carthage</h3>
-<pre class="highlight ruby"><code><span class="c1"># Swift 5.0</span>
+<pre class="highlight ruby"><code><span class="c1"># Swift 5.5</span>
 <span class="n">github</span> <span class="s2">"nathantannar4/InputBarAccessoryView"</span>
-<span class="c1"># Swift 4.2</span>
-<span class="n">github</span> <span class="s2">"nathantannar4/InputBarAccessoryView"</span> <span class="s2">"4.2.2"</span>
+
+<span class="c1"># Swift 5.0</span>
+<span class="n">github</span> <span class="s2">"nathantannar4/InputBarAccessoryView"</span> <span class="s2">"5.1.0"</span>
 </code></pre>
 <h3 id='requirements' class='heading'>Requirements</h3>
 
-<p>iOS 9.0+
-Swift 5.0</p>
+<p>iOS 12.0+
+Swift 5.5</p>
 
 <blockquote>
+<p>The latest iOS 11 release is v5.1.0</p>
+
+<p>The latest iOS 9 + iOS 10 release is v4.3.3</p>
+
+<p>The latest Swift 5.0 release is v5.1.0 </p>
+
 <p>The latest Swift 4.2 release is v4.2.2 </p>
 </blockquote>
 <h3 id='documentation' class='heading'>Documentation</h3>
@@ -229,39 +265,53 @@ Swift 5.0</p>
 <p>iMessage style <a href="https://github.com/nathantannar4/TypingIndicator">TypingIndicator</a> for chat apps</p>
 <h2 id='latest-releases' class='heading'>Latest Releases</h2>
 
-<ul>
-<li>5.0.0
+<p>5.5.0</p>
 
 <ul>
-<li>Swift 5 support</li>
-</ul></li>
-<li>4.2.2
-
-<ul>
-<li>Fixed image paste orientation issue in <code><a href="Classes/InputTextView.html">InputTextView</a></code></li>
-</ul></li>
-<li>4.2.1
-
-<ul>
-<li>Fixed autocompletes of completions that contain spaces</li>
-<li>Depricated <code>isCaseSensitive</code> in favor of a function asignment to pre-process autocompletions</li>
-</ul></li>
-<li>4.2.0
-
-<ul>
-<li>Added new API for overriding the main middle view, normally the <code><a href="Classes/InputTextView.html">InputTextView</a></code> so it can be replaced with views such as a <q>Join</q> button&quot;, <code>setMiddleContentView(_ view: UIView?, animated: Bool)</code></li>
-</ul></li>
-<li>4.1.2
-    - Add RxSwift/RxCocoa support through extensions and delegate proxies in <code>RxInputBarAccessoryView</code>, requires <code>RxSwift</code> and <code>RxCocoa</code>
-    - Add <code><a href="Classes/InputBarViewController.html">InputBarViewController</a></code> which contains an <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code> as the <code>inputAccessoryView</code> by default with a convenient <code>isInputBarHidden: Bool</code> property to show/hide it</li>
-<li>4.1.1
-    - Add <code>frameInsets: HorizontalEdgePadding</code> property to <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code> to inset the view to be compatible with <code>UISplitViewController</code> or other custom containers where the view should not be the full width</li>
-<li>4.1.0
-    - Fix issue where setting long strings in <code>viewDidLoad</code> broke inital layout, Issue #41
-    - Add <code>deleteCompletionByParts: Bool</code> flag to <code><a href="Classes/AutocompleteManager.html">AutocompleteManager</a></code> to allow for partial deletions of autocompletes rather than just the entire substring. 
-    - Add <code><a href="Classes/InputBarSendButton.html">InputBarSendButton</a></code> to use as the <code>sendButton</code> in <code><a href="Classes/InputBarAccessoryView.html">InputBarAccessoryView</a></code>. This subclass of <code><a href="Classes/InputBarButtonItem.html">InputBarButtonItem</a></code> has a <code>UIActivityIndicatorView</code> to show a spinner when making HTTP requests</li>
+<li>Update SPM tools to Swift 5.5</li>
+<li>Added new optional delegate method for custom attachments size</li>
+<li>Added new animations for left/right stack view constraints</li>
 </ul>
-<h3 id='a-href-changelog-md-changelog-a' class='heading'><a href="./CHANGELOG.md">CHANGELOG</a></h3>
+
+<p>5.4.0</p>
+
+<ul>
+<li>Make sure framework is ready for Xcode 13</li>
+<li>Fix availability in AppExtensions</li>
+<li>Fix Package.swift to support iOS 12+ only</li>
+</ul>
+
+<p>5.3.0</p>
+
+<ul>
+<li>Allow setting <code>canBecomeFirstResponder</code></li>
+<li>Fix interactive keyboard dismissal lag</li>
+<li>Add example implemntation of <code>sendButton</code> animation</li>
+</ul>
+
+<p>5.2.3</p>
+
+<ul>
+<li>Fixed appendSpaceOnCompletion inserting space at wrong location</li>
+</ul>
+
+<p>5.2.2</p>
+
+<ul>
+<li>Added an optional offset in KeyboardManager.bind(tableView:)</li>
+<li>Change reuseIdentifier from <code>public</code> to <code>open</code> to allow inheritance</li>
+<li>Fix send button loading indicator for dark mode</li>
+<li>Fix iOS 14 UIPasteboard system notification with images</li>
+</ul>
+
+<p>5.2.0</p>
+
+<ul>
+<li>Drop support for iOS 11 and bump minimum version to iOS 12+</li>
+<li>Support Swift 5.3 and higher for Xcode 12</li>
+</ul>
+
+<p>See <a href="./CHANGELOG.md">CHANGELOG</a> for more details and older releases.</p>
 
 <p><strong>Find a bug? Open an issue!</strong></p>
 <h2 id='layout' class='heading'>Layout</h2>
@@ -298,7 +348,8 @@ Swift 5.0</p>
     <img src="https://github.com/nathantannar4/NTComponents/raw/master/NTComponents/Assets/Nathan.png" width="100" height="100">
 </p>
 
-<p><strong>Nathan Tannar</strong> - <a href="https://nathantannar.me">https://nathantannar.me</a></p>
+<p><strong>Nathan Tannar</strong> - <a href="https://nathantannar.me">https://nathantannar.me</a>
+<strong>Jakub Kaspar</strong> - <a href="https://jakubkaspar.dev">https://jakubkaspar.dev</a></p>
 <h2 id='license' class='heading'>License</h2>
 
 <p>Distributed under the MIT license. See <code>LICENSE</code> for more information.</p>
@@ -306,11 +357,10 @@ Swift 5.0</p>
           </section>
         </section>
         <section id="footer">
-          <p>&copy; 2019 <a class="link" href="https://github.com/nathantannar4/InputBarAccessoryView" target="_blank" rel="external">Nathan Tannar</a>. All rights reserved. (Last updated: 2019-06-01)</p>
-          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+          <p>&copy; 2022 <a class="link" href="" target="_blank" rel="external noopener"></a>. All rights reserved. (Last updated: 2022-05-05)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
         </section>
       </article>
     </div>
   </body>
-</div>
 </html>

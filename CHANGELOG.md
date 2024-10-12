@@ -1,8 +1,67 @@
 #  Changelog
-
+- Master:
+   - Nothing yet
+- 6.3.0
+   - [#244](https://github.com/nathantannar4/InputBarAccessoryView/pull/244) Fixed the gap between keyboard and input bar when used on pagesheet/formsheet on iPad
+   - [#250](https://github.com/nathantannar4/InputBarAccessoryView/pull/250) Fixed crash after adding image attachment
+- 6.2.0
+   - Remove `canBecomeFirstResponder` on `InputTextView` to fix `UITextViewDelegate` methods not being called
+- 6.1.1
+   - Fixed warning for Xcode 14
+- 6.1.0
+   - [#230](https://github.com/nathantannar4/InputBarAccessoryView/pull/230) Added `additionalInputViewBottomConstraintConstant` to `KeyboardManager` as a way for providing additional bottom constraint constant offset for `inputAccessoryView`. Example implementation can be found in `AdditionalBottomSpaceExampleViewController`
+- 6.0.0
+   - **Breaking change**: Drop iOS 12 support
+   - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
+   - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+   - Update docs
+- 5.5.0
+   - Update SPM tools to Swift 5.5
+   - Added new optional delegate method for custom attachments size
+   - Added new animations for left/right stack view constraints
+- 5.4.0
+   - Make sure framework is ready for Xcode 13
+   - Fix availability in AppExtensions
+   - Fix Package.swift to support iOS 12+ only
+   - Reset cachedNotification when keyboard is programmatically dismissed
+- 5.3.1
+   - Applied `additionalBottomSpace` to interactive dismissal
+- 5.3.0
+   - Allow setting `canBecomeFirstResponder`
+   - Fix interactive keyboard dismissal lag
+   - Add example implemntation of `sendButton` animation
+- 5.2.3
+   - Fixed appendSpaceOnCompletion inserting space at wrong location
+- 5.2.2
+   - Added an optional offset in KeyboardManager.bind(tableView:)
+   - Change reuseIdentifier from `public` to `open` to allow inheritance
+   - Fix send button loading indicator for dark mode
+   - Fix iOS 14 UIPasteboard system notification with images
+- 5.2.1
+   - Fix SPM warnings about Info.plist file
+- 5.2.0
+    - Drop support for iOS 11 and bump minimum version to iOS 12+
+    - Support Swift 5.3 and higher for Xcode 12
+- 5.1.0
+    - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
+    - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
+    - Added support for Dark Mode on iOS 13+
+- 5.0.0
+    - Drop support for iOS 9 and iOS 10
+    - Remove `RxSwift`/`RxCocoa`  from SPM
+    - Fix image paste logic
+    - Fixed Getting started preview and hashtag typo
+    - Update documentation for setStackViewItems
+- 4.3.3
+    - Add support for Swift Package Manager (SPM)
+    - Make `reuseIdentifier` public accessible
+    - Fix warnings
+- 4.3.2
+    - Fixed a bug where editing immediately before a tag prefix would break the tag
+- 4.3.1
+    - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
 - 4.3.0
     - Swift 5 support
-    - Fixes accessibility of HorizontalEdgePadding initializers and a typo in its filename
 - 4.2.2
     - Fix image paste orientation in `InputTextView`
 - 4.2.1 
@@ -11,7 +70,6 @@
 - 4.2.0
     - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
 - 4.1.2
-    - Added RxSwift/RxCocoa support through extensions and delegate proxies in `RxInputBarAccessoryView`, requires `RxSwift` and `RxCocoa`
     - Added `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 
 - 4.1.1
     - Added `frameInsets: HorizontalEdgePadding` property to `InputBarAccessoryView` to inset the view to be compatible with `UISplitViewController` or other custom containers where the view should not be the full width
@@ -71,7 +129,7 @@
 - 1.3.0
     - iPhone X Correctedes
 - 1.2.0
-    - Better XCode docs
+    - Better Xcode docs
     - `InputItem` is now a protocol that you can give to the `InputBarAccessoryView`
     - `InputPlugin` is now a protocol that you can conform to make a plugin
     - `AutocompleteManager` and `AttactchmentManager` are no longer members of  `InputBarAccessoryView` by default. You will need to create them and assign them to the `InputPlugin` property of the `InputBarAccessoryView`

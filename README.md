@@ -10,34 +10,38 @@
 - [x] Autocomplete attributed text highlighting
 - [x] Reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `InputStackView`s that act as toolbars to place buttons
-- [x] `RxSwift`/`RxCocoa` Support with `RxExtensions` Cocoapod subspec
 - [x] Drop in attachment view for file/photo management
 - [x] Plugin support for your own `InputPlugin`s
 - [x] Compatible with all iPhones and iPads
 - [x] RTL Support
 
-### Installation via CocoaPods
+### Installation via Swift Package Manager (SPM)
 
-```ruby
-# Swift 5.0
-pod 'InputBarAccessoryView'
-# Swift 4.2
-pod 'InputBarAccessoryView', '4.2.2'
+The [Swift Package Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler.
+Once you have your Swift package set up, adding InputBarAccessoryView as a dependency is as easy as adding it to the dependencies value of your Package.swift.
+
 ```
-
-### Installation via Carthage
-
-```ruby
-# Swift 5.0
-github "nathantannar4/InputBarAccessoryView"
-# Swift 4.2
-github "nathantannar4/InputBarAccessoryView" "4.2.2"
+dependencies: [
+    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "6.0.0"))
+]
+```
+You can also add it via Xcode SPM editor with URL:
+```
+https://github.com/nathantannar4/InputBarAccessoryView.git
 ```
 
 ### Requirements
 
-iOS 9.0+
-Swift 5.0
+iOS 13.0+
+Swift 5.5
+
+> The latest iOS 12 release is v5.5.0
+
+> CocoaPods and RxExtensions were removed in 6.0.0
+
+> The latest iOS 11 release is v5.1.0
+
+> The latest Swift 5.0 release is v5.1.0 
 
 > The latest Swift 4.2 release is v4.2.2 
 
@@ -70,27 +74,32 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
-- 4.3.1
-    - Add `RxSwift`/`RxCocoa` support through extensions and delegate proxies, requires Cocoapods installation of  `InputBarAccessoryView/RxExtensions`
-- 4.3.0
-    - Swift 5 support
-- 4.2.2
-    - Fixed image paste orientation issue in `InputTextView`
-- 4.2.1
-    - Fixed autocompletes of completions that contain spaces
-    - Depricated `isCaseSensitive` in favor of a function asignment to pre-process autocompletions
-- 4.2.0
-    - Added new API for overriding the main middle view, normally the `InputTextView` so it can be replaced with views such as a "Join" button", `setMiddleContentView(_ view: UIView?, animated: Bool)`
-- 4.1.2
-        - Add `InputBarViewController` which contains an `InputBarAccessoryView` as the `inputAccessoryView` by default with a convenient `isInputBarHidden: Bool` property to show/hide it 
-- 4.1.1
-        - Add `frameInsets: HorizontalEdgePadding` property to `InputBarAccessoryView` to inset the view to be compatible with `UISplitViewController` or other custom containers where the view should not be the full width
-- 4.1.0
-        - Fix issue where setting long strings in `viewDidLoad` broke inital layout, Issue #41
-        - Add `deleteCompletionByParts: Bool` flag to `AutocompleteManager` to allow for partial deletions of autocompletes rather than just the entire substring. 
-        - Add `InputBarSendButton` to use as the `sendButton` in `InputBarAccessoryView`. This subclass of `InputBarButtonItem` has a `UIActivityIndicatorView` to show a spinner when making HTTP requests
+6.2.0
+   - Remove `canBecomeFirstResponder` on `InputTextView` to fix `UITextViewDelegate` methods not being called
+   
+6.1.1
+   - Fixed warning for Xcode 14
 
-### [CHANGELOG](./CHANGELOG.md)
+6.1.0
+   - #230 Added additionalInputViewBottomConstraintConstant to KeyboardManager as a way for providing additional bottom constraint constant offset for inputAccessoryView. Example implementation can be found in AdditionalBottomSpaceExampleViewController
+
+6.0.0
+   - **Breaking change**: Drop iOS 12 support
+   - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
+   - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+   - Update docs
+
+5.5.0
+   - Update SPM tools to Swift 5.5
+   - Added new optional delegate method for custom attachments size
+   - Added new animations for left/right stack view constraints
+
+5.4.0
+   - Make sure framework is ready for Xcode 13
+   - Fix availability in AppExtensions
+   - Fix Package.swift to support iOS 12+ only
+    
+See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
 **Find a bug? Open an issue!**
 
@@ -134,6 +143,7 @@ private var onDisabledAction: InputBarButtonItemAction?
 </p>
 
 **Nathan Tannar** - [https://nathantannar.me](https://nathantannar.me)
+**Jakub Kaspar** - [https://jakubkaspar.dev](https://jakubkaspar.dev)
 
 ## License
 

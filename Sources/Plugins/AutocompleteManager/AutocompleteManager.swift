@@ -2,7 +2,7 @@
 //  AttachmentManager.swift
 //  InputBarAccessoryView
 //
-//  Copyright © 2017-2019 Nathan Tannar.
+//  Copyright © 2017-2020 Nathan Tannar.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +62,11 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         let tableView = AutocompleteTableView()
         tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .white
+        if #available(iOS 13, *) {
+            tableView.backgroundColor = .systemBackground
+        } else {
+            tableView.backgroundColor = .white
+        }
         tableView.rowHeight = 44
         tableView.delegate = self
         tableView.dataSource = self
@@ -94,8 +98,15 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     open var deleteCompletionByParts = true
     
     /// The default text attributes
-    open var defaultTextAttributes: [NSAttributedString.Key: Any] =
-        [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.black]
+    open var defaultTextAttributes: [NSAttributedString.Key: Any] = {
+        var foregroundColor: UIColor
+        if #available(iOS 13, *) {
+            foregroundColor = .label
+        } else {
+            foregroundColor = .black
+        }
+        return [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: foregroundColor]
+    }()
     
     /// The NSAttributedString.Key.paragraphStyle value applied to attributed strings
     public let paragraphStyle: NSMutableParagraphStyle = {
@@ -324,7 +335,12 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         attrs[.autocompleted] = true
         attrs[.autocompletedContext] = session.completion?.context
         let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
-        let newAttributedString = NSAttributedString(string: newString, attributes: attrs)
+        let newAttributedString = NSMutableAttributedString(string: newString, attributes: attrs)
+        
+        // Append extra space if needed
+        if appendSpaceOnCompletion {
+          newAttributedString.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
+        }
         
         // Modify the NSRange to include the prefix length
         let rangeModifier = keepPrefixOnCompletion ? session.prefix.count : 0
@@ -332,9 +348,11 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         
         // Replace the attributedText with a modified version including the autocompete
         let newAttributedText = textView.attributedText.replacingCharacters(in: highlightedRange, with: newAttributedString)
-        if appendSpaceOnCompletion {
-            newAttributedText.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
-        }
+        
+        // make background clear for dark mode support
+        newAttributedText.addAttribute(NSAttributedString.Key.backgroundColor,
+                                       value: UIColor.clear,
+                                       range: NSMakeRange(0, newAttributedText.length))
         
         // Set to a blank attributed string to prevent keyboard autocorrect from cloberring the insert
         textView.attributedText = NSAttributedString()
@@ -447,8 +465,12 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             }
         } else if range.length >= 0, range.location < totalRange.length {
             
+            // Inserting text before a tag when the tag is at the start of the string
+            guard range.location != 0 else { return true }
+
             // Inserting text in the middle of an autocompleted string
-            let attributes = textView.attributedText.attributes(at: range.location, longestEffectiveRange: nil, in: range)
+            let attributes = textView.attributedText.attributes(at: range.location-1, longestEffectiveRange: nil, in: NSMakeRange(range.location-1, range.length))
+
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             if isAutocompleted {
                 textView.attributedText.enumerateAttribute(.autocompleted, in: totalRange, options: .reverse) { _, subrange, stop in

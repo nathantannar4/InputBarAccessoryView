@@ -8,19 +8,18 @@
 
 import UIKit
 
-internal extension UITextView {
+public extension UITextView {
 
     typealias Match = (prefix: String, word: String, range: NSRange)
     
     func find(prefixes: Set<String>, with delimiterSet: CharacterSet) -> Match? {
         guard prefixes.count > 0 else { return nil }
 
-        for prefix in prefixes {
-            if let match = find(prefix: prefix, with: delimiterSet) {
-                return match
-            }
+        let matches = prefixes.compactMap { find(prefix: $0, with: delimiterSet) }
+        let sorted = matches.sorted { a, b in
+            return a.range.lowerBound > b.range.lowerBound
         }
-        return nil
+        return sorted.first
     }
     
     func find(prefix: String, with delimiterSet: CharacterSet) -> Match? {
