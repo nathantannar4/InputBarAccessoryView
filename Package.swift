@@ -13,7 +13,10 @@ let package = Package(
         .target(
             name: "InputBarAccessoryView",
             path: "Sources",
-            exclude: ["Supporting/Info.plist"]
+            exclude: ["Supporting/Info.plist"],
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
+            ]
         )
     ],
     swiftLanguageVersions: [.v5]

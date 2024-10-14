@@ -28,6 +28,7 @@
 import Foundation
 import UIKit
 
+@MainActor
 class NSLayoutConstraintSet {
     
     var top: NSLayoutConstraint?
