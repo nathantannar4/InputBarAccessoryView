@@ -1,6 +1,11 @@
 #  Changelog
 - Master:
    - Nothing yet
+- 6.5.0
+   - Bump Swift version to 5.10
+   - [#274](https://github.com/nathantannar4/InputBarAccessoryView/pull/274) Perform layout changes on main thread
+- 6.4.0
+   - [#263](https://github.com/nathantannar4/InputBarAccessoryView/pull/263) Fixed bottom gap calculations for embedded controllers
 - 6.3.0
    - [#244](https://github.com/nathantannar4/InputBarAccessoryView/pull/244) Fixed the gap between keyboard and input bar when used on pagesheet/formsheet on iPad
    - [#250](https://github.com/nathantannar4/InputBarAccessoryView/pull/250) Fixed crash after adding image attachment
