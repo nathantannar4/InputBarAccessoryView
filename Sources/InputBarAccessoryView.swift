@@ -654,17 +654,17 @@ open class InputBarAccessoryView: UIView {
     ///   - animated: If the layout should be animated
     ///   - animations: Animation logic
     internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
-        DispatchQueue.main.async {
-            self.deactivateConstraints()
+        self.deactivateConstraints()
 
-            if animated {
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.3, animations: animations)
-                }
-            } else {
-                UIView.performWithoutAnimation { animations() }
+        if animated {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.3, animations: animations)
             }
+        } else {
+            UIView.performWithoutAnimation { animations() }
+        }
 
+        DispatchQueue.main.async {
             self.activateConstraints()
         }
     }
