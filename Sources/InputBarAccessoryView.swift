@@ -656,7 +656,6 @@ open class InputBarAccessoryView: UIView {
     internal func performLayout(_ animated: Bool, _ animations: @escaping () -> Void) {
         DispatchQueue.main.async {
             self.deactivateConstraints()
-            self.activateConstraints()
 
             DispatchQueue.main.async {
                 if animated {
@@ -665,6 +664,8 @@ open class InputBarAccessoryView: UIView {
                     UIView.performWithoutAnimation { animations() }
                 }
             }
+
+            self.activateConstraints()
         }
     }
 
