@@ -664,9 +664,7 @@ open class InputBarAccessoryView: UIView {
             UIView.performWithoutAnimation { animations() }
         }
 
-        DispatchQueue.main.async {
-            self.activateConstraints()
-        }
+        self.activateConstraints()
     }
 
     /// Activates the NSLayoutConstraintSet's
