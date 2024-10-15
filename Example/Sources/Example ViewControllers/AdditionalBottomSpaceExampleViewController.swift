@@ -38,7 +38,7 @@ final class AdditionalBottomSpaceExampleViewController: CommonTableViewControlle
 
         keyboardManager.additionalInputViewBottomConstraintConstant = {
             var safeBottomInset: CGFloat = self.view.safeAreaInsets.bottom
-            if let windowBottomInset = UIApplication.shared.windows.first?.safeAreaInsets.bottom,
+            if let windowBottomInset = UIWindowScene.activeScene?.windows.first?.safeAreaInsets.bottom,
                safeBottomInset != windowBottomInset {
                 safeBottomInset = windowBottomInset
             }
@@ -63,5 +63,16 @@ final class AdditionalBottomSpaceExampleViewController: CommonTableViewControlle
         super.viewDidAppear(animated)
 
         self.inputBar.inputTextView.becomeFirstResponder()
+    }
+}
+
+private extension UIWindowScene {
+    static var activeScene: UIWindowScene? {
+        let connectedScenes = UIApplication.shared.connectedScenes
+        if connectedScenes.count > 1 {
+            return connectedScenes.first(where: { $0.activationState == .foregroundActive }) as? UIWindowScene
+        } else {
+            return connectedScenes.first as? UIWindowScene
+        }
     }
 }

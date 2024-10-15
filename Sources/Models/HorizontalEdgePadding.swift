@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-public struct HorizontalEdgePadding {
+public struct HorizontalEdgePadding: Sendable {
     public let left: CGFloat
     public let right: CGFloat
 

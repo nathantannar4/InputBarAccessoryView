@@ -29,6 +29,7 @@ import Foundation
 import UIKit
 
 /// InputBarAccessoryViewDelegate is a protocol that can recieve notifications from the InputBarAccessoryView
+@MainActor
 public protocol InputBarAccessoryViewDelegate: AnyObject {
     
     /// Called when the default send button has been selected

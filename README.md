@@ -32,8 +32,10 @@ https://github.com/nathantannar4/InputBarAccessoryView.git
 
 ### Requirements
 
-iOS 13.0+
-Swift 5.5
+iOS 14.0+
+Swift 6
+
+> The latest iOS 13 release is v6.5.0
 
 > The latest iOS 12 release is v5.5.0
 
@@ -74,6 +76,21 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+7.0.0
+   - **Breaking change**: Drop iOS 13 support
+   - **Breaking change**: Move to Swift 6, fully support  Swift concurrency
+
+6.5.0
+   - Bump Swift version to 5.10
+   - Perform layout changes on main thread
+   
+6.4.0
+   - Fixed bottom gap calculations for embedded controllers
+   
+6.3.0
+   - Fixed the gap between keyboard and input bar when used on pagesheet/formsheet on iPad
+   - Fixed crash after adding image attachment
+
 6.2.0
    - Remove `canBecomeFirstResponder` on `InputTextView` to fix `UITextViewDelegate` methods not being called
    
@@ -88,16 +105,6 @@ iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicato
    - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
    - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
    - Update docs
-
-5.5.0
-   - Update SPM tools to Swift 5.5
-   - Added new optional delegate method for custom attachments size
-   - Added new animations for left/right stack view constraints
-
-5.4.0
-   - Make sure framework is ready for Xcode 13
-   - Fix availability in AppExtensions
-   - Fix Package.swift to support iOS 12+ only
     
 See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 

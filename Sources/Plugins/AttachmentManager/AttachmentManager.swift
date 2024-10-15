@@ -27,6 +27,7 @@
 
 import UIKit
 
+@MainActor
 open class AttachmentManager: NSObject, InputPlugin {
     
     public enum Attachment {

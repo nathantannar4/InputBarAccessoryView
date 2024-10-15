@@ -28,6 +28,7 @@
 import UIKit
 
 /// `InputPlugin` is a protocol that makes integrating plugins to the `InputBarAccessoryView` easy.
+@MainActor
 public protocol InputPlugin: AnyObject {
     
     /// Should reload the state if the `InputPlugin`
