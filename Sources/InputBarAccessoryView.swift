@@ -655,7 +655,9 @@ open class InputBarAccessoryView: UIView {
             self.deactivateConstraints()
 
             if animated {
-                UIView.animate(withDuration: 0.3, animations: animations)
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.3, animations: animations)
+                }
             } else {
                 UIView.performWithoutAnimation { animations() }
             }
