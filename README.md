@@ -35,7 +35,7 @@ https://github.com/nathantannar4/InputBarAccessoryView.git
 iOS 14.0+
 Swift 6
 
-> The latest iOS 13 release is v6.5.0
+> The latest iOS 13 release is v6.5.1
 
 > The latest iOS 12 release is v5.5.0
 
