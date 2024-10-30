@@ -28,6 +28,7 @@
 import UIKit
 
 /// AutocompleteManagerDataSource is a protocol that passes data to the AutocompleteManager
+@MainActor
 public protocol AutocompleteManagerDataSource: AnyObject {
     
     /// The autocomplete options for the registered prefix.
