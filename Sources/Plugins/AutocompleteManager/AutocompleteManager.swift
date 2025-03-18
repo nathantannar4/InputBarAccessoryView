@@ -314,7 +314,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     // MARK: - API [Private]
     
-    /// Resets the `InputTextView`'s typingAttributes to `defaultTextAttributes`
+    /// Resets the `textView`'s typingAttributes to `defaultTextAttributes`
     private func preserveTypingAttributes() {
         textView?.typingAttributes = typingTextAttributes
     }
@@ -327,37 +327,38 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     ///   - sesstion: The 'AutocompleteSession'
     ///   - range: The 'NSRange' to insert over
     private func insertAutocomplete(_ autocomplete: String, at session: AutocompleteSession, for range: NSRange) {
-        
         guard let textView = textView else { return }
+
+        // Get the current `textStorage` for direct modification
+        let textStorage = textView.textStorage
         
-        // Apply the autocomplete attributes
+        // Apply autocomplete attributes
         var attrs = autocompleteTextAttributes[session.prefix] ?? defaultTextAttributes
         attrs[.autocompleted] = true
         attrs[.autocompletedContext] = session.completion?.context
         let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
         let newAttributedString = NSMutableAttributedString(string: newString, attributes: attrs)
         
-        // Append extra space if needed
+        // Append a space if required
         if appendSpaceOnCompletion {
-          newAttributedString.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
+            newAttributedString.append(NSAttributedString(string: " ", attributes: typingTextAttributes))
         }
         
-        // Modify the NSRange to include the prefix length
+        // Calculate the highlighted range
         let rangeModifier = keepPrefixOnCompletion ? session.prefix.count : 0
         let highlightedRange = NSRange(location: range.location - rangeModifier, length: range.length + rangeModifier)
         
-        // Replace the attributedText with a modified version including the autocompete
-        let newAttributedText = textView.attributedText.replacingCharacters(in: highlightedRange, with: newAttributedString)
+        // Begin editing
+        textStorage.beginEditing()
         
-        // make background clear for dark mode support
-        newAttributedText.addAttribute(NSAttributedString.Key.backgroundColor,
-                                       value: UIColor.clear,
-                                       range: NSMakeRange(0, newAttributedText.length))
+        // Directly modify `textStorage` to avoid UI redraw caused by attributedText assignment
+        textStorage.replaceCharacters(in: highlightedRange, with: newAttributedString)
         
-        // Set to a blank attributed string to prevent keyboard autocorrect from cloberring the insert
-        textView.attributedText = NSAttributedString()
-
-        textView.attributedText = newAttributedText
+        // Remove background color to support dark mode
+        textStorage.addAttribute(.backgroundColor, value: UIColor.clear, range: NSRange(location: 0, length: textStorage.length))
+        
+        // End editing
+        textStorage.endEditing()
     }
     
     /// Initializes a session with a new `AutocompleteSession` object
