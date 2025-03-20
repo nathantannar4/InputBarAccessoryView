@@ -213,11 +213,8 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         guard let newText = object as? String, let textView = textView else { return false }
         let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
         let newAttributedString = NSAttributedString(string: newText, attributes: typingTextAttributes)
-        let selectedRange = textView.selectedRange.location
-        attributedString.insert(newAttributedString, at: selectedRange)
+        attributedString.append(newAttributedString)
         textView.attributedText = attributedString
-        let newSelectedRange = NSMakeRange(selectedRange + newText.count, 0)
-        textView.selectedRange = newSelectedRange
         reloadData()
         return true
     }
