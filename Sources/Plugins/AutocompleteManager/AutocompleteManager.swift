@@ -36,6 +36,10 @@ public extension NSAttributedString.Key {
     /// A key used for referencing the context of autocompleted substrings
     /// by InputBarAccessoryView.AutocompleteManager
     static let autocompletedContext = NSAttributedString.Key("com.system.autocompletekey.context")
+    
+    /// A key used for referencing the unique identifier of autocompleted substrings
+    /// by InputBarAccessoryView.AutocompleteManager
+    static let autocompletedID = NSAttributedString.Key("com.system.autocompletekey.ID")
 }
 
 open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -141,6 +145,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         var attributes = defaultTextAttributes
         attributes[.autocompleted] = false
         attributes[.autocompletedContext] = nil
+        attributes[.autocompletedID] = nil
         attributes[.paragraphStyle] = paragraphStyle
         return attributes
     }
@@ -343,6 +348,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         // Apply autocomplete attributes
         var attrs = autocompleteTextAttributes[session.prefix] ?? defaultTextAttributes
         attrs[.autocompleted] = true
+        attrs[.autocompletedID] = session.completion?.identifier
         attrs[.autocompletedContext] = session.completion?.context
         let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
         let newAttributedString = NSMutableAttributedString(string: newString, attributes: attrs)
@@ -447,7 +453,8 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             
             if isAutocompleted {
-                textView.attributedText.enumerateAttribute(.autocompleted, in: totalRange, options: .reverse) { _, subrange, stop in
+                // Bugfix: Replaced .autocompleted with .autocompletedID to address the issue where, after deleting all the spaces between two @mentions using backspace, continuing to delete either of the @mentions causes both @mentions to be deleted together.
+                textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { _, subrange, stop in
                     
                     let intersection = NSIntersectionRange(range, subrange)
                     guard intersection.length > 0 else { return }
@@ -482,7 +489,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
 
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             if isAutocompleted {
-                textView.attributedText.enumerateAttribute(.autocompleted, in: totalRange, options: .reverse) { _, subrange, stop in
+                textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { _, subrange, stop in
                     
                     let compareRange = range.length == 0 ? NSRange(location: range.location, length: 1) : range
                     let intersection = NSIntersectionRange(compareRange, subrange)

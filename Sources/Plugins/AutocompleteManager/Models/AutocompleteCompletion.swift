@@ -27,7 +27,7 @@
 
 import Foundation
 
-public struct AutocompleteCompletion {
+public struct AutocompleteCompletion: Equatable {
     
     // The String to insert/replace upon autocompletion
     public let text: String
@@ -35,14 +35,49 @@ public struct AutocompleteCompletion {
     // The context of the completion that you may need later when completed
     public let context: [String: Any]?
     
-    public init(text: String, context: [String: Any]? = nil) {
+    public private(set) var identifier: String
+        
+    /// Initializes an instance with the provided text, an optional identifier, and an optional context.
+    /// If no valid `identifier` is provided, a stable and unique ID is generated using a combination of `text` and `context`
+    public init(text: String, identifier: String? = nil, context: [String: Any]? = nil) {
         self.text = text
         self.context = context
+        self.identifier = (identifier?.isEmpty == false) ? identifier! : Self.generateID(text: text, context: context)
+    }
+
+    /// Generates a unique ID based on `text` and `context` using FNV-1a hashing.
+    private static func generateID(text: String, context: [String: Any]?) -> String {
+        var hash = fnv1aHash(text)
+        context?.forEach { key, value in
+            hash = fnvCombine(hash1: hash, hash2: fnv1aHash("\(key)=\(value)"))
+        }
+        return hash
+    }
+
+    /// Computes a 64-bit FNV-1a hash.
+    private static func fnv1aHash(_ string: String) -> String {
+        let prime: UInt64 = 1099511628211
+        var hash: UInt64 = 14695981039346656037
+        for byte in string.utf8 {
+            hash ^= UInt64(byte)
+            hash &*= prime
+        }
+        return String(format: "%016llx", hash)
+    }
+
+    /// Merges two FNV-1a hashes.
+    private static func fnvCombine(hash1: String, hash2: String) -> String {
+        return fnv1aHash(hash1 + hash2)
+    }
+    
+    public static func ==(lhs: AutocompleteCompletion, rhs: AutocompleteCompletion) -> Bool {
+        return lhs.identifier == rhs.identifier
     }
     
     @available(*, deprecated, message: "`displayText` should no longer be used, use `context: [String: Any]` instead")
     public init(_ text: String, displayText: String) {
         self.text = text
         self.context = nil
+        self.identifier = UUID().uuidString
     }
 }

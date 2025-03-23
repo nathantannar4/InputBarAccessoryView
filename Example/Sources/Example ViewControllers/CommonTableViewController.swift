@@ -257,6 +257,7 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
                 .filter { $0.name != SampleData.shared.currentUser.name }
                 .map { user in
                     return AutocompleteCompletion(text: user.name,
+                                                  identifier: user.id
                                                   context: ["id": user.id])
             }
         } else if prefix == "#" {
