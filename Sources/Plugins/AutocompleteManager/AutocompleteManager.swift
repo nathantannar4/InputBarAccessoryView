@@ -211,10 +211,18 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     @discardableResult
     open func handleInput(of object: AnyObject) -> Bool {
         guard let newText = object as? String, let textView = textView else { return false }
-        let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
-        let newAttributedString = NSAttributedString(string: newText, attributes: typingTextAttributes)
-        attributedString.append(newAttributedString)
-        textView.attributedText = attributedString
+        if let delegate = textView.delegate,
+           let shouldChange = delegate.textView?(textView, shouldChangeTextIn: textView.selectedRange, replacementText: newText) {
+            if shouldChange {
+                let attributedString = NSMutableAttributedString(attributedString: textView.attributedText)
+                let newAttributedString = NSAttributedString(string: newText, attributes: typingTextAttributes)
+                let selectedRange = textView.selectedRange.location
+                attributedString.insert(newAttributedString, at: selectedRange)
+                textView.attributedText = attributedString
+                let newSelectedRange = NSMakeRange(selectedRange + newText.count, 0)
+                textView.selectedRange = newSelectedRange
+            }
+        }
         reloadData()
         return true
     }
