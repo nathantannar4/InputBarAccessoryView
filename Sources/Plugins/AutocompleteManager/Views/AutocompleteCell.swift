@@ -27,7 +27,7 @@
 
 import UIKit
 
-open class AutocompleteCell: UITableViewCell {
+open class AutocompleteCell: UICollectionViewCell {
     
     // MARK: - Properties
     
@@ -35,18 +35,50 @@ open class AutocompleteCell: UITableViewCell {
         return "AutocompleteCell"
     }
     
-    /// A boarder line anchored to the top of the view
+    /// A border line anchored to the top of the view
     public let separatorLine = SeparatorLine()
     
+    open lazy var imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        contentView.addSubview(imageView)
+        return imageView
+    }()
+    
+    open lazy var textLabel: UILabel = {
+        let label = UILabel()
+        contentView.addSubview(label)
+        return label
+    }()
+    
+    open lazy var checkmarkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: "checkmark")
+        imageView.isHidden = true
+        contentView.addSubview(imageView)
+        return imageView
+    }()
+    
+    /// By setting this property, you can indirectly adjust the size of the imageView.
     open var imageViewEdgeInsets: UIEdgeInsets = .zero { didSet { setNeedsLayout() } }
     
+    /// The scroll direction of the parent collection view
+    public var scrollDirection: UICollectionView.ScrollDirection = .vertical {
+        didSet {
+            separatorLine.isHidden = scrollDirection == .horizontal
+            textLabel.textAlignment = scrollDirection == .horizontal ? .center : .natural
+            setNeedsLayout()
+        }
+    }
+
     // MARK: - Initialization
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    override public init(frame: CGRect) {
+        super.init(frame: frame)
         setup()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
@@ -54,44 +86,101 @@ open class AutocompleteCell: UITableViewCell {
     
     open override func prepareForReuse() {
         super.prepareForReuse()
-        textLabel?.text = nil
-        detailTextLabel?.text = nil
-        imageView?.image = nil
+        textLabel.text = nil
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = nil
         imageViewEdgeInsets = .zero
-        separatorLine.backgroundColor = .systemGray2
+        separatorLine.backgroundColor = .lightGray
         separatorLine.isHidden = false
+        checkmarkImageView.isHidden = true
     }
     
     // MARK: - Setup
     
     private func setup() {
-        
-        setupSubviews()
-        setupConstraints()
-    }
-    
-    open func setupSubviews() {
-        
         addSubview(separatorLine)
     }
     
-    open func setupConstraints() {
-        
-        separatorLine.addConstraints(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, heightConstant: 0.5)
-    }
+    // MARK: - Update Selection State
     
+    open var isCheckmarkSelected: Bool = false {
+        didSet {
+            checkmarkImageView.isHidden = !isCheckmarkSelected
+        }
+    }
+
     open override func layoutSubviews() {
         super.layoutSubviews()
-        guard let imageViewFrame = imageView?.frame else { return }
-        let imageViewOrigin = CGPoint(x: imageViewFrame.origin.x + imageViewEdgeInsets.left, y: imageViewFrame.origin.y + imageViewEdgeInsets.top)
-        let imageViewSize = CGSize(width: imageViewFrame.size.width - imageViewEdgeInsets.left - imageViewEdgeInsets.right, height: imageViewFrame.size.height - imageViewEdgeInsets.top - imageViewEdgeInsets.bottom)
-        imageView?.frame = CGRect(origin: imageViewOrigin, size: imageViewSize)
-    }
-    
-    // MARK: - API [Public]
-    
-    @available(*, deprecated, message: "This function has been moved to the `AutocompleteManager`")
-    open func attributedText(matching session: AutocompleteSession) -> NSMutableAttributedString {
-        fatalError("Please use `func attributedText(matching:, fontSize:)` implemented in the `AutocompleteManager`")
+
+        switch scrollDirection {
+        case .horizontal:
+            // Only set the imageView frame if image exists
+            if let _ = imageView.image {
+                let imageViewWidth = 36.0
+                let imageViewHeight = 36.0
+                let imageViewX = (bounds.width - imageViewWidth) / 2.0
+                let imageViewY = 16.0
+                
+                imageView.frame = CGRect(x: imageViewX + imageViewEdgeInsets.left,
+                                         y: imageViewY + imageViewEdgeInsets.top,
+                                         width: imageViewWidth - imageViewEdgeInsets.left - imageViewEdgeInsets.right,
+                                         height: imageViewHeight - imageViewEdgeInsets.top - imageViewEdgeInsets.bottom)
+            } else {
+                imageView.frame = .zero
+            }
+            
+            // Only set the textLabel frame if text exists
+            if let text = textLabel.text, !text.isEmpty {
+                let textLabelPadding = 5.0
+                let textLabelX = 8.0
+                let textLabelY = imageView.frame.maxY + textLabelPadding
+                let textLabelWidth = bounds.size.width - textLabelX * 2
+                let textLabelHeight = textLabel.font.pointSize
+                textLabel.frame = CGRect(x: textLabelX,
+                                         y: textLabelY,
+                                         width: textLabelWidth,
+                                         height: textLabelHeight)
+            } else {
+                textLabel.frame = .zero
+            }
+            
+            checkmarkImageView.frame = CGRect(x: bounds.width - 30, y: 10, width: 20, height: 20)
+        case .vertical:
+            separatorLine.frame = CGRect(x: 0, y: bounds.height - 0.5, width: bounds.width, height: 0.5)
+            
+            // Only set the imageView frame if image exists
+            if let _ = imageView.image {
+                let imageViewWidth = 30.0
+                let imageViewHeight = 30.0
+                let imageViewX = 16.0
+                let imageViewY = (bounds.height - imageViewHeight) / 2.0
+
+                imageView.frame = CGRect(x: imageViewX + imageViewEdgeInsets.left,
+                                         y: imageViewY + imageViewEdgeInsets.top,
+                                         width: imageViewWidth - imageViewEdgeInsets.left - imageViewEdgeInsets.right,
+                                         height: imageViewHeight - imageViewEdgeInsets.top - imageViewEdgeInsets.bottom)
+            } else {
+                imageView.frame = .zero
+            }
+            
+            // Only set the textLabel frame if text exists
+            if let text = textLabel.text, !text.isEmpty {
+                let textLabelPadding = 8.0
+                let textLabelWidth = bounds.width - imageView.frame.maxX - textLabelPadding
+                let textLabelHeight = 30.0
+                let textLabelX = imageView.frame.maxX + textLabelPadding
+                let textLabelY = (bounds.height - textLabelHeight) / 2.0
+                textLabel.frame = CGRect(x: textLabelX,
+                                         y: textLabelY,
+                                         width: textLabelWidth,
+                                         height: textLabelHeight)
+            } else {
+                textLabel.frame = .zero
+            }
+            
+            checkmarkImageView.frame = CGRect(x: bounds.width - 30, y: 10, width: 20, height: 20)
+        @unknown default:
+            break
+        }
     }
 }

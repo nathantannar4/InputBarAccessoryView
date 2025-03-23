@@ -62,7 +62,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -84,7 +84,6 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         autocompleteManager.register(prefix: "@", with: mentionTextAttributes)
         autocompleteManager.register(prefix: "#")
         autocompleteManager.maxSpaceCountDuringCompletion = 1 // Allow for autocompletes with a space
-        
         // Set plugins
         inputBar.inputPlugins = [autocompleteManager, attachmentManager]
         
@@ -100,17 +99,17 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(ConversationCell.self)", for: indexPath)
-        cell.imageView?.image = conversation.messages[indexPath.row].user.image
-        cell.imageView?.layer.cornerRadius = 5
-        cell.imageView?.clipsToBounds = true
-        cell.textLabel?.text = conversation.messages[indexPath.row].user.name
-        cell.textLabel?.font = .boldSystemFont(ofSize: 15)
-        cell.textLabel?.numberOfLines = 0
-        cell.detailTextLabel?.textColor = .secondaryLabel
-        cell.detailTextLabel?.font = .systemFont(ofSize: 14)
-        cell.detailTextLabel?.text = conversation.messages[indexPath.row].text
-        cell.detailTextLabel?.numberOfLines = 0
-        cell.selectionStyle = .none
+        var content = UIListContentConfiguration.cell()
+        content.imageProperties.cornerRadius = 5
+        content.textProperties.font = .boldSystemFont(ofSize: 15)
+        content.textProperties.numberOfLines = 0
+        content.secondaryTextProperties.font = .systemFont(ofSize: 14)
+        content.secondaryTextProperties.numberOfLines = 0
+        content.secondaryTextProperties.color = .darkGray
+        content.image = conversation.messages[indexPath.row].user.image
+        content.text = conversation.messages[indexPath.row].user.name
+        content.secondaryText = conversation.messages[indexPath.row].text
+        cell.contentConfiguration = content
         return cell
     }
 }
@@ -153,7 +152,6 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
     
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
-        print(size)
         tableView.contentInset.bottom = size.height + 300 // keyboard size estimate
     }
     
@@ -258,16 +256,16 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
         return []
     }
     
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
+    func autocompleteManager(_ manager: AutocompleteManager, collectionView: UICollectionView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> AutocompleteCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
             fatalError("Oops, some unknown error occurred")
         }
         let users = SampleData.shared.users
         let name = session.completion?.text ?? ""
         let user = users.filter { return $0.name == name }.first
-        cell.imageView?.image = user?.image
-        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 15)
+        cell.imageView.image = user?.image
+        cell.textLabel.attributedText = manager.attributedText(matching: session, fontSize: 14)
         return cell
     }
     
@@ -296,11 +294,11 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
     
     func setAutocompleteManager(active: Bool) {
         let topStackView = inputBar.topStackView
-        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
+        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.collectionView) {
+            topStackView.insertArrangedSubview(autocompleteManager.collectionView, at: topStackView.arrangedSubviews.count)
             topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            topStackView.removeArrangedSubview(autocompleteManager.tableView)
+        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.collectionView) {
+            topStackView.removeArrangedSubview(autocompleteManager.collectionView)
             topStackView.layoutIfNeeded()
         }
         inputBar.invalidateIntrinsicContentSize()
@@ -309,10 +307,10 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+    return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
-	return input.rawValue
+    return input.rawValue
 }

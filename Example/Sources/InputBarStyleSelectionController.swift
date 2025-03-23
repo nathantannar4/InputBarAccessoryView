@@ -41,7 +41,7 @@ class InputBarStyleSelectionController: UITableViewController {
         switch section {
         case 0:     return 1
         case 1...2: return styles.count
-        case 3:     return 4
+        case 3:     return 5
         default:    fatalError("unknown section \(section)")
         }
     }
@@ -51,10 +51,11 @@ class InputBarStyleSelectionController: UITableViewController {
         switch (indexPath.section, indexPath.row) {
         case (0, _):        cell.textLabel?.text = "README Preview"
         case (1...2, _):    cell.textLabel?.text = styles[indexPath.row].rawValue
-        case (3, 0):        cell.textLabel?.text = "Tab bar example (Slack style)"
-        case (3, 1):        cell.textLabel?.text = "Addition bottom space example (Slack)"
-        case (3, 2):        cell.textLabel?.text = "Send button animations"
-        case (3, 3):        cell.textLabel?.text = "SwiftUI example"
+        case (3, 0):        cell.textLabel?.text = "TikTok (allows consecutive mentions)"
+        case (3, 1):        cell.textLabel?.text = "Tab bar example (Slack style)"
+        case (3, 2):        cell.textLabel?.text = "Addition bottom space example (Slack)"
+        case (3, 3):        cell.textLabel?.text = "Send button animations"
+        case (3, 4):        cell.textLabel?.text = "SwiftUI example"
         default:            assertionFailure("unrecognized \(indexPath). Are you trying to add an additional example?")
         }
 
@@ -76,18 +77,21 @@ class InputBarStyleSelectionController: UITableViewController {
         case 3:
             switch indexPath.row {
             case 0:
+                let example = TikTokExampleViewController(style: .slack, conversation: convo)
+                navigationController?.pushViewController(example, animated: true)
+            case 1:
                 let tabBarController = UITabBarController()
                 let contained = SubviewExampleViewController(style: InputBarStyle.slack, conversation: convo)
                 tabBarController.viewControllers = [contained]
                 contained.tabBarItem = UITabBarItem(title: "Slack", image: UIImage(systemName: "number"), tag: 0)
                 navigationController?.pushViewController(tabBarController, animated: true)
-            case 1:
+            case 2:
                 let example = AdditionalBottomSpaceExampleViewController(style: .slack, conversation: convo)
                 navigationController?.pushViewController(example, animated: true)
-            case 2:
+            case 3:
                 let example = ButtonAnimationExample(style: .imessage, conversation: convo)
                 navigationController?.pushViewController(example, animated: true)
-            case 3:
+            case 4:
                 let example = UIHostingController(rootView: SwiftUIExample.make(style: .imessage, conversation: convo))
                 navigationController?.pushViewController(example, animated: true)
             default:

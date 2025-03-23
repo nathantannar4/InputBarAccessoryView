@@ -30,6 +30,7 @@
 		468A8728251C8AC20018D007 /* ButtonAnimationExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */; };
 		46E4094E252996D900D238A8 /* SwiftUIExample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E4094D252996D900D238A8 /* SwiftUIExample.swift */; };
 		51D058022823432C008AAC04 /* InputBarAccessoryView in Frameworks */ = {isa = PBXBuildFile; productRef = 51D058012823432C008AAC04 /* InputBarAccessoryView */; };
+		BB0C43FE2D903B6B000A34C6 /* TikTokExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0C43FD2D903B6B000A34C6 /* TikTokExampleViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,6 +72,7 @@
 		468A8727251C8AC20018D007 /* ButtonAnimationExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonAnimationExample.swift; sourceTree = "<group>"; };
 		46E4094D252996D900D238A8 /* SwiftUIExample.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExample.swift; sourceTree = "<group>"; };
 		51D057FF28234307008AAC04 /* InputBarAccessoryView */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = InputBarAccessoryView; path = ..; sourceTree = "<group>"; };
+		BB0C43FD2D903B6B000A34C6 /* TikTokExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TikTokExampleViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 				3821ADE020F534DA00DE0D1D /* InputAccessoryExampleViewController.swift */,
 				3821ADDF20F534DA00DE0D1D /* SubviewExampleViewController.swift */,
 				131A72EC28325D2E001F73BE /* AdditionalBottomSpaceExampleViewController.swift */,
+				BB0C43FD2D903B6B000A34C6 /* TikTokExampleViewController.swift */,
 				46E4094D252996D900D238A8 /* SwiftUIExample.swift */,
 			);
 			path = "Example ViewControllers";
@@ -291,6 +294,7 @@
 				38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */,
 				38DAD87D21A685C6001762CD /* NoTextViewInputBar.swift in Sources */,
 				3821ADE220F534DA00DE0D1D /* InputAccessoryExampleViewController.swift in Sources */,
+				BB0C43FE2D903B6B000A34C6 /* TikTokExampleViewController.swift in Sources */,
 				46E4094E252996D900D238A8 /* SwiftUIExample.swift in Sources */,
 				3821ADE620F5360B00DE0D1D /* InputBarStyle.swift in Sources */,
 			);

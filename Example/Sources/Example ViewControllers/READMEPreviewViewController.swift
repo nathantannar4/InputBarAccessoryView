@@ -72,21 +72,21 @@ extension READMEPreviewViewController: AutocompleteManagerDelegate, Autocomplete
         }
     }
 
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
+    func autocompleteManager(_ manager: AutocompleteManager, collectionView: UICollectionView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> AutocompleteCell {
 
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
             fatalError("Oops, some unknown error occurred")
         }
         if session.prefix == "@" {
             let user = SampleData.shared.currentUser
-            cell.imageView?.image = user.image
+            cell.imageView.image = user.image
             cell.imageViewEdgeInsets = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
-            cell.imageView?.layer.cornerRadius = 8
-            cell.imageView?.layer.borderWidth = 1
-            cell.imageView?.layer.borderColor = UIColor.systemBlue.cgColor
-            cell.imageView?.layer.masksToBounds = true
+            cell.imageView.layer.cornerRadius = 8
+            cell.imageView.layer.borderWidth = 1
+            cell.imageView.layer.borderColor = UIColor.systemBlue.cgColor
+            cell.imageView.layer.masksToBounds = true
         }
-        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 15, keepPrefix: session.prefix == "#" )
+        cell.textLabel.attributedText = manager.attributedText(matching: session, fontSize: 15, keepPrefix: session.prefix == "#" )
         return cell
     }
 
@@ -100,11 +100,11 @@ extension READMEPreviewViewController: AutocompleteManagerDelegate, Autocomplete
 
     func setAutocompleteManager(active: Bool) {
         let topStackView = inputBar.topStackView
-        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            topStackView.insertArrangedSubview(autocompleteManager.tableView, at: topStackView.arrangedSubviews.count)
+        if active && !topStackView.arrangedSubviews.contains(autocompleteManager.collectionView) {
+            topStackView.insertArrangedSubview(autocompleteManager.collectionView, at: topStackView.arrangedSubviews.count)
             topStackView.layoutIfNeeded()
-        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
-            topStackView.removeArrangedSubview(autocompleteManager.tableView)
+        } else if !active && topStackView.arrangedSubviews.contains(autocompleteManager.collectionView) {
+            topStackView.removeArrangedSubview(autocompleteManager.collectionView)
             topStackView.layoutIfNeeded()
         }
         inputBar.invalidateIntrinsicContentSize()

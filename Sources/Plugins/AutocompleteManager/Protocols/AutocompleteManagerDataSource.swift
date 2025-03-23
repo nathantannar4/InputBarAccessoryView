@@ -39,28 +39,28 @@ public protocol AutocompleteManagerDataSource: AnyObject {
     /// - Returns: An array of `AutocompleteCompletion` options for the given prefix
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: String) -> [AutocompleteCompletion]
     
-    /// The cell to populate the `AutocompleteTableView` with
+    /// The cell to populate the `AutocompleteCollectionView` with
     ///
     /// - Parameters:
-    ///   - manager: The `AttachmentManager` that sources the UITableViewDataSource
-    ///   - tableView: The `AttachmentManager`'s `AutocompleteTableView`
+    ///   - manager: The `AttachmentManager` that sources the UICollectionViewDataSource
+    ///   - collectionView: The `AttachmentManager`'s `AutocompleteCollectionView`
     ///   - indexPath: The `IndexPath` of the cell
     ///   - session: The current `Session` of the `AutocompleteManager`
-    /// - Returns: A UITableViewCell to populate the `AutocompleteTableView`
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell
+    /// - Returns: A UICollectionViewCell to populate the `AutocompleteCollectionView`
+    func autocompleteManager(_ manager: AutocompleteManager, collectionView: UICollectionView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> AutocompleteCell
 }
 
 public extension AutocompleteManagerDataSource {
     
-    func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
+    func autocompleteManager(_ manager: AutocompleteManager, collectionView: UICollectionView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> AutocompleteCell {
+
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
             fatalError("AutocompleteCell is not registered")
         }
-        
-        cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 13)
-        cell.backgroundColor = .systemBackground
-        cell.separatorLine.isHidden = tableView.numberOfRows(inSection: indexPath.section) - 1 == indexPath.row
+
+        cell.textLabel.attributedText = manager.attributedText(matching: session, fontSize: 13)
+        cell.backgroundColor = .white
+        cell.separatorLine.isHidden = collectionView.numberOfItems(inSection: indexPath.section) - 1 == indexPath.item
         return cell
         
     }

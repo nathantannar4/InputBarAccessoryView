@@ -42,7 +42,7 @@ public extension NSAttributedString.Key {
     static let autocompletedID = NSAttributedString.Key("com.system.autocompletekey.ID")
 }
 
-open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITableViewDelegate, UITableViewDataSource {
+open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
     // MARK: - Properties [Public]
     
@@ -55,22 +55,25 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// A reference to the `InputTextView` that the `AutocompleteManager` is using
     private(set) public weak var textView: UITextView?
     
+    private var previousText: String?
+
     @available(*, deprecated, message: "`inputTextView` has been renamed to `textView` of type `UITextView`")
     public var inputTextView: InputTextView? { return textView as? InputTextView }
     
     /// An ongoing session reference that holds the prefix, range and text to complete with
     private(set) public var currentSession: AutocompleteSession?
+    private var lastSession: AutocompleteSession?
     
-    /// The `AutocompleteTableView` that renders available autocompletes for the `currentSession`
-    open lazy var tableView: AutocompleteTableView = { [weak self] in
-        let tableView = AutocompleteTableView()
-        tableView.register(AutocompleteCell.self, forCellReuseIdentifier: AutocompleteCell.reuseIdentifier)
-        tableView.separatorStyle = .none
-        tableView.backgroundColor = .systemBackground
-        tableView.rowHeight = 44
-        tableView.delegate = self
-        tableView.dataSource = self
-        return tableView
+    /// The `AutocompleteCollectionView` that renders available autocompletes for the `currentSession`
+    open lazy var collectionView: AutocompleteCollectionView = { [weak self] in
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = AutocompleteCollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.register(AutocompleteCell.self, forCellWithReuseIdentifier: AutocompleteCell.reuseIdentifier)
+        collectionView.backgroundColor = .white
+        collectionView.allowsMultipleSelection = self?.allowsConsecutiveMentions ?? false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
     }()
     
     /// Adds an additional space after the autocompleted text when true.
@@ -97,10 +100,24 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     /// Default value is `TRUE`
     open var deleteCompletionByParts = true
     
+    /// Determines whether consecutive mentions are allowed.
+    /// When set to `true`, the collectionView starts in multi-selection mode when the user inputs a mention prefix (e.g., `@` or `#`).
+    /// If the user continues typing after the prefix, the collectionView automatically switches to single-selection mode.
+    /// It switches back to multi-selection mode when the cursor backspaces to a position right after a mention prefix or when a new mention prefix is inserted.
+    ///
+    /// Default value is `FALSE`
+    open var allowsConsecutiveMentions = false {
+        didSet {
+            collectionView.allowsMultipleSelection = allowsConsecutiveMentions
+        }
+    }
+
+    open private(set) var selectedAutocompletes: [String]? = []
+    
     /// The default text attributes
     open var defaultTextAttributes: [NSAttributedString.Key: Any] = {
         var foregroundColor: UIColor
-        foregroundColor = .label
+        foregroundColor = .black
         return [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: foregroundColor]
     }()
     
@@ -220,9 +237,14 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                 textView.selectedRange = newSelectedRange
             }
         }
+        if allowsConsecutiveMentions {
+            collectionView.allowsMultipleSelection = true
+            previousText = textView.text
+        }
         reloadData()
         return true
     }
+
     
     // MARK: - API [Public]
     
@@ -276,7 +298,9 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         )
         
         // Transform range
-        guard let range = Range(insertionRange, in: textView.text) else { return }
+        guard let range = Range(insertionRange, in: textView.text) else {
+            return
+        }
         let nsrange = NSRange(range, in: textView.text)
         
         // Replace the attributedText with a modified version
@@ -290,8 +314,9 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             length: 0
         )
         
-        // End the session
-        unregisterCurrentSession()
+        if !allowsConsecutiveMentions || !collectionView.allowsMultipleSelection {
+            unregisterCurrentSession()
+        }
     }
     
     /// Returns an attributed string with bolded characters matching the characters typed in the session
@@ -319,11 +344,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
     
     // MARK: - API [Private]
     
-    /// Resets the `textView`'s typingAttributes to `defaultTextAttributes`
+    /// Resets the `InputTextView`'s typingAttributes to `defaultTextAttributes`
     private func preserveTypingAttributes() {
         textView?.typingAttributes = typingTextAttributes
     }
-    
     
     /// Inserts an autocomplete for a given selection
     ///
@@ -340,8 +364,8 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         // Apply autocomplete attributes
         var attrs = autocompleteTextAttributes[session.prefix] ?? defaultTextAttributes
         attrs[.autocompleted] = true
-        attrs[.autocompletedID] = session.completion?.identifier
         attrs[.autocompletedContext] = session.completion?.context
+        attrs[.autocompletedID] = session.completion?.identifier
         let newString = (keepPrefixOnCompletion ? session.prefix : "") + autocomplete
         let newAttributedString = NSMutableAttributedString(string: newString, attributes: attrs)
         
@@ -356,17 +380,91 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         
         // Begin editing
         textStorage.beginEditing()
-        
         // Directly modify `textStorage` to avoid UI redraw caused by attributedText assignment
         textStorage.replaceCharacters(in: highlightedRange, with: newAttributedString)
-        
         // Remove background color to support dark mode
         textStorage.addAttribute(.backgroundColor, value: UIColor.clear, range: NSRange(location: 0, length: textStorage.length))
-        
         // End editing
         textStorage.endEditing()
+        
+        previousText = textView.text
     }
     
+    /// Removes the autocomplete item from the text view based on the provided autocomplete completion.
+    private func deleteAucomplete(_ autocomplete: AutocompleteCompletion) {
+        guard let textView = textView else { return }
+        
+        let totalRange = NSRange(location: 0, length: textView.attributedText.length)
+        
+        textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { attributeValue, subrange, stop in
+            if let autocompletedID = attributeValue as? String {
+                // If the autocompleted ID matches the one to remove
+                if autocompletedID == autocomplete.identifier {
+                    let textToReplace = textView.attributedText.attributedSubstring(from: subrange).string
+                    let nothing = NSAttributedString(string: "", attributes: typingTextAttributes)
+                    
+                    // Check if there is a space after the autocompleted text
+                    let endIndex = subrange.location + textToReplace.count
+                    if endIndex < textView.attributedText.length {
+                        // Find the character right after the autocomplete text
+                        let endStringIndex = textView.attributedText.string.index(textView.attributedText.string.startIndex, offsetBy: endIndex)
+                        if endStringIndex < textView.attributedText.string.endIndex {
+                            let nextCharacter = textView.attributedText.string[endStringIndex]
+                            // If the next character is a space, remove it as well
+                            if nextCharacter == " " {
+                                let spaceRange = NSRange(location: endIndex, length: 1)
+                                textView.attributedText = textView.attributedText.replacingCharacters(in: spaceRange, with: nothing)
+                            }
+                        }
+                    }
+                    
+                    textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: nothing)
+                    textView.selectedRange = NSRange(location: textView.attributedText.length, length: 0)
+                    
+                    stop.pointee = true
+                    
+                    // Call method to check and unregister current session if needed
+                    checkUnregisterCurrentSession()
+                }
+            }
+        }
+    }
+
+    /// Synchronizes the `selectedAutocompletes` list with the autocomplete attributes present in the textView.
+    private func refreshSelectedAutocompletes() {
+        guard allowsConsecutiveMentions, let textView = textView else { return }
+
+        let totalRange = NSRange(location: 0, length: textView.attributedText.length)
+        
+        selectedAutocompletes?.removeAll()
+        var selectedItems = selectedAutocompletes ?? []
+        textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { attributeValue, subrange, stop in
+            let subText = textView.attributedText.attributedSubstring(from: subrange).string
+            // Scenario: User input '@xxx @xxx @xxx' and then selects 'xxx @xxx @xxx' (excluding the first '@') to delete.
+            if subText == currentSession?.prefix {
+                textView.textStorage.addAttributes(typingTextAttributes, range: subrange)
+            } else {
+                if let autocompleteID = attributeValue as? String {
+                    selectedItems.append(autocompleteID)
+                }
+            }
+        }
+        selectedAutocompletes = selectedItems
+        reloadVisibleCells()
+    }
+    
+    /// Refreshes only visible cells to avoid flickering caused by `reloadData()`.
+    private func reloadVisibleCells() {
+        collectionView.visibleCells
+            .compactMap { $0 as? AutocompleteCell }
+            .forEach { cell in
+                if let indexPath = collectionView.indexPath(for: cell) {
+                    let autocomplete = currentAutocompleteOptions[indexPath.item]
+                    cell.isCheckmarkSelected = selectedAutocompletes?.contains(autocomplete.identifier) ?? false
+                }
+            }
+    }
+
     /// Initializes a session with a new `AutocompleteSession` object
     ///
     /// - Parameters:
@@ -377,6 +475,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         currentSession = session
         layoutIfNeeded()
         delegate?.autocompleteManager(self, shouldBecomeVisible: true)
+        lastSession = nil
     }
     
     /// Updates the session to a new String to filter results with
@@ -400,26 +499,118 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
         delegate?.autocompleteManager(self, shouldBecomeVisible: false)
     }
     
-    /// Calls the required methods to relayout the `AutocompleteTableView` in it's superview
+    private func checkUnregisterCurrentSession() {
+        guard let textView = textView else { return }
+        if allowsConsecutiveMentions {
+            if shouldReloadData() {
+                reloadData()
+                return
+            }
+            let isSingleSelectionMode = !collectionView.allowsMultipleSelection
+            let containsPrefix = textView.text.contains(currentSession?.prefix ?? "")
+            if isSingleSelectionMode || !containsPrefix {
+                unregisterCurrentSession()
+            }
+        } else {
+            unregisterCurrentSession()
+        }
+    }
+    
+    /// Calls the required methods to relayout the `AutocompleteCollectionView` in it's superview
     private func layoutIfNeeded() {
         
-        tableView.reloadData()
+        collectionView.reloadData()
         
-        // Resize the table to be fit properly in an `InputStackView`
-        tableView.invalidateIntrinsicContentSize()
+        // Resize the collectionView to be fit properly in an `InputStackView`
+        collectionView.invalidateIntrinsicContentSize()
         
-        // Layout the table's superview
-        tableView.superview?.layoutIfNeeded()
+        // Layout the collectionView's superview
+        collectionView.superview?.layoutIfNeeded()
+    }
+    
+    private func handleAutocomplete(at indexPath: IndexPath) {
+        guard let session = currentSession else { return }
+        
+        session.completion = currentAutocompleteOptions[indexPath.item]
+        autocomplete(with: session)
+        lastSession = session
+    }
+    
+    private func shouldReloadData() -> Bool {
+
+        guard let textView = textView else { return false }
+        
+        // The character before the current cursor
+        let location = textView.selectedRange.location - 1
+        guard location >= 0, location < textView.attributedText.length else { return false }
+        
+        // The range of the character before the current cursor
+        let range = NSRange(location: location, length: 1)
+        let attributes = textView.attributedText.attributes(at: location, longestEffectiveRange: nil, in: range)
+        // isAutocompleted == true means the @xxx is a completed autocomplete (or in a highlighted state)
+        // By checking the autocompleted status of the previous character, we can determine if the cursor is placed after a completed autocomplete.
+        // Scenario: types @xxx (non-highlighted) @xxx (highlighted) xxx, then Backspace
+        let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
+        
+        let text = textView.attributedText.attributedSubstring(from: range).string
+        
+        if !isAutocompleted, text != " " {
+            if let lastCharacter = textView.text.last, String(lastCharacter) == currentSession?.prefix {
+                collectionView.allowsMultipleSelection = allowsConsecutiveMentions
+            } else {
+                // types a prefix such as @ for the first time, currentSession.prefix is nil
+                collectionView.allowsMultipleSelection = (currentSession?.prefix != nil) ? false : allowsConsecutiveMentions
+            }
+
+            collectionView.allowsMultipleSelection =
+                (textView.text.last.map { String($0) } == currentSession?.prefix)
+                ? allowsConsecutiveMentions
+                : (currentSession?.prefix != nil ? false : allowsConsecutiveMentions)
+
+            return true
+        }
+        return false
     }
     
     // MARK: - UITextViewDelegate
     
     public func textViewDidChange(_ textView: UITextView) {
-        reloadData()
+
+        if allowsConsecutiveMentions {
+            
+            // If the cursor is at the beginning or the current session prefix is missing
+            if textView.selectedRange.location == 0 || (currentSession?.prefix != nil && !textView.text.contains(currentSession!.prefix)) {
+                refreshSelectedAutocompletes()
+                unregisterCurrentSession()
+                return
+            }
+
+            // Track previous and current text length for backspace detection
+            let previousTextLength = previousText?.count ?? 0
+            let currentTextLength = textView.text.count
+            
+            // Inserted new text
+            if previousTextLength < currentTextLength {
+                collectionView.allowsMultipleSelection = false
+            } else if previousTextLength > currentTextLength {
+                // Handle backspace
+                refreshSelectedAutocompletes()
+            }
+
+            previousText = textView.text
+
+            // Scenario: @@@@xxxxxx @Avatar xxx, Backspace
+            if shouldReloadData() {
+                reloadData()
+            }
+        } else {
+            reloadData()
+        }
+
     }
     
+    
     public func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        
         // Ensure that the text to be inserted is not using previous attributes
         preserveTypingAttributes()
         
@@ -445,8 +636,9 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             
             if isAutocompleted {
-                // Bugfix: Replaced .autocompleted with .autocompletedID to address the issue where, after deleting all the spaces between two @mentions using backspace, continuing to delete either of the @mentions causes both @mentions to be deleted together.
-                textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { _, subrange, stop in
+                // Bugfix: Replaced .autocompleted with .autocompletedID to address the issue where,
+                // after deleting all the spaces between two @mentions using backspace, continuing to delete either of the @mentions causes both @mentions to be deleted together.
+                textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { attributeValue, subrange, stop in
                     
                     let intersection = NSIntersectionRange(range, subrange)
                     guard intersection.length > 0 else { return }
@@ -459,6 +651,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                         // Replace entire autocomplete
                         textView.attributedText = textView.attributedText.replacingCharacters(in: subrange, with: nothing)
                         textView.selectedRange = NSRange(location: subrange.location, length: 0)
+                        previousText = textView.text
                         return
                     }
                     // Delete up to delimiter
@@ -467,8 +660,10 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                     let rangeFromDelimiter = NSRange(location: delimiterLocation + subrange.location, length: length)
                     textView.attributedText = textView.attributedText.replacingCharacters(in: rangeFromDelimiter, with: nothing)
                     textView.selectedRange = NSRange(location: subrange.location + delimiterLocation, length: 0)
+                    previousText = textView.text
                 }
-                unregisterCurrentSession()
+                refreshSelectedAutocompletes()
+                checkUnregisterCurrentSession()
                 return false
             }
         } else if range.length >= 0, range.location < totalRange.length {
@@ -481,7 +676,7 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
 
             let isAutocompleted = attributes[.autocompleted] as? Bool ?? false
             if isAutocompleted {
-                textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { _, subrange, stop in
+                textView.attributedText.enumerateAttribute(.autocompletedID, in: totalRange, options: .reverse) { attributeValue, subrange, stop in
                     
                     let compareRange = range.length == 0 ? NSRange(location: range.location, length: 1) : range
                     let intersection = NSIntersectionRange(compareRange, subrange)
@@ -492,42 +687,82 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UITab
                     let replacementText = NSAttributedString(string: text, attributes: typingTextAttributes)
                     textView.attributedText = mutable.replacingCharacters(in: range, with: replacementText)
                     textView.selectedRange = NSRange(location: range.location + text.count, length: 0)
+                    previousText = textView.text
                     stop.pointee = true
+                    
                 }
-                unregisterCurrentSession()
+                refreshSelectedAutocompletes()
+                if !allowsConsecutiveMentions || !collectionView.allowsMultipleSelection {
+                    unregisterCurrentSession()
+                }
+
                 return false
             }
         }
         return true
     }
     
-    // MARK: - UITableViewDataSource
+    // MARK: - UICollectionViewDataSource
     
-    open func numberOfSections(in tableView: UITableView) -> Int {
+    open func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
-    open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return currentAutocompleteOptions.count
     }
     
-    open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let session = currentSession else { fatalError("Attempted to render a cell for a nil `AutocompleteSession`") }
-        session.completion = currentAutocompleteOptions[indexPath.row]
-        guard let cell = dataSource?.autocompleteManager(self, tableView: tableView, cellForRowAt: indexPath, for: session) else {
+        session.completion = currentAutocompleteOptions[indexPath.item]
+        guard let cell = dataSource?.autocompleteManager(self, collectionView: collectionView, cellForRowAt: indexPath, for: session) else {
             fatalError("Failed to return a cell from `dataSource: AutocompleteManagerDataSource`")
         }
+        cell.scrollDirection = self.collectionView.scrollDirection == .horizontal ? .horizontal : .vertical
+        cell.isCheckmarkSelected = selectedAutocompletes?.contains(session.completion?.identifier ?? "") ?? false
         return cell
     }
     
-    // MARK: - UITableViewDelegate
+    // MARK: - UICollectionViewDelegate
     
-    open func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let textView = textView else { return }
         
-        guard let session = currentSession else { return }
-        session.completion = currentAutocompleteOptions[indexPath.row]
-        autocomplete(with: session)
+        if allowsConsecutiveMentions {
+            let currentAutocomplete = currentAutocompleteOptions[indexPath.item]
+            var selectedItems = selectedAutocompletes ?? []
+            if !selectedItems.contains(currentAutocomplete.identifier) {
+                selectedItems.append(currentAutocomplete.identifier)
+                selectedAutocompletes = selectedItems
+                if lastSession != nil, lastSession == currentSession {
+                    // Scenario: After inserting multiple "@" mentions consecutively, tapping a cell,
+                    // deleting one mention, and then tapping a cell again
+                    if let lastCharacter = textView.text.last, String(lastCharacter) == currentSession?.prefix {
+                        reloadData()
+                    } else { // auto insert a prefix
+                        handleInput(of:  currentSession?.prefix as AnyObject)
+                    }
+                } else {
+                    UIView.performWithoutAnimation {
+                        collectionView.reloadItems(at: [indexPath])
+                    }
+                }
+                handleAutocomplete(at: indexPath)
+            } else {
+                if let index = selectedItems.firstIndex(of: currentAutocomplete.identifier) {
+                    selectedItems.remove(at: index)
+                    selectedAutocompletes = selectedItems
+                    deleteAucomplete(currentAutocomplete)
+                    
+                    UIView.performWithoutAnimation {
+                        collectionView.reloadItems(at: [indexPath])
+                    }
+                }
+            }
+        } else {
+            handleAutocomplete(at: indexPath)
+        }
     }
-    
 }
+
+
