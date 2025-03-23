@@ -75,39 +75,22 @@ internal extension NSMutableAttributedString {
 
     @discardableResult
     func bold(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize) -> NSMutableAttributedString {
-        if #available(iOS 13, *) {
-            return bold(text, fontSize: fontSize, textColor: .label)
-        } else {
-            return bold(text, fontSize: fontSize, textColor: .black)
-        }
+        return bold(text, fontSize: fontSize, textColor: .label)
     }
 
     @discardableResult
     func medium(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize) -> NSMutableAttributedString {
-        if #available(iOS 13, *) {
-            return medium(text, fontSize: fontSize, textColor: .label)
-        } else {
-            return medium(text, fontSize: fontSize, textColor: .black)
-        }
+        return medium(text, fontSize: fontSize, textColor: .label)
     }
 
     @discardableResult
     func italic(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize) -> NSMutableAttributedString {
-        if #available(iOS 13, *) {
-            return italic(text, fontSize: fontSize, textColor: .label)
-        } else {
-            return italic(text, fontSize: fontSize, textColor: .black)
-
-        }
+        return italic(text, fontSize: fontSize, textColor: .label)
     }
 
     @discardableResult
     func normal(_ text: String, fontSize: CGFloat = UIFont.preferredFont(forTextStyle: .body).pointSize) -> NSMutableAttributedString {
-        if #available(iOS 13, *) {
-            return normal(text, fontSize: fontSize, textColor: .label)
-        } else {
-            return normal(text, fontSize: fontSize, textColor: .black)
-        }
+        return normal(text, fontSize: fontSize, textColor: .label)
     }
 }
 

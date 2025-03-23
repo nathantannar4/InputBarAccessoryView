@@ -176,11 +176,7 @@ open class InputBarButtonItem: UIButton, InputItem {
         setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .vertical)
         setTitleColor(.systemBlue, for: .normal)
         setTitleColor(UIColor.systemBlue.withAlphaComponent(0.3), for: .highlighted)
-        if #available(iOS 13, *) {
-            setTitleColor(.systemGray2, for: .disabled)
-        } else {
-            setTitleColor(.lightGray, for: .disabled)
-        }
+        setTitleColor(.systemGray2, for: .disabled)
         adjustsImageWhenHighlighted = false
         addTarget(self, action: #selector(InputBarButtonItem.touchUpInsideAction), for: .touchUpInside)
     }

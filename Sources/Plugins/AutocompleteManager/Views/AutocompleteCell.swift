@@ -58,11 +58,7 @@ open class AutocompleteCell: UITableViewCell {
         detailTextLabel?.text = nil
         imageView?.image = nil
         imageViewEdgeInsets = .zero
-        if #available(iOS 13, *) {
-            separatorLine.backgroundColor = .systemGray2
-        } else {
-            separatorLine.backgroundColor = .lightGray
-        }
+        separatorLine.backgroundColor = .systemGray2
         separatorLine.isHidden = false
     }
     

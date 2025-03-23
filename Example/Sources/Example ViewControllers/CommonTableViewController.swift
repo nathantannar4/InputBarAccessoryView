@@ -62,11 +62,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if #available(iOS 13, *) {
-            view.backgroundColor = .systemBackground
-        } else {
-            view.backgroundColor = .white
-        }
+        view.backgroundColor = .systemBackground
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
@@ -110,11 +106,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         cell.textLabel?.text = conversation.messages[indexPath.row].user.name
         cell.textLabel?.font = .boldSystemFont(ofSize: 15)
         cell.textLabel?.numberOfLines = 0
-        if #available(iOS 13, *) {
-            cell.detailTextLabel?.textColor = .secondaryLabel
-        } else {
-            cell.detailTextLabel?.textColor = .darkGray
-        }
+        cell.detailTextLabel?.textColor = .secondaryLabel
         cell.detailTextLabel?.font = .systemFont(ofSize: 14)
         cell.detailTextLabel?.text = conversation.messages[indexPath.row].text
         cell.detailTextLabel?.numberOfLines = 0

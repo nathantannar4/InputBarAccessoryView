@@ -35,11 +35,7 @@ final class FacebookInputBar: InputBarAccessoryView {
         button.tintColor = .systemBlue
         inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
         inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 20)
-        if #available(iOS 13, *) {
-            inputTextView.layer.borderColor = UIColor.systemGray2.cgColor
-        } else {
-            inputTextView.layer.borderColor = UIColor.lightGray.cgColor
-        }
+        inputTextView.layer.borderColor = UIColor.systemGray2.cgColor
         inputTextView.layer.borderWidth = 1.0
         inputTextView.layer.cornerRadius = 16.0
         inputTextView.layer.masksToBounds = true

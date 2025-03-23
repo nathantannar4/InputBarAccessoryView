@@ -59,11 +59,7 @@ public extension AutocompleteManagerDataSource {
         }
         
         cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 13)
-        if #available(iOS 13, *) {
-            cell.backgroundColor = .systemBackground
-        } else {
-            cell.backgroundColor = .white
-        }
+        cell.backgroundColor = .systemBackground
         cell.separatorLine.isHidden = tableView.numberOfRows(inSection: indexPath.section) - 1 == indexPath.row
         return cell
         

@@ -61,9 +61,7 @@ open class InputBarAccessoryView: UIView {
     */
     open lazy var blurView: UIVisualEffectView = {
         var blurEffect = UIBlurEffect(style: .light)
-        if #available(iOS 13, *) {
-            blurEffect = UIBlurEffect(style: .systemMaterial)
-        }
+        blurEffect = UIBlurEffect(style: .systemMaterial)
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -143,11 +141,7 @@ open class InputBarAccessoryView: UIView {
     }()
 
     private static let defaultBackgroundColor: UIColor = {
-        if #available(iOS 13, *) {
-            return .systemBackground
-        } else {
-            return .white
-        }
+        return .systemBackground
     }()
 
     /// The InputTextView a user can input a message in
