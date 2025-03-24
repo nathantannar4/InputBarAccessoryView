@@ -495,7 +495,13 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UICol
         guard let session = currentSession else { return }
         guard delegate?.autocompleteManager(self, shouldUnregister: session.prefix) != false else { return }
         currentSession = nil
-        layoutIfNeeded()
+        // Bugfix: Forcing an immediate layout update here may cause an issue where
+        // 'delegate?.autocompleteManager(self, shouldBecomeVisible: false)' calls layoutIfNeeded again,
+        // potentially preventing cells from being displayed the next time collectionView is shown.
+        // This means collectionView's cellForItemAt delegate method won't be called.
+        // This issue does not occur with tableView, possibly due to a system bug.
+        // Scenario: Insert an @, delete the @, insert an image attachment, then insert another @.
+        setNeedsLayout()
         delegate?.autocompleteManager(self, shouldBecomeVisible: false)
     }
     
@@ -516,16 +522,30 @@ open class AutocompleteManager: NSObject, InputPlugin, UITextViewDelegate, UICol
         }
     }
     
-    /// Calls the required methods to relayout the `AutocompleteCollectionView` in it's superview
-    private func layoutIfNeeded() {
-        
+    private func updateCollectionViewLayout(immediateLayout: Bool) {
         collectionView.reloadData()
         
-        // Resize the collectionView to be fit properly in an `InputStackView`
+        // Resize the collectionView to fit properly in `InputStackView`
         collectionView.invalidateIntrinsicContentSize()
+        collectionView.collectionViewLayout.invalidateLayout()
         
-        // Layout the collectionView's superview
-        collectionView.superview?.layoutIfNeeded()
+        if immediateLayout {
+            collectionView.superview?.layoutIfNeeded()
+        } else {
+            collectionView.superview?.setNeedsLayout()
+        }
+    }
+
+    /// Marks the superview as needing a layout update.
+    /// The actual layout update will be performed in the next run loop cycle.
+    private func setNeedsLayout() {
+        updateCollectionViewLayout(immediateLayout: false)
+    }
+
+    /// Forces an immediate layout update for the superview.
+    /// This ensures that any pending layout changes are applied immediately.
+    private func layoutIfNeeded() {
+        updateCollectionViewLayout(immediateLayout: true)
     }
     
     private func handleAutocomplete(at indexPath: IndexPath) {

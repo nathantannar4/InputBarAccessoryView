@@ -90,7 +90,7 @@ open class AutocompleteCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.image = nil
         imageViewEdgeInsets = .zero
-        separatorLine.backgroundColor = .lightGray
+        separatorLine.backgroundColor = .systemGray2
         separatorLine.isHidden = false
         checkmarkImageView.isHidden = true
     }
@@ -146,7 +146,7 @@ open class AutocompleteCell: UICollectionViewCell {
             
             checkmarkImageView.frame = CGRect(x: bounds.width - 30, y: 10, width: 20, height: 20)
         case .vertical:
-            separatorLine.frame = CGRect(x: 0, y: bounds.height - 0.5, width: bounds.width, height: 0.5)
+            separatorLine.frame = CGRect(x: 0, y: bounds.height, width: bounds.width, height: 0.5)
             
             // Only set the imageView frame if image exists
             if let _ = imageView.image {
