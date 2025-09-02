@@ -336,9 +336,6 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
         else { return }
 
         guard
-            // if there's no difference in frames for the `cachedNotification`, no adjustment is necessary.
-            // This is true when the keyboard is completely dismissed, or our pan doesn't intersect below the keyboard
-            keyboardNotification.startFrame != keyboardNotification.endFrame,
             // when the width of the keyboard from endFrame is smaller than the width of scrollView manager is tracking
             // with panGesture, we can assume the keyboard is floatig ahd updating inputAccessoryView is not necessary
             keyboardNotification.endFrame.width >= view.frame.width
