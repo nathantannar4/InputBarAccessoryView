@@ -28,7 +28,6 @@
 import UIKit
 
 /// An object that observes keyboard notifications such that event callbacks can be set for each notification
-@available(iOSApplicationExtension, unavailable)
 open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
 
     /// A callback that passes a `KeyboardNotification` as an input
@@ -146,8 +145,16 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     /// When e.g. using pagesheets on iPad the inputAccessoryView is not stuck to the bottom of the screen.
     /// This value represents the size of the gap between the bottom of the screen and the bottom of the inputAccessoryView.
     private var bottomGap: CGFloat {
-        if let inputAccessoryView = inputAccessoryView, let window = inputAccessoryView.window, let superView = inputAccessoryView.superview {
-            return window.frame.height - window.convert(superView.frame, to: window).maxY
+        if let inputAccessoryView = inputAccessoryView,
+            let window = inputAccessoryView.window,
+            let superView = inputAccessoryView.superview
+        {
+            var height = window.bounds.height
+            if let rootViewController = window.rootViewController, rootViewController.presentedViewController == nil {
+                // Extensions run in a UIWindow where the rootViewController's frame is inset from the top
+                height = rootViewController.view.bounds.height
+            }
+            return height - window.convert(superView.frame, to: window).maxY
         }
         return 0
     }
