@@ -146,6 +146,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     /// This value represents the size of the gap between the bottom of the screen and the bottom of the inputAccessoryView.
     private var bottomGap: CGFloat {
         if let inputAccessoryView = inputAccessoryView,
+            inputAccessoryView.traitCollection.userInterfaceIdiom == .pad,
             let window = inputAccessoryView.window,
             let superView = inputAccessoryView.superview
         {
