@@ -49,6 +49,9 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     /// Closure for providing an additional bottom constraint constant for `InputAccessoryView`
     public var additionalInputViewBottomConstraintConstant: () -> CGFloat = { 0 }
 
+    /// Close run with the animation during a transition
+    public var transition: ((KeyboardNotification) -> Void)?
+
     // MARK: - Properties [Private]
 
     /// The additional bottom space specified for laying out the input accessory view
@@ -324,8 +327,20 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
 
     // MARK: - Helper Methods
 
-    private func animateAlongside(_ notification: KeyboardNotification, animations: @escaping ()->Void) {
-        UIView.animate(withDuration: notification.timeInterval, delay: 0, options: [notification.animationOptions, .allowAnimatedContent, .beginFromCurrentState], animations: animations, completion: nil)
+    private func animateAlongside(
+        _ notification: KeyboardNotification,
+        animations: @escaping () -> Void
+    ) {
+        UIView.animate(
+            withDuration: notification.timeInterval,
+            delay: 0,
+            options: [notification.animationOptions, .allowAnimatedContent, .beginFromCurrentState],
+            animations: {
+                animations()
+                self.transition?(notification)
+            },
+            completion: nil
+        )
     }
 
     // MARK: - UIGestureRecognizerDelegate
