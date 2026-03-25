@@ -169,8 +169,12 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     ///
     /// - Parameter inputAccessoryView: The view to bind to the top of the keyboard but within its superview
     /// - Returns: Self
-@discardableResult
-open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none) -> Self {
+    @discardableResult
+    open func bind<InputAccessoryView: UIView>(
+        inputAccessoryView: InputAccessoryView,
+        isActive: @escaping (InputAccessoryView) -> Bool = { _ in true },
+        withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none
+    ) -> Self {
 
     guard let superview = inputAccessoryView.superview else {
         fatalError("`inputAccessoryView` must have a superview")
@@ -186,62 +190,73 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
 
     callbacks[.willShow] = { [weak self] (notification) in
         guard
-            self?.isKeyboardHidden == false,
-            self?.constraints?.bottom?.constant == self?.additionalInputViewBottomConstraintConstant(),
-            notification.isForCurrentApp
+            let self,
+            isKeyboardHidden == false,
+            constraints?.bottom?.constant == additionalInputViewBottomConstraintConstant(),
+            notification.isForCurrentApp,
+            let inputAccessoryView = self.inputAccessoryView as? InputAccessoryView
         else { return }
 
-        let keyboardHeight = notification.endFrame.height
+        let keyboardHeight = isActive(inputAccessoryView) ? notification.endFrame.height : 0
         let animateAlongside = {
-            self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
-                self?.inputAccessoryView?.superview?.layoutIfNeeded()
+            self.animateAlongside(notification) {
+                self.constraints?.bottom?.constant = min(-34, -keyboardHeight + self.bottomGap) - (additionalBottomSpace?() ?? 0)
+                self.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
         animateAlongside()
 
         // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
-        let initialBottomGap = self?.bottomGap ?? 0
-        DispatchQueue.main.async {
-            let newBottomGap = self?.bottomGap ?? 0
+        let initialBottomGap = bottomGap
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let newBottomGap = bottomGap
             if newBottomGap != 0 && newBottomGap != initialBottomGap {
                 animateAlongside()
             }
         }
     }
     callbacks[.willChangeFrame] = { [weak self] (notification) in
-        let keyboardHeight = notification.endFrame.height
         guard
-            self?.isKeyboardHidden == false,
-            notification.isForCurrentApp
+            let self,
+            isKeyboardHidden == false,
+            notification.isForCurrentApp,
+            let inputAccessoryView = self.inputAccessoryView as? InputAccessoryView
         else {
             return
         }
+        let keyboardHeight = isActive(inputAccessoryView) ? notification.endFrame.height : 0
         let animateAlongside = {
-            self?.animateAlongside(notification) {
-                self?.constraints?.bottom?.constant = min(0, -keyboardHeight + (self?.bottomGap ?? 0)) - (additionalBottomSpace?() ?? 0)
-                self?.inputAccessoryView?.superview?.layoutIfNeeded()
+            self.animateAlongside(notification) {
+                self.constraints?.bottom?.constant = min(-34, -keyboardHeight + self.bottomGap) - (additionalBottomSpace?() ?? 0)
+                self.inputAccessoryView?.superview?.layoutIfNeeded()
             }
         }
         animateAlongside()
         
         // Trigger a new animation if gap changed, this typically happens when using pagesheet on portrait iPad
-        let initialBottomGap = self?.bottomGap ?? 0
-        DispatchQueue.main.async {
-            let newBottomGap = self?.bottomGap ?? 0
-            if newBottomGap != 0 && newBottomGap != initialBottomGap && !(self?.justDidWillHide ?? false) {
+        let initialBottomGap = bottomGap
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            let newBottomGap = bottomGap
+            if newBottomGap != 0 && newBottomGap != initialBottomGap && !(justDidWillHide) {
                 animateAlongside()
             }
         }
     }
     callbacks[.willHide] = { [weak self] (notification) in
-        guard notification.isForCurrentApp else { return }
-        self?.justDidWillHide = true
-        self?.animateAlongside(notification) { [weak self] in
-            self?.constraints?.bottom?.constant = self?.additionalInputViewBottomConstraintConstant() ?? 0
-            self?.inputAccessoryView?.superview?.layoutIfNeeded()
+        guard
+            let self,
+            notification.isForCurrentApp
+        else {
+            return
         }
-        DispatchQueue.main.async {
+        justDidWillHide = true
+        animateAlongside(notification) {
+            self.constraints?.bottom?.constant = self.additionalInputViewBottomConstraintConstant()
+            self.inputAccessoryView?.superview?.layoutIfNeeded()
+        }
+        DispatchQueue.main.async { [weak self] in
             self?.justDidWillHide = false
         }
     }
