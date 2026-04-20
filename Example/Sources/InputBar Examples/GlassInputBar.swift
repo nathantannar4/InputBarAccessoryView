@@ -24,16 +24,34 @@ final class GlassInputBar: InputBarAccessoryView {
         backgroundColor = nil
         separatorLine.isHidden = true
         if #available(iOS 26.0, *) {
-            backgroundView.effect = UIGlassContainerEffect()
+            let container = UIGlassContainerEffect()
+            container.spacing = 8
+            containerContentView.effect = container
             backgroundView.backgroundColor = nil
+
+            middleContentViewPadding.left = 8
+            middleContentViewPadding.right = 8
 
             let effect = UIGlassEffect(style: .regular)
             effect.isInteractive = true
-            contentView.cornerConfiguration = .capsule()
-            contentView.effect = effect
+            middleContentViewWrapper.cornerConfiguration = .capsule(maximumRadius: 20)
+            middleContentViewWrapper.effect = effect
+
+            leftContentView.cornerConfiguration = .capsule(maximumRadius: 20)
+            leftContentView.effect = effect
+
+            rightContentView.cornerConfiguration = .capsule(maximumRadius: 20)
+            rightContentView.effect = effect
         }
 
-        
+        let button = InputBarButtonItem()
+        button.setSize(CGSize(width: 36, height: 36), animated: false)
+        button.setImage(#imageLiteral(resourceName: "ic_plus").withRenderingMode(.alwaysTemplate), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.tintColor = .systemBlue
+
+        setLeftStackViewWidthConstant(to: 36, animated: false)
+        setStackViewItems([button], forStack: .left, animated: false)
     }
 }
 

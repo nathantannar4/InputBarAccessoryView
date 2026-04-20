@@ -21,6 +21,8 @@ final class iMessageInputBar: InputBarAccessoryView {
     }
     
     func configure() {
+        backgroundColor = nil
+        backgroundView.backgroundColor = nil
         inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
         inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
         if #available(iOS 13, *) {
@@ -43,7 +45,7 @@ final class iMessageInputBar: InputBarAccessoryView {
         sendButton.backgroundColor = .clear
         middleContentViewPadding.right = -38
         separatorLine.isHidden = true
-        backgroundView.effect = UIBlurEffect(style: .systemMaterial)
+        containerContentView.effect = UIBlurEffect(style: .systemUltraThinMaterial)
     }
     
 }
