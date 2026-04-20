@@ -37,8 +37,8 @@ open class InputBarAccessoryView: UIView {
 
     /// The background UIView anchored to the bottom, left, and right of the InputBarAccessoryView
     /// with a top anchor equal to the bottom of the top InputStackView
-    open var backgroundView: UIView = {
-        let view = UIView()
+    open var backgroundView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = InputBarAccessoryView.defaultBackgroundColor
         return view
@@ -47,40 +47,11 @@ open class InputBarAccessoryView: UIView {
     /// A content UIView that holds the left/right/bottom InputStackViews
     /// and the middleContentView. Anchored to the bottom of the
     /// topStackView and inset by the padding UIEdgeInsets
-    open var contentView: UIView = {
-        let view = UIView()
+    open var contentView: UIVisualEffectView = {
+        let view = UIVisualEffectView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-    /**
-     A UIVisualEffectView that adds a blur effect to make the view appear transparent.
-
-     ## Important Notes ##
-     1. The blurView is initially not added to the backgroundView to improve performance when not needed. When `isTranslucent` is set to TRUE for the first time the blurView is added and anchored to the `backgroundView`s edge anchors
-    */
-    open lazy var blurView: UIVisualEffectView = {
-        var blurEffect = UIBlurEffect(style: .light)
-        if #available(iOS 13, *) {
-            blurEffect = UIBlurEffect(style: .systemMaterial)
-        }
-        let view = UIVisualEffectView(effect: blurEffect)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
-    /// Determines if the InputBarAccessoryView should have a translucent effect
-    open var isTranslucent: Bool = false {
-        didSet {
-            if isTranslucent && blurView.superview == nil {
-                backgroundView.addSubview(blurView)
-                blurView.fillSuperview()
-            }
-            blurView.isHidden = !isTranslucent
-            let color: UIColor = backgroundView.backgroundColor ?? InputBarAccessoryView.defaultBackgroundColor
-            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color
-        }
-    }
 
     /// A SeparatorLine that is anchored at the top of the InputBarAccessoryView
     public let separatorLine = SeparatorLine()

@@ -43,7 +43,7 @@ final class iMessageInputBar: InputBarAccessoryView {
         sendButton.backgroundColor = .clear
         middleContentViewPadding.right = -38
         separatorLine.isHidden = true
-        isTranslucent = true
+        backgroundView.effect = UIBlurEffect(style: .systemMaterial)
     }
     
 }

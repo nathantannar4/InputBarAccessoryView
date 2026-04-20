@@ -15,6 +15,7 @@ enum InputBarStyle: String, CaseIterable {
     case slack = "Slack"
     case githawk = "GitHawk"
     case facebook = "Facebook"
+    case glass = "Glass"
     case noTextView = "No InputTextView"
     case `default` = "Default"
     
@@ -24,6 +25,7 @@ enum InputBarStyle: String, CaseIterable {
         case .slack: return SlackInputBar()
         case .githawk: return GitHawkInputBar()
         case .facebook: return FacebookInputBar()
+        case .glass: return GlassInputBar()
         case .noTextView: return NoTextViewInputBar()
         case .default: return InputBarAccessoryView()
         }

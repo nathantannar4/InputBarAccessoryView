@@ -16,6 +16,7 @@
 		383989BD1F564F5C003D30DD /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383989BC1F564F5C003D30DD /* Random.swift */; };
 		383B839D1F47897800027965 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383B839C1F47897800027965 /* AppDelegate.swift */; };
 		383B83A11F47897800027965 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 383B83A01F47897800027965 /* Assets.xcassets */; };
+		3860DC1C2F96C27900F2D981 /* GlassInputBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860DC1B2F96C27900F2D981 /* GlassInputBar.swift */; };
 		388714E9202AC9620064C8BB /* InputBarStyleSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */; };
 		388714EB202AC9A50064C8BB /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388714EA202AC9A50064C8BB /* SampleData.swift */; };
 		38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C888C5202051B3000F2E2F /* ImageCell.swift */; };
@@ -57,6 +58,7 @@
 		383B839C1F47897800027965 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		383B83A01F47897800027965 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		383B83A51F47897800027965 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3860DC1B2F96C27900F2D981 /* GlassInputBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassInputBar.swift; sourceTree = "<group>"; };
 		388714E8202AC9620064C8BB /* InputBarStyleSelectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputBarStyleSelectionController.swift; sourceTree = "<group>"; };
 		388714EA202AC9A50064C8BB /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
 		38C888C5202051B3000F2E2F /* ImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 				3821ADE520F5360B00DE0D1D /* InputBarStyle.swift */,
 				38F0C1FD20C89C9B00FF8DD3 /* iMessageInputBar.swift */,
 				38F0C1FF20C89CA200FF8DD3 /* SlackInputBar.swift */,
+				3860DC1B2F96C27900F2D981 /* GlassInputBar.swift */,
 				38F0C20120C89CAB00FF8DD3 /* GitHawkInputBar.swift */,
 				38F0C20320C89CB400FF8DD3 /* FacebookInputBar.swift */,
 				38DAD87C21A685C6001762CD /* NoTextViewInputBar.swift */,
@@ -287,6 +290,7 @@
 				3821ADE420F5359800DE0D1D /* CommonTableViewController.swift in Sources */,
 				38F0C20820C89D1600FF8DD3 /* InboxCell.swift in Sources */,
 				383B839D1F47897800027965 /* AppDelegate.swift in Sources */,
+				3860DC1C2F96C27900F2D981 /* GlassInputBar.swift in Sources */,
 				38FCF9D6219F797600A47350 /* READMEPreviewViewController.swift in Sources */,
 				38C888C6202051B3000F2E2F /* ImageCell.swift in Sources */,
 				38DAD87D21A685C6001762CD /* NoTextViewInputBar.swift in Sources */,

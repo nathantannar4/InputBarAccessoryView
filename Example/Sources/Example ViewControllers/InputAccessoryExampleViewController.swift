@@ -12,7 +12,7 @@ import InputBarAccessoryView
 class InputAccessoryExampleViewController: CommonTableViewController {
     
     // MARK: - Properties
-    
+
     override var inputAccessoryView: UIView? {
         return inputBar
     }
@@ -26,5 +26,5 @@ class InputAccessoryExampleViewController: CommonTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
 }
