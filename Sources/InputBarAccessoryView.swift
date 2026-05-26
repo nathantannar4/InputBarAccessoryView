@@ -882,7 +882,7 @@ open class InputBarAccessoryView: UIView {
         let shouldInvalidateIntrinsicContentSize = requiredInputTextViewHeight != inputTextView.bounds.height
 
         items.forEach { $0.textViewDidChangeAction(with: self.inputTextView) }
-        delegate?.inputBar(self, textViewTextDidChangeTo: trimmedText)
+        delegate?.inputBar(self, textViewTextDidChangeTo: inputTextView.text ?? "")
 
         if shouldInvalidateIntrinsicContentSize {
             // Prevent un-needed content size invalidation
