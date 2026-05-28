@@ -562,7 +562,7 @@ open class InputBarAccessoryView: UIView {
     open func calculateIntrinsicContentSize() -> CGSize {
 
         var inputTextViewHeight = requiredInputTextViewHeight
-        if inputTextViewHeight >= maxTextViewHeight {
+        if inputTextViewHeight > maxTextViewHeight {
             if !isOverMaxTextViewHeight {
                 textViewHeightAnchor?.isActive = true
                 inputTextView.isScrollEnabled = true
