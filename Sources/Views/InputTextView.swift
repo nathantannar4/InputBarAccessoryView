@@ -185,7 +185,8 @@ open class InputTextView: UITextView {
             left:    placeholderLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: placeholderLabelInsets.left),
             right:   placeholderLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -placeholderLabelInsets.right),
             centerX: placeholderLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor)
+            centerY: placeholderLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            width:   placeholderLabel.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1, constant: -(placeholderLabelInsets.right + placeholderLabelInsets.left)),
         )
         placeholderLabelConstraintSet?.centerX?.priority = .defaultLow
         placeholderLabelConstraintSet?.centerY?.priority = .defaultLow
@@ -211,6 +212,7 @@ open class InputTextView: UITextView {
         placeholderLabelConstraintSet?.bottom?.constant = -placeholderLabelInsets.bottom
         placeholderLabelConstraintSet?.left?.constant = placeholderLabelInsets.left
         placeholderLabelConstraintSet?.right?.constant = -placeholderLabelInsets.right
+        placeholderLabelConstraintSet?.width?.constant = -(placeholderLabelInsets.left + placeholderLabelInsets.right)
     }
 
     open override func firstRect(for range: UITextRange) -> CGRect {
