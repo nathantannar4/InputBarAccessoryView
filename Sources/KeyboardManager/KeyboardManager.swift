@@ -367,6 +367,9 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     @objc
     open func handlePanGestureRecognizer(recognizer: UIPanGestureRecognizer) {
         guard
+            // Only follow drags that scroll the view. A drag another gesture claims (swipe to reply,
+            // back swipe) never dismisses the keyboard, so the bar would end up hidden behind it
+            scrollView?.isDragging == true,
             var keyboardNotification = cachedNotification,
             case .changed = recognizer.state,
             let view = recognizer.view,
